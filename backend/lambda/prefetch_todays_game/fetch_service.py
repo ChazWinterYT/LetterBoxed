@@ -1,6 +1,7 @@
 import boto3
 import requests
 from datetime import date
+from common.db_utils import check_game_exists_in_db
 
 def fetch_and_store_todays_game():
     today_id = date.today().isoformat()
@@ -10,12 +11,10 @@ def fetch_and_store_todays_game():
         return {
             "message": "Today's game is already cached."
         }
-    # Fetch today's game from NY Times website
-    game_data = fetch_game_from_nyt()
-
-    # Store in DB
-    store_game_in_db(today_id, game_data)
 
     return {
         "message": "Today's game cached successfully: {today_id}"
     }
+
+def game_exists_in_db(game_id):
+    return check_game_exists_in_db(game_id) is not None
