@@ -1,7 +1,8 @@
 from aws_cdk import (
     Stack,
     aws_sqs as sqs,
-    aws_dynamodb as dynamodb
+    aws_dynamodb as dynamodb,
+    aws_lambda as _lambda
 )
 from constructs import Construct
 
@@ -12,6 +13,7 @@ class LetterBoxedStack(Stack):
         # DynamoDB table definition
         self.game_table = dynamodb.Table(
             self, "LetterBoxedGamesTable",
+            table_name="LetterBoxedGames",
             partition_key=dynamodb.Attribute(
                 name="gameid",
                 type=dynamodb.AttributeType.STRING
@@ -26,3 +28,15 @@ class LetterBoxedStack(Stack):
                 type=dynamodb.AttributeType.STRING
             )
         )
+
+        # Lambda for word validation
+        self.validate_word_function = _lambda.Function(
+            self, "ValidateWordFunction",
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler="validate_word.handler",
+            code=_lambda.Code.from_asset("lambda")
+        )
+
+        # Grant DynamoDB access to the Lambda
+        self.game_table.grant_read_write_data(self.validate_word_function)
+        
