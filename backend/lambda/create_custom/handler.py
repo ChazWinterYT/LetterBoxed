@@ -28,7 +28,7 @@ def handler(event, context):
     else:
         # This is a new unique game. Generate a solution and store it.
         solution = calculate_solution(user_layout)
-        add_game_to_db(game_id, user_layout, standardized_hash, solution, store_standardized=True)
+        add_game_to_db(game_id, user_layout, standardized_hash, solution)
         return {
             "statusCode": 200,
             "body": json.dumps({
