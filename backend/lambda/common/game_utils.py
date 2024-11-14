@@ -1,28 +1,55 @@
 from uuid import uuid4
 import hashlib
 
-def generate_game_id(sides, is_random=False, max_retries=3):
+def generate_game_id():
     """
-    Create a standardized layout and hash it to generate a unique game ID
+    Generate a unique game id for a user-created game.
     """
-    standardized_layout = standardize_board(sides)
-    game_id = hashlib.sha256(standardized_layout.encode()).hexdigest()
-    return game_id, standardized_layout
+    return str(uuid4())
 
 
-def standardize_board(sides):
+def standardize_board(game_layout):
     """
-    Alphabetize the letters on each side of the board and create a 
-    standardized layout string
+    Create a standardized version of the board, by alphabetizing the letters on each side,
+    and then alphabetizing the sides. This way, two boards with the same letters on each side 
+    can be determined to be equivalent.
+
+    Args:
+        game_layout (List[str]): The input letters for this game.
     """
-    standardized_sides = ["".join(sorted(side)) for side in sides]
-    standardized_layout = ["-".join(standardized_sides)]
-    return standardized_layout
+    sorted_sides = ["".join(sorted(side)) for side in game_layout]
+    sorted_sides.sort()
+    return sorted_sides
 
 
-def calculate_solution(game_layout):
+def generate_standardized_hash(standardized_game_layout):
+    """
+    Generate a hash of the game layout, using a standardized letter layout so that 
+    equivalent boards generate the same hash.
+    
+    Args:
+        standardized_game_layout (List[str]): The input letters for this game, 
+        sorted so that equivalent boards generate the same hash.
+    """
+    layout_str = "-".join(standardized_game_layout)
+    return hashlib.sha256(layout_str.encode()).hexdigest()
+
+
+def calculate_two_word_solutions(game_layout):
+    """
+    Calculate the two word solutions to the given puzzle input.
+
+    Args:
+        game_layout (List[str]): The input letters for this game.
+    """
     pass
 
 
-def generate_standardized_hash(game_layout):
+def calculate_three_word_solutions(game_layout):
+    """
+    Calculate three word solutions to the given puzzle input.
+
+    Args:
+        game_layout (List[str]): The input letters for this game.
+    """
     pass
