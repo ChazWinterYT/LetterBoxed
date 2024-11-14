@@ -18,3 +18,11 @@ def standardize_board(sides):
     standardized_sides = ["".join(sorted(side)) for side in sides]
     standardized_layout = ["-".join(standardized_sides)]
     return standardized_layout
+
+
+def calculate_solution(game_layout):
+    pass
+
+
+def generate_standardized_hash(game_layout):
+    pass
