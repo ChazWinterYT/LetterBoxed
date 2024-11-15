@@ -29,13 +29,31 @@ class LetterBoxedStack(Stack):
             )
         )
 
-        # Lambda function for word validation
-        self.validate_word_function = _lambda.Function(
+        # Define the fetch_game Lambda function
+        fetch_game_lambda = _lambda.Function(
+            self, "FetchGameFunction",
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler="fetch_game.handler",
+            code=_lambda.Code.from_asset("lambdas")
+        )
+
+        # Define the create_custom Lambda function
+        create_custom_lambda = _lambda.Function(
+            self, "CreateCustomGameFunction",
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler="create_custom.handler",
+            code=_lambda.Code.from_asset("lambdas")
+        )
+
+        # Define the validate_word Lambda function
+        validate_word_lambda = _lambda.Function(
             self, "ValidateWordFunction",
             runtime=_lambda.Runtime.PYTHON_3_10,
             handler="validate_word.handler",
-            code=_lambda.Code.from_asset("lambda")
+            code=_lambda.Code.from_asset("lambdas")
         )
 
-        # Grant read/write permissions to the Lambda function
-        self.game_table.grant_read_write_data(self.validate_word_function)
+        # Grant DynamoDB read/write permissions to each Lambda function
+        self.game_table.grant_read_write_data(fetch_game_lambda)
+        self.game_table.grant_read_write_data(create_custom_lambda)
+        self.game_table.grant_read_write_data(validate_word_lambda)
