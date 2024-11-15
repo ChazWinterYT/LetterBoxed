@@ -1,7 +1,8 @@
 from aws_cdk import (
     Stack,
     aws_dynamodb as dynamodb,
-    aws_lambda as _lambda
+    aws_lambda as _lambda,
+    aws_apigateway as apigateway,
 )
 from constructs import Construct
 
@@ -57,3 +58,36 @@ class LetterBoxedStack(Stack):
         self.game_table.grant_read_write_data(fetch_game_lambda)
         self.game_table.grant_read_write_data(create_custom_lambda)
         self.game_table.grant_read_write_data(validate_word_lambda)
+
+        # Define API Gateway REST API
+        api = apigateway.RestApi(
+            self, "LetterBoxedApi",
+            rest_api_name="LetterBoxed Service",
+            description="This service handles functions related to the LetterBoxed game"
+        )
+        
+        # Set up /games resource and methods
+        games_resource = api.root.add_resource("games")
+        
+        # GET /games/{gameId} - Fetch an existing game
+        game_id_resource = games_resource.add_resource("{gameId}")
+        game_id_resource.add_method(
+            "GET",
+            apigateway.LambdaIntegration(fetch_game_lambda)
+        )
+        
+        # POST /games - Create a custom game
+        games_resource.add_method(
+            "POST",
+            apigateway.LambdaIntegration(create_custom_lambda)
+        )
+        
+        # Set up /validate resource and methods
+        validate_resource = api.root.add_resource("validate")
+        
+        # POST /validate - Check if a word is valid
+        validate_resource.add_method(
+            "POST",
+            apigateway.LambdaIntegration(validate_word_lambda)
+        )
+        
