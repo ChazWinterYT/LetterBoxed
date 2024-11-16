@@ -1,0 +1,40 @@
+{
+    "ui": {
+        "startGame": "Commencer le Jeu",
+        "submitWord": "Soumettre le Mot",
+        "playAgain": "Rejouer",
+        "chooseLanguage": "Choisir la Langue",
+        "backToHome": "Retour à l'Accueil"
+    },
+    "messages": {
+        "invalidWord": "Mot invalide",
+        "wordAlreadyUsed": "Mot déjà utilisé",
+        "gameNotFound": "Jeu introuvable",
+        "gameCreated": "Jeu Créé",
+        "gameFetched": "Jeu Récupéré",
+        "congratulations": "Félicitations !",
+        "youWin": "Vous avez gagné !",
+        "tryAgain": "Réessayez",
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "invalidInput": "Entrée invalide"
+    },
+    "game": {
+        "boardSize": "Taille du Plateau",
+        "gameId": "ID du Jeu",
+        "twoWordSolutions": "Solutions à Deux Mots",
+        "threeWordSolutions": "Solutions à Trois Mots",
+        "enterGameLayout": "Entrer la Disposition du Jeu",
+        "customGame": "Jeu Personnalisé",
+        "randomGame": "Jeu Aléatoire"
+    },
+    "instructions": {
+        "howToPlay": "Comment Jouer",
+        "rules": "Règles",
+        "instructions": "Instructions"
+    },
+    "language": {
+        "currentLanguage": "Français",
+        "language": "Langue"
+    }
+}

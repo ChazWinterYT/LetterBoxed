@@ -1,0 +1,40 @@
+{
+    "ui": {
+        "startGame": "Rozpocznij Grę",
+        "submitWord": "Zatwierdź Słowo",
+        "playAgain": "Zagraj Ponownie",
+        "chooseLanguage": "Wybierz Język",
+        "backToHome": "Powrót do Strony Głównej"
+    },
+    "messages": {
+        "invalidWord": "Nieprawidłowe słowo",
+        "wordAlreadyUsed": "Słowo już użyte",
+        "gameNotFound": "Gra nie znaleziona",
+        "gameCreated": "Gra Utworzona",
+        "gameFetched": "Gra Znaleziona",
+        "congratulations": "Gratulacje!",
+        "youWin": "Wygrałeś!",
+        "tryAgain": "Spróbuj Ponownie",
+        "loading": "Ładowanie...",
+        "error": "Błąd",
+        "invalidInput": "Nieprawidłowe dane wejściowe"
+    },
+    "game": {
+        "boardSize": "Rozmiar Planszy",
+        "gameId": "ID Gry",
+        "twoWordSolutions": "Rozwiązania Dwuwyrazowe",
+        "threeWordSolutions": "Rozwiązania Trójwyrazowe",
+        "enterGameLayout": "Wprowadź Układ Gry",
+        "customGame": "Gra Własna",
+        "randomGame": "Gra Losowa"
+    },
+    "instructions": {
+        "howToPlay": "Jak Grać",
+        "rules": "Zasady",
+        "instructions": "Instrukcje"
+    },
+    "language": {
+        "currentLanguage": "Polski",
+        "language": "Język"
+    }
+}

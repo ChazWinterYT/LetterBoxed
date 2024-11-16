@@ -1,0 +1,40 @@
+{
+    "ui": {
+        "startGame": "Start Game",
+        "submitWord": "Submit Word",
+        "playAgain": "Play Again",
+        "chooseLanguage": "Choose Language",
+        "backToHome": "Back to Home"
+    },
+    "messages": {
+        "invalidWord": "Invalid word",
+        "wordAlreadyUsed": "Word already used",
+        "gameNotFound": "Game not found",
+        "gameCreated": "Game Created",
+        "gameFetched": "Game Fetched",
+        "congratulations": "Congratulations!",
+        "youWin": "You win!",
+        "tryAgain": "Try Again",
+        "loading": "Loading...",
+        "error": "Error",
+        "invalidInput": "Invalid input"
+    },
+    "game": {
+        "boardSize": "Board Size",
+        "gameId": "Game ID",
+        "twoWordSolutions": "Two-Word Solutions",
+        "threeWordSolutions": "Three-Word Solutions",
+        "enterGameLayout": "Enter Game Layout",
+        "customGame": "Custom Game",
+        "randomGame": "Random Game"
+    },
+    "instructions": {
+        "howToPlay": "How to Play",
+        "rules": "Rules",
+        "instructions": "Instructions"
+    },
+    "language": {
+        "currentLanguage": "English",
+        "language": "Language"
+    }
+}
