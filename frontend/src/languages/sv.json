@@ -1,0 +1,40 @@
+{
+    "ui": {
+        "startGame": "Starta Spelet",
+        "submitWord": "Skicka Ord",
+        "playAgain": "Spela Igen",
+        "chooseLanguage": "Välj Språk",
+        "backToHome": "Tillbaka till Start"
+    },
+    "messages": {
+        "invalidWord": "Ogiltigt ord",
+        "wordAlreadyUsed": "Ordet har redan använts",
+        "gameNotFound": "Spelet hittades inte",
+        "gameCreated": "Spelet Skapades",
+        "gameFetched": "Spelet Hämtades",
+        "congratulations": "Grattis!",
+        "youWin": "Du vann!",
+        "tryAgain": "Försök Igen",
+        "loading": "Laddar...",
+        "error": "Fel",
+        "invalidInput": "Ogiltig inmatning"
+    },
+    "game": {
+        "boardSize": "Brädstorlek",
+        "gameId": "Spel-ID",
+        "twoWordSolutions": "Tvåords Lösningar",
+        "threeWordSolutions": "Treords Lösningar",
+        "enterGameLayout": "Ange Spelplanens Layout",
+        "customGame": "Anpassat Spel",
+        "randomGame": "Slumpmässigt Spel"
+    },
+    "instructions": {
+        "howToPlay": "Hur man Spelar",
+        "rules": "Regler",
+        "instructions": "Instruktioner"
+    },
+    "language": {
+        "currentLanguage": "Svenska",
+        "language": "Språk"
+    }
+}
