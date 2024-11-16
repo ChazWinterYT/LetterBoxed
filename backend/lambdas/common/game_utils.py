@@ -22,6 +22,16 @@ def standardize_board(game_layout):
     return sorted_sides
 
 
+def validate_board_size(board_size):
+    valid_board_sizes = ["3x3", "4x4", "5x5"]
+    return board_size in valid_board_sizes
+
+
+def validate_language(language):
+    valid_languages = ["en", "es", "fr", "pl", "de", "it", "sv"]
+    return language in valid_languages
+
+
 def generate_standardized_hash(standardized_game_layout):
     """
     Generate a hash of the game layout, using a standardized letter layout so that 

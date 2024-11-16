@@ -6,12 +6,43 @@ from common.game_utils import (
     calculate_two_word_solutions, 
     calculate_three_word_solutions, 
     generate_standardized_hash,
+    validate_language,
+    validate_board_size,
 )
 
 def handler(event, context):
     # Get the user-defined layout from the event payload
-    game_layout = event.get("body")
+    body = json.loads(event.get("body", "{}"))
+    game_layout = body.get("gameLayout")
+    language = body.get("language", "English") # Default to English
+    board_size = body.get("boardSize", "3x3") # Default to 3x3
     standardized_layout = standardize_board(game_layout)
+
+    # Validate required fields
+    if not game_layout:
+        return {
+            "statusCode": 400,
+            "body": json.dumps({
+                "message": "Game Layout is required."
+            })
+        }
+    
+    # Validate boardSize and language
+    if not validate_board_size(board_size):
+        return {
+            "statusCode": 400,
+            "body": json.dumps({
+                "message": "Invalid Game Board Size."
+            })
+        }
+    
+    if not validate_language(language):
+        return {
+            "statusCode": 400,
+            "body": json.dumps({
+                "message": "Selected language is not supported."
+            })
+        }
     
     # Generate a unique game id and a standardized hash for solution lookup
     game_id = generate_game_id(game_layout, is_random=False)
