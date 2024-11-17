@@ -67,5 +67,6 @@
     "@aws-cdk/custom-resources:logApiResponseDataPropertyTrueDefault": false,
     "@aws-cdk/aws-s3:keepNotificationInImportedBucket": false,
     "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": true
-  }
+  },
+  "postdeploy": "python upload_dictionaries.py"
 }

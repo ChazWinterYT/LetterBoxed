@@ -1,11 +1,13 @@
 import os
 import glob
+import boto3
 from aws_cdk import (
     Stack,
     aws_dynamodb as dynamodb,
     aws_lambda as _lambda,
     aws_apigateway as apigateway,
     aws_s3 as s3,
+    CfnOutput,
 )
 from constructs import Construct
 
@@ -40,29 +42,36 @@ class LetterBoxedStack(Stack):
         # ===============================================================================
         # Define S3 Resources
         # ===============================================================================
-        bucket = s3.Bucket(
+        bucket = s3.Bucket.from_bucket_name(
             self, "DictionariesBucket",
-            bucket_name="chazwinter.com",
-            public_read_access=False,
-            versioned=True
+            bucket_name="chazwinter.com"
+        )
+        
+        CfnOutput(
+            self, "DictionaryBucketName", 
+            value=bucket.bucket_name,
+            description="The name of the S3 bucket for dictionaries."
         )
 
-        dictionaries_dir = os.path.join(os.getcwd(), "dictionaries")
-        for file_path in glob.glob(f"{dictionaries_dir}/**/*", recursive=True):
-            if os.path.isfile(file_path):
-                bucket.upload(file_path, f"LetterBoxed/{file_path.replace(dictionaries_dir, '').lstrip('/')}")
-                
 
         # ===============================================================================
         # Define Lambda Functions
         # ===============================================================================
+
+        # Define common environment for all Lambdas
+        common_environment = {
+            "GAME_TABLE": self.game_table.table_name,
+            "BUCKET_NAME": "chazwinter.com",
+            "DICTIONARY_PATH": "LetterBoxed/Dictionaries/"
+        }
 
         # Define the fetch_game Lambda function
         fetch_game_lambda = _lambda.Function(
             self, "FetchGameFunction",
             runtime=_lambda.Runtime.PYTHON_3_10,
             handler="fetch_game.handler",
-            code=_lambda.Code.from_asset("lambdas")
+            code=_lambda.Code.from_asset("lambdas"),
+            environment=common_environment
         )
 
         # Define the create_custom Lambda function
@@ -70,7 +79,8 @@ class LetterBoxedStack(Stack):
             self, "CreateCustomGameFunction",
             runtime=_lambda.Runtime.PYTHON_3_10,
             handler="create_custom.handler",
-            code=_lambda.Code.from_asset("lambdas")
+            code=_lambda.Code.from_asset("lambdas"),
+            environment=common_environment
         )
 
         # Define the prefetch_todays_game Lambda function
@@ -78,7 +88,8 @@ class LetterBoxedStack(Stack):
             self, "PrefetchTodaysGameFunction",
             runtime=_lambda.Runtime.PYTHON_3_10,
             handler="prefetch_todays_game.handler",
-            code=_lambda.Code.from_asset("lambdas")
+            code=_lambda.Code.from_asset("lambdas"),
+            environment=common_environment
         )
 
         # Define the play_today Lambda function
@@ -86,7 +97,8 @@ class LetterBoxedStack(Stack):
             self, "PlayTodayFunction",
             runtime=_lambda.Runtime.PYTHON_3_10,
             handler="play_today.handler",
-            code=_lambda.Code.from_asset("lambdas")
+            code=_lambda.Code.from_asset("lambdas"),
+            environment=common_environment
         )
 
         # Define the validate_word Lambda function
@@ -94,7 +106,8 @@ class LetterBoxedStack(Stack):
             self, "ValidateWordFunction",
             runtime=_lambda.Runtime.PYTHON_3_10,
             handler="validate_word.handler",
-            code=_lambda.Code.from_asset("lambdas")
+            code=_lambda.Code.from_asset("lambdas"),
+            environment=common_environment
         )
 
         # Define the game_archive Lambda function
@@ -102,16 +115,25 @@ class LetterBoxedStack(Stack):
             self, "GameArchiveFunction",
             runtime=_lambda.Runtime.PYTHON_3_10,
             handler="game_archive.handler",
-            code=_lambda.Code.from_asset("lambdas")
+            code=_lambda.Code.from_asset("lambdas"),
+            environment=common_environment
         )
 
-        # Grant DynamoDB read/write permissions to each Lambda function
-        self.game_table.grant_read_write_data(fetch_game_lambda)
-        self.game_table.grant_read_write_data(create_custom_lambda)
-        self.game_table.grant_read_write_data(prefetch_todays_game_lambda)
-        self.game_table.grant_read_write_data(play_today_lambda)
-        self.game_table.grant_read_write_data(validate_word_lambda)
-        self.game_table.grant_read_write_data(game_archive_lambda)
+        # Grant permissions to each Lambda function
+        lambda_functions = [
+            fetch_game_lambda,
+            create_custom_lambda,
+            prefetch_todays_game_lambda,
+            play_today_lambda,
+            validate_word_lambda,
+            game_archive_lambda
+        ]
+
+        for lambda_fn in lambda_functions:
+            # Grant DynamoDB read/write permissions to each Lambda function
+            self.game_table.grant_read_write_data(lambda_fn)
+            # Add S3 permissions for dictionary access
+            bucket.grant_read(lambda_fn)
 
 
         # ===============================================================================
