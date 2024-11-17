@@ -1,6 +1,7 @@
 import os
 import boto3
 from dotenv import load_dotenv
+from botocore.exceptions import ClientError
 
 load_dotenv()
 
@@ -52,10 +53,12 @@ def _fetch_dictionary_from_s3(language: str) -> list:
         response = s3.get_object(Bucket=S3_BUCKET_NAME, Key=s3_key)
         dictionary_content = response["Body"].read().decode("utf-8")
         return dictionary_content.splitlines()
-    except s3.exceptions.NoSuchKey:
-        raise ValueError(f"Dictionary for language '{language}' not found in S3.")
-    except Exception as e:
-        raise RuntimeError(f"Failed to fetch dictionary from S3: {str(e)}")
+    except ClientError as e:
+        error_code = e.response["Error"]["Code"]
+        if error_code == "NoSuchKey":
+            raise ValueError(f"Dictionary for language '{language}' not found in S3.")
+        else:
+            raise RuntimeError(f"Failed to fetch dictionary from S3: {str(e)}")
 
 
 def _load_local_dictionary(language: str) -> list:
@@ -68,9 +71,11 @@ def _load_local_dictionary(language: str) -> list:
     Returns:
         list: A list of words from the dictionary.
     """
-    local_path = LOCAL_DICTIONARY_PATH.format(language=language)
-    if not os.path.exists(local_path):
-        raise ValueError(f"Dictionary for language '{language}' not found at '{local_path}'.")
+    # Construct an absolute path for the dictionary
+    base_path = os.path.abspath(LOCAL_DICTIONARY_PATH.format(language=language))
+
+    if not os.path.exists(base_path):
+        raise ValueError(f"Dictionary for language '{language}' not found at '{base_path}'.")
     
-    with open(local_path, "r") as file:
+    with open(base_path, "r") as file:
         return file.read().splitlines()
