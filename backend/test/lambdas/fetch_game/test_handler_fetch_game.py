@@ -16,7 +16,7 @@ def test_fetch_game_success(mock_fetch_game_by_id):
         "gameId": game_id,
         "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
         "boardSize": "3x3",
-        "language": "English"
+        "language": "en"
     }
     mock_fetch_game_by_id.return_value = sample_game
 

@@ -1,6 +1,6 @@
 import json
-from common.db_utils import add_game_to_db, fetch_solutions_by_standardized_hash
-from common.game_utils import (
+from lambdas.common.db_utils import add_game_to_db, fetch_solutions_by_standardized_hash
+from lambdas.common.game_utils import (
     generate_game_id, 
     standardize_board, 
     calculate_two_word_solutions, 
@@ -14,11 +14,6 @@ def handler(event, context):
     # Get the user-defined layout from the event payload
     body = json.loads(event.get("body", "{}"))
     game_layout = body.get("gameLayout")
-    language = body.get("language", "English") # Default to English
-    board_size = body.get("boardSize", "3x3") # Default to 3x3
-    standardized_layout = standardize_board(game_layout)
-
-    # Validate required fields
     if not game_layout:
         return {
             "statusCode": 400,
@@ -26,6 +21,10 @@ def handler(event, context):
                 "message": "Game Layout is required."
             })
         }
+
+    language = body.get("language", "en") # Default to English
+    board_size = body.get("boardSize", "3x3") # Default to 3x3
+    standardized_layout = standardize_board(game_layout)
     
     # Validate boardSize and language
     if not validate_board_size(board_size):
@@ -40,7 +39,7 @@ def handler(event, context):
         return {
             "statusCode": 400,
             "body": json.dumps({
-                "message": "Selected language is not supported."
+                "message": f"Selected language is not supported."
             })
         }
     
@@ -62,7 +61,7 @@ def handler(event, context):
             "twoWordSolutions": two_word_solutions,
             "threeWordSolutions": three_word_solutions,
             "boardSize": "3x3",
-            "language": "English",
+            "language": "en",
             "officialGame": False,
         }
 
@@ -86,7 +85,7 @@ def handler(event, context):
             "twoWordSolutions": two_word_solutions,
             "threeWordSolutions": three_word_solutions,
             "boardSize": "3x3",
-            "language": "English",
+            "language": "en",
             "officialGame": False,
         }
 

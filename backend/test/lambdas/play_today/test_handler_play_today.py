@@ -20,7 +20,7 @@ def test_play_today_game_exists(mock_dynamodb_table):
             "gameId": today, 
             "gameLayout": ["ABC", "DEF", "GHI", "XYZ"], 
             "boardSize": "3x3", 
-            "language": "English",
+            "language": "en",
             "par": 4
         }}
     ]
@@ -46,7 +46,7 @@ def test_play_today_fallback_to_yesterday(mock_dynamodb_table):
             "gameId": yesterday, 
             "gameLayout": ["XYZ", "DEF", "ABC", "LMN"], 
             "boardSize": "3x3", 
-            "language": "English",
+            "language": "en",
             "par": 4
         }}
     ]

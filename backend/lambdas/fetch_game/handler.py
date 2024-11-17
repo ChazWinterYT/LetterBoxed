@@ -27,7 +27,7 @@ def handler(event, context):
             "gameId": game_id,
             "gameLayout": game_data.get("gameLayout"),
             "boardSize": game_data.get("boardSize", "3x3"), # Default to 3x3
-            "language": game_data.get("language", "English"), # Default to English
+            "language": game_data.get("language", "en"), # Default to English
             "message": "Game fetched successfully."
         })
     }

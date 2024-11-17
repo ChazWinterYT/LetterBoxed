@@ -15,7 +15,7 @@ sample_game = {
     "twoWordSolutions": ["WORD1", "WORD2"],
     "threeWordSolutions": ["WORD3", "WORD4", "WORD5"],
     "boardSize": "3x3",
-    "language": "English",
+    "language": "en",
 }
 
 bad_sample_game_no_board_size = {
@@ -25,7 +25,7 @@ bad_sample_game_no_board_size = {
     "twoWordSolutions": ["WORD1", "WORD2"],
     "threeWordSolutions": ["WORD3", "WORD4", "WORD5"],
     "boardSize": "",
-    "language": "English",
+    "language": "en",
 }
 
 
