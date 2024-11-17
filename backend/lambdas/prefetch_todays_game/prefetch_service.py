@@ -1,9 +1,11 @@
+import os
+import sys
 import boto3
 import json
 import requests
 from bs4 import BeautifulSoup
 from datetime import date
-from common.db_utils import fetch_game_by_id
+from lambdas.common.db_utils import fetch_game_by_id
 
 def fetch_todays_game():
     url = "https://www.nytimes.com/puzzles/letter-boxed"
@@ -12,12 +14,17 @@ def fetch_todays_game():
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    script_tag = soup.find("script", text=lambda t: t and "window.gameData" in t)
+    script_tag = soup.find("script", string=lambda s: s and "window.gameData" in s)
     if not script_tag:
         raise Exception("Could not find game data in the page.")
     
     # Extract game data from the JSON
     raw_game_data = script_tag.string.split("=", 1)[1].strip()
+
+    # Strip the trailing semicolon from the end of a JavaScript object
+    if raw_game_data.endswith(";"):
+        raw_game_data = raw_game_data[:-1]
+
     game_data = json.loads(raw_game_data)
 
     todays_game = {
