@@ -44,7 +44,8 @@ def handler(event, context):
             "dictionary": todays_game["dictionary"],
             "par": todays_game["par"],
             "boardSize": "3x3",  # NYT games are always 3x3
-            "language": "English"  # Default to English
+            "language": "English",  # Default to English
+            "officialGame": True, # Official NYT game
         }
 
         # Add today's game to the database

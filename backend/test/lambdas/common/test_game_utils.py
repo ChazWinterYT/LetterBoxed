@@ -23,3 +23,15 @@ def test_generate_standardized_hash(equivalent_layouts, layout):
         standardized_eq_layout = standardize_board(eq_layout)
         equivalent_hash = generate_standardized_hash(standardized_eq_layout)
         assert result_hash == equivalent_hash
+
+
+def test_standardize_board():
+    game_layout = ["ZYX", "CAB", "FED", "IHG"]
+    expected = ["ABC", "DEF", "GHI", "XYZ"]
+    assert standardize_board(game_layout) == expected
+
+
+def test_standardize_board_equivalence():
+    board1 = ["ABC", "XYZ", "FED", "IHG"]
+    board2 = ["IHG", "ZYX", "CAB", "DFE"]
+    assert standardize_board(board1) == standardize_board(board2)

@@ -63,6 +63,7 @@ def handler(event, context):
             "threeWordSolutions": three_word_solutions,
             "boardSize": "3x3",
             "language": "English",
+            "officialGame": False,
         }
 
         add_game_to_db(game_data)
@@ -86,6 +87,7 @@ def handler(event, context):
             "threeWordSolutions": three_word_solutions,
             "boardSize": "3x3",
             "language": "English",
+            "officialGame": False,
         }
 
         add_game_to_db(game_data)
