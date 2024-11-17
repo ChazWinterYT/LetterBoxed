@@ -7,38 +7,15 @@ dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table("LetterBoxedGames")  
 
 
-def add_game_to_db(
-        game_id, 
-        game_layout, 
-        standardized_hash, 
-        two_word_solutions, 
-        three_word_solutions,
-        board_size="3x3",
-        language="English"
-    ):
+def add_game_to_db(game_data):
     """
     Adds a game entry to the DynamoDB table.
 
     Args:
-        game_id (str): Unique ID for the game.
-        game_layout (List[str]): The specific board layout.
-        standardized_hash (str): Hash for detecting equivalent games.
-        two_word_solutions (List[str]): List of two-word solutions.
-        three_word_solutions (List[str]): List of three-word solutions.
-        board_size (str): The size of the game board (default is 3x3).
-        language (str): The language for the game (default is English).
+        game_data (dict): A dictionary containing all game details.
     """
-    item = {
-        "gameId": game_id,
-        "gameLayout": game_layout,
-        "standardizedHash": standardized_hash,
-        "twoWordSolutions": two_word_solutions,
-        "threeWordSolutions": three_word_solutions,
-        "boardSize": board_size,
-        "language": language,
-    }
     try:
-        table.put_item(Item=item)
+        table.put_item(Item=game_data)
     except ClientError as e:
         print(f"Error adding game to DB: {e}")
 

@@ -21,6 +21,6 @@ def test_fetch_todays_game(mocker):
     requests.get.return_value = mock_response
 
     result = fetch_todays_game()
-    print(result)
+
     assert result["gameId"] == "2024-11-16"
     assert result["sides"] == ["PRO", "CTI", "DGN", "SAH"]

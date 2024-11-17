@@ -55,15 +55,17 @@ def handler(event, context):
         # Use the cached solution for this game and associate it with this game id
         two_word_solutions = equivalent_game_solution["twoWordSolutions"]
         three_word_solutions = equivalent_game_solution["threeWordSolutions"]
-        add_game_to_db(
-            game_id, 
-            game_layout, 
-            standardized_hash, 
-            two_word_solutions, 
-            three_word_solutions,
-            board_size="3x3",
-            language="English"
-        )
+        game_data = {
+            "gameId": game_id,
+            "gameLayout": game_layout,
+            "standardizedHash": standardized_hash,
+            "twoWordSolutions": two_word_solutions,
+            "threeWordSolutions": three_word_solutions,
+            "boardSize": "3x3",
+            "language": "English",
+        }
+
+        add_game_to_db(game_data)
         
         return {
             "statusCode": 200,
@@ -76,15 +78,17 @@ def handler(event, context):
         # This is a new unique game. Generate a solution and store it.
         two_word_solutions = calculate_two_word_solutions(game_layout)
         three_word_solutions = calculate_three_word_solutions(game_layout)
-        add_game_to_db(
-            game_id, 
-            game_layout, 
-            standardized_hash, 
-            two_word_solutions, 
-            three_word_solutions,
-            board_size="3x3",
-            language="English"
-        )
+        game_data = {
+            "gameId": game_id,
+            "gameLayout": game_layout,
+            "standardizedHash": standardized_hash,
+            "twoWordSolutions": two_word_solutions,
+            "threeWordSolutions": three_word_solutions,
+            "boardSize": "3x3",
+            "language": "English",
+        }
+
+        add_game_to_db(game_data)
         
         return {
             "statusCode": 200,
