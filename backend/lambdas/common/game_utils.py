@@ -65,22 +65,32 @@ def calculate_three_word_solutions(game_layout):
     pass
 
 
-def is_valid_word(word, puzzle_sides):
+def is_valid_word(word, game_layout, puzzle_sides=None):
     """
     Check if a word is valid for the given Letter Boxed puzzle.
     
     Args:
         word (str): Word to validate.
-        puzzle_sides (List[Set[str]]): Each side of the puzzle, containing a set of letters.
+        game_layout (List[str]): Each side of the puzzle as a List.
+        puzzle_sides (List[Set[str]], optional): Precomputed sets of letters for each side of the puzzle.
+            Can be passed in to save repeated calculations (as in generate_valid_words).
         
     Returns:
         bool: True if the word is valid, False otherwise.
     """
-    # First check if all the word's letters are in the current puzzle
-    letter_set = set("".join(puzzle_sides))
+    # Check minimum word length
+    if len(word) < 3:
+        return False
+    
+    # Check if all the word's letters are in the current puzzle
+    letter_set = set("".join(game_layout))
     if not set(word).issubset(letter_set):
         return False
     
+    # Compute puzzle_sides set if not provided
+    if not puzzle_sides:
+        puzzle_sides = sides_list_to_sides_set(game_layout)
+
     # Then ensure the letters alternate between sides
     last_side = None
     for char in word:
@@ -95,20 +105,24 @@ def is_valid_word(word, puzzle_sides):
     return True
 
 
-def generate_valid_words(dictionary, puzzle_sides):
+def generate_valid_words(dictionary, game_layout, puzzle_sides=None):
     """
     Generate valid words for the Letter Boxed puzzle.
     
     Args:
         dictionary (List[str]): Full word list.
-        puzzle_sides (List[Set[str]]): Puzzle sides with sets of letters.
+        game_layout (List[str]): Each side of the puzzle as a List.
+        puzzle_sides (List[Set[str]], optional): Precomputed sets of letters for each side of the puzzle.
+            Can be passed in to save repeated calculations (as in generate_valid_words).
         
     Returns:
         List[str]: Words valid for the puzzle.
     """
     valid_words = []
+    if not puzzle_sides:
+        puzzle_sides = sides_list_to_sides_set(game_layout)
     for word in dictionary:
-        if len(word) > 2 and is_valid_word(word, puzzle_sides):
+        if len(word) > 2 and is_valid_word(word, game_layout, puzzle_sides):
             valid_words.append(word)
     
     return valid_words
