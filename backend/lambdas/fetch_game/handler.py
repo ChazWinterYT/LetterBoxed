@@ -1,5 +1,5 @@
 import json
-from common.db_utils import fetch_game_by_id
+from lambdas.common.db_utils import fetch_game_by_id
 
 def handler(event, context):
     # Parse the gameId from path parameters

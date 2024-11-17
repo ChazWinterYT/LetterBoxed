@@ -56,7 +56,7 @@ def test_is_valid_word():
 
 
 def test_generate_valid_words():
-    dictionary = ["PARDONS", "BAD", "DAPHNIA", "DAAPHNIA", "AAAA", "SNAPDRAGON", "PHONIATRISTS", "SONANTI"]
+    dictionary = ["PARDONS", "BAD", "DAPHNIA", "DAAPHNIA", "AAAA", "SO", "SNAPDRAGON", "PHONIATRISTS", "SONANTI"]
     game_layout = ["PRO","CTI","DGN","SAH"]
     valid_words = generate_valid_words(dictionary, game_layout)
     assert valid_words == ["PARDONS", "DAPHNIA", "SNAPDRAGON", "PHONIATRISTS"]
