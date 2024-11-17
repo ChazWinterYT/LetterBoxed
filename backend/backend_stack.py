@@ -1,8 +1,11 @@
+import os
+import glob
 from aws_cdk import (
     Stack,
     aws_dynamodb as dynamodb,
     aws_lambda as _lambda,
     aws_apigateway as apigateway,
+    aws_s3 as s3,
 )
 from constructs import Construct
 
@@ -33,6 +36,22 @@ class LetterBoxedStack(Stack):
                 type=dynamodb.AttributeType.STRING
             )
         )
+
+        # ===============================================================================
+        # Define S3 Resources
+        # ===============================================================================
+        bucket = s3.Bucket(
+            self, "DictionariesBucket",
+            bucket_name="chazwinter.com",
+            public_read_access=False,
+            versioned=True
+        )
+
+        dictionaries_dir = os.path.join(os.getcwd(), "dictionaries")
+        for file_path in glob.glob(f"{dictionaries_dir}/**/*", recursive=True):
+            if os.path.isfile(file_path):
+                bucket.upload(file_path, f"LetterBoxed/{file_path.replace(dictionaries_dir, '').lstrip('/')}")
+                
 
         # ===============================================================================
         # Define Lambda Functions
