@@ -83,7 +83,7 @@ chmod +x upload_dictionaries.py
 
 To upload dictionaries automatically after deploying the stack:
 ```bash
-deploy_with_upload.sh  
+./deploy_with_upload.sh  
 ```
 
 Alternatively, you can upload the dictionaries without deploying the stack by running:
