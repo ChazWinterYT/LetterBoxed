@@ -36,7 +36,7 @@ Ensure you have the following installed:
 
 #### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-repo.git
+gh repo clone ChazWinterYT/LetterBoxed  # Or your preferred cloning method
 cd LetterBoxed  # All future commands begin from this directory
 ```
 
