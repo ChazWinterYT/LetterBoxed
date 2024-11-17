@@ -1,5 +1,7 @@
 from uuid import uuid4
 import hashlib
+from collections import defaultdict
+from lambdas.common.dictionary_utils import get_dictionary
 
 def generate_game_id():
     """
@@ -45,24 +47,50 @@ def generate_standardized_hash(standardized_game_layout):
     return hashlib.sha256(layout_str.encode()).hexdigest()
 
 
-def calculate_two_word_solutions(game_layout):
+def calculate_two_word_solutions(game_layout, language="en"):
     """
     Calculate the two word solutions to the given puzzle input.
 
     Args:
         game_layout (List[str]): The input letters for this game.
+        language (str, optional): Language of the word dictionary to use to find solutions.
+            Defaults to English.
+
+    Returns:
+        List[Tuple[str, str]]: List of pairs of words representing solutions to the puzzle.
     """
-    pass
+    try:
+        dictionary = get_dictionary(language)
+    except ValueError as e:
+        # Log error if dictionary cannot be loaded
+        print(f"Error loading dictionary for language '{language}': {e}")
+        return []
+
+    # Placeholder implementation: Return an empty list
+    return []
 
 
-def calculate_three_word_solutions(game_layout):
+def calculate_three_word_solutions(game_layout, language="en"):
     """
     Calculate three word solutions to the given puzzle input.
 
     Args:
         game_layout (List[str]): The input letters for this game.
+        language (str, optional): Language of the word dictionary to use to find solutions.
+            Defaults to English.
+    
+    Returns:
+        List[Tuple[str, str, str]]: List of trios of words representing solutions to the puzzle.
     """
-    pass
+    try:
+        dictionary = get_dictionary(language)
+    except ValueError as e:
+        # Log error if dictionary cannot be loaded
+        print(f"Error loading dictionary for language '{language}': {e}")
+        return []
+
+    # Placeholder implementation: Return an empty list
+    return []
 
 
 def is_valid_word(word, game_layout, puzzle_sides=None):

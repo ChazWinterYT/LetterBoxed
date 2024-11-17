@@ -2,11 +2,13 @@
 import os
 
 from aws_cdk import App, Environment
+from dotenv import load_dotenv
 
 from backend_stack import LetterBoxedStack
 
 app = App()
 env = Environment(account="082868779896", region="us-east-1")
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
 LetterBoxedStack(app, "LetterBoxedStack", env=env
     # If you don't specify 'env', this stack will be environment-agnostic.

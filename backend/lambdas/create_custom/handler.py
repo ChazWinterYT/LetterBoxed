@@ -60,8 +60,8 @@ def handler(event, context):
             "standardizedHash": standardized_hash,
             "twoWordSolutions": two_word_solutions,
             "threeWordSolutions": three_word_solutions,
-            "boardSize": "3x3",
-            "language": "en",
+            "boardSize": board_size,
+            "language": language,
             "officialGame": False,
         }
 
@@ -84,8 +84,8 @@ def handler(event, context):
             "standardizedHash": standardized_hash,
             "twoWordSolutions": two_word_solutions,
             "threeWordSolutions": three_word_solutions,
-            "boardSize": "3x3",
-            "language": "en",
+            "boardSize": board_size,
+            "language": language,
             "officialGame": False,
         }
 

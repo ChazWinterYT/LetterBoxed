@@ -45,7 +45,6 @@ def test_standardize_board_equivalence():
 
 def test_is_valid_word():
     game_layout = ["PRO","CTI","DGN","SAH"]
-
     assert is_valid_word("PIANIST", game_layout) == True
     assert is_valid_word("HOGO", game_layout) == True
     assert is_valid_word("TRAGACANTHIN", game_layout) == True
