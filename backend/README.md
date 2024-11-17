@@ -68,6 +68,8 @@ The project uses **pytest** for testing. Mocking for DynamoDB and external servi
 - **Run All Tests**:
   ```bash
   pytest
+  pytest -v # Some verbose testing
+  pytest -vv # More verbose testing
   ```
 
 - **Key Test Files**:
