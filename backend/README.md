@@ -1,4 +1,4 @@
-```markdown
+
 # LetterBoxed Game Backend
 
 This project is a backend implementation for a **LetterBoxed game** clone. It uses **AWS Lambda**, **DynamoDB**, and **API Gateway** for serverless functionality, and it is deployed using **AWS CDK**.
