@@ -78,12 +78,21 @@ class LetterBoxedStack(Stack):
             code=_lambda.Code.from_asset("lambdas")
         )
 
+        # Define the game_archive Lambda function
+        game_archive_lambda = _lambda.Function(
+            self, "GameArchiveFunction",
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler="game_archive.handler",
+            code=_lambda.Code.from_asset("lambdas")
+        )
+
         # Grant DynamoDB read/write permissions to each Lambda function
         self.game_table.grant_read_write_data(fetch_game_lambda)
         self.game_table.grant_read_write_data(create_custom_lambda)
         self.game_table.grant_read_write_data(prefetch_todays_game_lambda)
         self.game_table.grant_read_write_data(play_today_lambda)
         self.game_table.grant_read_write_data(validate_word_lambda)
+        self.game_table.grant_read_write_data(game_archive_lambda)
 
 
         # ===============================================================================
@@ -125,3 +134,8 @@ class LetterBoxedStack(Stack):
         play_today_integration = apigateway.LambdaIntegration(play_today_lambda)
         play_today_resource = api.root.add_resource("play-today")
         play_today_resource.add_method("GET", play_today_integration)
+
+        # Route for game_archive Lambda
+        game_archive_integration = apigateway.LambdaIntegration(game_archive_lambda)
+        game_archive_resource = api.root.add_resource("archive")
+        game_archive_resource.add_method("GET", game_archive_integration)
