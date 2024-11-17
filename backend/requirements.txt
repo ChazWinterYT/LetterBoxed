@@ -1,2 +1,14 @@
 aws-cdk-lib==2.159.0
 constructs>=10.0.0,<11.0.0
+
+# AWS SDK for Python
+boto3>=1.28.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# JSON and HTTP utilities
+requests>=2.28.0
+
+# Parsing HTML (if needed for scraping NYT games)
+beautifulsoup4>=4.12.0

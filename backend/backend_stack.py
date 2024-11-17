@@ -8,139 +8,144 @@ from aws_cdk import (
     aws_apigateway as apigateway,
     aws_s3 as s3,
     CfnOutput,
+    RemovalPolicy,
 )
 from constructs import Construct
 
 class LetterBoxedStack(Stack):
-    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, is_test=False, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # ===============================================================================
+        # ===========================================================================
         # Define DynamoDB Resources
-        # ===============================================================================
-
-        # DynamoDB table definition for unique games and standardized solutions
-        self.game_table = dynamodb.Table(
-            self, "LetterBoxedGamesTable",
-            table_name="LetterBoxedGames",
+        # ===========================================================================
+        
+        # Test DynamoDB table
+        self.test_game_table = dynamodb.Table(
+            self, "LetterBoxedGamesTestTable",
+            table_name="LetterBoxedGamesTest",
             partition_key=dynamodb.Attribute(
-                name="gameId",          # Unique identifier for each specific game layout
+                name="gameId",
                 type=dynamodb.AttributeType.STRING
             ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY  # Test resources should be cleaned up
         )
 
-        # Global Secondary Index (GSI) for standardized game layouts (equivalent solutions)
-        self.game_table.add_global_secondary_index(
+        self.test_game_table.add_global_secondary_index(
             index_name="StandardizedHashIndex",
             partition_key=dynamodb.Attribute(
-                name="standardizedHash",  # Unique identifier for the standardized version of the layout
+                name="standardizedHash",
                 type=dynamodb.AttributeType.STRING
             )
         )
 
-        # ===============================================================================
+        # Production DynamoDB table
+        self.prod_game_table = dynamodb.Table(
+            self, "LetterBoxedGamesTable",
+            table_name="LetterBoxedGames",
+            partition_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN  # Retain production resources
+        )
+
+        self.prod_game_table.add_global_secondary_index(
+            index_name="StandardizedHashIndex",
+            partition_key=dynamodb.Attribute(
+                name="standardizedHash",
+                type=dynamodb.AttributeType.STRING
+            )
+        )
+
+
+        # ===========================================================================
         # Define S3 Resources
-        # ===============================================================================
-        bucket = s3.Bucket.from_bucket_name(
+        # ===========================================================================
+
+        # Test S3 bucket
+        self.test_bucket = s3.Bucket.from_bucket_name(
+            self, "TestDictionariesBucket",
+            bucket_name="test-dictionary-bucket"
+        )
+
+        # Production S3 bucket (referencing an existing bucket)
+        self.prod_bucket = s3.Bucket.from_bucket_name(
             self, "DictionariesBucket",
             bucket_name="chazwinter.com"
         )
-        
-        CfnOutput(
-            self, "DictionaryBucketName", 
-            value=bucket.bucket_name,
-            description="The name of the S3 bucket for dictionaries."
-        )
+
+        CfnOutput(self, "DictionaryBucketName", value=self.prod_bucket.bucket_name)
 
 
-        # ===============================================================================
+        # ===========================================================================
         # Define Lambda Functions
-        # ===============================================================================
+        # ===========================================================================
+        # Define table and bucket names based on the environment
+        table_name = "LetterBoxedGamesTest" if is_test else "LetterBoxedGames"
+        bucket_name = "test-dictionary-bucket" if is_test else "chazwinter.com"
 
         # Define common environment for all Lambdas
         common_environment = {
-            "GAME_TABLE": self.game_table.table_name,
+            "GAME_TABLE": table_name,
             "DICTIONARY_SOURCE": "s3",
-            "S3_BUCKET_NAME": "chazwinter.com",
-            "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
+            "S3_BUCKET_NAME": bucket_name,
+            "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
             "DEFAULT_LANGUAGE": "en",
         }
 
-        # Define the fetch_game Lambda function
-        fetch_game_lambda = _lambda.Function(
-            self, "FetchGameFunction",
-            runtime=_lambda.Runtime.PYTHON_3_10,
-            handler="fetch_game.handler",
-            code=_lambda.Code.from_asset("lambdas"),
-            environment=common_environment
-        )
+        # Define the Lambda function handlers and their respective names
+        lambda_functions = {
+            "fetch_game": {
+                "handler": "fetch_game.handler",
+                "name": "FetchGameLambda"
+            },
+            "create_custom": {
+                "handler": "create_custom.handler",
+                "name": "CreateCustomLambda"
+            },
+            "prefetch_todays_game": {
+                "handler": "prefetch_todays_game.handler",
+                "name": "PrefetchTodaysGameLambda"
+            },
+            "play_today": {
+                "handler": "play_today.handler",
+                "name": "PlayTodayLambda"
+            },
+            "validate_word": {
+                "handler": "validate_word.handler",
+                "name": "ValidateWordLambda"
+            },
+            "game_archive": {
+                "handler": "game_archive.handler",
+                "name": "GameArchiveLambda"
+            },
+        }
 
-        # Define the create_custom Lambda function
-        create_custom_lambda = _lambda.Function(
-            self, "CreateCustomGameFunction",
-            runtime=_lambda.Runtime.PYTHON_3_10,
-            handler="create_custom.handler",
-            code=_lambda.Code.from_asset("lambdas"),
-            environment=common_environment
-        )
-
-        # Define the prefetch_todays_game Lambda function
-        prefetch_todays_game_lambda = _lambda.Function(
-            self, "PrefetchTodaysGameFunction",
-            runtime=_lambda.Runtime.PYTHON_3_10,
-            handler="prefetch_todays_game.handler",
-            code=_lambda.Code.from_asset("lambdas"),
-            environment=common_environment
-        )
-
-        # Define the play_today Lambda function
-        play_today_lambda = _lambda.Function(
-            self, "PlayTodayFunction",
-            runtime=_lambda.Runtime.PYTHON_3_10,
-            handler="play_today.handler",
-            code=_lambda.Code.from_asset("lambdas"),
-            environment=common_environment
-        )
-
-        # Define the validate_word Lambda function
-        validate_word_lambda = _lambda.Function(
-            self, "ValidateWordFunction",
-            runtime=_lambda.Runtime.PYTHON_3_10,
-            handler="validate_word.handler",
-            code=_lambda.Code.from_asset("lambdas"),
-            environment=common_environment
-        )
-
-        # Define the game_archive Lambda function
-        game_archive_lambda = _lambda.Function(
-            self, "GameArchiveFunction",
-            runtime=_lambda.Runtime.PYTHON_3_10,
-            handler="game_archive.handler",
-            code=_lambda.Code.from_asset("lambdas"),
-            environment=common_environment
-        )
-
-        # Grant permissions to each Lambda function
-        lambda_functions = [
-            fetch_game_lambda,
-            create_custom_lambda,
-            prefetch_todays_game_lambda,
-            play_today_lambda,
-            validate_word_lambda,
-            game_archive_lambda
-        ]
-
-        for lambda_fn in lambda_functions:
-            # Grant DynamoDB read/write permissions to each Lambda function
-            self.game_table.grant_read_write_data(lambda_fn)
-            # Add S3 permissions for dictionary access
-            bucket.grant_read(lambda_fn)
+        # Create Lambda functions and store references to them,
+        # so they can be used when creating API routing
+        lambda_references = {}
+        for lambda_key, lambda_config in lambda_functions.items():
+            lambda_function = _lambda.Function(
+                self, lambda_config["name"],
+                runtime=_lambda.Runtime.PYTHON_3_10,
+                handler=lambda_config["handler"],
+                code=_lambda.Code.from_asset("lambdas"),
+                environment=common_environment,
+                function_name=lambda_config["name"]
+            )
+            self.test_game_table.grant_read_write_data(lambda_function)
+            self.prod_game_table.grant_read_write_data(lambda_function)
+            self.test_bucket.grant_read(lambda_function)
+            self.prod_bucket.grant_read(lambda_function)
+            lambda_references[lambda_key] = lambda_function
 
 
-        # ===============================================================================
+        # ===========================================================================
         # Define API Gateway REST API Resources
-        # ===============================================================================
+        # ===========================================================================
         api = apigateway.RestApi(
             self, "LetterBoxedApi",
             rest_api_name="LetterBoxed Service",
@@ -154,31 +159,31 @@ class LetterBoxedStack(Stack):
         game_id_resource = games_resource.add_resource("{gameId}")
         game_id_resource.add_method(
             "GET",
-            apigateway.LambdaIntegration(fetch_game_lambda)
+            apigateway.LambdaIntegration(lambda_references["fetch_game"])
         )
         
         # POST /games - Create a custom game
         games_resource.add_method(
             "POST",
-            apigateway.LambdaIntegration(create_custom_lambda)
+            apigateway.LambdaIntegration(lambda_references["create_custom"])
         )
         
         # Set up /validate resource and POST method
-        validate_integration = apigateway.LambdaIntegration(validate_word_lambda)
+        validate_integration = apigateway.LambdaIntegration(lambda_references["validate_word"])
         validate_resource = api.root.add_resource("validate")
         validate_resource.add_method("POST", validate_integration)
         
         # Route for prefetch_todays_game
-        prefetch_integration = apigateway.LambdaIntegration(prefetch_todays_game_lambda)
+        prefetch_integration = apigateway.LambdaIntegration(lambda_references["prefetch_todays_game"])
         prefetch_resource = api.root.add_resource("prefetch")
         prefetch_resource.add_method("GET", prefetch_integration)
         
         # Route for play_today Lambda
-        play_today_integration = apigateway.LambdaIntegration(play_today_lambda)
+        play_today_integration = apigateway.LambdaIntegration(lambda_references["play_today"])
         play_today_resource = api.root.add_resource("play-today")
         play_today_resource.add_method("GET", play_today_integration)
 
         # Route for game_archive Lambda
-        game_archive_integration = apigateway.LambdaIntegration(game_archive_lambda)
+        game_archive_integration = apigateway.LambdaIntegration(lambda_references["game_archive"])
         game_archive_resource = api.root.add_resource("archive")
         game_archive_resource.add_method("GET", game_archive_integration)

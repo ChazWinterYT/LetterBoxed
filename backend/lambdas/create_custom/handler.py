@@ -44,7 +44,7 @@ def handler(event, context):
         }
     
     # Generate a unique game id and a standardized hash for solution lookup
-    game_id = generate_game_id(game_layout, is_random=False)
+    game_id = generate_game_id()
     standardized_hash = generate_standardized_hash(standardized_layout)
     
     # Check if a solution already exists for this game via the standardized hash
