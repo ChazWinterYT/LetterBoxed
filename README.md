@@ -37,7 +37,7 @@ Ensure you have the following installed:
 #### 1. Clone the Repository
 ```bash
 git clone https://github.com/your-repo.git
-cd LetterBoxed
+cd LetterBoxed  # All future commands begin from this directory
 ```
 
 #### 2. Environment Variables
@@ -66,21 +66,32 @@ cd frontend
 npm install
 ```
 
-#### 4. Upload Dictionaries to S3
-To upload dictionaries:
-```bash
-cd backend
-python upload_dictionaries.py
-```
 
-Ensure your dictionaries are in a `dictionaries/` directory in the project root, organized by language (e.g., `dictionaries/en/words.txt`).
-
-#### 5. Deploy the Backend
+#### 4. Deploy the Backend
 ```bash
 cd backend
 cdk bootstrap  # Run once for setup
-cdk deploy
+cdk deploy  # or run the script in Step 5
 ```
+Note: In Step 5 below, the script also runs `cdk deploy`, so if you are going to complete Step 5, then there is no need to run `cdk deploy` here.
+
+#### 5. Upload Dictionaries to S3
+First, you might need to give execute permissions to the upload script:
+```bash
+chmod +x upload_dictionaries.py 
+```
+
+To upload dictionaries automatically after deploying the stack:
+```bash
+deploy_with_upload.sh  
+```
+
+Alternatively, you can upload the dictionaries without deploying the stack by running:
+```bash
+python upload_dictionaries.py  # or python3
+```
+
+Ensure your dictionaries are in a `dictionaries/` directory in the project root, organized by language (e.g., `dictionaries/en/dictionary.txt`).
 
 #### 6. Start the Frontend
 ```bash
