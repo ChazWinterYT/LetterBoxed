@@ -61,8 +61,10 @@ class LetterBoxedStack(Stack):
         # Define common environment for all Lambdas
         common_environment = {
             "GAME_TABLE": self.game_table.table_name,
-            "BUCKET_NAME": "chazwinter.com",
-            "DICTIONARY_PATH": "LetterBoxed/Dictionaries/"
+            "DICTIONARY_SOURCE": "s3",
+            "S3_BUCKET_NAME": "chazwinter.com",
+            "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
+            "DEFAULT_LANGUAGE": "en",
         }
 
         # Define the fetch_game Lambda function
