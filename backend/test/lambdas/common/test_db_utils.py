@@ -89,6 +89,19 @@ def test_fetch_game_by_id_client_error(mock_dynamodb_table):
     mock_dynamodb_table.get_item.assert_called_once_with(Key={"gameId": game_id})
 
 
+def test_fetch_game_by_id_no_data(mock_dynamodb_table):
+    # Arrange
+    game_id = "nonexistent-game-id"
+    mock_dynamodb_table.get_item.return_value = {}  # No item found
+
+    # Act
+    result = fetch_game_by_id(game_id)
+
+    # Assert
+    assert result is None
+    mock_dynamodb_table.get_item.assert_called_once_with(Key={"gameId": game_id})
+
+
 def test_fetch_solutions_by_standardized_hash(mocker, mock_dynamodb_table, mock_solution_calculations):
     # Arrange
     standardized_hash = "sample-hash"
@@ -122,6 +135,42 @@ def test_fetch_solutions_by_standardized_hash_client_error(mocker, mock_dynamodb
 
     # Assert
     assert result is None
+    mock_dynamodb_table.query.assert_called_once_with(
+        IndexName="StandardizedHashIndex",
+        KeyConditionExpression=mocker.ANY
+    )
+
+
+def test_fetch_solutions_by_standardized_hash_no_data(mocker, mock_dynamodb_table):
+    # Arrange
+    standardized_hash = "nonexistent-hash"
+    mock_dynamodb_table.query.return_value = {"Items": []}  # No items found
+
+    # Act
+    result = fetch_solutions_by_standardized_hash(standardized_hash)
+
+    # Assert
+    assert result is None
+    mock_dynamodb_table.query.assert_called_once_with(
+        IndexName="StandardizedHashIndex",
+        KeyConditionExpression=mocker.ANY
+    )
+
+
+def test_fetch_solutions_by_standardized_hash_missing_fields(mocker, mock_dynamodb_table):
+    # Arrange
+    standardized_hash = "sample-hash"
+    items = [
+        {"twoWordSolutions": ["WORD1", "WORD2"]},  # Missing threeWordSolutions
+        {"threeWordSolutions": ["WORD3", "WORD4"]}  # Missing twoWordSolutions
+    ]
+    mock_dynamodb_table.query.return_value = {"Items": items}
+
+    # Act
+    result = fetch_solutions_by_standardized_hash(standardized_hash)
+
+    # Assert
+    assert result is None  # No item has both fields
     mock_dynamodb_table.query.assert_called_once_with(
         IndexName="StandardizedHashIndex",
         KeyConditionExpression=mocker.ANY

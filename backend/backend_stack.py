@@ -10,6 +10,10 @@ class LetterBoxedStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
+        # ===============================================================================
+        # Define DynamoDB Resources
+        # ===============================================================================
+
         # DynamoDB table definition for unique games and standardized solutions
         self.game_table = dynamodb.Table(
             self, "LetterBoxedGamesTable",
@@ -30,6 +34,10 @@ class LetterBoxedStack(Stack):
             )
         )
 
+        # ===============================================================================
+        # Define Lambda Functions
+        # ===============================================================================
+
         # Define the fetch_game Lambda function
         fetch_game_lambda = _lambda.Function(
             self, "FetchGameFunction",
@@ -46,6 +54,14 @@ class LetterBoxedStack(Stack):
             code=_lambda.Code.from_asset("lambdas")
         )
 
+        # Define the prefetch_todays_game Lambda function
+        prefetch_todays_game_lambda = _lambda.Function(
+            self, "PrefetchTodaysGameFunction",
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler="prefetch_todays_game.handler",
+            code=_lambda.Code.from_asset("lambdas")
+        )
+
         # Define the validate_word Lambda function
         validate_word_lambda = _lambda.Function(
             self, "ValidateWordFunction",
@@ -58,8 +74,12 @@ class LetterBoxedStack(Stack):
         self.game_table.grant_read_write_data(fetch_game_lambda)
         self.game_table.grant_read_write_data(create_custom_lambda)
         self.game_table.grant_read_write_data(validate_word_lambda)
+        self.game_table.grant_read_write_data(prefetch_todays_game_lambda)
 
-        # Define API Gateway REST API
+
+        # ===============================================================================
+        # Define API Gateway REST API Resources
+        # ===============================================================================
         api = apigateway.RestApi(
             self, "LetterBoxedApi",
             rest_api_name="LetterBoxed Service",
@@ -90,4 +110,8 @@ class LetterBoxedStack(Stack):
             "POST",
             apigateway.LambdaIntegration(validate_word_lambda)
         )
+        
+        # Route for prefetch_todays_game
+        prefetch_integration = apigateway.LambdaIntegration(prefetch_todays_game_lambda)
+        api.root.add_resource("prefetch").add_method("GET", prefetch_integration)
         
