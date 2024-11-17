@@ -29,7 +29,7 @@ def fetch_todays_game():
 
     todays_game = {
         "gameId": game_data["printDate"],
-        "sides": game_data["sides"],
+        "gameLayout": game_data["sides"],
         "nytSolution": game_data["ourSolution"],
         "dictionary": game_data["dictionary"],
         "par": game_data["par"]

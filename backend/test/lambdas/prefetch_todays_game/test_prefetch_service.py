@@ -23,4 +23,4 @@ def test_fetch_todays_game(mocker):
     result = fetch_todays_game()
 
     assert result["gameId"] == "2024-11-16"
-    assert result["sides"] == ["PRO", "CTI", "DGN", "SAH"]
+    assert result["gameLayout"] == ["PRO", "CTI", "DGN", "SAH"]

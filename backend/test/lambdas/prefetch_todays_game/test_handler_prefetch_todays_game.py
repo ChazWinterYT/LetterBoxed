@@ -18,7 +18,7 @@ def test_prefetch_todays_game_handler_game_cached(
     # Arrange
     mock_fetch_todays_game.return_value = {
         "gameId": "2024-11-16",
-        "sides": ["ABC", "DEF", "GHI", "XYZ"],
+        "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
         "nytSolution": ["WORD1", "WORD2"],
         "dictionary": ["WORD1", "WORD2", "WORD3"],
         "par": 4
@@ -49,7 +49,7 @@ def test_prefetch_todays_game_handler_game_not_cached(
     # Arrange
     mock_fetch_todays_game.return_value = {
         "gameId": "2024-11-16",
-        "sides": ["ABC", "DEF", "GHI", "XYZ"],
+        "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
         "nytSolution": ["WORD1", "WORD2"],
         "dictionary": ["WORD1", "WORD2", "WORD3"],
         "par": 4

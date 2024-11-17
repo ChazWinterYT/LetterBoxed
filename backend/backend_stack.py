@@ -62,6 +62,14 @@ class LetterBoxedStack(Stack):
             code=_lambda.Code.from_asset("lambdas")
         )
 
+        # Define the play_today Lambda function
+        play_today_lambda = _lambda.Function(
+            self, "PlayTodayFunction",
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler="play_today.handler",
+            code=_lambda.Code.from_asset("lambdas")
+        )
+
         # Define the validate_word Lambda function
         validate_word_lambda = _lambda.Function(
             self, "ValidateWordFunction",
@@ -73,8 +81,9 @@ class LetterBoxedStack(Stack):
         # Grant DynamoDB read/write permissions to each Lambda function
         self.game_table.grant_read_write_data(fetch_game_lambda)
         self.game_table.grant_read_write_data(create_custom_lambda)
-        self.game_table.grant_read_write_data(validate_word_lambda)
         self.game_table.grant_read_write_data(prefetch_todays_game_lambda)
+        self.game_table.grant_read_write_data(play_today_lambda)
+        self.game_table.grant_read_write_data(validate_word_lambda)
 
 
         # ===============================================================================
@@ -102,16 +111,17 @@ class LetterBoxedStack(Stack):
             apigateway.LambdaIntegration(create_custom_lambda)
         )
         
-        # Set up /validate resource and methods
+        # Set up /validate resource and POST method
+        validate_integration = apigateway.LambdaIntegration(validate_word_lambda)
         validate_resource = api.root.add_resource("validate")
-        
-        # POST /validate - Check if a word is valid
-        validate_resource.add_method(
-            "POST",
-            apigateway.LambdaIntegration(validate_word_lambda)
-        )
+        validate_resource.add_method("POST", validate_integration)
         
         # Route for prefetch_todays_game
         prefetch_integration = apigateway.LambdaIntegration(prefetch_todays_game_lambda)
-        api.root.add_resource("prefetch").add_method("GET", prefetch_integration)
+        prefetch_resource = api.root.add_resource("prefetch")
+        prefetch_resource.add_method("GET", prefetch_integration)
         
+        # Route for play_today Lambda
+        play_today_integration = apigateway.LambdaIntegration(play_today_lambda)
+        play_today_resource = api.root.add_resource("play-today")
+        play_today_resource.add_method("GET", play_today_integration)
