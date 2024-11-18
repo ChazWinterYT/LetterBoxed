@@ -60,6 +60,69 @@ class LetterBoxedStack(Stack):
             )
         )
 
+        # Production ValidWords DynamoDB table
+        self.prod_valid_words_table = dynamodb.Table(
+            self, "LetterBoxedValidWordsTable",
+            table_name="LetterBoxedValidWords",
+            partition_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="word",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
+        )
+
+        # Test ValidWords DynamoDB table
+        self.test_valid_words_table = dynamodb.Table(
+            self, "LetterBoxedValidWordsTestTable",
+            table_name="LetterBoxedValidWordsTest",
+            partition_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="word",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY
+        )
+
+        # Production UserGameStates DynamoDB table
+        self.prod_user_game_states_table = dynamodb.Table(
+            self, "LetterBoxedUserGameStatesTable",
+            table_name="LetterBoxedUserGameStates",
+            partition_key=dynamodb.Attribute(
+                name="userId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
+        )
+
+        # Test UserGameStates DynamoDB table
+        self.test_user_game_states_table = dynamodb.Table(
+            self, "LetterBoxedUserGameStatesTestTable",
+            table_name="LetterBoxedUserGameStatesTest",
+            partition_key=dynamodb.Attribute(
+                name="userId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY
+        )
 
         # ===========================================================================
         # Define S3 Resources
@@ -84,14 +147,18 @@ class LetterBoxedStack(Stack):
         # Define Lambda Functions
         # ===========================================================================
         # Define table and bucket names based on the environment
-        table_name = "LetterBoxedGamesTest" if is_test else "LetterBoxedGames"
-        bucket_name = "test-dictionary-bucket" if is_test else "chazwinter.com"
+        game_table_name = "LetterBoxedGamesTest" if is_test else "LetterBoxedGames"
+        dictionary_bucket_name = "test-dictionary-bucket" if is_test else "chazwinter.com"
+        valid_words_table_name = "LetterBoxedValidWordsTest" if is_test else "LetterBoxedValidWords"
+        user_game_states_table_name = "LetterBoxedUserGameStatesTest" if is_test else "LetterBoxedUserGameStates"
 
         # Define common environment for all Lambdas
         common_environment = {
-            "GAME_TABLE": table_name,
+            "GAME_TABLE": game_table_name,
+            "VALID_WORDS_TABLE": valid_words_table_name,
+            "USER_GAME_STATES_TABLE": user_game_states_table_name,
             "DICTIONARY_SOURCE": "s3",
-            "S3_BUCKET_NAME": bucket_name,
+            "S3_BUCKET_NAME": dictionary_bucket_name,
             "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
             "DEFAULT_LANGUAGE": "en",
         }
@@ -140,6 +207,10 @@ class LetterBoxedStack(Stack):
             self.prod_game_table.grant_read_write_data(lambda_function)
             self.test_bucket.grant_read(lambda_function)
             self.prod_bucket.grant_read(lambda_function)
+            self.test_valid_words_table.grant_read_write_data(lambda_function)
+            self.prod_valid_words_table.grant_read_write_data(lambda_function)
+            self.test_user_game_states_table.grant_read_write_data(lambda_function)
+            self.prod_user_game_states_table.grant_read_write_data(lambda_function)
             lambda_references[lambda_key] = lambda_function
 
 
