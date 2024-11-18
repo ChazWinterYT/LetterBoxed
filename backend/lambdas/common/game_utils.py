@@ -1,27 +1,62 @@
+from typing import List, Set, Optional, Dict
+import logging
 from uuid import uuid4
 import hashlib
 from collections import defaultdict
 from lambdas.common.dictionary_utils import get_dictionary
 
-def generate_game_id():
+logging.basicConfig(level=logging.INFO)
+_logger = logging.getLogger(__name__)
+
+def generate_game_id() -> str:
     """
     Generate a unique game id for a user-created game.
+
+    Returns:
+        str: A unique identifier string.
     """
     return str(uuid4())
 
 
-def standardize_board(game_layout):
+def standardize_board(game_layout: List[str]) -> List[str]:
     """
-    Create a standardized version of the board, by alphabetizing the letters on each side,
-    and then alphabetizing the sides. This way, two boards with the same letters on each side 
-    can be determined to be equivalent.
+    Standardize the board by alphabetizing letters on each side and the sides themselves.
 
     Args:
         game_layout (List[str]): The input letters for this game.
+
+    Returns:
+        List[str]: The standardized board layout.
+
+    Raises:
+        ValueError: If the input is invalid.
     """
-    sorted_sides = ["".join(sorted(side)) for side in game_layout]
-    sorted_sides.sort()
-    return sorted_sides
+    if not isinstance(game_layout, list) or not all(isinstance(side, str) for side in game_layout):
+        raise ValueError("game_layout must be a list of strings.")
+    
+    for side in game_layout:
+        if not isinstance(side, str):
+            raise ValueError("Each side in game_layout must be a string.")
+        if not side:
+            raise ValueError("Each side in game_layout must be a non-empty string.")
+        if not side.isalpha():
+            raise ValueError("Sides must contain only alphabetic characters.")
+
+    if len(game_layout) != 4:
+        raise ValueError("game_layout must have 4 sides.")
+    
+    # Enforce equal side lengths...for now!
+    side_lengths = [len(side) for side in game_layout]
+    if len(set(side_lengths)) != 1:
+        raise ValueError("All sides must have the same number of letters.")
+
+    # Normalize letters to lowercase
+    normalized_sides = [''.join(sorted(set(side.upper()))) for side in game_layout]
+
+    # Sort the sides themselves
+    standardized_sides = sorted(normalized_sides)
+
+    return standardized_sides
 
 
 def validate_board_size(board_size):
