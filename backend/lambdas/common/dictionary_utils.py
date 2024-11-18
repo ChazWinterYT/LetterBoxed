@@ -71,11 +71,17 @@ def _load_local_dictionary(language: str) -> list:
     Returns:
         list: A list of words from the dictionary.
     """
-    # Construct an absolute path for the dictionary
-    base_path = os.path.abspath(LOCAL_DICTIONARY_PATH.format(language=language))
+    # Get the directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    if not os.path.exists(base_path):
-        raise ValueError(f"Dictionary for language '{language}' not found at '{base_path}'.")
+    # Construct the path relative to the script directory
+    dictionary_path = os.path.join(script_dir, '..', '..', 'dictionaries', language, 'dictionary.txt')
+
+    # Normalize the path
+    dictionary_path = os.path.normpath(dictionary_path)
+
+    if not os.path.exists(dictionary_path):
+        raise ValueError(f"Dictionary for language '{language}' not found at '{dictionary_path}'.")
     
-    with open(base_path, "r") as file:
-        return file.read().splitlines()
+    with open(dictionary_path, "r") as file:
+        return [word.strip().upper() for word in file.readlines()]

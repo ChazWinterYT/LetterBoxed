@@ -1,3 +1,4 @@
+from unittest.mock import patch
 import pytest
 from lambdas.common.game_utils import (
     standardize_board, 
@@ -5,6 +6,7 @@ from lambdas.common.game_utils import (
     is_valid_word,
     sides_list_to_sides_set,
     generate_valid_words,
+    create_letter_to_side_mapping,
 )
 
 @pytest.fixture
@@ -100,17 +102,22 @@ def test_standardize_board_sides_not_equal_length():
 
 def test_is_valid_word():
     game_layout = ["PRO","CTI","DGN","SAH"]
-    assert is_valid_word("PIANIST", game_layout) == True
-    assert is_valid_word("HOGO", game_layout) == True
-    assert is_valid_word("TRAGACANTHIN", game_layout) == True
-    assert is_valid_word("TRAGACANTHIC", game_layout) == False
-    assert is_valid_word("PP", game_layout) == False
-    assert is_valid_word("CD", game_layout) == False
-    assert is_valid_word("PROC", game_layout) == False
+    letter_to_side = create_letter_to_side_mapping(game_layout)
+    all_letters = set(letter_to_side.keys())
+    assert is_valid_word("PIANIST", letter_to_side, all_letters) == True
+    assert is_valid_word("HOGO", letter_to_side, all_letters) == True
+    assert is_valid_word("TRAGACANTHIN", letter_to_side, all_letters) == True
+    assert is_valid_word("TRAGACANTHIC", letter_to_side, all_letters) == False
+    assert is_valid_word("PP", letter_to_side, all_letters) == False
+    assert is_valid_word("CD", letter_to_side, all_letters) == False
+    assert is_valid_word("PROC", letter_to_side, all_letters) == False
 
 
 def test_generate_valid_words():
     dictionary = ["PARDONS", "BAD", "DAPHNIA", "DAAPHNIA", "AAAA", "SO", "SNAPDRAGON", "PHONIATRISTS", "SONANTI"]
-    game_layout = ["PRO","CTI","DGN","SAH"]
-    valid_words = generate_valid_words(dictionary, game_layout)
-    assert valid_words == ["PARDONS", "DAPHNIA", "SNAPDRAGON", "PHONIATRISTS"]
+    game_layout = ["PRO", "CTI", "DGN", "SAH"]
+
+    # Mock the get_cached_dictionary function in the lambdas.common.game_utils module
+    with patch('lambdas.common.dictionary_utils._load_local_dictionary', return_value=dictionary):
+        valid_words = generate_valid_words(game_layout, "en")
+        assert valid_words == ["PARDONS", "DAPHNIA", "SNAPDRAGON", "PHONIATRISTS"]

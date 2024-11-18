@@ -128,66 +128,67 @@ def calculate_three_word_solutions(game_layout, language="en"):
     return []
 
 
-def is_valid_word(word, game_layout, puzzle_sides=None):
+def is_valid_word(word: str, letter_to_side: Dict[str, int], all_letters: Set[str]) -> bool:
     """
     Check if a word is valid for the given Letter Boxed puzzle.
-    
+
     Args:
-        word (str): Word to validate.
-        game_layout (List[str]): Each side of the puzzle as a List.
-        puzzle_sides (List[Set[str]], optional): Precomputed sets of letters for each side of the puzzle.
-            Can be passed in to save repeated calculations (as in generate_valid_words).
-        
+        word (str): The word to validate.
+        letter_to_side (Dict[str, int]): Mapping of letters to their side indices.
+        all_letters (Set[str]): Set of all letters in the puzzle.
+
     Returns:
         bool: True if the word is valid, False otherwise.
     """
-    # Check minimum word length
     if len(word) < 3:
         return False
-    
-    # Check if all the word's letters are in the current puzzle
-    letter_set = set("".join(game_layout))
-    if not set(word).issubset(letter_set):
-        return False
-    
-    # Compute puzzle_sides set if not provided
-    if not puzzle_sides:
-        puzzle_sides = sides_list_to_sides_set(game_layout)
 
-    # Then ensure the letters alternate between sides
+    # Check if all letters are in the puzzle
+    if not set(word).issubset(all_letters):
+        return False
+
+    # Check for alternating sides
     last_side = None
     for char in word:
-        for i, side in enumerate(puzzle_sides):
-            if char in side:
-                if last_side == i: # Next letter is on the same side as the previous
-                    return False
-                last_side = i
-                break
-    
-    # If the loop survives, then this is a valid word
+        side = letter_to_side.get(char)
+        if side is None:
+            return False  # Letter not in puzzle (shouldn't happen due to previous check)
+        if side == last_side:
+            return False  # Consecutive letters from the same side
+        last_side = side
+
     return True
 
 
-def generate_valid_words(dictionary, game_layout, puzzle_sides=None):
+def generate_valid_words(game_layout: List[str], language: str = "en") -> List[str]:
     """
     Generate valid words for the Letter Boxed puzzle.
-    
+
     Args:
-        dictionary (List[str]): Full word list.
-        game_layout (List[str]): Each side of the puzzle as a List.
-        puzzle_sides (List[Set[str]], optional): Precomputed sets of letters for each side of the puzzle.
-            Can be passed in to save repeated calculations (as in generate_valid_words).
-        
+        game_layout (List[str]): Each side of the puzzle as a list.
+        language (str): The language code for the dictionary to use.
+
     Returns:
         List[str]: Words valid for the puzzle.
     """
+    try:
+        dictionary = get_dictionary(language)
+    except (ValueError, RuntimeError) as e:
+        _logger.error(f"Error loading dictionary for language '{language}': {e}")
+        return []
+
+    # Create a mapping from letters to sides
+    letter_to_side = create_letter_to_side_mapping(game_layout)
+    all_letters = set(letter_to_side.keys())
+
     valid_words = []
-    if not puzzle_sides:
-        puzzle_sides = sides_list_to_sides_set(game_layout)
     for word in dictionary:
-        if len(word) > 2 and is_valid_word(word, game_layout, puzzle_sides):
+        word = word.upper()
+        if len(word) < 3:
+            continue  # Skip words shorter than 3 letters
+        if is_valid_word(word, letter_to_side, all_letters):
             valid_words.append(word)
-    
+
     return valid_words
 
 
@@ -202,3 +203,20 @@ def sides_list_to_sides_set(game_layout):
         List[Set[str]]: List of sets of characters for each side of the puzzle.
     """
     return [set(side) for side in game_layout]
+
+
+def create_letter_to_side_mapping(game_layout: List[str]) -> Dict[str, int]:
+    """
+    Creates a mapping from each letter to the index of the side it belongs to.
+
+    Args:
+        game_layout (List[str]): The puzzle layout.
+
+    Returns:
+        Dict[str, int]: Mapping of letters to side indices.
+    """
+    letter_to_side = {}
+    for index, side in enumerate(game_layout):
+        for letter in side.upper():
+            letter_to_side[letter] = index
+    return letter_to_side

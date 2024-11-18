@@ -32,16 +32,26 @@ def mock_s3_client(mocker):
 # Tests for _load_local_dictionary
 def test_load_local_dictionary(mocker):
     # Arrange
+    # Mock os.path.exists to return True
     mocker.patch("os.path.exists", return_value=True)
-    mocker.patch("os.path.abspath", side_effect=lambda path: f"/absolute/path/{path}")
+
+    # Mock open
     mock_open = mocker.patch("builtins.open", mocker.mock_open(read_data="word1\nword2\nword3"))
-    
+
+    # **Use the `__file__` of the module under test**
+    script_dir = os.path.dirname(os.path.abspath(_load_local_dictionary.__code__.co_filename))
+
+    # Construct the expected dictionary path
+    expected_dictionary_path = os.path.normpath(
+        os.path.join(script_dir, '..', '..', 'dictionaries', 'en', 'dictionary.txt')
+    )
+
     # Act
     words = _load_local_dictionary("en")
-    
+
     # Assert
-    assert words == ["word1", "word2", "word3"]
-    mock_open.assert_called_once_with("/absolute/path/./dictionaries/en/dictionary.txt", "r")
+    assert words == ["WORD1", "WORD2", "WORD3"]
+    mock_open.assert_called_once_with(expected_dictionary_path, "r")
 
 
 def test_load_local_dictionary_file_not_found(mocker):
