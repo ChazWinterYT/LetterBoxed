@@ -119,6 +119,7 @@ def test_fetch_solutions_by_standardized_hash(mocker, mock_dynamodb_table, mock_
     mock_dynamodb_table.query.assert_called_once_with(
         IndexName="StandardizedHashIndex",
         KeyConditionExpression=mocker.ANY,
+        ProjectionExpression="twoWordSolutions, threeWordSolutions",
     )
 
 
@@ -137,7 +138,8 @@ def test_fetch_solutions_by_standardized_hash_client_error(mocker, mock_dynamodb
     assert result is None
     mock_dynamodb_table.query.assert_called_once_with(
         IndexName="StandardizedHashIndex",
-        KeyConditionExpression=mocker.ANY
+        KeyConditionExpression=mocker.ANY,
+        ProjectionExpression="twoWordSolutions, threeWordSolutions",
     )
 
 
@@ -153,7 +155,8 @@ def test_fetch_solutions_by_standardized_hash_no_data(mocker, mock_dynamodb_tabl
     assert result is None
     mock_dynamodb_table.query.assert_called_once_with(
         IndexName="StandardizedHashIndex",
-        KeyConditionExpression=mocker.ANY
+        KeyConditionExpression=mocker.ANY,
+        ProjectionExpression="twoWordSolutions, threeWordSolutions",
     )
 
 
@@ -173,5 +176,6 @@ def test_fetch_solutions_by_standardized_hash_missing_fields(mocker, mock_dynamo
     assert result is None  # No item has both fields
     mock_dynamodb_table.query.assert_called_once_with(
         IndexName="StandardizedHashIndex",
-        KeyConditionExpression=mocker.ANY
+        KeyConditionExpression=mocker.ANY,
+        ProjectionExpression="twoWordSolutions, threeWordSolutions",
     )

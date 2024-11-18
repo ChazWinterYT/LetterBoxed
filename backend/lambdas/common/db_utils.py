@@ -5,7 +5,8 @@ from boto3.dynamodb.conditions import Key
 
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("LetterBoxedGames")  
+table_name = os.environ.get("LETTER_BOXED_TABLE_NAME", "LetterBoxedGames")
+table = dynamodb.Table(table_name)
 
 
 def add_game_to_db(game_data):
@@ -17,8 +18,10 @@ def add_game_to_db(game_data):
     """
     try:
         table.put_item(Item=game_data)
+        return True
     except ClientError as e:
         print(f"Error adding game to DB: {e}")
+        return False
 
 
 def fetch_game_by_id(game_id):
@@ -27,7 +30,8 @@ def fetch_game_by_id(game_id):
     """
     try:
         response = table.get_item(Key={"gameId": game_id})
-        return response.get("Item")
+        item = response.get("Item")
+        return item if item else None
     except ClientError as e:
         print(f"Error fetching game by gameId: {e}")
         return None
@@ -47,7 +51,8 @@ def fetch_solutions_by_standardized_hash(standardized_hash):
     try:
         response = table.query(
             IndexName="StandardizedHashIndex",
-            KeyConditionExpression=Key("standardizedHash").eq(standardized_hash)
+            KeyConditionExpression=Key("standardizedHash").eq(standardized_hash),
+            ProjectionExpression="twoWordSolutions, threeWordSolutions"
         )
         items = response.get("Items", [])
         
