@@ -168,27 +168,27 @@ class LetterBoxedStack(Stack):
         # Define the Lambda function handlers and their respective names
         lambda_functions = {
             "fetch_game": {
-                "handler": "fetch_game.handler",
+                "handler": "fetch_game.handler.handler",
                 "name": "FetchGameLambda"
             },
             "create_custom": {
-                "handler": "create_custom.handler",
+                "handler": "create_custom.handler.handler",
                 "name": "CreateCustomLambda"
             },
             "prefetch_todays_game": {
-                "handler": "prefetch_todays_game.handler",
+                "handler": "prefetch_todays_game.handler.handler",
                 "name": "PrefetchTodaysGameLambda"
             },
             "play_today": {
-                "handler": "play_today.handler",
+                "handler": "play_today.handler.handler",
                 "name": "PlayTodayLambda"
             },
             "validate_word": {
-                "handler": "validate_word.handler",
+                "handler": "validate_word.handler.handler",
                 "name": "ValidateWordLambda"
             },
             "game_archive": {
-                "handler": "game_archive.handler",
+                "handler": "game_archive.handler.handler",
                 "name": "GameArchiveLambda"
             },
         }
