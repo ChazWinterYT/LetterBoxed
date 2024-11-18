@@ -1,148 +1,183 @@
 # Letter Boxed Clone
 
-A clone of the New York Times' **Letter Boxed** game, built as a web app to practice coding, algorithm design, and AWS resources. The game supports custom puzzles, random board generation, and solution generation for user-created games, leveraging AWS Lambda, S3, and DynamoDB.
+A clone of The New York Times' **Letter Boxed** game, built as a web app to practice coding, algorithm design, and AWS resources. The game supports custom puzzles, random board generation, and solution generation for user-created games, leveraging AWS Lambda, S3, and DynamoDB.
 
 ## Project Overview
 
 ### Technologies Used
-- **Frontend**: A React-based interface written in TypeScript.
-- **Backend**: Python-based Lambda functions for game logic, validation, and solution generation.
-- **Database**: DynamoDB for storing game configurations, solutions, and standardized board hashes.
-- **Cloud Storage**: AWS S3 for managing word dictionaries.
+
+- **Frontend**: React (v17+), TypeScript (v4+)
+- **Backend**: Python 3.10+, AWS Lambda, AWS CDK
+- **Database**: AWS DynamoDB
+- **Cloud Storage**: AWS S3
+- **Other Tools**: AWS API Gateway, AWS IAM, Pytest (for testing)
 
 ### Features
-- **Play Today's Game**: Fetch the daily Letter Boxed puzzle from the NYT website, automatically preloaded.
-- **Custom Games**: Create puzzles with custom configurations.
-- **Archive of NYT Games**: Access any past NYT Letter Boxed puzzle.
-- **Random Games**: Generate random puzzles with guaranteed solutions.
-- **Solutions**: Automatically calculate and fetch two-word and three-word solutions.
-- **Multi-language Support**: Supports dictionaries in multiple languages.
-- **Standardized Board Layouts**: Boards are stored in DynamoDB with standardized hashing to reuse equivalent solutions.
+
+- **Play Today's Game**: Fetch and play the daily Letter Boxed puzzle from the NYT website.
+- **Custom Games**: Create and solve custom puzzles with user-defined configurations.
+- **Archive Access**: Access and play any past NYT Letter Boxed puzzle.
+- **Random Games**: Generate random puzzles guaranteed to have at least one solution.
+- **Solutions Generator**: Automatically calculate and display two-word and three-word solutions.
+- **Multi-language Support**: Supports dictionaries in multiple languages (e.g., English, Spanish).
+- **Standardized Board Layouts**: Reuse solutions for equivalent boards using standardized hashing.
+- **Responsive Design**: Optimized for both desktop and mobile browsers.
 
 ---
 
 ## Setup
 
 ### Prerequisites
-Ensure you have the following installed:
-- **Node.js** and **npm** for frontend development.
-- **Python** and **pip** for backend development.
-- **AWS CLI** and **AWS CDK** for deployment.
-- **AWS Account** with permissions to access DynamoDB, S3, and deploy Lambda functions.
 
----
+Ensure you have the following installed:
+
+- **Node.js** v14.x or newer and **npm**
+- **Python** 3.8 or newer
+- **AWS CLI** configured with your AWS credentials
+- **AWS CDK** v2.x (`npm install -g aws-cdk`)
+- **An AWS Account** with permissions to access DynamoDB, S3, Lambda, and API Gateway
 
 ### Installation
 
 #### 1. Clone the Repository
+
 ```bash
-gh repo clone ChazWinterYT/LetterBoxed  # Or your preferred cloning method
-cd LetterBoxed  # All future commands begin from this directory
+git clone https://github.com/ChazWinterYT/LetterBoxed.git
+cd LetterBoxed
 ```
 
 #### 2. Environment Variables
+
 - **Backend `.env` File**:
-  Create a `.env` file in the `backend/` folder:
+
+  Create a `.env` file in the `backend/` directory:
+
   ```plaintext
   DICTIONARY_SOURCE=local
-  S3_BUCKET_NAME=chazwinter.com
+  S3_BUCKET_NAME=your-s3-bucket-name
   DICTIONARY_BASE_PATH=LetterBoxed/Dictionaries/
   DEFAULT_LANGUAGE=en
   ```
 
+  Replace `your-s3-bucket-name` with the name of your S3 bucket.
+
 #### 3. Install Dependencies
 
 ##### Backend
+
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # Or .\venv\Scripts\activate on Windows
+source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
 ##### Frontend
+
 ```bash
 cd frontend
 npm install
 ```
 
+#### 4. Deploy the Backend and Upload Dictionaries
 
-#### 4. Deploy the Backend
+First, ensure your AWS credentials are configured.
+
+Then, make the upload script executable:
+
 ```bash
 cd backend
-cdk bootstrap  # Run once for setup
-cdk deploy  # or run the script in Step 5
+chmod +x upload_dictionaries.py
 ```
-Note: In Step 5 below, the script also runs `cdk deploy`, so if you are going to complete Step 5, then there is no need to run `cdk deploy` here.
 
-#### 5. Upload Dictionaries to S3
-First, you might need to give execute permissions to the upload script:
+Deploy the backend and upload dictionaries:
+
 ```bash
-chmod +x upload_dictionaries.py 
+./deploy_with_upload.sh
 ```
 
-To upload dictionaries automatically after deploying the stack:
-```bash
-./deploy_with_upload.sh  
-```
+This script will:
 
-Alternatively, you can upload the dictionaries without deploying the stack by running:
-```bash
-python upload_dictionaries.py  # or python3
-```
+- Deploy the AWS CDK stack, creating necessary AWS resources.
+- Upload the dictionaries to your specified S3 bucket.
 
-Ensure your dictionaries are in a `dictionaries/` directory in the project root, organized by language (e.g., `dictionaries/en/dictionary.txt`).
+#### 5. Start the Frontend
 
-#### 6. Start the Frontend
 ```bash
 cd frontend
 npm start
 ```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
 
 ---
 
 ## Lambda Functions
 
 ### Overview
-The backend uses AWS Lambda functions for handling various game logic tasks:
 
-- **`fetch_game`**: Fetches a game by ID.
-- **`play_today`**: Fetches the daily NYT game or falls back to the previous day during the update gap.
-- **`create_custom`**: Creates and stores custom games with generated solutions.
-- **`prefetch_todays_game`**: Preloads the NYT daily puzzle into DynamoDB.
-- **`validate_word`**: Validates words against game constraints and board rules.
-- **`game_archive`**: Fetches a list of NYT games available in the archive.
+The backend uses AWS Lambda functions for handling game logic and API endpoints:
+
+- **`fetch_game`**: Retrieves a game by its ID.
+- **`play_today`**: Retrieves the daily NYT game or falls back to the previous day's puzzle.
+- **`create_custom`**: Creates custom games and generates solutions.
+- **`prefetch_todays_game`**: Scheduled to preload the NYT daily puzzle into DynamoDB.
+- **`validate_word`**: Validates user-submitted words against game rules.
+- **`game_archive`**: Provides a list of available NYT games in the archive.
 
 ### Permissions
-Each Lambda function:
-- **Reads and Writes** to DynamoDB (`GAME_TABLE`).
-- **Reads** dictionaries stored in S3 (`DICTIONARY_PATH`).
+
+Each Lambda function requires specific permissions:
+
+- **DynamoDB Access**: Read and write permissions for the `GAME_TABLE` and `VALID_WORDS_TABLE`.
+- **S3 Access**: Read permissions for dictionaries in `DICTIONARY_PATH`.
+- **AWS IAM Roles**: Defined in the AWS CDK stack with least privilege access.
 
 ---
 
 ## Development Notes
 
 ### Key Concepts
-- **Standardized Layouts**: Boards are stored in DynamoDB with standardized hashes (`standardizedHash`) for efficient solution reuse.
-- **Word Validation**: Implements strict rules to ensure solutions alternate puzzle sides and use all available letters.
-- **Multi-language Support**: Dynamically loads language-specific dictionaries from S3.
+
+- **Standardized Hashing**: Boards are hashed based on their standardized layout to identify and reuse equivalent solutions.
+- **Word Validation Rules**:
+  - Words must alternate sides of the puzzle.
+  - Letters within a side must be used sequentially.
+  - All letters in the puzzle must be used at least once to solve the game.
+- **Multi-language Support**: The app can support additional languages by adding corresponding dictionaries to the S3 bucket.
 
 ### Testing
-Tests use `pytest` and `pytest-mock` to validate logic and ensure robustness:
+
+Tests are written using `pytest`. To run tests:
+
 ```bash
-pytest --cov=lambdas
+cd backend
+pip install -r requirements-dev.txt  # Install testing dependencies
+pytest -vv
 ```
 
 ### Planned Enhancements
-- Enhanced random board generation.
-- User authentication for saving progress.
-- Improved multilingual support with additional dictionaries.
+
+- **User Authentication**: Implement login functionality to save progress and track scores.
+- **Enhanced Random Generation**: Improve algorithms for generating more diverse and challenging random puzzles.
+- **Additional Languages**: Add support for more languages (e.g., French, German).
+- **Hints System**: Provide optional hints to assist players.
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Submit pull requests or open issues for suggestions or bugs.
+Contributions are welcome!
+
+- **Fork the Repository**: Make your changes in a new branch.
+- **Coding Standards**: Follow PEP 8 for Python and standard conventions for JavaScript/TypeScript.
+- **Commit Messages**: Write clear and descriptive commit messages.
+- **Pull Requests**: Submit a pull request with a detailed description of your changes.
+
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ---
 
+### **Thank you for your interest in the Letter Boxed Clone project!**
+
+---
