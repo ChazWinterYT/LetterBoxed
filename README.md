@@ -158,10 +158,9 @@ pytest -vv
 
 ### Planned Enhancements
 
-- **User Authentication**: Implement login functionality to save progress and track scores.
+- **Puzzle Solver**: Automatically solve a given puzzle for its two- and three-word solutions.
 - **Enhanced Random Generation**: Improve algorithms for generating more diverse and challenging random puzzles.
 - **Additional Languages**: Add support for more languages (e.g., French, German).
-- **Hints System**: Provide optional hints to assist players.
 
 ---
 
@@ -173,8 +172,6 @@ Contributions are welcome!
 - **Coding Standards**: Follow PEP 8 for Python and standard conventions for JavaScript/TypeScript.
 - **Commit Messages**: Write clear and descriptive commit messages.
 - **Pull Requests**: Submit a pull request with a detailed description of your changes.
-
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ---
 
