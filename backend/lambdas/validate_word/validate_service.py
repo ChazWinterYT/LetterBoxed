@@ -107,21 +107,26 @@ def get_user_game_state(session_id: str, game_id: str) -> dict:
 
     Returns:
     - dict: The user's game state.
+
+    Raises:
+    - Exception: If there is an error accessing the database.
     """
     user_game_key = {"sessionId": session_id, "gameId": game_id}
     try:
-        response = user_sessions_table_name.get_item(Key=user_game_key)
+        response = session_states_table.get_item(Key=user_game_key)
         user_game_data = response.get("Item")
-        if not user_game_data:
-            # New session. Initialize the game state
-            user_game_data = {
+
+        if user_game_data is None:
+            # Return initialized game state for a new session
+            return {
                 "sessionId": session_id,
                 "gameId": game_id,
                 'wordsUsed': []
             }
+
         return user_game_data
     except Exception as e:
-        print(f"Error fetching game state: {e}")
+        print(f"Error fetching game state for session '{session_id}', game '{game_id}': {e}")
         return None
     
 

@@ -18,7 +18,7 @@ def handler(event, context):
     """
     try:
         # Extract parameters from the event
-        body = json.loads(event.get('body'), '{}')
+        body = json.loads(event.get('body'))
         game_id = body.get('gameId')
         submitted_word = body.get('word')
         session_id = body.get('sessionId')
