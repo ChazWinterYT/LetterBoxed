@@ -2,7 +2,7 @@ from typing import List, Set, Optional, Dict
 import logging
 from uuid import uuid4
 import hashlib
-from collections import defaultdict
+from collections import defaultdict, Counter
 from lambdas.common.dictionary_utils import get_dictionary
 
 logging.basicConfig(level=logging.INFO)
@@ -50,7 +50,7 @@ def standardize_board(game_layout: List[str]) -> List[str]:
     if len(set(side_lengths)) != 1:
         raise ValueError("All sides must have the same number of letters.")
 
-    # Normalize letters to lowercase
+    # Normalize letters to uppercase
     normalized_sides = [''.join(sorted(set(side.upper()))) for side in game_layout]
 
     # Sort the sides themselves
@@ -95,14 +95,53 @@ def calculate_two_word_solutions(game_layout, language="en"):
         List[Tuple[str, str]]: List of pairs of words representing solutions to the puzzle.
     """
     try:
-        dictionary = get_dictionary(language)
+        # Preprocess words to generate a list of valid words for this puzzle
+        valid_words, starting_letter_to_words = preprocess_words(game_layout, language)
     except ValueError as e:
-        # Log error if dictionary cannot be loaded
-        print(f"Error loading dictionary for language '{language}': {e}")
+        print(f"Error preprocessing words for two word solution: {e}")
         return []
+    
+    # Create a mapping of letters to their sides, and a set of all letters on the board
+    # (this requires all letters on the board to be unique)
+    letter_to_side = create_letter_to_side_mapping(game_layout)
+    all_letters = set(letter_to_side.keys())
+    total_letters = len(all_letters)
 
-    # Placeholder implementation: Return an empty list
-    return []
+    solutions = []
+    letter_usage = Counter()
+
+    # Iterate through all valid words
+    for word1 in valid_words:
+        # Update letter usage with word1
+        update_letter_usage(letter_usage, word1, increment=True)
+
+        # Look for word2 candidates that start with the last letter of word1
+        last_letter = word1[-1]
+        potential_second_words = starting_letter_to_words[last_letter]
+
+        for word2 in potential_second_words:
+            # Skip pairs that can't cover all letters in the puzzle
+            if len(word1) + len(word2) < total_letters:
+                continue
+
+            # Skip repeated words
+            if word1 == word2:
+                continue
+
+            # Update letter usage with word2
+            update_letter_usage(letter_usage, word2, increment=True)
+
+            # If all letters have been used, then we have a solution!
+            if all(letter_usage[letter] > 0 for letter in all_letters):
+                solutions.append((word1, word2))
+            
+            # Revert word2 letter usage so we can try the next candidate
+            update_letter_usage(letter_usage, word2, increment=False)
+        
+        # Revert word1 letter usage so we can try the next word in the dictionary
+        update_letter_usage(letter_usage, word1, increment=False)
+    
+    return solutions
 
 
 def calculate_three_word_solutions(game_layout, language="en"):
@@ -220,3 +259,30 @@ def create_letter_to_side_mapping(game_layout: List[str]) -> Dict[str, int]:
         for letter in side.upper():
             letter_to_side[letter] = index
     return letter_to_side
+
+
+def preprocess_words(game_layout, language):
+    valid_words = generate_valid_words(game_layout, language)
+    starting_letter_to_words = defaultdict(list)
+
+    for word in valid_words:
+        first_letter = word[0]
+        starting_letter_to_words[first_letter].append(word)
+    
+    return valid_words, starting_letter_to_words
+
+
+def update_letter_usage(letter_usage, word, increment=True):
+    """
+    Updates the letter usage count for a word.
+
+    Args:
+        letter_usage (Counter): Tracks the current letter usage.
+        word (str): The word being added or removed.
+        increment (bool): Whether to increment or decrement usage counts.
+    """
+    change = 1 if increment else -1
+    for letter in word:
+        letter_usage[letter] += change
+        if letter_usage[letter] == 0 and not increment:
+            del letter_usage[letter]

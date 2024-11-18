@@ -43,6 +43,14 @@ def handler(event, context):
             })
         }
     
+    if not validate_board_matches_layout(game_layout, board_size):
+        return {
+            "statusCode": 400,
+            "body": json.dumps({
+                "message": f"Game layout does not match board size."
+            })
+        }
+    
     # Generate a unique game id and a standardized hash for solution lookup
     game_id = generate_game_id()
     standardized_hash = generate_standardized_hash(standardized_layout)
@@ -98,3 +106,36 @@ def handler(event, context):
                 "message": "Game created. New solution generated and cached in DB."
             })
         }
+
+
+def validate_game_layout(game_layout, board_size):
+    """
+    Validates the game layout against the specified board size.
+
+    Args:
+        game_layout (list[str]): The game layout as a list of strings.
+        board_size (str): The board size in the format "m x n" (e.g., "3x3" or "4x5").
+
+    Returns:
+        bool: True if the layout is valid, False otherwise.
+    """
+    # Parse board size
+    try:
+        rows, cols = map(int, board_size.lower().split('x'))
+    except ValueError:
+        raise ValueError(f"Invalid board size format: '{board_size}'. Expected 'm x n'.")
+
+    # Calculate total expected spaces
+    total_spaces = (2 * rows) + (2 * cols)
+
+    # Check that the number of letters in game_layout matches total_spaces
+    layout_letter_count = sum(len(side) for side in game_layout)
+
+    if layout_letter_count != total_spaces:
+        raise ValueError(
+            f"Invalid game layout: Expected {total_spaces} letters for a {rows}x{cols} board, "
+            f"but got {layout_letter_count}."
+        )
+
+    return True
+   
