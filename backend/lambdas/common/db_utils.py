@@ -5,7 +5,7 @@ from boto3.dynamodb.conditions import Key
 
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
-table_name = os.environ.get("LETTER_BOXED_TABLE_NAME", "LetterBoxedGames")
+table_name = os.environ.get("GAMES_TABLE_NAME", "LetterBoxedGames")
 table = dynamodb.Table(table_name)
 
 

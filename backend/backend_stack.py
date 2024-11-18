@@ -92,12 +92,12 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.DESTROY
         )
 
-        # Production UserGameStates DynamoDB table
+        # Production SessionStates DynamoDB table
         self.prod_user_game_states_table = dynamodb.Table(
-            self, "LetterBoxedUserGameStatesTable",
-            table_name="LetterBoxedUserGameStates",
+            self, "LetterBoxedSessionStatesTable",
+            table_name="LetterBoxedSessionStates",
             partition_key=dynamodb.Attribute(
-                name="userId",
+                name="sessionId",
                 type=dynamodb.AttributeType.STRING
             ),
             sort_key=dynamodb.Attribute(
@@ -105,15 +105,16 @@ class LetterBoxedStack(Stack):
                 type=dynamodb.AttributeType.STRING
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.RETAIN
+            removal_policy=RemovalPolicy.RETAIN,
+            time_to_live_attribute="TTL"
         )
 
-        # Test UserGameStates DynamoDB table
+        # Test SessionStates DynamoDB table
         self.test_user_game_states_table = dynamodb.Table(
-            self, "LetterBoxedUserGameStatesTestTable",
-            table_name="LetterBoxedUserGameStatesTest",
+            self, "LetterBoxedSessionStatesTestTable",
+            table_name="LetterBoxedSessionStatesTest",
             partition_key=dynamodb.Attribute(
-                name="userId",
+                name="sessionId",
                 type=dynamodb.AttributeType.STRING
             ),
             sort_key=dynamodb.Attribute(
@@ -121,7 +122,8 @@ class LetterBoxedStack(Stack):
                 type=dynamodb.AttributeType.STRING
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.DESTROY
+            removal_policy=RemovalPolicy.DESTROY,
+            time_to_live_attribute="TTL"
         )
 
         # ===========================================================================
