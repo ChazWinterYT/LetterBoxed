@@ -168,27 +168,27 @@ class LetterBoxedStack(Stack):
         # Define the Lambda function handlers and their respective names
         lambda_functions = {
             "fetch_game": {
-                "handler": "fetch_game.handler.handler",
+                "handler": "lambdas.fetch_game.handler.handler",
                 "name": "FetchGameLambda"
             },
             "create_custom": {
-                "handler": "create_custom.handler.handler",
+                "handler": "lambdas.create_custom.handler.handler",
                 "name": "CreateCustomLambda"
             },
             "prefetch_todays_game": {
-                "handler": "prefetch_todays_game.handler.handler",
+                "handler": "lambdas.prefetch_todays_game.handler.handler",
                 "name": "PrefetchTodaysGameLambda"
             },
             "play_today": {
-                "handler": "play_today.handler.handler",
+                "handler": "lambdas.play_today.handler.handler",
                 "name": "PlayTodayLambda"
             },
             "validate_word": {
-                "handler": "validate_word.handler.handler",
+                "handler": "lambdas.validate_word.handler.handler",
                 "name": "ValidateWordLambda"
             },
             "game_archive": {
-                "handler": "game_archive.handler.handler",
+                "handler": "lambdas.game_archive.handler.handler",
                 "name": "GameArchiveLambda"
             },
         }
@@ -201,7 +201,32 @@ class LetterBoxedStack(Stack):
                 self, lambda_config["name"],
                 runtime=_lambda.Runtime.PYTHON_3_10,
                 handler=lambda_config["handler"],
-                code=_lambda.Code.from_asset("lambdas"),
+                code=_lambda.Code.from_asset(
+                    path=".",
+                    exclude=[
+                        "**/node_modules",
+                        "**/__pycache__",
+                        ".pytest_cache",
+                        "**/.git",
+                        "**/.idea",
+                        "**/.vscode",
+                        "**/*.pyc",
+                        "cdk.out",
+                        "venv",
+                        "*.iml",
+                        "*.log",
+                        "*.tmp",
+                        "*.zip",
+                        "*.tar.gz",
+                        ".env",
+                        ".gitignore",
+                        "utility",
+                        "test",
+                        "cdk.json",
+                        "*.bat",
+                        "*.md"
+                    ],
+                ),
                 environment=common_environment,
                 function_name=lambda_config["name"]
             )

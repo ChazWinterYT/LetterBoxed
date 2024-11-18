@@ -1,4 +1,5 @@
 import json
+
 from lambdas.common.db_utils import add_game_to_db, fetch_solutions_by_standardized_hash
 from lambdas.common.game_utils import (
     generate_game_id, 
@@ -108,7 +109,7 @@ def handler(event, context):
         }
 
 
-def validate_game_layout(game_layout, board_size):
+def validate_board_matches_layout(game_layout, board_size):
     """
     Validates the game layout against the specified board size.
 

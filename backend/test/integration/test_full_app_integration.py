@@ -49,11 +49,11 @@ def test_full_app_integration(aws_clients):
         FunctionName="CreateCustomLambda",
         Payload=json.dumps(constants.CREATE_CUSTOM_GAME_PAYLOAD)
     )
-    # response_payload = json.loads(response["Payload"].read())
-    # assert "statusCode" in response_payload, f"Unexpected response: {response_payload}"
-    # assert response_payload["statusCode"] == 200
-    # game_id = json.loads(response_payload["body"])["gameId"]
-    # assert_dynamodb_item_exists(dynamodb, game_id)
+    response_payload = json.loads(response["Payload"].read())
+    assert "statusCode" in response_payload, f"Unexpected response: {response_payload}"
+    assert response_payload["statusCode"] == 200
+    game_id = json.loads(response_payload["body"])["gameId"]
+    assert_dynamodb_item_exists(dynamodb, game_id)
 
     # Cleanup after tests and verify that resources are clear
     cleanup_dynamodb_table(dynamodb)
