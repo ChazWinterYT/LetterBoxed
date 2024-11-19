@@ -3,7 +3,8 @@ from lambdas.common.db_utils import fetch_game_by_id
 
 def handler(event, context):
     # Parse the gameId from path parameters
-    game_id = event.get("pathParameters", {}).get("gameId")
+    body = json.loads(event.get("body", "{}"))
+    game_id = body.get("gameId")
     if not game_id:
         return {
             "statusCode": 400,

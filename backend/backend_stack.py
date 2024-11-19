@@ -193,6 +193,14 @@ class LetterBoxedStack(Stack):
             },
         }
 
+        # Create Lambda layer for dependencies
+        lambda_layer = _lambda.LayerVersion(
+            self, "LambdaLayerRequests",
+            code=_lambda.Code.from_asset("lambda_layer"),
+            compatible_runtimes=[_lambda.Runtime.PYTHON_3_10],
+            description="Lambda layer that includes the requests library."
+        )
+
         # Create Lambda functions and store references to them,
         # so they can be used when creating API routing
         lambda_references = {}
@@ -213,6 +221,7 @@ class LetterBoxedStack(Stack):
                         "**/*.pyc",
                         "cdk.out",
                         "venv",
+                        "lambda_layer",
                         "*.iml",
                         "*.log",
                         "*.tmp",
@@ -227,6 +236,7 @@ class LetterBoxedStack(Stack):
                         "*.md"
                     ],
                 ),
+                layers=[lambda_layer],
                 environment=common_environment,
                 function_name=lambda_config["name"]
             )

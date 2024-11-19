@@ -59,8 +59,9 @@ INVALID_CUSTOM_GAME_PAYLOAD = {
 # Validation Payloads
 VALIDATE_WORD_PAYLOAD_VALID = {
     "body": {
-        "word": VALID_WORD_1,
-        "gameLayout": VALID_LAYOUT_1,
+        "gameId": "example-game-id",
+        "word": "example-word",
+        "sessionId": "example-session-id"
     }
 }
 
