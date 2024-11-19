@@ -1,4 +1,3 @@
-
 # LetterBoxed Game Backend
 
 This project is a backend implementation for a **LetterBoxed game** clone. It uses **AWS Lambda**, **DynamoDB**, and **API Gateway** for serverless functionality, and it is deployed using **AWS CDK**.
@@ -21,12 +20,14 @@ The project uses a virtual environment for Python dependencies.
 To manually create and activate a virtual environment:
 
 #### MacOS/Linux:
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
 #### Windows:
+
 ```bash
 python -m venv .venv
 .venv\Scripts\activate.bat
@@ -43,11 +44,13 @@ pip install -r requirements.txt
 The project uses **AWS CDK** for deploying infrastructure.
 
 - **Install CDK CLI**:
+
   ```bash
   npm install -g aws-cdk
   ```
 
 - **Bootstrap the Environment**:
+
   ```bash
   cdk bootstrap aws://<ACCOUNT_ID>/<REGION>
   ```
@@ -66,6 +69,7 @@ Use `cdk ls` to list all stacks and `cdk synth` to synthesize the CloudFormation
 The project uses **pytest** for testing. Mocking for DynamoDB and external services is handled with **pytest-mock**.
 
 - **Run All Tests**:
+
   ```bash
   pytest
   pytest -v # Some verbose testing
@@ -79,28 +83,31 @@ The project uses **pytest** for testing. Mocking for DynamoDB and external servi
 ### Dependency: `pytest-mock`
 
 If `pytest-mock` is not installed, add it to your virtual environment:
+
 ```bash
 pip install pytest-mock
 ```
 
 ### Mocking DynamoDB
 
-When testing with mocked DynamoDB tables, ensure the correct path is patched (e.g., `lambdas.common.db_utils.table`).
+When testing with mocked DynamoDB tables, ensure the correct path is patched (e.g., `lambdas.common.db_utils.get_table`).
 
 ---
 
 ## Useful CDK Commands
 
-- `cdk ls`          - List all stacks in the app.
-- `cdk synth`       - Synthesize the CloudFormation template for this code.
-- `cdk deploy`      - Deploy the stack to your default AWS account/region.
-- `cdk diff`        - Compare the deployed stack with the current state.
-- `cdk docs`        - Open CDK documentation.
+- `cdk ls` - List all stacks in the app.
+- `cdk synth` - Synthesize the CloudFormation template for this code.
+- `cdk deploy` - Deploy the stack to your default AWS account/region.
+- `cdk diff` - Compare the deployed stack with the current state.
+- `cdk docs` - Open CDK documentation.
 
 ---
 
 ## Contributing
 
 Feel free to submit issues and pull requests! For major changes, please open an issue first to discuss what you would like to change.
+
+```
 
 ```

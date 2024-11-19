@@ -8,22 +8,22 @@ from datetime import date, timedelta
 def mock_dynamodb_table(mocker):
     # Mock the DynamoDB table and replace `boto3.resource` globally
     mock_table = MagicMock()
-    mocker.patch("lambdas.common.db_utils.table", mock_table) 
+    mocker.patch("lambdas.common.db_utils.get_table", return_value=mock_table) 
     return mock_table
 
 
 def test_play_today_game_exists(mock_dynamodb_table):
     # Arrange: Mock today's game in the DB
     today = date.today().isoformat()
-    mock_dynamodb_table.get_item.side_effect = [
-        {"Item": {
-            "gameId": today, 
-            "gameLayout": ["ABC", "DEF", "GHI", "XYZ"], 
-            "boardSize": "3x3", 
+    mock_dynamodb_table.get_item.return_value = {
+        "Item": {
+            "gameId": today,
+            "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
+            "boardSize": "3x3",
             "language": "en",
-            "par": 4
-        }}
-    ]
+            "par": 4,
+        }
+    }
 
     # Act
     event = {}
@@ -70,8 +70,8 @@ def test_play_today_no_games_available(mock_dynamodb_table):
     
     # Mock the return values for get_item to simulate no games in the DB
     mock_dynamodb_table.get_item.side_effect = [
-        {"Item": None},  # Today's game is not found
-        {"Item": None},  # Yesterday's game is not found
+        {},  # Today's game is not found
+        {},  # Yesterday's game is not found
     ]
 
     # Act

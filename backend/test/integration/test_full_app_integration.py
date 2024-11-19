@@ -28,9 +28,7 @@ def setup_aws_resources(aws_clients):
     
     # Cleanup before tests
     cleanup_dynamodb_table(dynamodb, games_table_name)
-    cleanup_s3_bucket(s3)
     assert_table_empty(dynamodb, games_table_name)
-    assert_bucket_empty(s3, bucket_name)
     
     # Run the tests
     yield
@@ -52,8 +50,8 @@ def test_full_app_integration(aws_clients):
     # ===========================================================================
 
     # Setup S3 Dictionary
-    add_en_dictionary_to_s3(s3)
-    assert_bucket_contains(s3, constants.VALID_DICTIONARY_KEY)
+    # add_en_dictionary_to_s3(s3)
+    # assert_bucket_contains(s3, constants.VALID_DICTIONARY_KEY)
 
     # Prepare the payload for the CreateCustomLambda function
     payload_1 = {

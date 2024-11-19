@@ -32,7 +32,7 @@ bad_sample_game_no_board_size = {
 @pytest.fixture
 def mock_dynamodb_table(mocker):
     mock_table = MagicMock()
-    mocker.patch("lambdas.common.db_utils.table", mock_table)  # Replace `table` in db_utils with the mock
+    mocker.patch("lambdas.common.db_utils.get_table", return_value=mock_table)  
     return mock_table
 
 

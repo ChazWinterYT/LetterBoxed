@@ -9,6 +9,7 @@ from aws_cdk import (
     aws_s3 as s3,
     CfnOutput,
     RemovalPolicy,
+    Duration,
 )
 from constructs import Construct
 
@@ -323,6 +324,7 @@ class LetterBoxedStack(Stack):
                     "*.md"
                 ],
             ),
+            timeout=Duration.seconds(15),
             layers=[layer],
             environment=environment,
             function_name=lambda_config["name"] + function_suffix

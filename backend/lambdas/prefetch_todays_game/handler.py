@@ -30,8 +30,8 @@ def handler(event, context):
         # Generate standardized hash
         standardized_game_layout = standardize_board(todays_game["gameLayout"])
         standardized_hash = generate_standardized_hash(standardized_game_layout)
-        twoWordSolutions = calculate_two_word_solutions(standardized_game_layout)
-        threeWordSolutions = calculate_three_word_solutions(standardized_game_layout)
+        two_word_solutions = calculate_two_word_solutions(standardized_game_layout)
+        three_word_solutions = calculate_three_word_solutions(standardized_game_layout)
 
         # Prepare the game object
         game_object = {
@@ -39,8 +39,8 @@ def handler(event, context):
             "gameLayout": todays_game["gameLayout"],
             "standardizedHash": standardized_hash,
             "nytSolution": todays_game["nytSolution"],
-            "twoWordSolutions": twoWordSolutions,
-            "threeWordSolutions": threeWordSolutions,
+            "twoWordSolutions": two_word_solutions,
+            "threeWordSolutions": three_word_solutions,
             "dictionary": todays_game["dictionary"],
             "par": todays_game["par"],
             "boardSize": "3x3",  # NYT games are always 3x3
