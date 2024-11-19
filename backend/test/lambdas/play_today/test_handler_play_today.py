@@ -8,7 +8,7 @@ from datetime import date, timedelta
 def mock_dynamodb_table(mocker):
     # Mock the DynamoDB table and replace `boto3.resource` globally
     mock_table = MagicMock()
-    mocker.patch("lambdas.common.db_utils.get_table", return_value=mock_table) 
+    mocker.patch("lambdas.common.db_utils.get_games_table", return_value=mock_table) 
     return mock_table
 
 

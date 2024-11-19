@@ -90,7 +90,7 @@ pip install pytest-mock
 
 ### Mocking DynamoDB
 
-When testing with mocked DynamoDB tables, ensure the correct path is patched (e.g., `lambdas.common.db_utils.get_table`).
+When testing with mocked DynamoDB tables, ensure the correct path is patched (e.g., `lambdas.common.db_utils.get_games_table`).
 
 ---
 

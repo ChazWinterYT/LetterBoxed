@@ -69,10 +69,6 @@ class LetterBoxedStack(Stack):
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
             ),
-            sort_key=dynamodb.Attribute(
-                name="word",
-                type=dynamodb.AttributeType.STRING
-            ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN
         )
@@ -83,10 +79,6 @@ class LetterBoxedStack(Stack):
             table_name="LetterBoxedValidWordsTest",
             partition_key=dynamodb.Attribute(
                 name="gameId",
-                type=dynamodb.AttributeType.STRING
-            ),
-            sort_key=dynamodb.Attribute(
-                name="word",
                 type=dynamodb.AttributeType.STRING
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
