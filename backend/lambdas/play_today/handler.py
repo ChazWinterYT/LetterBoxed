@@ -23,22 +23,22 @@ def handler(event, context):
                 return {
                     "statusCode": 404,
                     "body": json.dumps({
-                        "message": "Today's game is not yet available, and yesterday's game isn't either. Please try again later."
+                        "message": f"{today}'s game is not yet available, and {yesterday}'s game isn't either. Please try again later."
                     })
                 }
-        else:
-            # Serve yesterday's game, including a message to indicate that it's yesterday's game
-            return {
-                "statusCode": 200,
-                "body": json.dumps({
-                    "gameId": todays_game["gameId"],
-                    "gameLayout": todays_game["gameLayout"],
-                    "boardSize": todays_game["boardSize"],
-                    "language": todays_game["language"],
-                    "par": todays_game["par"],
-                    "message": "Today's game is not available yet. Serving yesterday's game instead."
-                })
-            }
+            else:
+                # Serve yesterday's game, including a message to indicate that it's yesterday's game
+                return {
+                    "statusCode": 200,
+                    "body": json.dumps({
+                        "gameId": todays_game["gameId"],
+                        "gameLayout": todays_game["gameLayout"],
+                        "boardSize": todays_game["boardSize"],
+                        "language": todays_game["language"],
+                        "par": todays_game["par"],
+                        "message": f"{today}'s game is not available yet. Serving {yesterday}'s game instead."
+                    })
+                }
         
         # Return today's game
         return {
@@ -49,7 +49,7 @@ def handler(event, context):
                 "boardSize": todays_game["boardSize"],
                 "language": todays_game["language"],
                 "par": todays_game["par"],
-                "message": "Today's game fetched successfully."
+                "message": f"{today}'s game fetched successfully."
             })
         }
     except Exception as e:
@@ -57,7 +57,7 @@ def handler(event, context):
         return {
             "statusCode": 500,
             "body": json.dumps({
-                "message": "An error occurred while fetching today's game.",
+                "message": f"An error occurred while fetching {today}'s game.",
                 "error": str(e)
             })
         }

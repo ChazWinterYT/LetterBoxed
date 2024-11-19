@@ -32,7 +32,7 @@ def fetch_todays_game():
         "gameLayout": game_data["sides"],
         "nytSolution": game_data["ourSolution"],
         "dictionary": game_data["dictionary"],
-        "par": game_data["par"]
+        "par": str(game_data["par"])
     }
 
     return todays_game
