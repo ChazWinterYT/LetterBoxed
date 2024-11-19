@@ -12,4 +12,4 @@ venv
 utility
 
 .env
-lambda-layer
+lambda_layer
