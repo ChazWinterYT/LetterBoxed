@@ -20,7 +20,7 @@ def test_fetch_game_success(mock_fetch_game_by_id):
     }
     mock_fetch_game_by_id.return_value = sample_game
 
-    event = {"pathParameters": {"gameId": game_id}}
+    event = {"body": json.dumps({"gameId": game_id})}
     context = {}
 
     # Act
@@ -39,7 +39,7 @@ def test_fetch_game_success(mock_fetch_game_by_id):
 
 def test_fetch_game_invalid_input(mock_fetch_game_by_id):
     # Arrange
-    event = {"pathParameters": {}}
+    event = {"body": json.dumps({})}
     context = {}
 
     # Act
@@ -57,7 +57,7 @@ def test_fetch_game_not_found(mock_fetch_game_by_id):
     game_id = "non-existent-game-id"
     mock_fetch_game_by_id.return_value = None
 
-    event = {"pathParameters": {"gameId": game_id}}
+    event = {"body": json.dumps({"gameId": game_id})}
     context = {}
 
     # Act
