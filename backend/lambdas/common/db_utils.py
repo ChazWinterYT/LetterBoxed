@@ -5,8 +5,6 @@ from boto3.dynamodb.conditions import Key
 
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
-table_name = os.environ.get("GAMES_TABLE_NAME", "LetterBoxedGames")
-table = dynamodb.Table(table_name)
 
 
 def add_game_to_db(game_data):
@@ -17,6 +15,8 @@ def add_game_to_db(game_data):
         game_data (dict): A dictionary containing all game details.
     """
     try:
+        table = get_table()
+        print("Using Table:", table)
         table.put_item(Item=game_data)
         return True
     except ClientError as e:
@@ -29,6 +29,8 @@ def fetch_game_by_id(game_id):
     Fetches a game entry by its gameId.
     """
     try:
+        table = get_table()
+        print("Using Table:", table)
         response = table.get_item(Key={"gameId": game_id})
         item = response.get("Item")
         return item if item else None
@@ -49,6 +51,7 @@ def fetch_solutions_by_standardized_hash(standardized_hash):
         dict: The first item containing both solution fields, or None if not found.
     """
     try:
+        table = get_table()
         response = table.query(
             IndexName="StandardizedHashIndex",
             KeyConditionExpression=Key("standardizedHash").eq(standardized_hash),
@@ -67,3 +70,14 @@ def fetch_solutions_by_standardized_hash(standardized_hash):
     except ClientError as e:
         print(f"Error fetching solutions by standardized hash: {e}")
         return None
+
+
+def get_table():
+    """
+    Dynamically retrieves the DynamoDB table based on the environment variable.
+
+    Returns:
+        boto3.Table: The DynamoDB Table object.
+    """
+    table_name = os.environ.get("GAMES_TABLE_NAME", "LetterBoxedGames")
+    return dynamodb.Table(table_name)

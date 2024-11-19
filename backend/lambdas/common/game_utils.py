@@ -82,7 +82,7 @@ def generate_standardized_hash(standardized_game_layout):
     return hashlib.sha256(layout_str.encode()).hexdigest()
 
 
-def calculate_two_word_solutions(game_layout, language="en"):
+def calculate_two_word_solutions(game_layout, language="en", valid_words=None, starting_letter_to_words=None):
     """
     Calculate the two word solutions to the given puzzle input.
 
@@ -90,13 +90,16 @@ def calculate_two_word_solutions(game_layout, language="en"):
         game_layout (List[str]): The input letters for this game.
         language (str, optional): Language of the word dictionary to use to find solutions.
             Defaults to English.
+        valid_words (List[str], optional): List of valid words for this puzzle, if pre-calculated.
+        starting_letter_to_words (dict, optional): Mapping of letters to words starting with that letter.
 
     Returns:
         List[Tuple[str, str]]: List of pairs of words representing solutions to the puzzle.
     """
     try:
         # Preprocess words to generate a list of valid words for this puzzle
-        valid_words, starting_letter_to_words = preprocess_words(game_layout, language)
+        if not valid_words and not starting_letter_to_words:
+            valid_words, starting_letter_to_words = preprocess_words(game_layout, language)
     except ValueError as e:
         print(f"Error preprocessing words for two word solution: {e}")
         return []

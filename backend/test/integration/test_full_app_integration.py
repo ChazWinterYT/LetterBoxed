@@ -3,10 +3,9 @@ import boto3
 import json
 import pytest
 import constants
-from moto import mock_aws
 
 # Set up environment variables for the test environment
-table_name = os.environ["GAME_TABLE"] = "LetterBoxedGamesTest"
+games_table_name = os.environ["GAMES_TABLE_NAME"] = "LetterBoxedGamesTest"
 bucket_name = os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
 dictionary_path = os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
 default_language = os.environ["DEFAULT_LANGUAGE"] = "en"
@@ -22,19 +21,31 @@ def aws_clients():
     lambda_client = boto3.client("lambda", region_name="us-east-1")
     return {"dynamodb": dynamodb, "s3": s3, "lambda_client": lambda_client}
 
-
+@pytest.fixture(scope="module")
+def setup_aws_resources(aws_clients):
+    dynamodb = aws_clients["dynamodb"]
+    s3 = aws_clients["s3"]
+    
+    # Cleanup before tests
+    cleanup_dynamodb_table(dynamodb, games_table_name)
+    cleanup_s3_bucket(s3)
+    assert_table_empty(dynamodb, games_table_name)
+    assert_bucket_empty(s3, bucket_name)
+    
+    # Run the tests
+    yield
+    
+    # Cleanup after tests
+    # cleanup_dynamodb_table(dynamodb, games_table_name)
+    # cleanup_s3_bucket(s3)
+    # assert_table_empty(dynamodb, games_table_name)
+    # assert_bucket_empty(s3, bucket_name)
 
 
 def test_full_app_integration(aws_clients):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]
-
-    # Ensure test resources are clean before starting
-    cleanup_dynamodb_table(dynamodb)
-    cleanup_s3_bucket(s3)
-    assert_table_empty(dynamodb, table_name)
-    assert_bucket_empty(s3, bucket_name)
 
     # ===========================================================================
     # Begin Integration Tests
@@ -44,26 +55,47 @@ def test_full_app_integration(aws_clients):
     add_en_dictionary_to_s3(s3)
     assert_bucket_contains(s3, constants.VALID_DICTIONARY_KEY)
 
+    # Prepare the payload for the CreateCustomLambda function
+    payload_1 = {
+        "body": json.dumps({
+            "gameLayout": constants.VALID_LAYOUT_1,  
+            "language": constants.VALID_LANGUAGE,       
+            "boardSize": constants.VALID_BOARD_SIZE     
+        })
+    }
+
     # Create a custom game
-    response = lambda_client.invoke(
-        FunctionName="CreateCustomLambda",
-        Payload=json.dumps(constants.CREATE_CUSTOM_GAME_PAYLOAD)
+    print("Creating a valid custom game")
+    create_response = lambda_client.invoke(
+        FunctionName="CreateCustomLambdaTest",
+        InvocationType='RequestResponse',
+        Payload=json.dumps(payload_1)
     )
-    response_payload = json.loads(response["Payload"].read())
-    assert "statusCode" in response_payload, f"Unexpected response: {response_payload}"
-    assert response_payload["statusCode"] == 200
-    game_id = json.loads(response_payload["body"])["gameId"]
+
+    # Read and parse the response payload
+    response_payload = json.loads(create_response['Payload'].read())
+    print("response payload:", response_payload)
+
+    # Check for errors
+    if 'FunctionError' in create_response:
+        error_message = response_payload.get('errorMessage', 'Unknown error')
+        pytest.fail(f"Lambda invocation failed with error: {error_message}")
+
+    # Extract gameId from the response
+    game_id = json.loads(response_payload.get('body', '{}')).get('gameId')
+    assert game_id, "No gameId returned from CreateCustomLambdaTest"
+
+    # Verify the game data in DynamoDB
     assert_dynamodb_item_exists(dynamodb, game_id)
 
-    # Cleanup after tests and verify that resources are clear
-    cleanup_dynamodb_table(dynamodb)
-    cleanup_s3_bucket(s3)
-    assert_table_empty(dynamodb, table_name)
-    assert_bucket_empty(s3, bucket_name)
+    # Let's create a functionally equivalent game
+
+    # Now let's fetch the game we just created using the fetch Lambda
+
 
 
 # Cleanup resources and verify cleanup complete
-def cleanup_dynamodb_table(dynamodb):
+def cleanup_dynamodb_table(dynamodb, table_name):
     try:
         table = dynamodb.Table(table_name)
         response = table.scan()
@@ -87,12 +119,14 @@ def assert_bucket_contains(s3, key):
     objects = s3.list_objects(Bucket=bucket_name).get("Contents", [])
     keys = [obj["Key"] for obj in objects]
     assert key in keys, f"Key {key} not found in bucket {bucket_name}."
+    print("Dictionary was found in S3 bucket.")
 
 def assert_dynamodb_item_exists(dynamodb, game_id):
     """Assert that a specific item exists in DynamoDB."""
-    table = dynamodb.Table(table_name)
+    table = dynamodb.Table(games_table_name)
     response = table.get_item(Key={"gameId": game_id})
-    assert "Item" in response, f"Item with gameId {game_id} not found in DynamoDB."
+    assert "Item" in response, f"Item with gameId {game_id} not found in {table}."
+    print(f"Item with gameId {game_id} was found in DynamoDB table.")
 
 # ===========================================================================
 # Cleanup Utilities

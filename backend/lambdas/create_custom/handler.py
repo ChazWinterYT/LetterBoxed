@@ -9,6 +9,7 @@ from lambdas.common.game_utils import (
     generate_standardized_hash,
     validate_language,
     validate_board_size,
+    preprocess_words,
 )
 
 def handler(event, context):
@@ -85,8 +86,11 @@ def handler(event, context):
         }
     else:
         # This is a new unique game. Generate a solution and store it.
-        two_word_solutions = calculate_two_word_solutions(game_layout)
-        three_word_solutions = calculate_three_word_solutions(game_layout)
+        valid_words, starting_letter_to_words = preprocess_words(game_layout, language)
+        two_word_solutions = calculate_two_word_solutions(
+            game_layout, language, valid_words, starting_letter_to_words
+        )
+        three_word_solutions = calculate_three_word_solutions(game_layout, language)
         game_data = {
             "gameId": game_id,
             "gameLayout": game_layout,

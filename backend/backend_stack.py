@@ -142,25 +142,31 @@ class LetterBoxedStack(Stack):
             bucket_name="chazwinter.com"
         )
 
+        CfnOutput(self, "TestDictionaryBucketName", value=self.test_bucket.bucket_name)
         CfnOutput(self, "DictionaryBucketName", value=self.prod_bucket.bucket_name)
 
 
         # ===========================================================================
         # Define Lambda Functions
         # ===========================================================================
-        # Define table and bucket names based on the environment
-        game_table_name = "LetterBoxedGamesTest" if is_test else "LetterBoxedGames"
-        dictionary_bucket_name = "test-dictionary-bucket" if is_test else "chazwinter.com"
-        valid_words_table_name = "LetterBoxedValidWordsTest" if is_test else "LetterBoxedValidWords"
-        user_game_states_table_name = "LetterBoxedUserGameStatesTest" if is_test else "LetterBoxedUserGameStates"
 
         # Define common environment for all Lambdas
-        common_environment = {
-            "GAME_TABLE": game_table_name,
-            "VALID_WORDS_TABLE": valid_words_table_name,
-            "USER_GAME_STATES_TABLE": user_game_states_table_name,
+        test_common_environment = {
+            "GAMES_TABLE_NAME": "LetterBoxedGamesTest",
+            "VALID_WORDS_TABLE": "LetterBoxedValidWordsTest",
+            "SESSION_STATES_TABLE": "LetterBoxedSessionStatesTest",
             "DICTIONARY_SOURCE": "s3",
-            "S3_BUCKET_NAME": dictionary_bucket_name,
+            "S3_BUCKET_NAME": "test-dictionary-bucket",
+            "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
+            "DEFAULT_LANGUAGE": "en",
+        }
+
+        prod_common_environment = {
+            "GAMES_TABLE_NAME": "LetterBoxedGames",
+            "VALID_WORDS_TABLE": "LetterBoxedValidWords",
+            "SESSION_STATES_TABLE": "LetterBoxedSessionStates",
+            "DICTIONARY_SOURCE": "s3",
+            "S3_BUCKET_NAME": "chazwinter.com",
             "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
             "DEFAULT_LANGUAGE": "en",
         }
@@ -205,50 +211,38 @@ class LetterBoxedStack(Stack):
         # so they can be used when creating API routing
         lambda_references = {}
         for lambda_key, lambda_config in lambda_functions.items():
-            lambda_function = _lambda.Function(
-                self, lambda_config["name"],
-                runtime=_lambda.Runtime.PYTHON_3_10,
-                handler=lambda_config["handler"],
-                code=_lambda.Code.from_asset(
-                    path=".",
-                    exclude=[
-                        "**/node_modules",
-                        "**/__pycache__",
-                        ".pytest_cache",
-                        "**/.git",
-                        "**/.idea",
-                        "**/.vscode",
-                        "**/*.pyc",
-                        "cdk.out",
-                        "venv",
-                        "lambda_layer",
-                        "*.iml",
-                        "*.log",
-                        "*.tmp",
-                        "*.zip",
-                        "*.tar.gz",
-                        ".env",
-                        ".gitignore",
-                        "utility",
-                        "test",
-                        "cdk.json",
-                        "*.bat",
-                        "*.md"
-                    ],
-                ),
-                layers=[lambda_layer],
-                environment=common_environment,
-                function_name=lambda_config["name"]
+            # Create Production Lambda
+            prod_resources = [
+                self.prod_game_table, 
+                self.prod_valid_words_table, 
+                self.prod_user_game_states_table
+            ]
+            prod_lambda = self.create_lambda(
+                lambda_key, 
+                lambda_config, 
+                prod_common_environment, 
+                "", 
+                lambda_layer, 
+                prod_resources
             )
-            self.test_game_table.grant_read_write_data(lambda_function)
-            self.prod_game_table.grant_read_write_data(lambda_function)
-            self.test_bucket.grant_read(lambda_function)
-            self.prod_bucket.grant_read(lambda_function)
-            self.test_valid_words_table.grant_read_write_data(lambda_function)
-            self.prod_valid_words_table.grant_read_write_data(lambda_function)
-            self.test_user_game_states_table.grant_read_write_data(lambda_function)
-            self.prod_user_game_states_table.grant_read_write_data(lambda_function)
-            lambda_references[lambda_key] = lambda_function
+            self.prod_bucket.grant_read(prod_lambda)
+            lambda_references[lambda_key] = prod_lambda # Needed for prod only
+
+            # Create Test Lambda
+            test_resources = [
+                self.test_game_table, 
+                self.test_valid_words_table, 
+                self.test_user_game_states_table
+            ]
+            test_lambda = self.create_lambda(
+                lambda_key, 
+                lambda_config, 
+                test_common_environment, 
+                "Test", 
+                lambda_layer, 
+                test_resources
+            )
+            self.test_bucket.grant_read(test_lambda)
 
 
         # ===========================================================================
@@ -295,3 +289,45 @@ class LetterBoxedStack(Stack):
         game_archive_integration = apigateway.LambdaIntegration(lambda_references["game_archive"])
         game_archive_resource = api.root.add_resource("archive")
         game_archive_resource.add_method("GET", game_archive_integration)
+
+
+    def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):
+        lambda_function = _lambda.Function(
+            self, lambda_config["name"] + function_suffix,
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler=lambda_config["handler"],
+            code=_lambda.Code.from_asset(
+                path=".",
+                exclude=[
+                    "**/node_modules",
+                    "**/__pycache__",
+                    ".pytest_cache",
+                    "**/.git",
+                    "**/.idea",
+                    "**/.vscode",
+                    "**/*.pyc",
+                    "cdk.out",
+                    "venv",
+                    "lambda_layer",
+                    "*.iml",
+                    "*.log",
+                    "*.tmp",
+                    "*.zip",
+                    "*.tar.gz",
+                    ".env",
+                    ".gitignore",
+                    "utility",
+                    "test",
+                    "cdk.json",
+                    "*.bat",
+                    "*.md"
+                ],
+            ),
+            layers=[layer],
+            environment=environment,
+            function_name=lambda_config["name"] + function_suffix
+        )
+        # Grant resources to the Lambda
+        for resource in resources:
+            resource.grant_read_write_data(lambda_function)
+        return lambda_function
