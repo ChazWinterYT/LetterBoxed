@@ -168,7 +168,7 @@ class LetterBoxedStack(Stack):
             "SESSION_STATES_TABLE": "LetterBoxedSessionStates",
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "chazwinter.com",
-            "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
+            "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
             "DEFAULT_LANGUAGE": "en",
         }
 
@@ -324,7 +324,7 @@ class LetterBoxedStack(Stack):
                     "*.md"
                 ],
             ),
-            timeout=Duration.seconds(15),
+            timeout=Duration.seconds(60),
             layers=[layer],
             environment=environment,
             function_name=lambda_config["name"] + function_suffix
