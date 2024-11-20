@@ -1,17 +1,21 @@
+import os
 import json
-import re
 import boto3
 from boto3.dynamodb.conditions import Attr
 
-dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("LetterBoxedGames")
+
+# Dynamically retrieve the table name from environment variables
+def get_table():
+    dynamodb = boto3.resource("dynamodb")
+    table_name = os.environ.get("GAMES_TABLE_NAME", "LetterBoxedGames") 
+    return dynamodb.Table(table_name)
+
 
 def handler(event, context):
     """
     Fetch an archive of official New York Times games based on the gameId.
     Supports optional filtering based on the year via query parameters.
     """
-    
     # Parse query parameters for pagination
     query_params = event.get("queryStringParameters", {})
     year_filter = query_params.get("year") if query_params else None
@@ -21,19 +25,26 @@ def handler(event, context):
     if year_filter:
         filter_expression &= Attr("gameId").begins_with(f"{year_filter}")
 
-    # Scan DB table for official NYT games
     try:
-        response = table.scan(FilterExpression=filter_expression)
-        nyt_games = [item["gameId"] for item in response.get("Items", [])]
+        # Initialize variables for pagination
+        nyt_games = []
+        last_evaluated_key = None
+        table = get_table()
 
-        # Handle pagination
-        while "LastEvaluatedKey" in response:
-            response = table.scan(
-                FilterExpression=filter_expression,
-                ExclusiveStartKey=response["LastEvaluatedKey"]
-            )
-            nyt_games.extend(item["gameId"] for item in response.get("Items", []))
-        
+        while True:
+            # Scan DB table for official NYT games with pagination
+            scan_kwargs = {"FilterExpression": filter_expression}
+            if last_evaluated_key:
+                scan_kwargs["ExclusiveStartKey"] = last_evaluated_key
+
+            response = table.scan(**scan_kwargs)
+            nyt_games.extend(item["gameId"] for item in response.get("Items", []) if item.get("officialGame"))
+
+            # Break the loop if there are no more pages
+            last_evaluated_key = response.get("LastEvaluatedKey")
+            if not last_evaluated_key:
+                break
+
         # Return the list of official games
         return {
             "statusCode": 200,
@@ -42,6 +53,7 @@ def handler(event, context):
                 "message": "Fetched official NYT games archive successfully."
             })
         }
+
     except Exception as e:
         return {
             "statusCode": 500,
