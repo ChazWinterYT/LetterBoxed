@@ -20,7 +20,7 @@ def calculate_solutions() -> None:
     Calculate and print two-word solutions for the given game layout.
     """
     # Calculate two-word solutions
-    two_word_solutions: List[List[str]] = calculate_two_word_solutions(game_layout, "en")
+    two_word_solutions: List[tuple[str, str]] = calculate_two_word_solutions(game_layout, "en")
 
     # Print results
     print(f"{len(two_word_solutions)} Two-word solutions for game layout: {game_layout}")

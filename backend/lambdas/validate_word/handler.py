@@ -55,6 +55,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         # Fetch the user game state
         user_game_state = get_user_game_state(session_id, game_id)
+        if not user_game_state:
+            return _error_response(
+                "An error occurred while fetching the game state", 500
+            )
 
         # Check if the word has already been used
         if submitted_word in user_game_state["wordsUsed"]:
@@ -115,7 +119,7 @@ def _error_response(message: str, status_code: int) -> Dict[str, Any]:
     }
 
 
-def _check_game_completion(game_layout: list, words_used: list) -> tuple[bool, str]:
+def _check_game_completion(game_layout: list[str], words_used: list[str]) -> tuple[bool, str]:
     """
     Checks if the game is completed by verifying if all letters have been used.
 

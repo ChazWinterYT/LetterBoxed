@@ -1,4 +1,5 @@
 import json
+from typing import Dict, Any
 from lambdas.prefetch_todays_game.prefetch_service import fetch_todays_game
 from lambdas.common.db_utils import add_game_to_db, fetch_game_by_id
 from lambdas.common.game_utils import (
@@ -8,7 +9,7 @@ from lambdas.common.game_utils import (
     calculate_three_word_solutions,
 )
 
-def handler(event, context):
+def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
     AWS Lambda handler for prefetching today's game from the NYT website.
     """

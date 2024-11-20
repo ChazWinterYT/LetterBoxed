@@ -1,17 +1,18 @@
 import os
 import json
+from typing import Any, Dict
 import boto3
 from boto3.dynamodb.conditions import Attr
 
 
 # Dynamically retrieve the table name from environment variables
-def get_table():
+def get_table() -> Any:
     dynamodb = boto3.resource("dynamodb")
     table_name = os.environ.get("GAMES_TABLE_NAME", "LetterBoxedGames") 
     return dynamodb.Table(table_name)
 
 
-def handler(event, context):
+def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
     Fetch an archive of official New York Times games based on the gameId.
     Supports optional filtering based on the year via query parameters.
@@ -27,7 +28,7 @@ def handler(event, context):
 
     try:
         # Initialize variables for pagination
-        nyt_games = []
+        nyt_games: list[str] = []
         last_evaluated_key = None
         table = get_table()
 

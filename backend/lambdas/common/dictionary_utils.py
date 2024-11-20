@@ -16,7 +16,7 @@ LOCAL_DICTIONARY_PATH = os.getenv("LOCAL_DICTIONARY_PATH", "./dictionaries/{lang
 s3 = boto3.client("s3") if DICTIONARY_SOURCE == "s3" else None
 
 
-def get_dictionary(language: str = None) -> list:
+def get_dictionary(language: str = DEFAULT_LANGUAGE) -> list[str]:
     """
     Load the dictionary for the specified language from the appropriate source (local or S3).
     Falls back to the default language if the specified language is not provided.
@@ -25,17 +25,15 @@ def get_dictionary(language: str = None) -> list:
         language (str): The language code (e.g., 'en', 'es').
 
     Returns:
-        list: A list of words from the dictionary.
+        list[str]: A list of words from the dictionary.
     """
-    language = language or DEFAULT_LANGUAGE
-
     if DICTIONARY_SOURCE == "s3":
         return _fetch_dictionary_from_s3(language)
     else:
         return _load_local_dictionary(language)
 
 
-def _fetch_dictionary_from_s3(language: str) -> list:
+def _fetch_dictionary_from_s3(language: str) -> list[str]:
     """
     Fetch the dictionary for the specified language from S3.
 
@@ -43,25 +41,31 @@ def _fetch_dictionary_from_s3(language: str) -> list:
         language (str): The language code.
 
     Returns:
-        list: A list of words from the dictionary.
+        list[str]: A list of words from the dictionary.
     """
     if not S3_BUCKET_NAME:
         raise ValueError("S3_BUCKET_NAME is not set in the environment.")
 
+    if not s3:
+        raise RuntimeError("boto3 failed to initialize s3 client.")
+
     s3_key = f"{DICTIONARY_BASE_S3_PATH}{language}/dictionary.txt"
     try:
         response = s3.get_object(Bucket=S3_BUCKET_NAME, Key=s3_key)
-        dictionary_content = response["Body"].read().decode("utf-8")
+        body = response["Body"].read()
+        if not isinstance(body, bytes):
+            raise TypeError("Unexpected response type: 'Body.read()' did not return bytes.")
+        dictionary_content = body.decode("utf-8")
+        if not isinstance(dictionary_content, str):
+            raise TypeError("Unexpected response type: Decoded content is not a string.")
         return dictionary_content.splitlines()
-    except ClientError as e:
-        error_code = e.response["Error"]["Code"]
-        if error_code == "NoSuchKey":
-            raise ValueError(f"Dictionary for language '{language}' not found in S3.")
-        else:
-            raise RuntimeError(f"Failed to fetch dictionary from S3: {str(e)}")
+    except KeyError as e:
+        raise ValueError(f"Unexpected response structure from S3: {e}") from e
+    except Exception as e:
+        raise RuntimeError(f"Error fetching dictionary from S3: {e}") from e
 
 
-def _load_local_dictionary(language: str) -> list:
+def _load_local_dictionary(language: str) -> list[str]:
     """
     Load the dictionary for the specified language from a local file.
 
@@ -69,7 +73,7 @@ def _load_local_dictionary(language: str) -> list:
         language (str): The language code.
 
     Returns:
-        list: A list of words from the dictionary.
+        list[str]: A list of words from the dictionary.
     """
     # Get the directory where this script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))

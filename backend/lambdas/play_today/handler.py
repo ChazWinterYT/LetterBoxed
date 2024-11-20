@@ -1,8 +1,9 @@
 import json
+from typing import Dict, Any
 from datetime import date, timedelta
 from lambdas.common.db_utils import fetch_game_by_id
 
-def handler(event, context):
+def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
     Lambda handler for fetching today's NYT game from the DB.
     If today's game is not yet available, it falls back to yesterday's game.

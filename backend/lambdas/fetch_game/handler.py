@@ -1,7 +1,8 @@
 import json
+from typing import Dict, Any
 from lambdas.common.db_utils import fetch_game_by_id
 
-def handler(event, context):
+def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     # Parse the gameId from path parameters
     body = json.loads(event.get("body", "{}"))
     game_id = body.get("gameId")

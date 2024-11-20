@@ -167,7 +167,7 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
         game_id (str): The unique identifier for the game.
 
     Returns:
-        dict or None: The user's game state.
+        dict: The user's game state.
     """
     try:
         table = get_session_states_table()
@@ -177,7 +177,7 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
             "gameId": game_id
         }
         response = table.get_item(Key=key)
-        user_game_data = response.get("Item")
+        user_game_data: Dict[str, Any] = response.get("Item")
 
         if user_game_data is None:
             # Initialize the game state for a new session
@@ -190,12 +190,7 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
                 "TTL": int(time.time()) + 30 * 24 * 60 * 60,  # 30 days from now
             }
         
-        # Ensure the returned value is a dictionary
-        if isinstance(user_game_data, dict):
-            return user_game_data
-
-        print(f"Unexpected data type for user_game_data: {type(user_game_data)}")
-        return None
+        return user_game_data
     except ClientError as e:
         print(f"Error fetching game state for session '{session_id}', game '{game_id}': {e}")
         return None

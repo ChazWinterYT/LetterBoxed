@@ -1,4 +1,5 @@
 import json
+from typing import Dict, Any
 
 from lambdas.common.db_utils import (
     add_game_to_db, 
@@ -17,7 +18,7 @@ from lambdas.common.game_utils import (
     generate_valid_words,
 )
 
-def handler(event, context):
+def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     # Get the user-defined layout from the event payload
     body = json.loads(event.get("body", "{}"))
     game_layout = body.get("gameLayout")
@@ -80,7 +81,7 @@ def handler(event, context):
             "officialGame": False,
         }
         add_game_to_db(game_data)
-        valid_words = fetch_valid_words_by_game_id(game_id)
+        valid_words = fetch_valid_words_by_game_id(game_id) or []
         add_valid_words_to_db(game_id, valid_words)
         
         return {
@@ -119,7 +120,7 @@ def handler(event, context):
         }
 
 
-def validate_board_matches_layout(game_layout, board_size):
+def validate_board_matches_layout(game_layout: list[str], board_size: str) -> bool:
     """
     Validates the game layout against the specified board size.
 
