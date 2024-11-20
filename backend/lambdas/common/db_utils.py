@@ -182,7 +182,7 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
             # Initialize the game state for a new session
             return {
                 "sessionId": session_id,
-                "game_id": game_id,
+                "gameId": game_id,
                 "wordsUsed": []
             }
         
