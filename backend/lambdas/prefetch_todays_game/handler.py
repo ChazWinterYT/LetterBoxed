@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any
 from lambdas.prefetch_todays_game.prefetch_service import fetch_todays_game
-from lambdas.common.db_utils import add_game_to_db, fetch_game_by_id
+from lambdas.common.db_utils import add_game_to_db, fetch_game_by_id, add_valid_words_to_db
 from lambdas.common.game_utils import (
     standardize_board, 
     generate_standardized_hash,
@@ -51,6 +51,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
         # Add today's game to the database
         add_game_to_db(game_object)
+        add_valid_words_to_db(game_id, todays_game["dictionary"])
 
         return {
             "statusCode": 201,

@@ -156,7 +156,7 @@ class LetterBoxedStack(Stack):
 
         prod_common_environment = {
             "GAMES_TABLE_NAME": "LetterBoxedGames",
-            "VALID_WORDS_TABLE": "LetterBoxedValidWords",
+            "VALID_WORDS_TABLE": "LetterBoxedValidWords1",
             "SESSION_STATES_TABLE": "LetterBoxedSessionStates",
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "chazwinter.com",

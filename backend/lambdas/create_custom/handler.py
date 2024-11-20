@@ -81,7 +81,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "officialGame": False,
         }
         add_game_to_db(game_data)
-        valid_words = fetch_valid_words_by_game_id(game_id) or []
+        valid_words = fetch_valid_words_by_game_id(game_id)
         add_valid_words_to_db(game_id, valid_words)
         
         return {

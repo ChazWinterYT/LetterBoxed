@@ -151,7 +151,7 @@ def get_valid_words_table() -> Any:
     Returns:
         boto3.Table: The DynamoDB Table object.
     """
-    table_name = os.environ.get("VALID_WORDS_TABLE", "LetterBoxedValidWords")
+    table_name = os.environ.get("VALID_WORDS_TABLE", "LetterBoxedValidWords1")
     return dynamodb.Table(table_name)
 
 

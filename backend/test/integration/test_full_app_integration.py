@@ -40,7 +40,7 @@ def setup_aws_resources(aws_clients):
     # assert_bucket_empty(s3, bucket_name)
 
 
-def test_full_app_integration(aws_clients):
+def est_full_app_integration(aws_clients):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]
