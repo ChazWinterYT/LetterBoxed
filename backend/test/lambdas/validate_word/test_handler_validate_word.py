@@ -1,100 +1,117 @@
-import pytest
-from unittest.mock import patch
-from lambdas.validate_word.handler import handler
 import json
+import pytest
+from unittest.mock import MagicMock
+from lambdas.validate_word.handler import handler
 
 
-def test_handler_success(mocker):
+@pytest.fixture
+def mock_db_utils(mocker):
+    """
+    Mock the db_utils functions for interacting with DynamoDB.
+    """
+    mocker.patch("lambdas.validate_word.handler.fetch_game_by_id")
+    mocker.patch("lambdas.validate_word.handler.fetch_valid_words_by_game_id")
+    mocker.patch("lambdas.validate_word.handler.get_user_game_state")
+    mocker.patch("lambdas.validate_word.handler.save_session_state")
+
+
+def test_validate_word_success(mock_db_utils, mocker):
     # Arrange
+    mocker.patch("lambdas.validate_word.handler.fetch_valid_words_by_game_id", return_value=["APPLE", "ORANGE", "ELEPHANT"])
+    mocker.patch("lambdas.validate_word.handler.get_user_game_state", return_value={"sessionId": "test-session", "gameId": "test-game", "wordsUsed": ["ORANGE"]})
+    mocker.patch("lambdas.validate_word.handler.save_session_state", return_value=True)
+
     event = {
-        'body': json.dumps({
-            'gameId': 'game123',
-            'word': 'apple',
-            'sessionId': 'session1'
-        })
-    }
-
-    # Mock validate_submitted_word to return a valid result
-    mocker.patch('lambdas.validate_word.handler.validate_submitted_word', return_value={
-        'valid': True,
-        'message': 'Word accepted.',
-        'game_completed': False,
-        'words_used': ['APPLE']
-    })
-
-    # Act
-    response = handler(event, None)
-
-    # Assert
-    assert response['statusCode'] == 200
-    body = json.loads(response['body'])
-    assert body['valid'] == True
-    assert body['message'] == 'Word accepted.'
-    assert body['words_used'] == ['APPLE']
-
-
-def test_handler_missing_parameters():
-    # Arrange
-    event = {
-        'body': json.dumps({
-            'gameId': 'game123',
-            'word': 'apple'
-            # 'sessionId' is missing
-        })
+        "body": json.dumps({"gameId": "test-game", "word": "ELEPHANT", "sessionId": "test-session"})
     }
 
     # Act
     response = handler(event, None)
+    body = json.loads(response["body"])
+    print(body)
 
     # Assert
-    assert response['statusCode'] == 400
-    body = json.loads(response['body'])
-    assert 'Missing required parameters' in body['message']
+    assert response["statusCode"] == 200
+    assert body["valid"] is True
+    assert body["message"] == "Word accepted."
+    assert "ELEPHANT" in body["wordsUsed"]
+    assert body["gameCompleted"] is False
 
 
-def test_handler_validation_failure(mocker):
+def test_validate_word_puzzle_solved(mock_db_utils, mocker):
     # Arrange
-    event = {
-        'body': json.dumps({
-            'gameId': 'game123',
-            'word': 'invalidword',
-            'sessionId': 'session1'
-        })
-    }
+    game_layout = ["PRO","CTI","DGN","SAH"]
+    mocker.patch("lambdas.validate_word.handler.fetch_valid_words_by_game_id", return_value=["CHINSTRAP","PAGODA"])
+    mocker.patch("lambdas.validate_word.handler.get_user_game_state", return_value={"sessionId": "test-session", "gameId": "test-game", "wordsUsed": ["CHINSTRAP"]})
+    mocker.patch("lambdas.validate_word.handler.save_session_state", return_value=True)
+    mocker.patch("lambdas.validate_word.handler.fetch_game_by_id", return_value={"gameLayout": game_layout})
 
-    # Mock validate_submitted_word to return an invalid result
-    mocker.patch('lambdas.validate_word.handler.validate_submitted_word', return_value={
-        'valid': False,
-        'message': 'Word is not valid for this puzzle.'
-    })
+    event = {
+        "body": json.dumps({"gameId": "test-game", "word": "PAGODA", "sessionId": "test-session"})
+    }
 
     # Act
     response = handler(event, None)
+    body = json.loads(response["body"])
 
     # Assert
-    assert response['statusCode'] == 400
-    body = json.loads(response['body'])
-    assert body['valid'] == False
-    assert body['message'] == 'Word is not valid for this puzzle.'
+    assert response["statusCode"] == 200
+    assert body["valid"] is True
+    assert body["message"] == "Puzzle solved successfully! Congrats!"
+    assert body["gameCompleted"] is True
 
 
-def test_handler_exception(mocker):
+def test_validate_word_already_used(mock_db_utils, mocker):
     # Arrange
-    event = {
-        'body': json.dumps({
-            'gameId': 'game123',
-            'word': 'apple',
-            'sessionId': 'session1'
-        })
-    }
+    mocker.patch("lambdas.validate_word.handler.fetch_valid_words_by_game_id", return_value=["APPLE", "ORANGE"])
+    mocker.patch("lambdas.validate_word.handler.get_user_game_state", return_value={"sessionId": "test-session", "gameId": "test-game", "wordsUsed": ["APPLE"]})
 
-    # Mock validate_submitted_word to raise an exception
-    mocker.patch('lambdas.validate_word.handler.validate_submitted_word', side_effect=Exception('Test exception'))
+    event = {
+        "body": json.dumps({"gameId": "test-game", "word": "APPLE", "sessionId": "test-session"})
+    }
 
     # Act
     response = handler(event, None)
+    body = json.loads(response["body"])
 
     # Assert
-    assert response['statusCode'] == 500
-    body = json.loads(response['body'])
-    assert body['message'] == 'An error occurred.'
+    assert response["statusCode"] == 200
+    assert body["valid"] is False
+    assert body["message"] == "Word 'APPLE' has already been used."
+
+
+def test_validate_word_invalid_word(mock_db_utils, mocker):
+    # Arrange
+    mocker.patch("lambdas.validate_word.handler.fetch_valid_words_by_game_id", return_value=["APPLE", "ORANGE"])
+    mocker.patch("lambdas.validate_word.handler.get_user_game_state", return_value={"sessionId": "test-session", "gameId": "test-game", "wordsUsed": []})
+
+    event = {
+        "body": json.dumps({"gameId": "test-game", "word": "BANANA", "sessionId": "test-session"})
+    }
+
+    # Act
+    response = handler(event, None)
+    body = json.loads(response["body"])
+
+    # Assert
+    assert response["statusCode"] == 200
+    assert body["valid"] is False
+    assert body["message"] == "Word is not valid for this puzzle."
+
+
+def test_validate_word_db_error(mock_db_utils, mocker):
+    # Arrange
+    mocker.patch("lambdas.validate_word.handler.fetch_valid_words_by_game_id", side_effect=Exception("DB Error"))
+    mocker.patch("lambdas.validate_word.handler.get_user_game_state", return_value={"sessionId": "test-session", "gameId": "test-game", "wordsUsed": []})
+
+    event = {
+        "body": json.dumps({"gameId": "test-game", "word": "APPLE", "sessionId": "test-session"})
+    }
+
+    # Act
+    response = handler(event, None)
+    body = json.loads(response["body"])
+
+    # Assert
+    assert response["statusCode"] == 500
+    assert body["message"] == "An unexpected error occurred: DB Error"

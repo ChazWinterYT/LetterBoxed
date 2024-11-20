@@ -273,7 +273,10 @@ def test_get_user_game_state_existing_session(mock_session_states_table):
     assert result == session_data
     mock_session_states_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
 
-def test_get_user_game_state_new_session(mock_session_states_table):
+def test_get_user_game_state_new_session(mock_session_states_table, mocker):
+    mock_time = 1732083185  # Fixed timestamp for test
+    mocker.patch("time.time", return_value=mock_time)
+    
     session_id = "new-session-id"
     game_id = "test-game-id"
     mock_session_states_table.get_item.return_value = {}  # No item found
@@ -284,6 +287,9 @@ def test_get_user_game_state_new_session(mock_session_states_table):
         "sessionId": session_id,
         "gameId": game_id, 
         "wordsUsed": [],
+        "gameCompleted": False,
+        "lastUpdated": mock_time,
+        "TTL": mock_time + 30 * 24 * 60 * 60 # 30 days later
     }
     assert result == expected_result
     mock_session_states_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})

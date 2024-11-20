@@ -59,10 +59,12 @@ def _fetch_dictionary_from_s3(language: str) -> list[str]:
         if not isinstance(dictionary_content, str):
             raise TypeError("Unexpected response type: Decoded content is not a string.")
         return dictionary_content.splitlines()
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "NoSuchKey":
+            raise ValueError(f"Dictionary for language '{language}' not found in S3.") from e
+        raise RuntimeError(f"Error fetching dictionary from S3: {e}") from e
     except KeyError as e:
         raise ValueError(f"Unexpected response structure from S3: {e}") from e
-    except Exception as e:
-        raise RuntimeError(f"Error fetching dictionary from S3: {e}") from e
 
 
 def _load_local_dictionary(language: str) -> list[str]:

@@ -99,7 +99,7 @@ def test_fetch_dictionary_from_s3_other_error(mock_s3_client):
     )
 
     # Act & Assert
-    with pytest.raises(RuntimeError, match="Failed to fetch dictionary from S3: An error occurred"):
+    with pytest.raises(RuntimeError, match="Error fetching dictionary from S3: An error occurred"):
         _fetch_dictionary_from_s3("en")
 
 

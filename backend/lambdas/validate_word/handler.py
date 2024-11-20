@@ -50,7 +50,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Check if the submitted word is valid
         if submitted_word not in valid_words:
             return _error_response(
-                "The specified word is not valid for this game.", 400
+                "Word is not valid for this puzzle.", 200
             )
         
         # Fetch the user game state
@@ -63,7 +63,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Check if the word has already been used
         if submitted_word in user_game_state["wordsUsed"]:
             return _error_response(
-                f"Word '{submitted_word}' has already been used.", 400
+                f"Word '{submitted_word}' has already been used.", 200
             )
         
         # Validate word chaining rules (for the second word onward)
@@ -71,14 +71,15 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             last_word = user_game_state["wordsUsed"][-1]
             if submitted_word[0] != last_word[-1]:
                 return _error_response(
-                    f"Word '{submitted_word}' must start with the last letter of the previous word '{last_word}", 400
+                    f"Word '{submitted_word}' must start with the last letter of the previous word '{last_word}", 200
                 )
 
-        # All checks passed. Check if all letters have been used
-        game_completed, message = _check_game_completion(game_data["gameLayout"], user_game_state["wordsUsed"])
-
-        # Update user game state
+        # All checks passed. Update user game state
         user_game_state["wordsUsed"].append(submitted_word)
+        
+        # Check if the user completed the game
+        game_completed, message = _check_game_completion(game_data["gameLayout"], user_game_state["wordsUsed"])
+    
         user_game_state["gameCompleted"] = game_completed
         updated_time = int(time.time())
         user_game_state["lastUpdated"] = updated_time
@@ -115,7 +116,7 @@ def _error_response(message: str, status_code: int) -> Dict[str, Any]:
     """
     return {
         "statusCode": status_code,
-        "body": json.dumps({"message": message})
+        "body": json.dumps({"message": message, "valid": False}),
     }
 
 
