@@ -81,8 +81,8 @@ def test_play_today_no_games_available(mock_dynamodb_table):
 
     # Assert
     assert response["statusCode"] == 404
-    assert "Today's game is not yet available" in response["body"]
-    assert "yesterday's game isn't either" in response["body"]
+    assert f"{today}'s game is not yet available" in response["body"]
+    assert f"{yesterday}'s game isn't either" in response["body"]
 
     # Ensure `get_item` is called for both today and yesterday
     mock_dynamodb_table.get_item.assert_any_call(Key={"gameId": today})

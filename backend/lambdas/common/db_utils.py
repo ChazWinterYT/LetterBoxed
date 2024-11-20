@@ -84,7 +84,7 @@ def fetch_solutions_by_standardized_hash(standardized_hash: str) -> Optional[Dic
         return None
 
 
-def get_games_table() -> boto3.resources.factory.dynamodb.Table:
+def get_games_table() -> Any:
     """
     Dynamically retrieves the DynamoDB table based on the environment variable.
 
@@ -143,7 +143,7 @@ def fetch_valid_words_by_game_id(game_id: str) -> Optional[List[str]]:
         return None
     
 
-def get_valid_words_table() -> boto3.resources.factory.dynamodb.Table:
+def get_valid_words_table() -> Any:
     """
     Dynamically retrieves the DynamoDB valid words table based on the environment variable.
 
@@ -212,7 +212,7 @@ def save_session_state(session_data: Dict[str, Any]) -> bool:
         return False
     
 
-def get_session_states_table() -> boto3.resources.factory.dynamodb.Table:
+def get_session_states_table() -> Any:
     """
     Dynamically retrieves the DynamoDB session states table based on the environment variable.
 

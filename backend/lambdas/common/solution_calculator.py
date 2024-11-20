@@ -9,6 +9,8 @@ from lambdas.common.game_utils import (
     calculate_three_word_solutions,
 )
 
+# THIS FILE IS MEANT TO BE RUN FROM YOUR LOCAL MACHINE ONLY
+
 game_layout = ["TLQ","SRU","BFI","EMO"]
 
 def calculate_solutions():
