@@ -98,8 +98,10 @@ def calculate_two_word_solutions(game_layout, language="en", valid_words=None, s
     """
     try:
         # Preprocess words to generate a list of valid words for this puzzle
-        if not valid_words and not starting_letter_to_words:
-            valid_words, starting_letter_to_words = preprocess_words(game_layout, language)
+        if not valid_words or valid_words is None:
+            valid_words = generate_valid_words(game_layout, language)
+        if not starting_letter_to_words or starting_letter_to_words is None:
+            starting_letter_to_words = create_starting_letter_to_words_dict(game_layout, language)
     except ValueError as e:
         print(f"Error preprocessing words for two word solution: {e}")
         return []
@@ -264,7 +266,17 @@ def create_letter_to_side_mapping(game_layout: List[str]) -> Dict[str, int]:
     return letter_to_side
 
 
-def preprocess_words(game_layout, language):
+def create_starting_letter_to_words_dict(game_layout, language) -> dict:
+    """
+    Creates a dictionary that maps each starting letter to a list of valid words starting with that letter.
+
+    Args:
+        game_layout (list): The game layout containing letters.
+        language (str): The language of the dictionary to use.
+
+    Returns:
+        dict: A dictionary where keys are starting letters and values are lists of words starting with those letters.
+    """
     valid_words = generate_valid_words(game_layout, language)
     starting_letter_to_words = defaultdict(list)
 
@@ -272,7 +284,7 @@ def preprocess_words(game_layout, language):
         first_letter = word[0]
         starting_letter_to_words[first_letter].append(word)
     
-    return valid_words, starting_letter_to_words
+    return starting_letter_to_words
 
 
 def update_letter_usage(letter_usage, word, increment=True):

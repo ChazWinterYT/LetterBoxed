@@ -9,7 +9,7 @@ from lambdas.common.game_utils import (
     calculate_three_word_solutions,
 )
 
-game_layout = ["MUX","LRT","DEB","AFI"]
+game_layout = ["TLQ","SRU","BFI","EMO"]
 
 def calculate_solutions():
     two_word_solutions = calculate_two_word_solutions(game_layout, "en")

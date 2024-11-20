@@ -64,7 +64,7 @@ class LetterBoxedStack(Stack):
         # Production ValidWords DynamoDB table
         self.prod_valid_words_table = dynamodb.Table(
             self, "LetterBoxedValidWordsTable",
-            table_name="LetterBoxedValidWords",
+            table_name="LetterBoxedValidWords1",
             partition_key=dynamodb.Attribute(
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
@@ -76,7 +76,7 @@ class LetterBoxedStack(Stack):
         # Test ValidWords DynamoDB table
         self.test_valid_words_table = dynamodb.Table(
             self, "LetterBoxedValidWordsTestTable",
-            table_name="LetterBoxedValidWordsTest",
+            table_name="LetterBoxedValidWords1Test",
             partition_key=dynamodb.Attribute(
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
@@ -146,7 +146,7 @@ class LetterBoxedStack(Stack):
         # Define common environment for all Lambdas
         test_common_environment = {
             "GAMES_TABLE_NAME": "LetterBoxedGamesTest",
-            "VALID_WORDS_TABLE": "LetterBoxedValidWordsTest",
+            "VALID_WORDS_TABLE": "LetterBoxedValidWords1Test",
             "SESSION_STATES_TABLE": "LetterBoxedSessionStatesTest",
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "test-dictionary-bucket",

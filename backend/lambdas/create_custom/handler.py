@@ -1,6 +1,11 @@
 import json
 
-from lambdas.common.db_utils import add_game_to_db, fetch_solutions_by_standardized_hash
+from lambdas.common.db_utils import (
+    add_game_to_db, 
+    fetch_solutions_by_standardized_hash,
+    add_valid_words_to_db,
+    fetch_valid_words_by_game_id,
+)
 from lambdas.common.game_utils import (
     generate_game_id, 
     standardize_board, 
@@ -9,7 +14,7 @@ from lambdas.common.game_utils import (
     generate_standardized_hash,
     validate_language,
     validate_board_size,
-    preprocess_words,
+    generate_valid_words,
 )
 
 def handler(event, context):
@@ -74,8 +79,9 @@ def handler(event, context):
             "language": language,
             "officialGame": False,
         }
-
         add_game_to_db(game_data)
+        valid_words = fetch_valid_words_by_game_id(game_id)
+        add_valid_words_to_db(game_id, valid_words)
         
         return {
             "statusCode": 200,
@@ -86,9 +92,9 @@ def handler(event, context):
         }
     else:
         # This is a new unique game. Generate a solution and store it.
-        valid_words, starting_letter_to_words = preprocess_words(game_layout, language)
+        valid_words = generate_valid_words(game_layout, language)
         two_word_solutions = calculate_two_word_solutions(
-            game_layout, language, valid_words, starting_letter_to_words
+            game_layout, language, valid_words
         )
         three_word_solutions = calculate_three_word_solutions(game_layout, language)
         game_data = {
@@ -101,8 +107,8 @@ def handler(event, context):
             "language": language,
             "officialGame": False,
         }
-
         add_game_to_db(game_data)
+        add_valid_words_to_db(game_id, valid_words)
         
         return {
             "statusCode": 200,

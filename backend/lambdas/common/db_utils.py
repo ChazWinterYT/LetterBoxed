@@ -148,3 +148,72 @@ def get_valid_words_table():
     """
     table_name = os.environ.get("VALID_WORDS_TABLE", "LetterBoxedValidWords")
     return dynamodb.Table(table_name)
+
+
+# ====================== User Game States Table Functions ======================
+
+def get_user_game_state(session_id, game_id):
+    """
+    Retrieves or initializes the game state for a user session.
+    If the session does not exist, it is created.
+
+    Args:
+        session_id (str): The unique session identifier for the user.
+        game_id (str): The unique identifier for the game.
+
+    Returns:
+        dict: The user's game state.
+    """
+    try:
+        table = get_session_states_table()
+        print("Using Session States Table:", table.table_name)
+        key = {
+            "sessionId": session_id,
+            "gameId": game_id
+        }
+        response = table.get_item(Key=key)
+        user_game_data = response.get("Item")
+
+        if not user_game_data or user_game_data is None:
+            # Initialize the game state for a new session
+            return {
+                "sessionId": session_id,
+                "game_id": game_id,
+                "wordsUsed": []
+            }
+        
+        return user_game_data
+    except ClientError as e:
+        print(f"Error fetching game state for session '{session_id}', game '{game_id}': {e}")
+        return None
+
+
+def save_session_state(session_data):
+    """
+    Saves the user's game state to the DynamoDB session states table.
+
+    Args:
+        session_data (dict): The user's game state data.
+
+    Returns:
+        bool: True if operation was successful, False otherwise.
+    """
+    try:
+        table = get_session_states_table()
+        print("Using Session States Table:", table.table_name)
+        table.put_item(Item=session_data)
+        return True
+    except ClientError as e:
+        print(f"Error saving session state: {e}")
+        return False
+    
+
+def get_session_states_table():
+    """
+    Dynamically retrieves the DynamoDB session states table based on the environment variable.
+
+    Returns:
+        boto3.Table: The DynamoDB Table object.
+    """
+    table_name = os.environ.get("SESSION_STATES_TABLE", "LetterBoxedSessionStates")
+    return dynamodb.Table(table_name)
