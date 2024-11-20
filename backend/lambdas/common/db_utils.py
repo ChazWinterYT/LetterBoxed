@@ -1,5 +1,6 @@
 import os
 from typing import List, Optional, Dict, Any
+import time
 import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
@@ -183,7 +184,10 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
             return {
                 "sessionId": session_id,
                 "gameId": game_id,
-                "wordsUsed": []
+                "wordsUsed": [],
+                "gameCompleted": False,
+                "lastUpdated": int(time.time()),
+                "TTL": int(time.time()) + 30 * 24 * 60 * 60,  # 30 days from now
             }
         
         # Ensure the returned value is a dictionary
