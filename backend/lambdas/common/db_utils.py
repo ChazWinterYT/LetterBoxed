@@ -69,7 +69,7 @@ def fetch_solutions_by_standardized_hash(standardized_hash: str) -> Optional[Dic
             KeyConditionExpression=Key("standardizedHash").eq(standardized_hash),
             ProjectionExpression="twoWordSolutions, threeWordSolutions"
         )
-        items = response.get("Items", [])
+        items: List[Dict[str, Any]] = response.get("Items", [])
         
         # Iterate over items to find the first with both solution fields
         for item in items:
@@ -136,7 +136,7 @@ def fetch_valid_words_by_game_id(game_id: str) -> Optional[List[str]]:
         table = get_valid_words_table()
         print("Using Valid Words Table:", table.table_name)
         response = table.get_item(Key={"gameId": game_id})
-        item: Optional[dict] = response.get("Item")
+        item: Optional[Dict[str, List[str]]] = response.get("Item")
         return item.get("validWords", []) if item else None
     except ClientError as e:
         print(f"Error fetching valid words by gameId: {e}")
@@ -178,7 +178,7 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
         response = table.get_item(Key=key)
         user_game_data = response.get("Item")
 
-        if not user_game_data or user_game_data is None:
+        if user_game_data is None:
             # Initialize the game state for a new session
             return {
                 "sessionId": session_id,
@@ -186,7 +186,12 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
                 "wordsUsed": []
             }
         
-        return user_game_data
+        # Ensure the returned value is a dictionary
+        if isinstance(user_game_data, dict):
+            return user_game_data
+
+        print(f"Unexpected data type for user_game_data: {type(user_game_data)}")
+        return None
     except ClientError as e:
         print(f"Error fetching game state for session '{session_id}', game '{game_id}': {e}")
         return None

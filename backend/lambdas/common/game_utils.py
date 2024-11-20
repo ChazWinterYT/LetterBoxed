@@ -1,4 +1,4 @@
-from typing import List, Set, Optional, Dict
+from typing import List, Set, Optional, Dict, Tuple
 import logging
 from uuid import uuid4
 import hashlib
@@ -59,17 +59,35 @@ def standardize_board(game_layout: List[str]) -> List[str]:
     return standardized_sides
 
 
-def validate_board_size(board_size):
+def validate_board_size(board_size: str) -> bool:
+    """
+    Validate if the board size is allowed.
+
+    Args:
+        board_size (str): The board size to validate.
+
+    Returns:
+        bool: True if the board size is valid, False otherwise.
+    """
     valid_board_sizes = ["3x3", "4x4", "5x5"]
     return board_size in valid_board_sizes
 
 
-def validate_language(language):
+def validate_language(language: str) -> bool:
+    """
+    Validate if the language is supported.
+
+    Args:
+        language (str): The language to validate.
+
+    Returns:
+        bool: True if the language is supported, False otherwise.
+    """
     valid_languages = ["en", "es", "fr", "pl", "de", "it", "sv"]
     return language in valid_languages
 
 
-def generate_standardized_hash(standardized_game_layout):
+def generate_standardized_hash(standardized_game_layout: List[str]) -> str:
     """
     Generate a hash of the game layout, using a standardized letter layout so that 
     equivalent boards generate the same hash.
@@ -82,19 +100,23 @@ def generate_standardized_hash(standardized_game_layout):
     return hashlib.sha256(layout_str.encode()).hexdigest()
 
 
-def calculate_two_word_solutions(game_layout, language="en", valid_words=None, starting_letter_to_words=None):
+def calculate_two_word_solutions(
+    game_layout: List[str],
+    language: str = "en",
+    valid_words: Optional[List[str]] = None,
+    starting_letter_to_words: Optional[Dict[str, List[str]]] = None
+) -> List[Tuple[str, str]]:
     """
-    Calculate the two word solutions to the given puzzle input.
+    Calculate the two-word solutions to the given puzzle input.
 
     Args:
         game_layout (List[str]): The input letters for this game.
-        language (str, optional): Language of the word dictionary to use to find solutions.
-            Defaults to English.
-        valid_words (List[str], optional): List of valid words for this puzzle, if pre-calculated.
-        starting_letter_to_words (dict, optional): Mapping of letters to words starting with that letter.
+        language (str, optional): Language of the word dictionary.
+        valid_words (List[str], optional): Pre-calculated list of valid words.
+        starting_letter_to_words (Dict[str, List[str]], optional): Mapping of starting letters to words.
 
     Returns:
-        List[Tuple[str, str]]: List of pairs of words representing solutions to the puzzle.
+        List[Tuple[str, str]]: Pairs of words representing solutions to the puzzle.
     """
     try:
         # Preprocess words to generate a list of valid words for this puzzle
@@ -113,7 +135,7 @@ def calculate_two_word_solutions(game_layout, language="en", valid_words=None, s
     total_letters = len(all_letters)
 
     solutions = []
-    letter_usage = Counter()
+    letter_usage: Counter[str] = Counter()
 
     # Iterate through all valid words
     for word1 in valid_words:
@@ -149,7 +171,7 @@ def calculate_two_word_solutions(game_layout, language="en", valid_words=None, s
     return solutions
 
 
-def calculate_three_word_solutions(game_layout, language="en"):
+def calculate_three_word_solutions(game_layout: List[str], language: str = "en") -> List[Tuple[str, str, str]]:
     """
     Calculate three word solutions to the given puzzle input.
 
@@ -236,7 +258,7 @@ def generate_valid_words(game_layout: List[str], language: str = "en") -> List[s
     return valid_words
 
 
-def sides_list_to_sides_set(game_layout):
+def sides_list_to_sides_set(game_layout: List[str]) -> List[Set[str]]:
     """
     Converts a list of string sides to a list of sets of characters.
     
@@ -266,16 +288,16 @@ def create_letter_to_side_mapping(game_layout: List[str]) -> Dict[str, int]:
     return letter_to_side
 
 
-def create_starting_letter_to_words_dict(game_layout, language) -> dict:
+def create_starting_letter_to_words_dict(game_layout: List[str], language: str) -> Dict[str, List[str]]:
     """
     Creates a dictionary that maps each starting letter to a list of valid words starting with that letter.
 
     Args:
-        game_layout (list): The game layout containing letters.
+        game_layout (List[str]): The game layout containing letters.
         language (str): The language of the dictionary to use.
 
     Returns:
-        dict: A dictionary where keys are starting letters and values are lists of words starting with those letters.
+        Dict[str, List[str]]: A dictionary where keys are starting letters and values are lists of words starting with those letters.
     """
     valid_words = generate_valid_words(game_layout, language)
     starting_letter_to_words = defaultdict(list)
@@ -287,7 +309,7 @@ def create_starting_letter_to_words_dict(game_layout, language) -> dict:
     return starting_letter_to_words
 
 
-def update_letter_usage(letter_usage, word, increment=True):
+def update_letter_usage(letter_usage: Counter[str], word: str, increment: bool = True) -> None:
     """
     Updates the letter usage count for a word.
 
