@@ -1,0 +1,29 @@
+{
+    "exclude": [
+        "**/node_modules",
+        "**/__pycache__",
+        ".pytest_cache",
+        "**/.git",
+        "**/.idea",
+        "**/.vscode",
+        "**/*.pyc",
+        "cdk.out",
+        "venv",
+        "lambda_layer",
+        "*.iml",
+        "*.log",
+        "*.tmp",
+        "*.zip",
+        "*.tar.gz",
+        ".env",
+        ".gitignore",
+        "utility",
+        "test",
+        "cdk.json",
+        "*.bat",
+        "*.md"
+    ],
+    "include": [
+        "/backend"
+    ]
+}
