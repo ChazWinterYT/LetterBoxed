@@ -21,7 +21,7 @@ class LetterBoxedStack(Stack):
         # Define DynamoDB Resources
         # ===========================================================================
         
-        # Test DynamoDB table
+        # Test DynamoDB Games table
         self.test_game_table = dynamodb.Table(
             self, "LetterBoxedGamesTestTable",
             table_name="LetterBoxedGamesTest",
@@ -41,7 +41,7 @@ class LetterBoxedStack(Stack):
             )
         )
 
-        # Production DynamoDB table
+        # Production DynamoDB Games table
         self.prod_game_table = dynamodb.Table(
             self, "LetterBoxedGamesTable",
             table_name="LetterBoxedGames",
@@ -61,7 +61,7 @@ class LetterBoxedStack(Stack):
             )
         )
 
-        # Production ValidWords DynamoDB table
+        # Production DynamoDB ValidWords table
         self.prod_valid_words_table = dynamodb.Table(
             self, "LetterBoxedValidWordsTable",
             table_name="LetterBoxedValidWords1",
@@ -73,7 +73,7 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.RETAIN
         )
 
-        # Test ValidWords DynamoDB table
+        # Test DynamoDB ValidWords table
         self.test_valid_words_table = dynamodb.Table(
             self, "LetterBoxedValidWordsTestTable",
             table_name="LetterBoxedValidWords1Test",
@@ -85,7 +85,7 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.DESTROY
         )
 
-        # Production SessionStates DynamoDB table
+        # Production DynamoDB SessionStates table
         self.prod_user_game_states_table = dynamodb.Table(
             self, "LetterBoxedSessionStatesTable",
             table_name="LetterBoxedSessionStates",
@@ -102,7 +102,7 @@ class LetterBoxedStack(Stack):
             time_to_live_attribute="TTL"
         )
 
-        # Test SessionStates DynamoDB table
+        # Test DynamoDB SessionStates table
         self.test_user_game_states_table = dynamodb.Table(
             self, "LetterBoxedSessionStatesTestTable",
             table_name="LetterBoxedSessionStatesTest",
@@ -118,6 +118,55 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.DESTROY,
             time_to_live_attribute="TTL"
         )
+
+        # Production DynamoDB RandomGames table
+        self.prod_random_games_table = dynamodb.Table(
+            self, "LetterBoxedRandomGamesTable",
+            table_name="LetterBoxedRandomGames",
+            partition_key=dynamodb.Attribute(
+                name="atomicNumber",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
+        )
+
+        # Test DynamoDB RandomGames table
+        self.test_random_games_table = dynamodb.Table(
+            self, "LetterBoxedRandomGamesTestTable",
+            table_name="LetterBoxedRandomGamesTest",
+            partition_key=dynamodb.Attribute(
+                name="atomicNumber",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY
+        )
+
+        # Production DynamoDB Metadata table
+        self.prod_metadata_table = dynamodb.Table(
+            self, "LetterBoxedMetadataTable",
+            table_name="LetterBoxedMetadata",
+            partition_key=dynamodb.Attribute(
+                name="randomGameCount",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
+        )
+
+        # Test DynamoDB Metadata table
+        self.test_metadata_table = dynamodb.Table(
+            self, "LetterBoxedMetadataTestTable",
+            table_name="LetterBoxedMetadataTest",
+            partition_key=dynamodb.Attribute(
+                name="randomGameCount",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY
+        )
+
 
         # ===========================================================================
         # Define S3 Resources
@@ -148,6 +197,8 @@ class LetterBoxedStack(Stack):
             "GAMES_TABLE_NAME": "LetterBoxedGamesTest",
             "VALID_WORDS_TABLE": "LetterBoxedValidWords1Test",
             "SESSION_STATES_TABLE": "LetterBoxedSessionStatesTest",
+            "RANDOM_GAMES_TABLE": "LetterBoxedRandomGamesTest",
+            "METADATA_TABLE": "LetterBoxedMetadataTest",
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "test-dictionary-bucket",
             "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
@@ -158,6 +209,8 @@ class LetterBoxedStack(Stack):
             "GAMES_TABLE_NAME": "LetterBoxedGames",
             "VALID_WORDS_TABLE": "LetterBoxedValidWords1",
             "SESSION_STATES_TABLE": "LetterBoxedSessionStates",
+            "RANDOM_GAMES_TABLE": "LetterBoxedRandomGames",
+            "METADATA_TABLE": "LetterBoxedMetadata",
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "chazwinter.com",
             "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
