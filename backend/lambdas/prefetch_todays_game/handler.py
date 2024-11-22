@@ -2,14 +2,8 @@ import json
 from typing import Dict, Any
 from lambdas.prefetch_todays_game.prefetch_service import fetch_todays_game
 from lambdas.common.db_utils import add_game_to_db, fetch_game_by_id, add_valid_words_to_db
-from lambdas.common.game_utils import (
-    standardize_board, 
-    calculate_two_word_solutions,
-    calculate_three_word_solutions,
-)
-from lambdas.common.game_schema import (
-    generate_standardized_hash,
-)
+from lambdas.common.game_schema import create_game_schema
+
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
@@ -30,30 +24,22 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 })
             }
 
-        # Generate standardized hash
-        standardized_game_layout = standardize_board(todays_game["gameLayout"])
-        standardized_hash = generate_standardized_hash(standardized_game_layout)
-        two_word_solutions = calculate_two_word_solutions(standardized_game_layout)
-        three_word_solutions = calculate_three_word_solutions(standardized_game_layout)
-
-        # Prepare the game object
-        game_object = {
-            "gameId": todays_game["gameId"],
-            "gameLayout": todays_game["gameLayout"],
-            "standardizedHash": standardized_hash,
-            "nytSolution": todays_game["nytSolution"],
-            "twoWordSolutions": two_word_solutions,
-            "threeWordSolutions": three_word_solutions,
-            "dictionary": todays_game["dictionary"],
-            "par": todays_game["par"],
-            "boardSize": "3x3",  # NYT games are always 3x3
-            "language": "en",  # Default to English
-            "officialGame": True, # Official NYT game
-        }
+        # Create the game schema using the centralized function
+        game_object = create_game_schema(
+            game_id=game_id,
+            game_layout=todays_game["gameLayout"],
+            game_type="nyt",
+            official_game=True,
+            nyt_solution=todays_game["nytSolution"],
+            dictionary=todays_game["dictionary"],
+            par=todays_game["par"],
+            board_size="3x3",  # NYT games are always 3x3
+            language="en",  # Default to English
+        )
 
         # Add today's game to the database
         add_game_to_db(game_object)
-        add_valid_words_to_db(game_id, todays_game["dictionary"])
+        add_valid_words_to_db(game_id, game_object["validWords"])
 
         return {
             "statusCode": 201,
