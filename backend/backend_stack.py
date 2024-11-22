@@ -21,10 +21,21 @@ class LetterBoxedStack(Stack):
         # Define DynamoDB Resources
         # ===========================================================================
         
+        prod_GAMES_TABLE_NAME = "LetterBoxedGames"
+        prod_VALID_WORDS_TABLE_NAME = "LetterBoxedValidWords1"
+        prod_SESSION_STATES_TABLE_NAME = "LetterBoxedSessionStates"
+        prod_RANDOM_GAMES_TABLE_NAME = "LetterBoxedRandomGames"
+        prod_METADATA_TABLE_NAME = "LetterBoxedMetadataTable"
+        test_GAMES_TABLE_NAME = "LetterBoxedGamesTest"
+        test_VALID_WORDS_TABLE_NAME = "LetterBoxedValidWords1Test"
+        test_SESSION_STATES_TABLE_NAME = "LetterBoxedSessionStatesTest"
+        test_RANDOM_GAMES_TABLE_NAME = "LetterBoxedRandomGamesTest"
+        test_METADATA_TABLE_NAME = "LetterBoxedMetadataTableTest"
+
         # Test DynamoDB Games table
         self.test_game_table = dynamodb.Table(
             self, "LetterBoxedGamesTestTable",
-            table_name="LetterBoxedGamesTest",
+            table_name=test_GAMES_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
@@ -36,7 +47,7 @@ class LetterBoxedStack(Stack):
         # Production DynamoDB Games table
         self.prod_game_table = dynamodb.Table(
             self, "LetterBoxedGamesTable",
-            table_name="LetterBoxedGames",
+            table_name=prod_GAMES_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
@@ -48,7 +59,7 @@ class LetterBoxedStack(Stack):
         # Production DynamoDB ValidWords table
         self.prod_valid_words_table = dynamodb.Table(
             self, "LetterBoxedValidWordsTable",
-            table_name="LetterBoxedValidWords1",
+            table_name=prod_VALID_WORDS_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
@@ -60,7 +71,7 @@ class LetterBoxedStack(Stack):
         # Test DynamoDB ValidWords table
         self.test_valid_words_table = dynamodb.Table(
             self, "LetterBoxedValidWordsTestTable",
-            table_name="LetterBoxedValidWords1Test",
+            table_name=test_VALID_WORDS_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
@@ -72,7 +83,7 @@ class LetterBoxedStack(Stack):
         # Production DynamoDB SessionStates table
         self.prod_user_game_states_table = dynamodb.Table(
             self, "LetterBoxedSessionStatesTable",
-            table_name="LetterBoxedSessionStates",
+            table_name=prod_SESSION_STATES_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="sessionId",
                 type=dynamodb.AttributeType.STRING
@@ -89,7 +100,7 @@ class LetterBoxedStack(Stack):
         # Test DynamoDB SessionStates table
         self.test_user_game_states_table = dynamodb.Table(
             self, "LetterBoxedSessionStatesTestTable",
-            table_name="LetterBoxedSessionStatesTest",
+            table_name=test_SESSION_STATES_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="sessionId",
                 type=dynamodb.AttributeType.STRING
@@ -106,7 +117,7 @@ class LetterBoxedStack(Stack):
         # Production DynamoDB RandomGames table
         self.prod_random_games_table = dynamodb.Table(
             self, "LetterBoxedRandomGamesTable",
-            table_name="LetterBoxedRandomGames",
+            table_name=prod_RANDOM_GAMES_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="atomicNumber",
                 type=dynamodb.AttributeType.NUMBER
@@ -118,7 +129,7 @@ class LetterBoxedStack(Stack):
         # Test DynamoDB RandomGames table
         self.test_random_games_table = dynamodb.Table(
             self, "LetterBoxedRandomGamesTestTable",
-            table_name="LetterBoxedRandomGamesTest",
+            table_name=test_RANDOM_GAMES_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="atomicNumber",
                 type=dynamodb.AttributeType.NUMBER
@@ -130,7 +141,7 @@ class LetterBoxedStack(Stack):
         # Production DynamoDB Metadata table
         self.prod_metadata_table = dynamodb.Table(
             self, "LetterBoxedMetadataTable",
-            table_name="LetterBoxedMetadata",
+            table_name=prod_METADATA_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="metadataType",
                 type=dynamodb.AttributeType.STRING
@@ -142,7 +153,7 @@ class LetterBoxedStack(Stack):
         # Test DynamoDB Metadata table
         self.test_metadata_table = dynamodb.Table(
             self, "LetterBoxedMetadataTestTable",
-            table_name="LetterBoxedMetadataTest",
+            table_name=test_METADATA_TABLE_NAME,
             partition_key=dynamodb.Attribute(
                 name="metadataType",
                 type=dynamodb.AttributeType.STRING
@@ -178,11 +189,11 @@ class LetterBoxedStack(Stack):
 
         # Define common environment for all Lambdas
         test_common_environment = {
-            "GAMES_TABLE_NAME": "LetterBoxedGamesTest",
-            "VALID_WORDS_TABLE": "LetterBoxedValidWords1Test",
-            "SESSION_STATES_TABLE": "LetterBoxedSessionStatesTest",
-            "RANDOM_GAMES_TABLE": "LetterBoxedRandomGamesTest",
-            "METADATA_TABLE": "LetterBoxedMetadataTest",
+            "GAMES_TABLE_NAME": test_GAMES_TABLE_NAME,
+            "VALID_WORDS_TABLE": test_VALID_WORDS_TABLE_NAME,
+            "SESSION_STATES_TABLE": test_SESSION_STATES_TABLE_NAME,
+            "RANDOM_GAMES_TABLE": test_RANDOM_GAMES_TABLE_NAME,
+            "METADATA_TABLE": test_METADATA_TABLE_NAME,
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "test-dictionary-bucket",
             "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
@@ -190,11 +201,11 @@ class LetterBoxedStack(Stack):
         }
 
         prod_common_environment = {
-            "GAMES_TABLE_NAME": "LetterBoxedGames",
-            "VALID_WORDS_TABLE": "LetterBoxedValidWords1",
-            "SESSION_STATES_TABLE": "LetterBoxedSessionStates",
-            "RANDOM_GAMES_TABLE": "LetterBoxedRandomGames",
-            "METADATA_TABLE": "LetterBoxedMetadata",
+            "GAMES_TABLE_NAME": prod_GAMES_TABLE_NAME,
+            "VALID_WORDS_TABLE": prod_VALID_WORDS_TABLE_NAME,
+            "SESSION_STATES_TABLE": prod_SESSION_STATES_TABLE_NAME,
+            "RANDOM_GAMES_TABLE": prod_RANDOM_GAMES_TABLE_NAME,
+            "METADATA_TABLE": prod_METADATA_TABLE_NAME,
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "chazwinter.com",
             "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
@@ -207,9 +218,17 @@ class LetterBoxedStack(Stack):
                 "handler": "lambdas.fetch_game.handler.handler",
                 "name": "FetchGameLambda"
             },
+            "fetch_random": {
+                "handler": "lambdas.fetch_random.handler.handler",
+                "name": "FetchRandomGameLambda"
+            },
             "create_custom": {
                 "handler": "lambdas.create_custom.handler.handler",
                 "name": "CreateCustomLambda"
+            },
+            "create_random": {
+                "handler": "lambdas.create_random.handler.handler",
+                "name": "CreateRandomGameLambda"
             },
             "prefetch_todays_game": {
                 "handler": "lambdas.prefetch_todays_game.handler.handler",
