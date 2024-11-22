@@ -7,14 +7,14 @@ from lambdas.common.db_utils import (
     add_valid_words_to_db,
     fetch_valid_words_by_game_id,
 )
-from lambdas.common.game_utils import (
-    generate_game_id, 
+from lambdas.common.game_utils import ( 
     standardize_board, 
     calculate_two_word_solutions, 
     calculate_three_word_solutions, 
     generate_valid_words,
 )
 from lambdas.common.game_schema import (
+    generate_game_id,
     create_game_schema,
     validate_board_matches_layout,
     generate_game_id, 

@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Optional, List, Tuple
 import uuid
 import hashlib
 from datetime import datetime, timezone
@@ -195,4 +195,4 @@ def generate_game_id() -> str:
     Returns:
         str: A unique identifier string.
     """
-    return str(uuid4())
+    return str(uuid.uuid4())

@@ -4,9 +4,11 @@ from lambdas.prefetch_todays_game.prefetch_service import fetch_todays_game
 from lambdas.common.db_utils import add_game_to_db, fetch_game_by_id, add_valid_words_to_db
 from lambdas.common.game_utils import (
     standardize_board, 
-    generate_standardized_hash,
     calculate_two_word_solutions,
     calculate_three_word_solutions,
+)
+from lambdas.common.game_schema import (
+    generate_standardized_hash,
 )
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
