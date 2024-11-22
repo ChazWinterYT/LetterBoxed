@@ -39,7 +39,8 @@ def fetch_todays_game() -> Dict[str, Any]:
         "gameLayout": game_data["sides"],
         "nytSolution": game_data["ourSolution"],
         "dictionary": game_data["dictionary"],
-        "par": str(game_data["par"])
+        "par": str(game_data["par"]),
+        "createdBy": game_data["editor"],
     }
 
     return todays_game

@@ -229,6 +229,25 @@ def get_session_states_table() -> Any:
 
 # ====================== Random Game Table Functions ======================
 
+def add_game_id_to_random_games_db(game_id: str) -> int:
+    """
+    Insert the game ID and atomic number into the Random Games table.
+
+    Args:
+        game_id (str): The unique game ID.
+        atomic_number (int): The atomic number assigned to this game.
+    
+    Returns:
+        int: The atomic number assigned to this game.
+    """
+    atomic_number = increment_random_game_count()
+    table = get_random_games_table()
+    table.put_item(Item={
+        "atomicNumber": atomic_number,
+        "gameId": game_id
+    })
+    return atomic_number
+
 
 def get_random_games_table() -> Any:
     """
@@ -241,13 +260,55 @@ def get_random_games_table() -> Any:
     return dynamodb.Table(table_name)
 
 # ====================== Metadata Table Functions ======================
-def fetch_random_game_count() -> Dict[str, Any]:
+
+def fetch_random_game_count() -> int:
     """
     Fetch the current random game count from the metadata table.
+
+    Returns:
+        int: The current count of random games.
     """
     table = get_metadata_table()
-    response = table.get_item(Key={"randomGameCount": 1})
-    return response.get("Item", {}).get("randomGameCount", 0)
+    response = table.get_item(Key={"metadataType": "randomGameCount"})
+    return response.get("Item", {}).get("value", 0)
+
+
+def increment_random_game_count() -> int:
+    """
+    Increment the random game count in the metadata table and return the new count.
+
+    Returns:
+        int: The new count of random games.
+    """
+    table = get_metadata_table()
+    response = table.update_item(
+        Key={"metadataType": "randomGameCount"},
+        UpdateExpression="SET #val = if_not_exists(#val, :start) + :inc",
+        ExpressionAttributeNames={"#val": "value"},
+        ExpressionAttributeValues={":start": 0, ":inc": 1},
+        ReturnValues="UPDATED_NEW"
+    )
+    return int(response["Attributes"]["value"])
+
+
+def update_metadata(metadata_type: str, new_value: int) -> None:
+    """
+    Update the metadata table with a new value for the specified metadata type.
+    Meant as a generic metadata updater. If the specific metadata is known,
+    a different function may be more appropriate (such as increment_random_game_count)
+
+    Args:
+        metadata_type (str): The type of metadata to update.
+        new_value (int): The new value to set for the metadata.
+    """
+    table = get_metadata_table()
+    table.update_item(
+        Key={"metadataType": metadata_type},
+        UpdateExpression="SET #val = :newVal",
+        ExpressionAttributeNames={"#val": "value"},
+        ExpressionAttributeValues={":newVal": new_value}
+    )
+
 
 def get_metadata_table() -> Any:
     """

@@ -1,6 +1,5 @@
 import json
 from typing import Dict, Any
-from lambdas.common.db_utils import (
-    add_game_to_db,
-    
+from lambdas.create_random.random_game_service import (
+    create_random_game
 )

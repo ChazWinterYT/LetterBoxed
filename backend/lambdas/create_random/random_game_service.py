@@ -1,5 +1,43 @@
 import random
 from typing import List, Optional, Tuple
+from lambdas.common.dictionary_utils import get_dictionary
+from lambdas.common.db_utils import (
+    add_game_to_db,
+    add_valid_words_to_db,
+    fetch_random_game_count,
+)
+
+DEFAULT_LANGUAGE = "en"
+
+def create_random_game(language: str = "en") -> Dict[str, Optional[List[str]]]:
+    """
+    Create a random game by selecting two words from the dictionary and generating a layout.
+
+    Args:
+        language (str): The language code for the dictionary (default: 'en').
+
+    Returns:
+        Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout,
+        or None if the process fails.
+    """
+    # Fetch the dictionary for the specified language
+    dictionary = get_dictionary(language)
+    if not dictionary:
+        raise ValueError("Dictionary not found for the specified language.")
+
+    # Select two words that can be potentially linked for the random puzzle
+    selected_words = select_two_words(dictionary)
+    if not selected_words:
+        raise ValueError("Failed to find a valid pair of words for the game.")
+
+    word1, word2 = selected_words
+
+    # Generate the game layout
+    game_layout = generate_layout(word1, word2)
+    if not game_layout:
+        raise ValueError("Failed to generate a valid layout for the game.")
+
+    
 
 
 def generate_layout(word1: str, word2: str) -> Optional[List[str]]:

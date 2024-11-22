@@ -35,6 +35,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             par=todays_game["par"],
             board_size="3x3",  # NYT games are always 3x3
             language="en",  # Default to English
+            created_by=todays_game["createdBy"],
         )
 
         # Add today's game to the database
