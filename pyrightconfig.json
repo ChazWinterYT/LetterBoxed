@@ -2,28 +2,40 @@
     "exclude": [
         "**/node_modules",
         "**/__pycache__",
-        ".pytest_cache",
-        "**/.git",
-        "**/.idea",
-        "**/.vscode",
-        "**/*.pyc",
+        "backend/venv",
+        "backend/__pycache__",
+        "**/.pytest_cache",
+        ".mypy_cache",
+        ".git",
+        ".idea",
+        ".vscode",
+        "*.pyc",
         "cdk.out",
-        "venv",
-        "lambda_layer",
         "*.iml",
         "*.log",
         "*.tmp",
         "*.zip",
         "*.tar.gz",
+        ".github",
         ".env",
         ".gitignore",
         "utility",
         "test",
         "cdk.json",
         "*.bat",
-        "*.md"
+        "*.md",
+        "backend/venv",
+        "backend/__pycache__",
+        "backend/static",
+        "backend/logs",
+        "**/node_modules",
+        "**/.git",
+        "**/__pycache__",
+        "**/*.pyc"
     ],
     "include": [
-        "/backend"
-    ]
+        "backend/**/*.py"
+    ],
+    "indexing": false, 
+    "verboseOutput": true
 }

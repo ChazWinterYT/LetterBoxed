@@ -1,21 +1,11 @@
 from typing import List, Set, Optional, Dict, Tuple
 import logging
 from uuid import uuid4
-import hashlib
 from collections import defaultdict, Counter
 from lambdas.common.dictionary_utils import get_dictionary
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
-
-def generate_game_id() -> str:
-    """
-    Generate a unique game id for a user-created game.
-
-    Returns:
-        str: A unique identifier string.
-    """
-    return str(uuid4())
 
 
 def standardize_board(game_layout: List[str]) -> List[str]:
@@ -59,45 +49,7 @@ def standardize_board(game_layout: List[str]) -> List[str]:
     return standardized_sides
 
 
-def validate_board_size(board_size: str) -> bool:
-    """
-    Validate if the board size is allowed.
 
-    Args:
-        board_size (str): The board size to validate.
-
-    Returns:
-        bool: True if the board size is valid, False otherwise.
-    """
-    valid_board_sizes = ["3x3", "4x4", "5x5"]
-    return board_size in valid_board_sizes
-
-
-def validate_language(language: str) -> bool:
-    """
-    Validate if the language is supported.
-
-    Args:
-        language (str): The language to validate.
-
-    Returns:
-        bool: True if the language is supported, False otherwise.
-    """
-    valid_languages = ["en", "es", "fr", "pl", "de", "it", "sv"]
-    return language in valid_languages
-
-
-def generate_standardized_hash(standardized_game_layout: List[str]) -> str:
-    """
-    Generate a hash of the game layout, using a standardized letter layout so that 
-    equivalent boards generate the same hash.
-    
-    Args:
-        standardized_game_layout (List[str]): The input letters for this game, 
-        sorted so that equivalent boards generate the same hash.
-    """
-    layout_str = "-".join(standardized_game_layout)
-    return hashlib.sha256(layout_str.encode()).hexdigest()
 
 
 def calculate_two_word_solutions(
@@ -171,14 +123,20 @@ def calculate_two_word_solutions(
     return solutions
 
 
-def calculate_three_word_solutions(game_layout: List[str], language: str = "en") -> List[Tuple[str, str, str]]:
+def calculate_three_word_solutions(
+    game_layout: List[str],
+    language: str = "en",
+    valid_words: Optional[List[str]] = None,
+    starting_letter_to_words: Optional[Dict[str, List[str]]] = None
+) -> List[Tuple[str, str, str]]:
     """
     Calculate three word solutions to the given puzzle input.
 
     Args:
         game_layout (List[str]): The input letters for this game.
-        language (str, optional): Language of the word dictionary to use to find solutions.
-            Defaults to English.
+        language (str, optional): Language of the word dictionary.
+        valid_words (List[str], optional): Pre-calculated list of valid words.
+        starting_letter_to_words (Dict[str, List[str]], optional): Mapping of starting letters to words.
     
     Returns:
         List[Tuple[str, str, str]]: List of trios of words representing solutions to the puzzle.

@@ -12,16 +12,20 @@ from lambdas.common.game_utils import (
     standardize_board, 
     calculate_two_word_solutions, 
     calculate_three_word_solutions, 
-    generate_standardized_hash,
-    validate_language,
-    validate_board_size,
     generate_valid_words,
+)
+from lambdas.common.game_schema import (
+    create_game_schema,
+    validate_board_matches_layout,
+    generate_game_id, 
+    generate_standardized_hash,
 )
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     # Get the user-defined layout from the event payload
     body = json.loads(event.get("body", "{}"))
     game_layout = body.get("gameLayout")
+    created_by = body.get("sessionId", "")
     if not game_layout:
         return {
             "statusCode": 400,
@@ -33,23 +37,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     language = body.get("language", "en") # Default to English
     board_size = body.get("boardSize", "3x3") # Default to 3x3
     standardized_layout = standardize_board(game_layout)
-    
-    # Validate boardSize and language
-    if not validate_board_size(board_size):
-        return {
-            "statusCode": 400,
-            "body": json.dumps({
-                "message": "Invalid Game Board Size."
-            })
-        }
-    
-    if not validate_language(language):
-        return {
-            "statusCode": 400,
-            "body": json.dumps({
-                "message": f"Selected language is not supported."
-            })
-        }
+
     
     if not validate_board_matches_layout(game_layout, board_size):
         return {
@@ -118,36 +106,4 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "message": "Game created. New solution generated and cached in DB."
             })
         }
-
-
-def validate_board_matches_layout(game_layout: list[str], board_size: str) -> bool:
-    """
-    Validates the game layout against the specified board size.
-
-    Args:
-        game_layout (list[str]): The game layout as a list of strings.
-        board_size (str): The board size in the format "m x n" (e.g., "3x3" or "4x5").
-
-    Returns:
-        bool: True if the layout is valid, False otherwise.
-    """
-    # Parse board size
-    try:
-        rows, cols = map(int, board_size.lower().split('x'))
-    except ValueError:
-        raise ValueError(f"Invalid board size format: '{board_size}'. Expected 'm x n'.")
-
-    # Calculate total expected spaces
-    total_spaces = (2 * rows) + (2 * cols)
-
-    # Check that the number of letters in game_layout matches total_spaces
-    layout_letter_count = sum(len(side) for side in game_layout)
-
-    if layout_letter_count != total_spaces:
-        raise ValueError(
-            f"Invalid game layout: Expected {total_spaces} letters for a {rows}x{cols} board, "
-            f"but got {layout_letter_count}."
-        )
-
-    return True
    
