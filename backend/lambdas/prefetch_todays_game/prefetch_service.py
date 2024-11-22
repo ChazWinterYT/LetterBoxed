@@ -40,7 +40,7 @@ def fetch_todays_game() -> Dict[str, Any]:
         "nytSolution": game_data["ourSolution"],
         "dictionary": game_data["dictionary"],
         "par": str(game_data["par"]),
-        "createdBy": game_data["editor"],
+        "createdBy": game_data.get("editor", ""),
     }
 
     return todays_game
