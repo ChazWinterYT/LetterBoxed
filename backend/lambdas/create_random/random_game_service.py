@@ -3,18 +3,19 @@ from typing import List, Optional, Tuple
 from lambdas.common.dictionary_utils import get_dictionary
 from lambdas.common.db_utils import (
     add_game_to_db,
-    add_valid_words_to_db,
-    fetch_random_game_count,
+    add_game_id_to_random_games_db
 )
+from lambdas.common.game_schema import create_game_schema
 
 DEFAULT_LANGUAGE = "en"
 
-def create_random_game(language: str = "en") -> Dict[str, Optional[List[str]]]:
+def create_random_game(language: str = "en", board_size: str = "3x3") -> Dict[str, Optional[List[str]]]:
     """
     Create a random game by selecting two words from the dictionary and generating a layout.
 
     Args:
         language (str): The language code for the dictionary (default: 'en').
+        board_size (str): The size of the board to generate (default: '3x3).
 
     Returns:
         Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout,
@@ -37,7 +38,22 @@ def create_random_game(language: str = "en") -> Dict[str, Optional[List[str]]]:
     if not game_layout:
         raise ValueError("Failed to generate a valid layout for the game.")
 
-    
+    game_data = create_game_schema(
+        game_layout=game_layout,
+        game_type="random",
+        language=language,
+        board_size=board_size,
+        random_seed_words=[word1, word2],
+        created_by=""
+    )
+
+    # Store the game in the games DB
+    add_game_to_db(game_data)
+
+    # Add the game to the random games table and track the count
+    atomic_number = add_game_id_to_random_games_db(game_data["gameId"])
+
+    return game_data
 
 
 def generate_layout(word1: str, word2: str) -> Optional[List[str]]:
