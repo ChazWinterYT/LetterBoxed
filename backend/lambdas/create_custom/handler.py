@@ -21,12 +21,6 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "body": json.dumps({"message": "Game Layout is required."})
         }
 
-    if not validate_board_matches_layout(game_layout, board_size):
-        return {
-            "statusCode": 400,
-            "body": json.dumps({"message": "Game layout does not match board size."})
-        }
-
     # Create the game schema
     try:
         game_data = create_game_schema(

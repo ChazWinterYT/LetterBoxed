@@ -29,7 +29,7 @@ def create_game_schema(
     par: Optional[str] = None,
     board_size: str = "3x3",
     language: str = "en",
-    created_at: str = None,
+    created_at: Optional[str] = None,
     created_by: str = "",
     clue: str = "",
 ) -> Dict[str, Any]:
@@ -71,11 +71,8 @@ def create_game_schema(
     if not game_layout:
         raise ValueError("Game layout is required to create a game schema.")
     
-    if not validate_board_matches_layout(game_layout, board_size):
-        raise ValueError(
-            f"Invalid game layout: Expected {total_spaces} letters for a {rows}x{cols} board, "
-            f"but got {layout_letter_count}."
-        )
+    # Validate board layout (raises an error if invalid)
+    validate_board_matches_layout(game_layout, board_size)
 
     # Generate missing fields
     game_id = game_id or generate_game_id()
@@ -149,30 +146,31 @@ def validate_language(language: str) -> bool:
     return language in valid_languages
 
 
-def validate_board_matches_layout(game_layout: list[str], board_size: str) -> bool:
+def validate_board_matches_layout(game_layout: List[str], board_size: str) -> None:
     """
     Validates the game layout against the specified board size.
+    Raises a ValueError if the layout does not match the board size.
 
     Args:
-        game_layout (list[str]): The game layout as a list of strings.
+        game_layout (List[str]): The game layout as a list of strings.
         board_size (str): The board size in the format "m x n" (e.g., "3x3" or "4x5").
 
-    Returns:
-        bool: True if the layout is valid, False otherwise.
+    Raises:
+        ValueError: If the layout does not match the specified board size.
     """
-    # Parse board size
     try:
         rows, cols = map(int, board_size.lower().split('x'))
     except ValueError:
         raise ValueError(f"Invalid board size format: '{board_size}'. Expected 'm x n'.")
 
-    # Calculate total expected spaces
     total_spaces = (2 * rows) + (2 * cols)
-
-    # Check that the number of letters in game_layout matches total_spaces
     layout_letter_count = sum(len(side) for side in game_layout)
 
-    return layout_letter_count == total_spaces
+    if layout_letter_count != total_spaces:
+        raise ValueError(
+            f"Invalid game layout: Expected {total_spaces} letters for a {rows}x{cols} board, "
+            f"but got {layout_letter_count}."
+        )
 
 
 def generate_standardized_hash(standardized_game_layout: List[str]) -> str:
