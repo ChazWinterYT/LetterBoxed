@@ -225,3 +225,36 @@ def get_session_states_table() -> Any:
     """
     table_name = os.environ.get("SESSION_STATES_TABLE", "LetterBoxedSessionStates")
     return dynamodb.Table(table_name)
+
+
+# ====================== Random Game Table Functions ======================
+
+
+def get_random_games_table() -> Any:
+    """
+    Dynamically retrieves the DynamoDB Random Games table based on the environment variable.
+
+    Returns:
+        boto3.Table: The DynamoDB Table object.
+    """
+    table_name = os.environ.get("RANDOM_GAMES_TABLE", "LetterBoxedRandomGames")
+    return dynamodb.Table(table_name)
+
+# ====================== Metadata Table Functions ======================
+def fetch_random_game_count() -> Dict[str, Any]:
+    """
+    Fetch the current random game count from the metadata table.
+    """
+    table = get_metadata_table()
+    response = table.get_item(Key={"randomGameCount": 1})
+    return response.get("Item", {}).get("randomGameCount", 0)
+
+def get_metadata_table() -> Any:
+    """
+    Dynamically retrieves the DynamoDB metadata table based on the environment variable.
+
+    Returns:
+        boto3.Table: The DynamoDB Table object.
+    """
+    table_name = os.environ.get("METADATA_TABLE", "LetterBoxedMetadata")
+    return dynamodb.Table(table_name)

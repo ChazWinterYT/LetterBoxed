@@ -33,14 +33,6 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.DESTROY  # Test resources should be cleaned up
         )
 
-        self.test_game_table.add_global_secondary_index(
-            index_name="StandardizedHashIndex",
-            partition_key=dynamodb.Attribute(
-                name="standardizedHash",
-                type=dynamodb.AttributeType.STRING
-            )
-        )
-
         # Production DynamoDB Games table
         self.prod_game_table = dynamodb.Table(
             self, "LetterBoxedGamesTable",
@@ -51,14 +43,6 @@ class LetterBoxedStack(Stack):
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN  # Retain production resources
-        )
-
-        self.prod_game_table.add_global_secondary_index(
-            index_name="StandardizedHashIndex",
-            partition_key=dynamodb.Attribute(
-                name="standardizedHash",
-                type=dynamodb.AttributeType.STRING
-            )
         )
 
         # Production DynamoDB ValidWords table
@@ -148,8 +132,8 @@ class LetterBoxedStack(Stack):
             self, "LetterBoxedMetadataTable",
             table_name="LetterBoxedMetadata",
             partition_key=dynamodb.Attribute(
-                name="randomGameCount",
-                type=dynamodb.AttributeType.NUMBER
+                name="metadataType",
+                type=dynamodb.AttributeType.STRING
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN
@@ -160,8 +144,8 @@ class LetterBoxedStack(Stack):
             self, "LetterBoxedMetadataTestTable",
             table_name="LetterBoxedMetadataTest",
             partition_key=dynamodb.Attribute(
-                name="randomGameCount",
-                type=dynamodb.AttributeType.NUMBER
+                name="metadataType",
+                type=dynamodb.AttributeType.STRING
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
