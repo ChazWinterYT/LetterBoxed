@@ -1,5 +1,5 @@
 import random
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 from lambdas.common.dictionary_utils import get_dictionary
 from lambdas.common.db_utils import (
     add_game_to_db,
