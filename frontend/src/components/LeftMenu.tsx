@@ -1,7 +1,11 @@
 import React from 'react';
 import './css/LeftMenu.css';
 
-const LeftMenu = ({ onOptionSelect }: { onOptionSelect: (option: string) => void }) => (
+interface LeftMenuProps {
+  onOptionSelect: (option: string) => void;
+}
+
+const LeftMenu: React.FC<LeftMenuProps> = ({ onOptionSelect }) => (
   <aside className="left-menu">
     <h2>Menu</h2>
     <ul>

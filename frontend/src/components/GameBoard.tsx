@@ -1,10 +1,16 @@
 import React from 'react';
 import './css/GameBoard.css';
 
-const GameBoard = ({ board }: { board: string[] }) => (
+interface GameBoardProps {
+  board: string[];
+}
+
+const GameBoard: React.FC<GameBoardProps> = ({ board }) => (
   <div className="game-board">
-    {board.map((letter, idx) => (
-      <div key={idx} className="game-tile">{letter}</div>
+    {board.map((letter, index) => (
+      <div key={index} className="tile">
+        {letter}
+      </div>
     ))}
   </div>
 );
