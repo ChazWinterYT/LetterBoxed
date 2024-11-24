@@ -10,29 +10,38 @@ from lambdas.common.game_schema import create_game_schema
 
 DEFAULT_LANGUAGE = "en"
 
-def create_random_game(language: str = "en", board_size: str = "3x3") -> Dict[str, Optional[List[str]]]:
+def create_random_game(language: str = "en", board_size: str = "3x3", seed_words: Optional[tuple[str, str]] = None) -> Dict[str, Optional[List[str]]]:
     """
     Create a random game by selecting two words from the dictionary and generating a layout.
 
     Args:
         language (str): The language code for the dictionary (default: 'en').
         board_size (str): The size of the board to generate (default: '3x3).
+        seed_words (tuple[str, str], optional): The two words to use to generate the puzzle, if provided.
+            If not provided, the function will select two compatible words at random.
 
     Returns:
-        Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout,
-        or None if the process fails.
+        Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout.
+    
+    Raises:
+        ValueError if a step in the process fails.
     """
     # Fetch the dictionary for the specified language
     dictionary = get_dictionary(language)
     if not dictionary:
         raise ValueError("Dictionary not found for the specified language.")
 
-    # Select two words that can be potentially linked for the random puzzle
-    selected_words = select_two_words(dictionary)
-    if not selected_words:
-        raise ValueError("Failed to find a valid pair of words for the game.")
+    # Select two words that can be potentially linked for the random puzzle, if not provided
+    if not seed_words:
+        seed_words = select_two_words(dictionary)
+        if not seed_words:
+            raise ValueError("Failed to find a valid pair of words for the game.")
 
-    word1, word2 = selected_words
+    word1, word2 = seed_words
+    
+    # Validate that the two provided words are actually in the dictionary
+    if word1 not in dictionary or word2 not in dictionary:
+        raise ValueError("One or both words are not valid dictionary words.")
 
     # Generate the game layout
     game_layout = generate_layout(word1, word2)
@@ -71,6 +80,9 @@ def generate_layout(word1: str, word2: str) -> Optional[List[str]]:
         Optional[List[str]]: A list of 4 strings representing the sides of the board,
         or None if no valid layout can be generated.
     """
+    if word2[0] != word1[-1]:
+        return None
+    
     combined_letters = word1 + word2[1:]
     if len(set(combined_letters)) != 12:
         return None

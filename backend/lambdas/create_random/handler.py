@@ -12,11 +12,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
         # Parse parameters for the event
         body = json.loads(event.get("body", "{}"))
+        seed_words = body.get("seedWords", None) # Use seed words if provided
         language = body.get("language", "en")  # Default to English
         board_size = body.get("boardSize", "3x3")  # Default to 3x3
 
         # Retry random game creation if it fails
-        random_game_data = retry_random_game_creation(language, board_size)
+        random_game_data = retry_random_game_creation(language, board_size, seed_words)
 
         # Return the game details
         return {
@@ -35,12 +36,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         }
 
 
-def retry_random_game_creation(language: str, board_size: str) -> Dict[str, Any]:
+def retry_random_game_creation(language: str, board_size: str, seed_words: Optional[tuple[str, str]]) -> Dict[str, Any]:
     retries = 0
     while retries < MAX_RETRIES:
         try:
             # Create a random game
-            return create_random_game(language, board_size)
+            return create_random_game(language, board_size, seed_words)
         except ValueError as e:
             retries += 1
             print(f"Retrying ({retries}/{MAX_RETRIES}) due to error generating game: {e}")

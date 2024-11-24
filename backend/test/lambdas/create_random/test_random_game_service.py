@@ -18,10 +18,12 @@ def mock_game_schema():
         "gameId": "test-game-id",
         "gameLayout": ["RHV", "WTU", "LBK", "AEC"],
         "gameType": "random",
+        "officialGame": False,
         "language": "en",
         "boardSize": "3x3",
         "randomSeedWords": ["BULWARK", "KVETCH"],
         "createdBy": "",
+        "validWords": ["BULWARK", "KVETCH"],
     }
 
 
