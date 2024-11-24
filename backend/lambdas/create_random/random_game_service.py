@@ -28,8 +28,11 @@ def create_random_game(language: str = "en", board_size: str = "3x3", seed_words
     """
     # Fetch the dictionary for the specified language
     dictionary = get_dictionary(language)
+    basic_dictionary = get_basic_dictionary(language)
     if not dictionary:
         raise ValueError("Dictionary not found for the specified language.")
+    if not basic_dictionary:
+        raise ValueError("Basic dictionary not found for the speciied language.")
 
     # Select two words that can be potentially linked for the random puzzle, if not provided
     if not seed_words:
