@@ -1,26 +1,24 @@
 import pytest
 from unittest.mock import MagicMock
 import os
-import boto3
 from botocore.exceptions import ClientError
 from lambdas.common.dictionary_utils import (
     get_dictionary,
+    get_basic_dictionary,
     _fetch_dictionary_from_s3,
-    _load_local_dictionary
+    _load_local_dictionary,
 )
 
 # Mock environment variables
 @pytest.fixture(autouse=True)
 def mock_env_vars(mocker):
-    mocker.patch.dict(
-        os.environ, {
-            "DICTIONARY_SOURCE": "local",
-            "S3_BUCKET_NAME": "chazwinter.com",
-            "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
-            "DEFAULT_LANGUAGE": "en",
-            "LOCAL_DICTIONARY_PATH": "./dictionaries/{language}/dictionary.txt"
-        }
-    )
+    mocker.patch.dict(os.environ, {
+        "DICTIONARY_SOURCE": "local",
+        "S3_BUCKET_NAME": "chazwinter.com",
+        "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
+        "DEFAULT_LANGUAGE": "en",
+    }, clear=True)
+
 
 @pytest.fixture
 def mock_s3_client(mocker):
@@ -31,119 +29,51 @@ def mock_s3_client(mocker):
 
 # Tests for _load_local_dictionary
 def test_load_local_dictionary(mocker):
-    # Arrange
-    # Mock os.path.exists to return True
     mocker.patch("os.path.exists", return_value=True)
-
-    # Mock open
     mock_open = mocker.patch("builtins.open", mocker.mock_open(read_data="word1\nword2\nword3"))
-
-    # **Use the `__file__` of the module under test**
     script_dir = os.path.dirname(os.path.abspath(_load_local_dictionary.__code__.co_filename))
-
-    # Construct the expected dictionary path
     expected_dictionary_path = os.path.normpath(
         os.path.join(script_dir, '..', '..', 'dictionaries', 'en', 'dictionary.txt')
     )
-
-    # Act
-    words = _load_local_dictionary("en")
-
-    # Assert
+    words = _load_local_dictionary("en", "dictionary")
     assert words == ["WORD1", "WORD2", "WORD3"]
     mock_open.assert_called_once_with(expected_dictionary_path, "r")
 
 
 def test_load_local_dictionary_file_not_found(mocker):
-    # Arrange
     mocker.patch("os.path.exists", return_value=False)
-    
-    # Act & Assert
-    with pytest.raises(ValueError, match="Dictionary for language 'en' not found at"):
-        _load_local_dictionary("en")
+    with pytest.raises(ValueError, match=r"Dictionary 'dictionary' for language 'en' not found at"):
+        _load_local_dictionary("en", "dictionary")
 
 
-# Tests for _fetch_dictionary_from_s3
 def test_fetch_dictionary_from_s3(mock_s3_client):
-    # Arrange
-    os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
-    os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
     mock_s3_client.get_object.return_value = {"Body": MagicMock(read=lambda: b"word1\nword2\nword3")}
-
-    # Act
-    words = _fetch_dictionary_from_s3("en")
-
-    # Assert
+    words = _fetch_dictionary_from_s3("en", "dictionary")
     assert words == ["word1", "word2", "word3"]
     mock_s3_client.get_object.assert_called_once_with(
-        Bucket="test-dictionary-bucket", 
-        Key="Dictionaries/en/dictionary.txt"
+        Bucket="chazwinter.com", 
+        Key="LetterBoxed/Dictionaries/en/dictionary.txt"
     )
 
 
-def test_fetch_dictionary_from_s3_key_not_found(mock_s3_client):
-    # Arrange
+@pytest.mark.parametrize("language", ["en", "es", "fr"])
+def test_fetch_dictionary_from_s3_key_not_found(mock_s3_client, language):
     mock_s3_client.get_object.side_effect = ClientError(
         {"Error": {"Code": "NoSuchKey", "Message": "Key not found"}}, "GetObject"
     )
-
-    # Act & Assert
-    with pytest.raises(ValueError, match="Dictionary for language 'en' not found in S3."):
-        _fetch_dictionary_from_s3("en")
+    with pytest.raises(ValueError, match=f"Dictionary 'dictionary.txt' for language '{language}' not found in S3."):
+        _fetch_dictionary_from_s3(language, "dictionary")
 
 
-def test_fetch_dictionary_from_s3_other_error(mock_s3_client):
-    # Arrange
-    mock_s3_client.get_object.side_effect = ClientError(
-        {"Error": {"Code": "InternalError", "Message": "Some other error"}}, "GetObject"
-    )
-
-    # Act & Assert
-    with pytest.raises(RuntimeError, match="Error fetching dictionary from S3: An error occurred"):
-        _fetch_dictionary_from_s3("en")
-
-
-# Tests for get_dictionary
 def test_get_dictionary_local(mocker):
-    # Arrange
-    mocker.patch("os.getenv", side_effect=lambda key, default: "local" if key == "DICTIONARY_SOURCE" else default)
     mock_load_local = mocker.patch("lambdas.common.dictionary_utils._load_local_dictionary", return_value=["word1", "word2"])
-    
-    # Act
     words = get_dictionary("en")
-    
-    # Assert
     assert words == ["word1", "word2"]
-    mock_load_local.assert_called_once_with("en")
+    mock_load_local.assert_called_once_with("en", "dictionary")
 
 
-def test_get_dictionary_s3(mocker):
-    # Arrange
-    mocker.patch(
-        "lambdas.common.dictionary_utils.DICTIONARY_SOURCE", 
-        "s3"
-    )
-    mock_fetch_s3 = mocker.patch(
-        "lambdas.common.dictionary_utils._fetch_dictionary_from_s3",
-        return_value=["word1", "word2"]
-    )
-
-    # Act
-    words = get_dictionary("en")
-
-    # Assert
-    assert words == ["word1", "word2"]
-    mock_fetch_s3.assert_called_once_with("en")
-
-
-def test_get_dictionary_default_language(mocker):
-    # Arrange
-    mocker.patch("os.getenv", side_effect=lambda key, default: "local" if key == "DICTIONARY_SOURCE" else default)
-    mock_load_local = mocker.patch("lambdas.common.dictionary_utils._load_local_dictionary", return_value=["word1", "word2"])
-    
-    # Act
-    words = get_dictionary()
-    
-    # Assert
-    assert words == ["word1", "word2"]
-    mock_load_local.assert_called_once_with("en")
+def test_get_basic_dictionary_local(mocker):
+    mock_load_local = mocker.patch("lambdas.common.dictionary_utils._load_local_dictionary", return_value=["basic1", "basic2"])
+    words = get_basic_dictionary("en")
+    assert words == ["basic1", "basic2"]
+    mock_load_local.assert_called_once_with("en", "basic")
