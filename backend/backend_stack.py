@@ -264,7 +264,9 @@ class LetterBoxedStack(Stack):
             prod_resources = [
                 self.prod_game_table, 
                 self.prod_valid_words_table, 
-                self.prod_user_game_states_table
+                self.prod_user_game_states_table,
+                self.prod_random_games_table,
+                self.prod_metadata_table
             ]
             prod_lambda = self.create_lambda(
                 lambda_key, 
@@ -281,7 +283,9 @@ class LetterBoxedStack(Stack):
             test_resources = [
                 self.test_game_table, 
                 self.test_valid_words_table, 
-                self.test_user_game_states_table
+                self.test_user_game_states_table,
+                self.test_random_games_table,
+                self.test_metadata_table
             ]
             test_lambda = self.create_lambda(
                 lambda_key, 

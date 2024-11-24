@@ -138,7 +138,7 @@ def shuffle_final_layout(layout: List[str]) -> List[str]:
     return shuffled_sides
 
 
-def main() -> Dict[str, Any] | None:
+def main() -> Any:
     # Path to the directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
     dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", "en", "basic_2000.txt")
@@ -218,6 +218,6 @@ def benchmark(n: int) -> None:
 if __name__ == "__main__":
     RUN_BENCHMARK = True  # Set to False to disable benchmarking
     if RUN_BENCHMARK:
-        benchmark(30)  # Change 10 to the desired number of iterations
+        benchmark(10)  # Change 10 to the desired number of iterations
     else:
         main()

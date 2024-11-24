@@ -3,7 +3,8 @@ from typing import List, Optional, Tuple, Dict
 from lambdas.common.dictionary_utils import get_dictionary
 from lambdas.common.db_utils import (
     add_game_to_db,
-    add_game_id_to_random_games_db
+    add_game_id_to_random_games_db,
+    add_valid_words_to_db
 )
 from lambdas.common.game_schema import create_game_schema
 
@@ -49,6 +50,7 @@ def create_random_game(language: str = "en", board_size: str = "3x3") -> Dict[st
 
     # Store the game in the games DB
     add_game_to_db(game_data)
+    add_valid_words_to_db(game_data["gameId"], game_data["validWords"])
 
     # Add the game to the random games table and track the count
     atomic_number = add_game_id_to_random_games_db(game_data["gameId"])
