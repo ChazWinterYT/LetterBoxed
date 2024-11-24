@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2016",                                  /* Keep or set to a newer version if needed. */
+    "lib": ["dom", "esnext"],                            /* Add "dom" for React and "esnext" for modern JS features. */
+    "jsx": "react-jsx",                                  /* Specify React JSX handling. */
+    "module": "commonjs",                                /* Keep this unless using ESM. */
+    "moduleResolution": "node",                         /* Resolve modules like Node.js. */
+    "resolveJsonModule": true,                           /* Enable importing .json files. */
+    "esModuleInterop": true,                             /* Ensure compatibility with CommonJS modules. */
+    "allowSyntheticDefaultImports": true,               /* Allow default imports from modules without default exports. */
+
+    /* Type Definitions */
+    "types": ["node"],                                   /* Include Node.js types for process.env, etc. */
+
+    /* Type Checking */
+    "strict": true,                                      /* Enable strict type checking. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure consistent import/export casing. */
+
+    /* Completeness */
+    "skipLibCheck": true                                 /* Skip type checking for .d.ts files to speed up builds. */
+  },
+  "include": ["src/**/*"],                               /* Include all files in the src/ directory. */
+  "exclude": ["node_modules", "build"]                  /* Exclude build artifacts and dependencies. */
+}

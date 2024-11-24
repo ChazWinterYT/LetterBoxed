@@ -1,0 +1,23 @@
+.left-menu {
+    width: 250px;
+    padding: 1rem;
+    background-color: #f0f0f0;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  .left-menu h2 {
+    margin-top: 0;
+  }
+  .left-menu ul {
+    list-style: none;
+    padding: 0;
+  }
+  .left-menu li {
+    padding: 0.5rem;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+  }
+  .left-menu li:hover {
+    background-color: #ddd;
+  }
+  
