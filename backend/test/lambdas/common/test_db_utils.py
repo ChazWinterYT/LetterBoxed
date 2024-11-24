@@ -1,336 +1,488 @@
 import pytest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, ANY
 from botocore.exceptions import ClientError
-from lambdas.common.db_utils import (
-    add_game_to_db,
-    fetch_game_by_id,
-    fetch_solutions_by_standardized_hash,
-    add_valid_words_to_db,
-    fetch_valid_words_by_game_id,
-    get_user_game_state,
-    save_session_state,
-)
+from lambdas.common import db_utils
 
-
-sample_game = {
-    "gameId": "test-game-id",
-    "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
-    "standardizedHash": "sample-hash",
-    "twoWordSolutions": ["WORD1", "WORD2"],
-    "threeWordSolutions": ["WORD3", "WORD4", "WORD5"],
-    "boardSize": "3x3",
-    "language": "en",
-}
-
-bad_sample_game_no_board_size = {
-    "gameId": "test-game-id",
-    "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
-    "standardizedHash": "sample-hash",
-    "twoWordSolutions": ["WORD1", "WORD2"],
-    "threeWordSolutions": ["WORD3", "WORD4", "WORD5"],
-    "boardSize": "",
-    "language": "en",
-}
-
-
-@pytest.fixture
-def mock_games_table(mocker):
+# Helper function to create a mock DynamoDB table
+def create_mock_table():
     mock_table = MagicMock()
-    mocker.patch("lambdas.common.db_utils.get_games_table", return_value=mock_table)  
+    mock_table.table_name = "MockTable"
     return mock_table
 
+# Fixture to mock DynamoDB resource specifically in the `db_utils` module
+@pytest.fixture(autouse=True)
+def mock_dynamodb_resource(mocker):
+    """Mock DynamoDB resource in the db_utils module."""
+    mock_dynamodb = MagicMock()
+    mocker.patch("lambdas.common.db_utils.dynamodb", mock_dynamodb)
+    return mock_dynamodb
 
-@pytest.fixture
-def mock_valid_words_table(mocker):
-    mock_table = MagicMock()
-    mocker.patch("lambdas.common.db_utils.get_valid_words_table", return_value=mock_table)
-    return mock_table
+# ====================== Games Table Tests ======================
 
-
-@pytest.fixture
-def mock_session_states_table(mocker):
-    mock_table = MagicMock()
-    mocker.patch("lambdas.common.db_utils.get_session_states_table", return_value=mock_table)
-    return mock_table
-
-
-@pytest.fixture
-def mock_solution_calculations(mocker):
-    mocker.patch("lambdas.common.game_utils.calculate_two_word_solutions", return_value=["WORD1", "WORD2"])
-    mocker.patch("lambdas.common.game_utils.calculate_three_word_solutions", return_value=["WORD3", "WORD4"])
-
-# ========================= Games DB tests =========================
-
-def test_add_game_to_db(mock_games_table):
-    # Act
-    add_game_to_db(sample_game)
-
-    # Assert
-    mock_games_table.put_item.assert_called_once_with(Item=sample_game)
-
-
-def test_add_game_to_db_client_error(mock_games_table):
-    mock_games_table.put_item.side_effect = ClientError(
-        error_response={"Error": {"Code": "MockError", "Message": "Mocked error"}},
-        operation_name="PutItem",
-    )
-    sample_game = {...}  # Your game data
-    add_game_to_db(sample_game)  # Expect no exception, just print error
-    mock_games_table.put_item.assert_called_once()
-
-
-def test_fetch_game_by_id(mock_games_table):
+def test_add_game_to_db_success(mock_dynamodb_resource):
     # Arrange
-    game_id = "test-game-id"
-    mock_games_table.get_item.return_value = {"Item": sample_game}
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_data = {"gameId": "test-game-id", "gameLayout": ["ABC", "DEF", "GHI", "JKL"]}
 
     # Act
-    result = fetch_game_by_id(game_id)
+    result = db_utils.add_game_to_db(game_data)
 
-    # Assert
-    assert result == sample_game
-    mock_games_table.get_item.assert_called_once_with(Key={"gameId": game_id})
-
-
-def test_fetch_game_by_id_client_error(mock_games_table):
-    # Arrange
-    game_id = "test-game-id"
-    mock_games_table.get_item.side_effect = ClientError(
-        error_response={"Error": {"Code": "MockError", "Message": "Mocked error"}},
-        operation_name="GetItem"
-    )
-
-    # Act
-    result = fetch_game_by_id(game_id)
-
-    # Assert
-    assert result is None
-    mock_games_table.get_item.assert_called_once_with(Key={"gameId": game_id})
-
-
-def test_fetch_game_by_id_no_data(mock_games_table):
-    # Arrange
-    game_id = "nonexistent-game-id"
-    mock_games_table.get_item.return_value = {}  # No item found
-
-    # Act
-    result = fetch_game_by_id(game_id)
-
-    # Assert
-    assert result is None
-    mock_games_table.get_item.assert_called_once_with(Key={"gameId": game_id})
-
-
-def test_fetch_solutions_by_standardized_hash(mocker, mock_games_table, mock_solution_calculations):
-    # Arrange
-    standardized_hash = "sample-hash"
-    items = [
-        {"twoWordSolutions": ["WORD1", "WORD2"], "threeWordSolutions": ["WORD3", "WORD4"]},
-        {"twoWordSolutions": ["ALT1", "ALT2"]},  # Missing one solution field
-    ]
-    mock_games_table.query.return_value = {"Items": items}
-
-    # Act
-    result = fetch_solutions_by_standardized_hash(standardized_hash)
-
-    # Assert
-    assert result == items[0]
-    mock_games_table.query.assert_called_once_with(
-        IndexName="StandardizedHashIndex",
-        KeyConditionExpression=mocker.ANY,
-        ProjectionExpression="twoWordSolutions, threeWordSolutions",
-    )
-
-
-def test_fetch_solutions_by_standardized_hash_client_error(mocker, mock_games_table):
-    # Arrange
-    standardized_hash = "sample-hash"
-    mock_games_table.query.side_effect = ClientError(
-        error_response={"Error": {"Code": "MockError", "Message": "Mocked error"}},
-        operation_name="Query"
-    )
-
-    # Act
-    result = fetch_solutions_by_standardized_hash(standardized_hash)
-
-    # Assert
-    assert result is None
-    mock_games_table.query.assert_called_once_with(
-        IndexName="StandardizedHashIndex",
-        KeyConditionExpression=mocker.ANY,
-        ProjectionExpression="twoWordSolutions, threeWordSolutions",
-    )
-
-
-def test_fetch_solutions_by_standardized_hash_no_data(mocker, mock_games_table):
-    # Arrange
-    standardized_hash = "nonexistent-hash"
-    mock_games_table.query.return_value = {"Items": []}  # No items found
-
-    # Act
-    result = fetch_solutions_by_standardized_hash(standardized_hash)
-
-    # Assert
-    assert result is None
-    mock_games_table.query.assert_called_once_with(
-        IndexName="StandardizedHashIndex",
-        KeyConditionExpression=mocker.ANY,
-        ProjectionExpression="twoWordSolutions, threeWordSolutions",
-    )
-
-
-def test_fetch_solutions_by_standardized_hash_missing_fields(mocker, mock_games_table):
-    # Arrange
-    standardized_hash = "sample-hash"
-    items = [
-        {"twoWordSolutions": ["WORD1", "WORD2"]},  # Missing threeWordSolutions
-        {"threeWordSolutions": ["WORD3", "WORD4"]}  # Missing twoWordSolutions
-    ]
-    mock_games_table.query.return_value = {"Items": items}
-
-    # Act
-    result = fetch_solutions_by_standardized_hash(standardized_hash)
-
-    # Assert
-    assert result is None  # No item has both fields
-    mock_games_table.query.assert_called_once_with(
-        IndexName="StandardizedHashIndex",
-        KeyConditionExpression=mocker.ANY,
-        ProjectionExpression="twoWordSolutions, threeWordSolutions",
-    )
-
-
-# ========================= Valid Words DB tests =========================
-
-def test_add_valid_words_to_db(mock_valid_words_table):
-    game_id = "test-game-id"
-    valid_words = ["apple", "banana", "cherry"]
-    # Act
-    result = add_valid_words_to_db(game_id, valid_words)
     # Assert
     assert result is True
-    mock_valid_words_table.put_item.assert_called_once_with(Item={"gameId": game_id, "validWords": valid_words})
+    mock_table.put_item.assert_called_once_with(Item=game_data)
 
-def test_add_valid_words_to_db_client_error(mock_valid_words_table):
-    mock_valid_words_table.put_item.side_effect = ClientError(
-        error_response={"Error": {"Code": "MockError", "Message": "Mocked error"}},
+def test_add_game_to_db_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.put_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
         operation_name="PutItem",
     )
-    game_id = "test-game-id"
-    valid_words = ["apple", "banana", "cherry"]
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_data = {"gameId": "test-game-id", "gameLayout": ["ABC", "DEF", "GHI", "JKL"]}
+
     # Act
-    result = add_valid_words_to_db(game_id, valid_words)
+    result = db_utils.add_game_to_db(game_data)
+
     # Assert
     assert result is False
-    mock_valid_words_table.put_item.assert_called_once()
+    mock_table.put_item.assert_called_once_with(Item=game_data)
 
-def test_fetch_valid_words_by_game_id(mock_valid_words_table):
-    game_id = "test-game-id"
-    valid_words = ["apple", "banana", "cherry"]
-    mock_valid_words_table.get_item.return_value = {"Item": {"gameId": game_id, "validWords": valid_words}}
+def test_fetch_game_by_id_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    expected_item = {"gameId": "test-game-id", "gameLayout": ["ABC", "DEF", "GHI", "JKL"]}
+    mock_table.get_item.return_value = {"Item": expected_item}
+    mock_dynamodb_resource.Table.return_value = mock_table
+
     # Act
-    result = fetch_valid_words_by_game_id(game_id)
+    result = db_utils.fetch_game_by_id("test-game-id")
+
     # Assert
-    assert result == valid_words
-    mock_valid_words_table.get_item.assert_called_once_with(Key={"gameId": game_id})
+    assert result == expected_item
+    mock_table.get_item.assert_called_once_with(Key={"gameId": "test-game-id"})
 
-def test_fetch_valid_words_by_game_id_no_data(mock_valid_words_table):
-    game_id = "nonexistent-game-id"
-    mock_valid_words_table.get_item.return_value = {}  # No item found
+def test_fetch_game_by_id_not_found(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.get_item.return_value = {}
+    mock_dynamodb_resource.Table.return_value = mock_table
+
     # Act
-    result = fetch_valid_words_by_game_id(game_id)
+    result = db_utils.fetch_game_by_id("non-existent-id")
+
     # Assert
     assert result is None
-    mock_valid_words_table.get_item.assert_called_once_with(Key={"gameId": game_id})
+    mock_table.get_item.assert_called_once_with(Key={"gameId": "non-existent-id"})
 
-def test_fetch_valid_words_by_game_id_client_error(mock_valid_words_table):
-    mock_valid_words_table.get_item.side_effect = ClientError(
-        error_response={"Error": {"Code": "MockError", "Message": "Mocked error"}},
+def test_fetch_game_by_id_error(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.get_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
         operation_name="GetItem",
     )
-    game_id = "test-game-id"
+    mock_dynamodb_resource.Table.return_value = mock_table
+
     # Act
-    result = fetch_valid_words_by_game_id(game_id)
+    result = db_utils.fetch_game_by_id("test-game-id")
+
     # Assert
     assert result is None
-    mock_valid_words_table.get_item.assert_called_once_with(Key={"gameId": game_id})
+    mock_table.get_item.assert_called_once_with(Key={"gameId": "test-game-id"})
 
+def test_fetch_solutions_by_standardized_hash_found(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    expected_item = {
+        "twoWordSolutions": [["WORD1", "WORD2"]],
+        "threeWordSolutions": [["WORD3", "WORD4", "WORD5"]],
+    }
+    mock_table.query.return_value = {"Items": [expected_item]}
+    mock_dynamodb_resource.Table.return_value = mock_table
 
-# ========================= Sessions DB tests =========================
+    # Act
+    result = db_utils.fetch_solutions_by_standardized_hash("test-hash")
 
-def test_get_user_game_state_existing_session(mock_session_states_table):
+    # Assert
+    assert result == expected_item
+    mock_table.query.assert_called_once_with(
+        IndexName="StandardizedHashIndex",
+        KeyConditionExpression=ANY,
+        ProjectionExpression="twoWordSolutions, threeWordSolutions"
+    )
+
+def test_fetch_solutions_by_standardized_hash_not_found(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.query.return_value = {"Items": []}
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_solutions_by_standardized_hash("test-hash")
+
+    # Assert
+    assert result is None
+    mock_table.query.assert_called_once_with(
+        IndexName="StandardizedHashIndex",
+        KeyConditionExpression=ANY,
+        ProjectionExpression="twoWordSolutions, threeWordSolutions"
+    )
+
+def test_fetch_solutions_by_standardized_hash_error(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.query.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="Query",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_solutions_by_standardized_hash("test-hash")
+
+    # Assert
+    assert result is None
+    mock_table.query.assert_called_once_with(
+        IndexName="StandardizedHashIndex",
+        KeyConditionExpression=ANY,
+        ProjectionExpression="twoWordSolutions, threeWordSolutions"
+    )
+
+# ====================== Valid Words Table Tests ======================
+
+def test_add_valid_words_to_db_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_id = "test-game-id"
+    valid_words = ["WORD1", "WORD2", "WORD3"]
+
+    # Act
+    result = db_utils.add_valid_words_to_db(game_id, valid_words)
+
+    # Assert
+    assert result is True
+    mock_table.put_item.assert_called_once_with(
+        Item={"gameId": game_id, "validWords": valid_words}
+    )
+
+def test_add_valid_words_to_db_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.put_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="PutItem",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_id = "test-game-id"
+    valid_words = ["WORD1", "WORD2", "WORD3"]
+
+    # Act
+    result = db_utils.add_valid_words_to_db(game_id, valid_words)
+
+    # Assert
+    assert result is False
+    mock_table.put_item.assert_called_once_with(
+        Item={"gameId": game_id, "validWords": valid_words}
+    )
+
+def test_fetch_valid_words_by_game_id_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    game_id = "test-game-id"
+    expected_valid_words = ["WORD1", "WORD2", "WORD3"]
+    mock_table.get_item.return_value = {
+        "Item": {"gameId": game_id, "validWords": expected_valid_words}
+    }
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_valid_words_by_game_id(game_id)
+
+    # Assert
+    assert result == expected_valid_words
+    mock_table.get_item.assert_called_once_with(Key={"gameId": game_id})
+
+def test_fetch_valid_words_by_game_id_not_found(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    game_id = "non-existent-id"
+    mock_table.get_item.return_value = {}
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_valid_words_by_game_id(game_id)
+
+    # Assert
+    assert result is None
+    mock_table.get_item.assert_called_once_with(Key={"gameId": game_id})
+
+def test_fetch_valid_words_by_game_id_error(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    game_id = "test-game-id"
+    mock_table.get_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="GetItem",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_valid_words_by_game_id(game_id)
+
+    # Assert
+    assert result is None
+    mock_table.get_item.assert_called_once_with(Key={"gameId": game_id})
+
+# ====================== User Game States Table Tests ======================
+
+def test_get_user_game_state_existing_session(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
     session_id = "test-session-id"
     game_id = "test-game-id"
-    session_data = {
+    expected_item = {
         "sessionId": session_id,
         "gameId": game_id,
-        "wordsUsed": ["apple", "banana"],
+        "wordsUsed": ["WORD1"],
+        "gameCompleted": False,
+        "lastUpdated": 1234567890,
+        "TTL": 1234567890 + 30 * 24 * 60 * 60,
     }
-    mock_session_states_table.get_item.return_value = {"Item": session_data}
-    # Act
-    result = get_user_game_state(session_id, game_id)
-    # Assert
-    assert result == session_data
-    mock_session_states_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
+    mock_table.get_item.return_value = {"Item": expected_item}
+    mock_dynamodb_resource.Table.return_value = mock_table
 
-def test_get_user_game_state_new_session(mock_session_states_table, mocker):
-    mock_time = 1732083185  # Fixed timestamp for test
-    mocker.patch("time.time", return_value=mock_time)
-    
+    # Act
+    result = db_utils.get_user_game_state(session_id, game_id)
+
+    # Assert
+    assert result == expected_item
+    mock_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
+
+def test_get_user_game_state_new_session(mocker, mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
     session_id = "new-session-id"
     game_id = "test-game-id"
-    mock_session_states_table.get_item.return_value = {}  # No item found
-    # Act
-    result = get_user_game_state(session_id, game_id)
-    # Assert
-    expected_result = {
-        "sessionId": session_id,
-        "gameId": game_id, 
-        "wordsUsed": [],
-        "gameCompleted": False,
-        "lastUpdated": mock_time,
-        "TTL": mock_time + 30 * 24 * 60 * 60 # 30 days later
-    }
-    assert result == expected_result
-    mock_session_states_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
+    mock_table.get_item.return_value = {}
+    mock_dynamodb_resource.Table.return_value = mock_table
 
-def test_get_user_game_state_client_error(mock_session_states_table):
+    # Mock time.time() to return a fixed timestamp
+    mocker.patch("time.time", return_value=1234567890)
+
+    # Act
+    result = db_utils.get_user_game_state(session_id, game_id)
+
+    # Assert
+    assert result["sessionId"] == session_id
+    assert result["gameId"] == game_id
+    assert result["wordsUsed"] == []
+    assert result["gameCompleted"] is False
+    assert result["lastUpdated"] == 1234567890
+    assert result["TTL"] == 1234567890 + 30 * 24 * 60 * 60
+    mock_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
+
+def test_get_user_game_state_error(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
     session_id = "test-session-id"
     game_id = "test-game-id"
-    mock_session_states_table.get_item.side_effect = ClientError(
-        error_response={"Error": {"Code": "MockError", "Message": "Mocked error"}},
+    mock_table.get_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
         operation_name="GetItem",
     )
+    mock_dynamodb_resource.Table.return_value = mock_table
+
     # Act
-    result = get_user_game_state(session_id, game_id)
+    result = db_utils.get_user_game_state(session_id, game_id)
+
     # Assert
     assert result is None
-    mock_session_states_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
+    mock_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
 
-def test_save_session_state(mock_session_states_table):
+def test_save_session_state_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
     session_data = {
         "sessionId": "test-session-id",
         "gameId": "test-game-id",
-        "wordsUsed": ["apple", "banana"],
+        "wordsUsed": ["WORD1"],
+        "gameCompleted": False,
+        "lastUpdated": 1234567890,
+        "TTL": 1234567890 + 30 * 24 * 60 * 60,
     }
+    mock_dynamodb_resource.Table.return_value = mock_table
+
     # Act
-    result = save_session_state(session_data)
+    result = db_utils.save_session_state(session_data)
+
     # Assert
     assert result is True
-    mock_session_states_table.put_item.assert_called_once_with(Item=session_data)
+    mock_table.put_item.assert_called_once_with(Item=session_data)
 
-def test_save_session_state_client_error(mock_session_states_table):
+def test_save_session_state_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
     session_data = {
         "sessionId": "test-session-id",
         "gameId": "test-game-id",
-        "wordsUsed": ["apple", "banana"],
+        "wordsUsed": ["WORD1"],
+        "gameCompleted": False,
+        "lastUpdated": 1234567890,
+        "TTL": 1234567890 + 30 * 24 * 60 * 60,
     }
-    mock_session_states_table.put_item.side_effect = ClientError(
-        error_response={"Error": {"Code": "MockError", "Message": "Mocked error"}},
+    mock_table.put_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
         operation_name="PutItem",
     )
+    mock_dynamodb_resource.Table.return_value = mock_table
+
     # Act
-    result = save_session_state(session_data)
+    result = db_utils.save_session_state(session_data)
+
     # Assert
     assert result is False
-    mock_session_states_table.put_item.assert_called_once_with(Item=session_data)
+    mock_table.put_item.assert_called_once_with(Item=session_data)
+
+# ====================== Random Game Table Tests ======================
+
+def test_add_game_id_to_random_games_db_success(mocker, mock_dynamodb_resource):
+    # Arrange
+    mock_random_games_table = create_mock_table()
+    mock_metadata_table = create_mock_table()
+    # Mock increment_random_game_count to return a fixed value
+    mocker.patch("lambdas.common.db_utils.increment_random_game_count", return_value=42)
+
+    # Need to ensure get_random_games_table and get_metadata_table return different tables
+    def side_effect(table_name):
+        if table_name == "LetterBoxedRandomGames":
+            return mock_random_games_table
+        elif table_name == "LetterBoxedMetadata":
+            return mock_metadata_table
+        else:
+            return create_mock_table()
+
+    mock_dynamodb_resource.Table.side_effect = side_effect
+
+    game_id = "test-game-id"
+
+    # Act
+    result = db_utils.add_game_id_to_random_games_db(game_id)
+
+    # Assert
+    assert result == 42
+    mock_random_games_table.put_item.assert_called_once_with(
+        Item={"atomicNumber": 42, "gameId": game_id}
+    )
+
+# ====================== Metadata Table Tests ======================
+
+def test_fetch_random_game_count_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.get_item.return_value = {
+        "Item": {"metadataType": "randomGameCount", "value": 100}
+    }
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_random_game_count()
+
+    # Assert
+    assert result == 100
+    mock_table.get_item.assert_called_once_with(Key={"metadataType": "randomGameCount"})
+
+def test_fetch_random_game_count_no_item(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.get_item.return_value = {}
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_random_game_count()
+
+    # Assert
+    assert result == 0
+    mock_table.get_item.assert_called_once_with(Key={"metadataType": "randomGameCount"})
+
+def test_increment_random_game_count_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.update_item.return_value = {
+        "Attributes": {"value": 101}
+    }
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.increment_random_game_count()
+
+    # Assert
+    assert result == 101
+    mock_table.update_item.assert_called_once_with(
+        Key={"metadataType": "randomGameCount"},
+        UpdateExpression="SET #val = if_not_exists(#val, :start) + :inc",
+        ExpressionAttributeNames={"#val": "value"},
+        ExpressionAttributeValues={":start": 0, ":inc": 1},
+        ReturnValues="UPDATED_NEW",
+    )
+
+def test_increment_random_game_count_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.update_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="UpdateItem",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act & Assert
+    with pytest.raises(ClientError):
+        db_utils.increment_random_game_count()
+    mock_table.update_item.assert_called_once_with(
+        Key={"metadataType": "randomGameCount"},
+        UpdateExpression="SET #val = if_not_exists(#val, :start) + :inc",
+        ExpressionAttributeNames={"#val": "value"},
+        ExpressionAttributeValues={":start": 0, ":inc": 1},
+        ReturnValues="UPDATED_NEW",
+    )
+
+def test_update_metadata_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    metadata_type = "testMetadata"
+    new_value = 123
+
+    # Act
+    db_utils.update_metadata(metadata_type, new_value)
+
+    # Assert
+    mock_table.update_item.assert_called_once_with(
+        Key={"metadataType": metadata_type},
+        UpdateExpression="SET #val = :newVal",
+        ExpressionAttributeNames={"#val": "value"},
+        ExpressionAttributeValues={":newVal": new_value},
+    )
+
+def test_update_metadata_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.update_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="UpdateItem",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+    metadata_type = "testMetadata"
+    new_value = 123
+
+    # Act & Assert
+    with pytest.raises(ClientError):
+        db_utils.update_metadata(metadata_type, new_value)
+    mock_table.update_item.assert_called_once_with(
+        Key={"metadataType": metadata_type},
+        UpdateExpression="SET #val = :newVal",
+        ExpressionAttributeNames={"#val": "value"},
+        ExpressionAttributeValues={":newVal": new_value},
+    )
