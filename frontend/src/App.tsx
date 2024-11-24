@@ -13,16 +13,6 @@ const App = () => {
   const [archiveGames, setArchiveGames] = useState<any[]>([]); // Stores archive data
   const API_URL = process.env.REACT_APP_API_URL;
 
-  useEffect(() => {
-    if (view === 'play-today') {
-      fetchTodaysGame();
-    }
-  }, [view]);
-
-  console.log("React app loaded!");
-  console.log("Environment Variables:", process.env.REACT_APP_API_URL);
-
-
   const fetchTodaysGame = async () => {
     if (board.length > 0) return; // Don’t refetch if already loaded
     try {
@@ -32,6 +22,18 @@ const App = () => {
       console.error("Error fetching today's game:", error);
     }
   };
+
+  useEffect(() => {
+    if (view === 'play-today') {
+      fetchTodaysGame();
+    }
+  }, [view, fetchTodaysGame]);
+
+  console.log("React app loaded!");
+  console.log("Environment Variables:", process.env.REACT_APP_API_URL);
+
+
+
 
   const fetchGameArchive = async () => {
     try {
