@@ -40,6 +40,7 @@ def setup_aws_resources(aws_clients):
     # assert_bucket_empty(s3, bucket_name)
 
 
+# Function intentionally misspelled "est" to prevent integration tests from running when not needed
 def est_full_app_integration(aws_clients):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]

@@ -2,7 +2,7 @@ import random
 import os
 import sys
 import time
-from typing import List, Optional, Tuple, Dict
+from typing import List, Optional, Tuple, Dict, Any
 from collections import Counter
 
 # Add the backend directory to the Python path
@@ -71,7 +71,7 @@ def generate_layout(word1: str, word2: str) -> Optional[List[str]]:
         raise ValueError("The combined words must have exactly 12 unique letters.")
 
     sides = [""] * 4  # Initialize 4 empty sides
-    letter_to_side = {}  # Track where each letter is placed
+    letter_to_side: Dict[str, int] = {}  # Track where each letter is placed
 
     def backtrack(index: int, current_side: int) -> bool:
         # Base case: all letters are placed
@@ -138,7 +138,7 @@ def shuffle_final_layout(layout: List[str]) -> List[str]:
     return shuffled_sides
 
 
-def main():
+def main() -> Dict[str, Any] | None:
     # Path to the directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
     dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", "en", "basic_2000.txt")
@@ -185,7 +185,7 @@ def main():
         "gameLayout": game_layout,
     }
 
-def benchmark(n: int):
+def benchmark(n: int) -> None:
     import time
 
     times = []

@@ -270,7 +270,7 @@ def fetch_random_game_count() -> int:
     """
     table = get_metadata_table()
     response = table.get_item(Key={"metadataType": "randomGameCount"})
-    return response.get("Item", {}).get("value", 0)
+    return response.get("Item", {}).get("value", 0) if response else 0
 
 
 def increment_random_game_count() -> int:

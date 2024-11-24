@@ -74,7 +74,7 @@ def generate_layout(word1: str, word2: str) -> Optional[List[str]]:
         return None
 
     sides = [""] * 4
-    letter_to_side = {}
+    letter_to_side: Dict[str, int] = {}
 
     def backtrack(index: int, current_side: int) -> bool:
         if index == len(combined_letters):
