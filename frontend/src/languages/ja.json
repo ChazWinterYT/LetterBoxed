@@ -28,6 +28,8 @@
         "invalidInput": "無効な入力です"
     },
     "game": {
+        "loading": "ゲームボードを読み込んでいます。お待ちください...",
+        "playedWords": "使用した単語:",
         "boardSize": "ボードサイズ",
         "gameId": "ゲームID",
         "tryToSolve": "{words}語で解決を試みてください",

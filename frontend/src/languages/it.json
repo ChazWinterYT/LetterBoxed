@@ -28,6 +28,8 @@
         "invalidInput": "Input non valido"
     },
     "game": {
+        "loading": "Caricamento del tabellone, attendere prego...",
+        "playedWords": "Parole Giocate:",
         "boardSize": "Dimensione della griglia",
         "gameId": "ID del gioco",
         "tryToSolve": "Prova a risolverlo in {words} parole",

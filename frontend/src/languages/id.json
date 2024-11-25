@@ -28,6 +28,8 @@
         "invalidInput": "Input tidak valid"
     },
     "game": {
+        "loading": "Memuat papan permainan, harap tunggu...",
+        "playedWords": "Kata yang Dimainkan:",
         "boardSize": "Ukuran Papan",
         "gameId": "ID Game",
         "tryToSolve": "Coba selesaikan dengan {words} kata",

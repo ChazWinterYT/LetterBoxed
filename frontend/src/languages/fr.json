@@ -28,6 +28,8 @@
         "invalidInput": "Entrée invalide"
     },
     "game": {
+        "loading": "Chargement du plateau de jeu, veuillez patienter...",
+        "playedWords": "Mots Joués:",
         "boardSize": "Taille du plateau",
         "gameId": "ID du jeu",
         "tryToSolve": "Essayez de résoudre en {words} mots",

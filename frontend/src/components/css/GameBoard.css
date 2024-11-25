@@ -1,104 +1,50 @@
-.game-board-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.word-formation-area {
-  height: 50px; /* Reserve space for the word formation area */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-}
-
-.current-word {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  white-space: nowrap;
-}
-
-.controls {
-  display: flex;
-  gap: 10px;
-}
-
-.controls button {
-  padding: 5px 10px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.board {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  background-color: white;
-  border: 5px solid black;
-  margin-bottom: 30px;
-}
-
-.top-side,
-.left-side,
-.right-side,
-.bottom-side {
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-}
-
-.top-side {
-  top: -20px;
-  left: 20px;
-  right: 20px;
-}
-
-.left-side {
-  top: 20px;
-  left: -20px;
-  bottom: 20px;
-  flex-direction: column;
-}
-
-.right-side {
-  top: 20px;
-  right: -20px;
-  bottom: 20px;
-  flex-direction: column;
-}
-
-.bottom-side {
-  bottom: -20px;
-  left: 20px;
-  right: 20px;
-}
-
+/* Letter Styles */
 .letter {
-  background-color: #e3f2fd;
+  background-color: #e3f2fd; /* Default unplayed letter color */
   border-radius: 50%;
   padding: 10px;
   font-size: 1.2rem;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.1s ease;
+  transition: background-color 0.3s ease;
 }
 
-.letter.clicked {
-  background-color: purple; /* Highlight clicked letter */
-  color: white; /* Optional: Change text color for contrast */
+.letter.unplayed-letter {
+  background-color: #e3f2fd; /* Light blue */
 }
 
-/* Controls (Delete and Submit Buttons) */
+.letter.played-letter {
+  background-color: #9c27b0; /* Purple */
+  color: white; /* Optional: White text for contrast */
+}
+
+/* Marker Styles */
+.marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #cfd8dc; /* Inactive marker color */
+  margin: 5px auto; /* Center the marker */
+  transition: background-color 0.3s ease;
+}
+
+.marker.active {
+  background-color: #90caf9; /* Darker blue for active markers */
+}
+
+/* Letter Container */
+.letter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Controls */
 .controls {
   display: flex;
   gap: 15px; /* Add spacing between buttons */
-  margin-top: 20px; /* Add more space below the board */
+  margin-top: 20px;
 }
 
 .controls button {

@@ -32,6 +32,7 @@ const App = () => {
       setArchiveGames(response.data.games || []);
     } catch (error) {
       console.error("Error fetching game archive:", error);
+      setBoard([]); // Set fallback
     }
   };
 

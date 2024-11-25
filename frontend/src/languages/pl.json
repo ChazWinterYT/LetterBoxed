@@ -28,6 +28,8 @@
         "invalidInput": "Nieprawidłowe dane wejściowe"
     },
     "game": {
+        "loading": "Ładowanie planszy do gry, proszę czekać...",
+        "playedWords": "Zagrane Słowa:",
         "boardSize": "Rozmiar planszy",
         "gameId": "ID gry",
         "tryToSolve": "Spróbuj rozwiązać w {words} słowach",

@@ -5,11 +5,9 @@
   min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
 }
 
-
-
 /* Body styles */
 body {
-  background-color: #25648b;
+  background-color: #25648b; /* Light blue background */
   margin: 0;
   font-family: Arial, sans-serif;
 }
@@ -50,13 +48,6 @@ body {
   padding: 1rem;
   overflow: auto; /* Allow scrolling if content overflows */
 }
-
-/* Game board styles */
-.game-board-container {
-  margin-top: 1rem;
-}
-
-
 
 /* Mobile-specific adjustments */
 @media (max-width: 768px) {

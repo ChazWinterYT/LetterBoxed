@@ -28,6 +28,8 @@
         "invalidInput": "Invalid input"
     },
     "game": {
+        "loading": "Loading game board, please wait...",
+        "playedWords": "Played Words:",
         "boardSize": "Board Size",
         "gameId": "Game ID",
         "tryToSolve": "Try to solve in {words} words",

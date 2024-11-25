@@ -28,6 +28,8 @@
         "invalidInput": "Entrada inválida"
     },
     "game": {
+        "loading": "Cargando el tablero de juego, espera por favor...",
+        "playedWords": "Palabras Jugadas:",
         "boardSize": "Tamaño del tablero",
         "gameId": "ID del juego",
         "tryToSolve": "Intenta resolver en {words} palabras",

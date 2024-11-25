@@ -27,6 +27,8 @@
         "invalidInput": "Ungültige Eingabe"
     },
     "game": {
+        "loading": "Spielbrett wird geladen, bitte warten...",
+        "playedWords": "Gespielte Wörter:",
         "boardSize": "Brettgröße",
         "gameId": "Spiel-ID",
         "tryToSolve": "Versuche, in {words} Wörtern zu lösen",

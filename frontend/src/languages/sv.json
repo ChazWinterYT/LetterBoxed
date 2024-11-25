@@ -28,6 +28,8 @@
         "invalidInput": "Ogiltig inmatning"
     },
     "game": {
+        "loading": "Laddar spelbräde, vänligen vänta...",
+        "playedWords": "Spelade Ord:",
         "boardSize": "Brädans storlek",
         "gameId": "Spel-ID",
         "tryToSolve": "Försök lösa med {words} ord",
