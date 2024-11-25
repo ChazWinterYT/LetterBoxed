@@ -8,3 +8,12 @@
     width: 100%;
   }
   
+  footer a {
+    color: #4caf50; /* Green link color */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  footer a:hover {
+    color: #81c784; 
+    text-decoration: underline; /* Add underline on hover */
+  }
