@@ -8,7 +8,8 @@
             "randomGame": "ランダムゲームを作成"
         },
         "archive": {
-            "noGames": "利用可能なゲームはありません"
+            "noGames": "利用可能なゲームはありません",
+            "archiveLoading": "アーカイブを読み込んでいます。お待ちください..."
         },
         "customGame": {
             "random": "完全にランダムなゲーム",

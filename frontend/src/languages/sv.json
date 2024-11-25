@@ -8,7 +8,8 @@
             "randomGame": "Skapa slumpmässigt spel"
         },
         "archive": {
-            "noGames": "Inga spel tillgängliga"
+            "noGames": "Inga spel tillgängliga",
+            "archiveLoading": "Arkivet laddas, vänligen vänta..."
         },
         "customGame": {
             "random": "Helt slumpmässigt spel",

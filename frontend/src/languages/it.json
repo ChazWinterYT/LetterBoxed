@@ -8,7 +8,8 @@
             "randomGame": "Crea un gioco casuale"
         },
         "archive": {
-            "noGames": "Nessun gioco disponibile"
+            "noGames": "Nessun gioco disponibile",
+            "archiveLoading": "L'archivio si sta caricando, attendere prego..."
         },
         "customGame": {
             "random": "Gioco completamente casuale",

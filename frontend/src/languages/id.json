@@ -8,7 +8,8 @@
             "randomGame": "Buat Game Acak"
         },
         "archive": {
-            "noGames": "Tidak ada permainan tersedia"
+            "noGames": "Tidak ada permainan tersedia",
+            "archiveLoading": "Arsip sedang dimuat, harap tunggu..."
         },
         "customGame": {
             "random": "Permainan Acak Sepenuhnya",

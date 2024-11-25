@@ -8,7 +8,8 @@
             "randomGame": "Créer un jeu aléatoire"
         },
         "archive": {
-            "noGames": "Aucun jeu disponible"
+            "noGames": "Aucun jeu disponible",
+            "archiveLoading": "L'archive est en cours de chargement, veuillez patienter..."
         },
         "customGame": {
             "random": "Jeu entièrement aléatoire",

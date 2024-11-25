@@ -29,17 +29,19 @@ const App = () => {
     }
   }, [API_URL]);
 
-  // Fetch NYT archive
+  // Fetch NYT archive with caching
   const fetchGameArchive = async () => {
-    if (archiveGames.length > 0) return; // Use cached data
-    setIsLoadingArchive(true);
+    if (archiveGames.length > 0) return; // Use cached data if available
+    setIsLoadingArchive(true); // Start loading
     try {
       const response = await axios.get(`${API_URL}/archive`);
-      setArchiveGames(response.data.games || []);
+      setArchiveGames(response.data.nytGames || []); // Parse and set archive games
+      setModalContent(<ArchiveList games={response.data.nytGames || []} />); // Update modal content with archive list
     } catch (error) {
       console.error("Error fetching game archive:", error);
+      setModalContent(<p>{t("ui.archive.error")}</p>); // Show error in modal
     } finally {
-      setIsLoadingArchive(false);
+      setIsLoadingArchive(false); // Stop loading
     }
   };
 
@@ -50,17 +52,13 @@ const App = () => {
   }, [view, fetchTodaysGame]);
 
   // Open the archive modal
-  const openArchiveModal = () => {
-    setModalTitle(t("ui.menu.archive"));
-    setIsModalOpen(true);
-    fetchGameArchive();
-    setModalContent(
-      isLoadingArchive ? (
-        <p>{t("messages.loading")}</p>
-      ) : (
-        <ArchiveList games={archiveGames} />
-      )
-    );
+  const openArchiveModal = async () => {
+    setModalTitle(t("ui.menu.archive")); // Set modal title
+    setIsModalOpen(true); // Open the modal
+    if (archiveGames.length === 0) {
+      setModalContent(<p>{t("ui.archive.archiveLoading")}</p>); // Show loading while fetching
+      await fetchGameArchive(); // Fetch data if not already cached
+    }
   };
 
   // Open custom game modal
