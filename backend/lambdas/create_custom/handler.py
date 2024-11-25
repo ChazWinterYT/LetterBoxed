@@ -18,6 +18,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     if not game_layout:
         return {
             "statusCode": 400,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({"message": "Game Layout is required."})
         }
 
@@ -33,6 +38,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     except Exception as e:
         return {
             "statusCode": 500,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({"message": f"Failed to create game schema: {e}"})
         }
 
@@ -42,6 +52,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     return {
         "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*",  # Allow all origins
+            "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+            "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+        },
         "body": json.dumps({
             "gameId": game_data["gameId"],
             "message": "Game created successfully."

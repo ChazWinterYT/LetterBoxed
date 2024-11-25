@@ -22,6 +22,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Return the game details
         return {
             "statusCode": 201,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({
                 "message": "Random game created successfully.",
                 "gameId": random_game_data["gameId"],
@@ -32,6 +37,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         print(f"Handler failed: {e}")
         return {
             "statusCode": 500,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({"error": str(e)}),
         }
 

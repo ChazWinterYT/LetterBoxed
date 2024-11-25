@@ -49,6 +49,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Return the list of official games
         return {
             "statusCode": 200,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({
                 "nytGames": nyt_games,
                 "message": "Fetched official NYT games archive successfully."
@@ -58,6 +63,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     except Exception as e:
         return {
             "statusCode": 500,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({
                 "message": "Error fetching NYT games archive",
                 "error": str(e)

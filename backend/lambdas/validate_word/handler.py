@@ -89,6 +89,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Success response
         return {
             "statusCode": 200,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({
                 "valid": True,
                 "message": message,
@@ -116,6 +121,11 @@ def _error_response(message: str, status_code: int) -> Dict[str, Any]:
     """
     return {
         "statusCode": status_code,
+        "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
         "body": json.dumps({"message": message, "valid": False}),
     }
 

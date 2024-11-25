@@ -18,6 +18,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if fetch_game_by_id(game_id):
             return {
                 "statusCode": 200,
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",  # Allow all origins
+                    "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                    "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                },
                 "body": json.dumps({
                     "message": "Today's game is already cached.",
                     "gameId": game_id
@@ -44,6 +49,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
         return {
             "statusCode": 201,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({
                 "message": "Today's game cached successfully.",
                 "gameId": game_id
@@ -54,5 +64,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         print(f"Error prefetching today's game: {e}")
         return {
             "statusCode": 500,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({"error": str(e)})
         }

@@ -301,73 +301,101 @@ class LetterBoxedStack(Stack):
         # ===========================================================================
         # Define API Gateway REST API Resources
         # ===========================================================================
-        
-        # Define API Gateway REST API
         api = apigateway.RestApi(
             self, "LetterBoxedApi",
             rest_api_name="LetterBoxed Service",
-            description="This service handles functions related to the LetterBoxed game",
+            description="This service handles functions related to the LetterBoxed game"
         )
         
-        # Resources and Methods
-        # /games/{gameId} - Fetch an existing game
-        add_api_method(api.root, "games/{gameId}", "GET", lambda_references["fetch_game"])
+        # Helper function to enable CORS
+        def add_cors(resource):
+            """
+            Add CORS support by creating an OPTIONS method for the given resource.
+            """
+            resource.add_method(
+                "OPTIONS",
+                apigateway.MockIntegration(
+                    integration_responses=[
+                        {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization'",
+                                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST'",
+                                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                            },
+                        },
+                    ],
+                    passthrough_behavior=apigateway.PassthroughBehavior.NEVER,
+                    request_templates={"application/json": '{"statusCode": 200}'},
+                ),
+                method_responses=[
+                    {
+                        "statusCode": "200",
+                        "responseParameters": {
+                            "method.response.header.Access-Control-Allow-Headers": True,
+                            "method.response.header.Access-Control-Allow-Methods": True,
+                            "method.response.header.Access-Control-Allow-Origin": True,
+                        },
+                    }
+                ],
+            )
 
-        # /random-game - Fetch a random game
-        add_api_method(api.root, "random-game", "GET", lambda_references["fetch_random"])
-
-        # /custom-game - Create a custom game
-        add_api_method(api.root, "custom-game", "POST", lambda_references["create_custom"])
-
-        # /random-game - Create a new random game
-        add_api_method(api.root, "random-game", "POST", lambda_references["create_random"])
-
-        # /prefetch-today - Prefetch today's NYT game
-        add_api_method(api.root, "prefetch-today", "GET", lambda_references["prefetch_todays_game"])
-
-        # /play-today - Play today's NYT game
-        add_api_method(api.root, "play-today", "GET", lambda_references["play_today"])
-
-        # /validate - Validate a word
-        add_api_method(api.root, "validate", "POST", lambda_references["validate_word"])
-
-        # /archive - Fetch the archive of games
-        add_api_method(api.root, "archive", "GET", lambda_references["game_archive"])
-
-
-    # Helper function to create a resource with methods
-    def add_api_method(api_root, path: str, method: str, lambda_ref, cors=True):
-        """
-        Adds a resource and method to the API Gateway.
-
-        Args:
-            api_root: The root or parent resource.
-            path (str): The resource path.
-            method (str): HTTP method (e.g., "GET", "POST").
-            lambda_ref: The Lambda function reference.
-            cors (bool): Whether to enable CORS for this resource.
-
-        Returns:
-            The created resource.
-        """
-        resource = api_root.add_resource(path)
-        integration = apigateway.LambdaIntegration(lambda_ref)
-        resource.add_method(
-            method,
-            integration,
-            method_responses=[
-                {
-                    "statusCode": "200",
-                    "responseParameters": {
-                        "method.response.header.Access-Control-Allow-Origin": True,
-                    },
-                }
-            ] if cors else []
+        
+        # Set up /games resource and methods
+        games_resource = api.root.add_resource("games")
+        
+        # GET /games/{gameId} - Fetch an existing game
+        game_id_resource = games_resource.add_resource("{gameId}")
+        game_id_resource.add_method(
+            "GET",
+            apigateway.LambdaIntegration(lambda_references["fetch_game"])
         )
-        # Add CORS options if enabled
-        if cors:
-            apigateway.Cors.add_cors_options(resource, allow_origins=["*"])
-        return resource
+        add_cors(game_id_resource)
+        
+        # POST /games - Create a custom game
+        games_resource.add_method(
+            "POST",
+            apigateway.LambdaIntegration(lambda_references["create_custom"])
+        )
+        add_cors(games_resource)
+        
+        # Set up /validate resource and POST method
+        validate_integration = apigateway.LambdaIntegration(lambda_references["validate_word"])
+        validate_resource = api.root.add_resource("validate")
+        validate_resource.add_method("POST", validate_integration)
+        add_cors(validate_resource)
+        
+        # Route for prefetch_todays_game
+        prefetch_integration = apigateway.LambdaIntegration(lambda_references["prefetch_todays_game"])
+        prefetch_resource = api.root.add_resource("prefetch")
+        prefetch_resource.add_method("GET", prefetch_integration)
+        add_cors(prefetch_resource)
+        
+        # Route for play_today Lambda
+        play_today_integration = apigateway.LambdaIntegration(lambda_references["play_today"])
+        play_today_resource = api.root.add_resource("play-today")
+        play_today_resource.add_method("GET", play_today_integration)
+        add_cors(play_today_resource)
+
+        # Route for game_archive Lambda
+        game_archive_integration = apigateway.LambdaIntegration(lambda_references["game_archive"])
+        game_archive_resource = api.root.add_resource("archive")
+        game_archive_resource.add_method("GET", game_archive_integration)
+        add_cors(game_archive_resource)
+        
+        # GET /random-game - Fetch a random game
+        random_game_resource = api.root.add_resource("random-game")
+        random_game_resource.add_method(
+            "GET",
+            apigateway.LambdaIntegration(lambda_references["fetch_random"])
+        )
+
+        # POST /random-game - Create a random game
+        random_game_resource.add_method(
+            "POST",
+            apigateway.LambdaIntegration(lambda_references["create_random"])
+        )
+        add_cors(random_game_resource)
 
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):

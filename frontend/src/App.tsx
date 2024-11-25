@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import Header from './components/Header';
 import LeftMenu from './components/LeftMenu';
@@ -13,7 +13,8 @@ const App = () => {
   const [archiveGames, setArchiveGames] = useState<any[]>([]); // Stores archive data
   const API_URL = process.env.REACT_APP_API_URL;
 
-  const fetchTodaysGame = async () => {
+  // Memoize fetchTodaysGame to prevent re-creation on every render
+  const fetchTodaysGame = useCallback(async () => {
     if (board.length > 0) return; // Don’t refetch if already loaded
     try {
       const response = await axios.get(`${API_URL}/play-today`);
@@ -21,28 +22,22 @@ const App = () => {
     } catch (error) {
       console.error("Error fetching today's game:", error);
     }
-  };
+  }, [API_URL, board]);
 
-  useEffect(() => {
-    if (view === 'play-today') {
-      fetchTodaysGame();
-    }
-  }, [view, fetchTodaysGame]);
-
-  console.log("React app loaded!");
-  console.log("Environment Variables:", process.env.REACT_APP_API_URL);
-
-
-
-
-  const fetchGameArchive = async () => {
+  const fetchGameArchive = useCallback(async () => {
     try {
       const response = await axios.get(`${API_URL}/archive`);
       setArchiveGames(response.data.games);
     } catch (error) {
       console.error('Error fetching game archive:', error);
     }
-  };
+  }, [API_URL]);
+
+  useEffect(() => {
+    if (view === 'play-today') {
+      fetchTodaysGame();
+    }
+  }, [view, fetchTodaysGame]);
 
   const handleMenuSelect = (option: string) => {
     if (option === 'archive') {

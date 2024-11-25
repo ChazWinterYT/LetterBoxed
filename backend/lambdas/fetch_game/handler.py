@@ -9,6 +9,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     if not game_id:
         return {
             "statusCode": 400,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({
                 "message": "Invalid input: gameId is required."
             })
@@ -19,12 +24,22 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     if not game_data:
         return {
             "statusCode": 400,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
             "body": json.dumps({"message": "Game ID not found."})
         }
         
     # Return game details
     return {
         "statusCode": 200,
+        "headers": {
+                "Access-Control-Allow-Origin": "*",  # Allow all origins
+                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            },
         "body": json.dumps({
             "gameId": game_id,
             "gameLayout": game_data.get("gameLayout"),
