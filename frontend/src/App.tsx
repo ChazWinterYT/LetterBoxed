@@ -5,6 +5,7 @@ import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/ArchiveList";
 import Footer from "./components/Footer";
 import Modal from "./components/Modal";
+import Spinner from "./components/Spinner";
 import { useLanguage } from "./context/LanguageContext";
 import "./App.css";
 
@@ -12,7 +13,6 @@ const App = () => {
   const [layout, setBoard] = useState<string[]>([]);
   const [view, setView] = useState<string>("play-today");
   const [archiveGames, setArchiveGames] = useState<string[]>([]);
-  const [isLoadingArchive, setIsLoadingArchive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
@@ -32,7 +32,6 @@ const App = () => {
   // Fetch NYT archive with caching
   const fetchGameArchive = async () => {
     if (archiveGames.length > 0) return; // Use cached data if available
-    setIsLoadingArchive(true); // Start loading
     try {
       const response = await axios.get(`${API_URL}/archive`);
       setArchiveGames(response.data.nytGames || []); // Parse and set archive games
@@ -40,8 +39,6 @@ const App = () => {
     } catch (error) {
       console.error("Error fetching game archive:", error);
       setModalContent(<p>{t("ui.archive.error")}</p>); // Show error in modal
-    } finally {
-      setIsLoadingArchive(false); // Stop loading
     }
   };
 
@@ -54,10 +51,10 @@ const App = () => {
   // Open the archive modal
   const openArchiveModal = async () => {
     setModalTitle(t("ui.menu.archive")); // Set modal title
-    setIsModalOpen(true); // Open the modal
+    setIsModalOpen(true); // Open modal
     if (archiveGames.length === 0) {
-      setModalContent(<p>{t("ui.archive.archiveLoading")}</p>); // Show loading while fetching
-      await fetchGameArchive(); // Fetch data if not already cached
+      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} />); // Show loading state
+      await fetchGameArchive(); // Fetch data if not cached
     }
   };
 

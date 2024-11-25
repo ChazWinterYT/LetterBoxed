@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import './css/GameBoard.css';
+import Spinner from './Spinner';
 
 interface GameBoardProps {
   layout: string[];
@@ -26,8 +27,13 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
     }
   };
 
+  // Display loading spinner and message while layout is not ready
   if (!Array.isArray(layout) || layout.length !== 4) {
-    return <div className="loading-message">{t('game.loading')}</div>;
+    return (
+      <div className="loading-container">
+        <Spinner message={t("game.loading")} /> {/* Spinner with translated message */}
+      </div>
+    );
   }
 
   return (
