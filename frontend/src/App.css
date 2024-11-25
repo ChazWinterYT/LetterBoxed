@@ -55,3 +55,30 @@ footer {
   padding: 1rem;
   flex-shrink: 0; /* Ensures it doesn't shrink */
 }
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .content-container {
+    flex-direction: column; /* Stack components vertically */
+  }
+
+  .left-menu {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .game-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  button {
+    width: 90%; /* Ensure buttons are visible */
+    margin: 10px auto; /* Add spacing */
+  }
+}
