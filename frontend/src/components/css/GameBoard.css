@@ -69,61 +69,96 @@
 /* Board */
 .board {
   position: relative;
-  width: 240px; /* New square width */
-  height: 240px; /* New square height */
-  background-color: #fff; /* Light board background */
+  width: 240px; 
+  height: 240px;
+  background-color: #eaebf1;
   border: 2px solid black;
-  margin: 20px auto;
-  display: grid;
-  grid-template-rows: 50px auto 50px; /* Even row sizes */
-  grid-template-columns: 50px auto 50px; /* Even column sizes */
+  margin: 50px auto;
 }
 
-/* Top and Bottom Sides */
+/* Top Side */
 .top-side {
-  grid-row: 1;
-  grid-column: 2;
+  position: absolute;
+  top: -40px; /* Move marker and letter above the square */
+  left: 50%;
+  transform: translateX(-50%) translateY(-20%);
   display: flex;
   justify-content: space-between;
+  width: 75%; /* Spread markers and letters evenly */
 }
 
+.top-side .letter-container {
+  display: flex;
+  flex-direction: column-reverse; /* Letter above marker */
+  align-items: center;
+}
+
+/* Bottom Side */
 .bottom-side {
-  grid-row: 3;
-  grid-column: 2;
+  position: absolute;
+  bottom: -40px; /* Move marker and letter below the square */
+  left: 50%;
+  transform: translateX(-50%) translateY(20%);
   display: flex;
   justify-content: space-between;
+  width: 75%;
 }
 
-/* Left and Right Sides */
+.bottom-side .letter-container {
+  display: flex;
+  flex-direction: column; /* Letter below marker */
+  align-items: center;
+}
+
+/* Left Side */
 .left-side {
-  grid-row: 2;
-  grid-column: 1;
+  position: absolute;
+  top: 50%;
+  left: -40px; /* Move marker and letter left of the square */
+  transform: translateY(-50%) translateX(-8%);
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse; /* Letter left of marker */
   justify-content: space-between;
+  height: 75%; /* Spread markers and letters evenly */
 }
 
-.right-side {
-  grid-row: 2;
-  grid-column: 3;
+.left-side .letter-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse; /* Letter left of marker */
+  align-items: center;
+}
+
+/* Right Side */
+.right-side {
+  position: absolute;
+  top: 50%;
+  right: -40px; /* Move marker and letter right of the square */
+  transform: translateY(-50%) translateX(8%);
+  display: flex;
+  flex-direction: column; /* Letter right of marker */
   justify-content: space-between;
+  height: 75%;
+}
+
+.right-side .letter-container {
+  display: flex;
+  flex-direction: row; /* Letter right of marker */
+  align-items: center;
 }
 
 /* Letter and Marker Container */
 .letter-container {
   display: flex;
+  flex-direction: column; /* Stack marker and letter */
   align-items: center;
-  gap: 4px; /* Adjusted gap for smaller size */
 }
 
 /* Letters */
 .letter {
   background-color: #e3f2fd;
   border-radius: 50%;
-  padding: 10px; /* Adjusted size for smaller square */
-  font-size: 1rem; /* Adjusted font size */
+  padding: 10px;
+  font-size: 1rem;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
@@ -139,18 +174,26 @@
   color: white;
 }
 
-/* Marker Styles */
+/* Markers */
 .marker {
-  width: 10px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background-color: #cfd8dc; /* Default inactive marker */
-  margin: 5px auto; /* Center the marker */
-  transition: background-color 0.3s ease;
+  background-color: #84888a;
+  margin: 5px; /* Space between marker and letter */
 }
 
 .marker.active {
-  background-color: #90caf9; /* Blue for active markers */
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 /* Controls */

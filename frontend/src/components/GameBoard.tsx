@@ -76,7 +76,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
 
         {/* Left Side */}
         <div className="left-side">
-          {layout[1].split('').map((letter, index) => (
+          {layout[3].split('').map((letter, index) => (
             <div className="letter-container" key={`left-${index}`}>
               <div
                 className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
@@ -97,7 +97,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
 
         {/* Right Side */}
         <div className="right-side">
-          {layout[3].split('').map((letter, index) => (
+          {layout[1].split('').map((letter, index) => (
             <div className="letter-container" key={`right-${index}`}>
               <div
                 className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
