@@ -24,14 +24,20 @@ const App = () => {
     }
   }, [API_URL, board]);
 
-  const fetchGameArchive = useCallback(async () => {
+  const fetchGameArchive = async () => {
     try {
       const response = await axios.get(`${API_URL}/archive`);
-      setArchiveGames(response.data.games);
+      if (response.data && Array.isArray(response.data.games)) {
+        setArchiveGames(response.data.games);
+      } else {
+        console.error('Unexpected response structure:', response.data);
+        setArchiveGames([]);
+      }
     } catch (error) {
       console.error('Error fetching game archive:', error);
+      setArchiveGames([]); // Ensure fallback
     }
-  }, [API_URL]);
+  };
 
   useEffect(() => {
     if (view === 'play-today') {
@@ -54,10 +60,10 @@ const App = () => {
       <div className="main-layout">
         <LeftMenu onOptionSelect={handleMenuSelect} />
         <div className="game-area">
-          {view === 'play-today' && <GameBoard board={board} />}
-          {view === 'archive' && <ArchiveList games={archiveGames} />}
-          {view === 'custom-game' && <CustomGameForm />}
-        </div>
+            {view === 'play-today' && <GameBoard board={board} />}
+            {view === 'archive' && <ArchiveList games={archiveGames} />}
+            {view === 'custom-game' && <CustomGameForm />}
+            </div>
       </div>
     </div>
   );

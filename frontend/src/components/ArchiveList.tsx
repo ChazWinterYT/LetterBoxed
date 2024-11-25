@@ -1,20 +1,21 @@
 import React from 'react';
 
-interface ArchiveListProps {
-  games: any[];
-}
+type ArchiveListProps = {
+  games: string[]; 
+};
 
-const ArchiveList: React.FC<ArchiveListProps> = ({ games }) => (
-  <div>
-    <h2>NYT Games Archive</h2>
+const ArchiveList: React.FC<ArchiveListProps> = ({ games }) => {
+  if (!games || games.length === 0) {
+    return <p>No games available.</p>; // Graceful fallback
+  }
+
+  return (
     <ul>
       {games.map((game, index) => (
-        <li key={index}>
-          <a href={`/game/${game.uuid}`}>{game.date}</a>
-        </li>
+        <li key={index}>{game}</li> // Render each date
       ))}
     </ul>
-  </div>
-);
+  );
+};
 
 export default ArchiveList;
