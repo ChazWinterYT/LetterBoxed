@@ -7,6 +7,9 @@
             "customGame": "Skapa eget spel",
             "randomGame": "Skapa slumpmässigt spel"
         },
+        "archive": {
+            "noGames": "Inga spel tillgängliga"
+        },
         "startGame": "Starta spelet",
         "submitWord": "Skicka in ord",
         "playAgain": "Spela igen",

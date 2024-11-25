@@ -7,6 +7,9 @@
             "customGame": "Buat Game Kustom",
             "randomGame": "Buat Game Acak"
         },
+        "archive": {
+            "noGames": "Tidak ada permainan tersedia"
+        },
         "startGame": "Mulai Permainan",
         "submitWord": "Kirim Kata",
         "playAgain": "Main Lagi",

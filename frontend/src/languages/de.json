@@ -2,9 +2,13 @@
     "ui": {
         "menu": {
             "menuTitle": "Hauptmenü",
+            "playToday": "Spiele das heutige NYT-Spiel",
             "archive": "NYT-Spiele-Archiv",
             "customGame": "Eigenes Spiel erstellen",
             "randomGame": "Zufälliges Spiel erstellen"
+        },
+        "archive": {
+            "noGames": "Keine Spiele verfügbar"
         },
         "startGame": "Spiel starten",
         "submitWord": "Wort einreichen",

@@ -7,6 +7,9 @@
             "customGame": "カスタムゲームを作成",
             "randomGame": "ランダムゲームを作成"
         },
+        "archive": {
+            "noGames": "利用可能なゲームはありません"
+        },
         "startGame": "ゲーム開始",
         "submitWord": "単語を提出",
         "playAgain": "もう一度プレイ",

@@ -7,6 +7,9 @@
             "customGame": "Crear juego personalizado",
             "randomGame": "Crear juego aleatorio"
         },
+        "archive": {
+            "noGames": "No hay juegos disponibles"
+        },
         "startGame": "Iniciar juego",
         "submitWord": "Enviar palabra",
         "playAgain": "Jugar de nuevo",

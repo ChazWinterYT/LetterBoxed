@@ -7,6 +7,9 @@
             "customGame": "कस्टम गेम बनाएं",
             "randomGame": "रैंडम गेम बनाएं"
         },
+        "archive": {
+            "noGames": "कोई खेल उपलब्ध नहीं है"
+        },
         "startGame": "खेल शुरू करें",
         "submitWord": "शब्द सबमिट करें",
         "playAgain": "फिर से खेलें",

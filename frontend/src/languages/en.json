@@ -7,6 +7,9 @@
             "customGame": "Create Custom Game",
             "randomGame": "Create Random Game"
         },
+        "archive": {
+            "noGames": "No games available"
+        },
         "startGame": "Start Game",
         "submitWord": "Submit Word",
         "playAgain": "Play Again",
