@@ -1,24 +1,26 @@
 import React from "react";
 import { useLanguage } from "../context/LanguageContext";
+import './css/ArchiveList.css';
 
 type ArchiveListProps = {
-  games: string[]; // Array of game IDs (dates in your case)
+  games: string[]; // Array of game IDs (dates)
+  onGameSelect: (gameId: string) => void; // Callback to load game
 };
 
-const ArchiveList: React.FC<ArchiveListProps> = ({ games }) => {
+const ArchiveList: React.FC<ArchiveListProps> = ({ games, onGameSelect }) => {
   const { t } = useLanguage(); // Translation function
 
   if (!games || games.length === 0) {
-    return <p>{t("ui.archive.noGames")}</p>; // Fallback if no games
+    return <p>{t("ui.archive.noGames")}</p>;
   }
 
   return (
     <ul>
       {games.map((game, index) => (
         <li key={index}>
-          <a href={`/games/${game}`} target="_blank" rel="noopener noreferrer">
+          <button onClick={() => onGameSelect(game)} className="game-link">
             {game}
-          </a>
+          </button>
         </li>
       ))}
     </ul>

@@ -1,0 +1,16 @@
+.game-link {
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #e3f2fd;
+    border: 2px solid #90caf9;
+    border-radius: 5px;
+    color: #333;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .game-link:hover {
+    background-color: #90caf9;
+    color: white;
+  }

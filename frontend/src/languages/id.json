@@ -9,7 +9,8 @@
         },
         "archive": {
             "noGames": "Tidak ada permainan tersedia",
-            "archiveLoading": "Arsip sedang dimuat, harap tunggu..."
+            "archiveLoading": "Arsip sedang dimuat, harap tunggu...",
+            "errorLoadingGame": "Terjadi kesalahan saat memuat permainan"
         },
         "customGame": {
             "random": "Permainan Acak Sepenuhnya",

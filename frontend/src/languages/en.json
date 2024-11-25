@@ -9,7 +9,8 @@
         },
         "archive": {
             "noGames": "No games available",
-            "archiveLoading": "Archive is loading, please wait..."
+            "archiveLoading": "Archive is loading, please wait...",
+            "errorLoadingGame": "There was an error when loading the game"
         },
         "customGame": {
             "random": "Fully Random Game",

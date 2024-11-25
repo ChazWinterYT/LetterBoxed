@@ -31,14 +31,36 @@ const App = () => {
 
   // Fetch NYT archive with caching
   const fetchGameArchive = async () => {
-    if (archiveGames.length > 0) return; // Use cached data if available
+    if (archiveGames.length > 0) {
+      // Use cached data
+      setModalContent(
+        <ArchiveList games={archiveGames} onGameSelect={loadGameFromArchive} />
+      );
+      return;
+    }
+
     try {
+      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} />); // Show spinner
       const response = await axios.get(`${API_URL}/archive`);
       setArchiveGames(response.data.nytGames || []); // Parse and set archive games
-      setModalContent(<ArchiveList games={response.data.nytGames || []} />); // Update modal content with archive list
+      setModalContent(
+        <ArchiveList games={response.data.nytGames || []} onGameSelect={loadGameFromArchive} />
+      ); // Update modal content
     } catch (error) {
       console.error("Error fetching game archive:", error);
       setModalContent(<p>{t("ui.archive.error")}</p>); // Show error in modal
+    }
+  };
+
+  // Load a selected game onto the game board
+  const loadGameFromArchive = async (gameId: string) => {
+    try {
+      const response = await axios.get(`${API_URL}/games/${gameId}`);
+      setBoard(response.data.gameLayout || []);
+      setIsModalOpen(false); // Close modal after loading game
+    } catch (error) {
+      console.error(`Error loading game ${gameId}:`, error);
+      setModalContent(<p>{t("ui.archive.errorLoadingGame")}</p>);
     }
   };
 
@@ -50,12 +72,9 @@ const App = () => {
 
   // Open the archive modal
   const openArchiveModal = async () => {
-    setModalTitle(t("ui.menu.archive")); // Set modal title
-    setIsModalOpen(true); // Open modal
-    if (archiveGames.length === 0) {
-      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} />); // Show loading state
-      await fetchGameArchive(); // Fetch data if not cached
-    }
+    setModalTitle(t("ui.menu.archive"));
+    setIsModalOpen(true);
+    await fetchGameArchive(); // Fetch or use cached archive data
   };
 
   // Open custom game modal

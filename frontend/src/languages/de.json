@@ -9,7 +9,8 @@
         },
         "archive": {
             "noGames": "Keine Spiele verfügbar",
-            "archiveLoading": "Das Archiv wird geladen, bitte warten..."
+            "archiveLoading": "Das Archiv wird geladen, bitte warten...",
+            "errorLoadingGame": "Beim Laden des Spiels ist ein Fehler aufgetreten"
         },
         "customGame": {
             "random": "Vollständig zufälliges Spiel",

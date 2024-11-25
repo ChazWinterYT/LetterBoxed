@@ -9,7 +9,8 @@
         },
         "archive": {
             "noGames": "Aucun jeu disponible",
-            "archiveLoading": "L'archive est en cours de chargement, veuillez patienter..."
+            "archiveLoading": "L'archive est en cours de chargement, veuillez patienter...",
+            "errorLoadingGame": "Une erreur s'est produite lors du chargement du jeu"
         },
         "customGame": {
             "random": "Jeu entièrement aléatoire",

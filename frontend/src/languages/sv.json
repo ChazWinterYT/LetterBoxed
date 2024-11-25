@@ -9,7 +9,8 @@
         },
         "archive": {
             "noGames": "Inga spel tillgängliga",
-            "archiveLoading": "Arkivet laddas, vänligen vänta..."
+            "archiveLoading": "Arkivet laddas, vänligen vänta...",
+            "errorLoadingGame": "Ett fel inträffade vid laddning av spelet"
         },
         "customGame": {
             "random": "Helt slumpmässigt spel",
