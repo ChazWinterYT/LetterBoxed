@@ -1,0 +1,49 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* Dim background */
+  backdrop-filter: blur(8px); /* Add blur effect */ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%; /* Mobile-friendly width */
+  max-width: 400px; /* For larger screens */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+/* Close Button */
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Modal Title */
+.modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Modal Body */
+.modal-body {
+  font-size: 1rem;
+  text-align: left;
+}

@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/ArchiveList";
 import CustomGameForm from "./components/CustomGameForm";
+import Modal from "./components/Modal"; // Import the modal component
 import Footer from "./components/Footer";
 import { useLanguage } from "./context/LanguageContext";
 import "./App.css";
@@ -12,6 +13,9 @@ const App = () => {
   const [layout, setBoard] = useState<string[]>([]);
   const [view, setView] = useState<string>("play-today");
   const [archiveGames, setArchiveGames] = useState<any[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Modal state
+  const [modalTitle, setModalTitle] = useState<string>(""); // Modal title
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null); // Modal content
   const API_URL = process.env.REACT_APP_API_URL;
   const { t } = useLanguage(); // Translation function
 
@@ -32,7 +36,6 @@ const App = () => {
       setArchiveGames(response.data.games || []);
     } catch (error) {
       console.error("Error fetching game archive:", error);
-      setBoard([]); // Set fallback
     }
   };
 
@@ -44,8 +47,32 @@ const App = () => {
 
   // Handle button selection
   const handleViewChange = (newView: string) => {
-    setView(newView);
-    if (newView === "archive") fetchGameArchive();
+    if (newView === "archive") {
+      setModalTitle(t("ui.menu.archive")); // Set modal title
+      setModalContent(
+        <ArchiveList games={archiveGames} /> // Show archive content in the modal
+      );
+      setIsModalOpen(true);
+      fetchGameArchive(); // Fetch archive data
+    } else if (newView === "custom-game") {
+      setModalTitle(t("ui.menu.customGame")); // Set modal title
+      setModalContent(
+        <div>
+          <button onClick={() => alert("Full Random Game")}>
+            Full Random Game
+          </button>
+          <button onClick={() => alert("Seed Words")}>
+            Generated Game (Seed Words)
+          </button>
+          <button onClick={() => alert("Fully Custom Game")}>
+            Fully Custom Game
+          </button>
+        </div>
+      );
+      setIsModalOpen(true);
+    } else {
+      setView(newView);
+    }
   };
 
   return (
@@ -61,15 +88,18 @@ const App = () => {
         <button onClick={() => handleViewChange("custom-game")}>
           {t("ui.menu.customGame")}
         </button>
-        <button onClick={() => handleViewChange("random-game")}>
-          {t("ui.menu.randomGame")}
-        </button>
       </div>
       <div className="main-content">
         {view === "play-today" && <GameBoard layout={layout} />}
-        {view === "archive" && <ArchiveList games={archiveGames} />}
-        {view === "custom-game" && <CustomGameForm />}
       </div>
+      {/* Modal */}
+      <Modal
+        title={modalTitle}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        {modalContent}
+      </Modal>
       <Footer />
     </div>
   );
