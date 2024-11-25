@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLanguage } from '../context/LanguageContext';
 import './css/GameBoard.css';
 
 interface GameBoardProps {
@@ -8,20 +7,27 @@ interface GameBoardProps {
 
 const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
   const [currentWord, setCurrentWord] = useState<string>('');
-  const { t } = useLanguage(); // Translation function
+  const [clickedLetters, setClickedLetters] = useState<Set<string>>(new Set());
 
   const handleLetterClick = (letter: string) => {
     setCurrentWord((prevWord) => prevWord + letter);
+
+    // Add the letter to the clicked set
+    setClickedLetters((prevClicked) => new Set(prevClicked).add(letter));
   };
 
   const handleDelete = () => {
     setCurrentWord((prevWord) => prevWord.slice(0, -1));
+    // Optional: Reset clicked letters when deleting (if applicable)
   };
 
   const handleSubmit = () => {
-    alert(`${t('game.submittedWord')}: ${currentWord}`);
+    alert(`Submitted word: ${currentWord}`);
     setCurrentWord(''); // Clear the current word
+    setClickedLetters(new Set()); // Reset clicked letters
   };
+
+  const isClicked = (letter: string) => clickedLetters.has(letter);
 
   return (
     <div className="game-board-container">
@@ -38,7 +44,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
               {layout[0].split('').map((letter, index) => (
                 <div
                   key={`top-${index}`}
-                  className="letter"
+                  className={`letter ${isClicked(letter) ? 'clicked' : ''}`}
                   onClick={() => handleLetterClick(letter)}
                 >
                   {letter}
@@ -49,7 +55,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
               {layout[1].split('').map((letter, index) => (
                 <div
                   key={`left-${index}`}
-                  className="letter"
+                  className={`letter ${isClicked(letter) ? 'clicked' : ''}`}
                   onClick={() => handleLetterClick(letter)}
                 >
                   {letter}
@@ -60,7 +66,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
               {layout[3].split('').map((letter, index) => (
                 <div
                   key={`right-${index}`}
-                  className="letter"
+                  className={`letter ${isClicked(letter) ? 'clicked' : ''}`}
                   onClick={() => handleLetterClick(letter)}
                 >
                   {letter}
@@ -71,7 +77,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
               {layout[2].split('').map((letter, index) => (
                 <div
                   key={`bottom-${index}`}
-                  className="letter"
+                  className={`letter ${isClicked(letter) ? 'clicked' : ''}`}
                   onClick={() => handleLetterClick(letter)}
                 >
                   {letter}
@@ -81,11 +87,10 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
           </>
         )}
       </div>
-
       {/* Controls */}
       <div className="controls">
-        <button onClick={handleDelete}>{t('game.deleteLetter')}</button>
-        <button onClick={handleSubmit}>{t('game.submitWord')}</button>
+        <button onClick={handleDelete}>Delete Letter</button>
+        <button onClick={handleSubmit}>Submit Word</button>
       </div>
     </div>
   );

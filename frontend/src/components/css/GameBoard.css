@@ -86,6 +86,12 @@
   font-weight: bold;
   text-align: center;
   cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.letter.clicked {
+  background-color: purple; /* Highlight clicked letter */
+  color: white; /* Optional: Change text color for contrast */
 }
 
 /* Controls (Delete and Submit Buttons) */
