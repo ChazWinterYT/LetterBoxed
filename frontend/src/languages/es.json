@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "menuTitle": "Menú Principal",
             "playToday": "Jugar el juego de hoy del NYT",
             "archive": "Archivo de juegos del NYT",
             "customGame": "Crear juego personalizado",

@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "menuTitle": "मुख्य मेनू",
             "playToday": "आज का NYT गेम खेलें",
             "archive": "NYT गेम्स का संग्रह",
             "customGame": "कस्टम गेम बनाएं",

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import './css/GameBoard.css';
 
 interface GameBoardProps {
@@ -7,6 +8,7 @@ interface GameBoardProps {
 
 const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
   const [currentWord, setCurrentWord] = useState<string>('');
+  const { t } = useLanguage(); // Translation function
 
   const handleLetterClick = (letter: string) => {
     setCurrentWord((prevWord) => prevWord + letter);
@@ -17,7 +19,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
   };
 
   const handleSubmit = () => {
-    alert(`Submitted word: ${currentWord}`);
+    alert(`${t('game.submittedWord')}: ${currentWord}`);
     setCurrentWord(''); // Clear the current word
   };
 
@@ -79,10 +81,11 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
           </>
         )}
       </div>
+
       {/* Controls */}
       <div className="controls">
-        <button onClick={handleDelete}>Delete Letter</button>
-        <button onClick={handleSubmit}>Submit Word</button>
+        <button onClick={handleDelete}>{t('game.deleteLetter')}</button>
+        <button onClick={handleSubmit}>{t('game.submitWord')}</button>
       </div>
     </div>
   );

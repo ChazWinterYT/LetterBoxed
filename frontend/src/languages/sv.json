@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "menuTitle": "Huvudmeny",
             "playToday": "Spela dagens NYT-spel",
             "archive": "NYT-spelarkiv",
             "customGame": "Skapa eget spel",

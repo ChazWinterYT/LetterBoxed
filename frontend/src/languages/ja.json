@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "menuTitle": "メインメニュー",
             "playToday": "今日のNYTゲームをプレイ",
             "archive": "NYTゲームアーカイブ",
             "customGame": "カスタムゲームを作成",

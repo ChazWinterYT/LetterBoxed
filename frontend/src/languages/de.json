@@ -1,7 +1,7 @@
 {
     "ui": {
         "menu": {
-            "playToday": "Heutiges NYT-Spiel spielen",
+            "menuTitle": "Hauptmenü",
             "archive": "NYT-Spiele-Archiv",
             "customGame": "Eigenes Spiel erstellen",
             "randomGame": "Zufälliges Spiel erstellen"
