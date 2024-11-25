@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "利用可能なゲームはありません"
         },
+        "customGame": {
+            "random": "完全にランダムなゲーム",
+            "seedWords": "生成されたゲーム（シードワード）",
+            "fullCustom": "完全カスタムゲーム",
+            "randomDescription": "ランダムな文字でゲームを生成しています。",
+            "seedWordsDescription": "シードワードを2つ入力してゲームを生成します。",
+            "fullCustomDescription": "すべての文字を選択して独自のカスタムゲームを作成します。"
+        },
         "startGame": "ゲーム開始",
         "submitWord": "単語を提出",
         "playAgain": "もう一度プレイ",

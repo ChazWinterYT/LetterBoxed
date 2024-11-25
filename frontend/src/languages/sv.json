@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "Inga spel tillgängliga"
         },
+        "customGame": {
+            "random": "Helt slumpmässigt spel",
+            "seedWords": "Genererat spel (Fröord)",
+            "fullCustom": "Helt anpassat spel",
+            "randomDescription": "Ett spel med slumpmässiga bokstäver genereras.",
+            "seedWordsDescription": "Ange två fröord för att skapa ditt spel.",
+            "fullCustomDescription": "Skapa ditt eget anpassade spel genom att välja alla bokstäver."
+        },
         "startGame": "Starta spelet",
         "submitWord": "Skicka in ord",
         "playAgain": "Spela igen",

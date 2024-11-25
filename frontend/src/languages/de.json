@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "Keine Spiele verfügbar"
         },
+        "customGame": {
+            "random": "Vollständig zufälliges Spiel",
+            "seedWords": "Generiertes Spiel (Saatwörter)",
+            "fullCustom": "Vollständig benutzerdefiniertes Spiel",
+            "randomDescription": "Ein Spiel mit zufälligen Buchstaben wird generiert.",
+            "seedWordsDescription": "Geben Sie zwei Saatwörter ein, um Ihr Spiel zu generieren.",
+            "fullCustomDescription": "Erstellen Sie Ihr eigenes benutzerdefiniertes Spiel, indem Sie alle Buchstaben auswählen."
+        },
         "startGame": "Spiel starten",
         "submitWord": "Wort einreichen",
         "playAgain": "Nochmal spielen",

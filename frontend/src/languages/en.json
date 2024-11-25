@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "No games available"
         },
+        "customGame": {
+            "random": "Fully Random Game",
+            "seedWords": "Generated Game (Seed Words)",
+            "fullCustom": "Fully Custom Game",
+            "randomDescription": "A game with random letters is being generated.",
+            "seedWordsDescription": "Enter two seed words to generate your game.",
+            "fullCustomDescription": "Create your own custom game by selecting all letters."
+        },
         "startGame": "Start Game",
         "submitWord": "Submit Word",
         "playAgain": "Play Again",

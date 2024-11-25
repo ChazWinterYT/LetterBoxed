@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "कोई खेल उपलब्ध नहीं है"
         },
+        "customGame": {
+            "random": "पूरी तरह से रैंडम गेम",
+            "seedWords": "जनरेटेड गेम (सीड शब्द)",
+            "fullCustom": "पूरी तरह से कस्टम गेम",
+            "randomDescription": "यादृच्छिक अक्षरों वाला गेम बनाया जा रहा है।",
+            "seedWordsDescription": "अपना गेम बनाने के लिए दो सीड शब्द दर्ज करें।",
+            "fullCustomDescription": "सभी अक्षरों का चयन करके अपना कस्टम गेम बनाएं।"
+        },
         "startGame": "खेल शुरू करें",
         "submitWord": "शब्द सबमिट करें",
         "playAgain": "फिर से खेलें",

@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "Tidak ada permainan tersedia"
         },
+        "customGame": {
+            "random": "Permainan Acak Sepenuhnya",
+            "seedWords": "Permainan yang Dihasilkan (Kata Benih)",
+            "fullCustom": "Permainan Sepenuhnya Kustom",
+            "randomDescription": "Sebuah permainan dengan huruf acak sedang dibuat.",
+            "seedWordsDescription": "Masukkan dua kata benih untuk membuat permainan Anda.",
+            "fullCustomDescription": "Buat permainan kustom Anda sendiri dengan memilih semua huruf."
+        },
         "startGame": "Mulai Permainan",
         "submitWord": "Kirim Kata",
         "playAgain": "Main Lagi",

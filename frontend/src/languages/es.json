@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "No hay juegos disponibles"
         },
+        "customGame": {
+            "random": "Juego completamente aleatorio",
+            "seedWords": "Juego generado (Palabras semilla)",
+            "fullCustom": "Juego totalmente personalizado",
+            "randomDescription": "Se está generando un juego con letras aleatorias.",
+            "seedWordsDescription": "Introduce dos palabras semilla para generar tu juego.",
+            "fullCustomDescription": "Crea tu propio juego personalizado seleccionando todas las letras."
+        },
         "startGame": "Iniciar juego",
         "submitWord": "Enviar palabra",
         "playAgain": "Jugar de nuevo",

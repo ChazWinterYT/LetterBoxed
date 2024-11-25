@@ -10,6 +10,14 @@
         "archive": {
             "noGames": "Brak dostępnych gier"
         },
+        "customGame": {
+            "random": "Całkowicie losowa gra",
+            "seedWords": "Wygenerowana gra (Słowa początkowe)",
+            "fullCustom": "Całkowicie niestandardowa gra",
+            "randomDescription": "Tworzy się gra z losowymi literami.",
+            "seedWordsDescription": "Wprowadź dwa słowa początkowe, aby wygenerować swoją grę.",
+            "fullCustomDescription": "Stwórz własną niestandardową grę, wybierając wszystkie litery."
+        },
         "startGame": "Rozpocznij grę",
         "submitWord": "Zatwierdź słowo",
         "playAgain": "Zagraj ponownie",
