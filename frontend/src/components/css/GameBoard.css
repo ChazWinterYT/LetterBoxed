@@ -32,8 +32,8 @@
 
 /* Played Words Section */
 .played-words-section {
-  width: 100%; /* Allows the box to be responsive */
-  max-width: 300px; /* Set the max width to make wrapping start sooner */
+  width: 100%;
+  max-width: 300px; /* Ensures wrapping happens sooner */
   background-color: #f0f4f8;
   padding: 10px;
   border-radius: 5px;
@@ -44,19 +44,21 @@
   display: flex;
   flex-direction: column; /* Stack heading and words */
   gap: 5px; /* Space between heading and words */
-  height: auto; /* Dynamic height for wrapping */
+  min-height: 80px; /* Reserve space for wrapping */
+  height: auto; /* Allow height to grow if needed */
 }
 
 .played-words-section h3 {
   margin: 0; /* Remove extra spacing */
-  font-size: 1.2rem; /* Slightly larger font for "Played Words" */
+  font-size: 1.1rem; /* Slightly larger font for "Played Words" */
+  text-align: center; /* Center the heading */
 }
 
 .played-words {
   display: flex;
   flex-wrap: wrap; /* Enable wrapping of words */
   gap: 5px; /* Space between words */
-  font-size: 1rem; /* Slightly larger font for the words */
+  font-size: 0.9rem; /* Slightly larger font for the words */
   color: #555;
 }
 
@@ -67,17 +69,17 @@
 /* Board */
 .board {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 240px; /* New square width */
+  height: 240px; /* New square height */
   background-color: #fff; /* Light board background */
   border: 2px solid black;
   margin: 20px auto;
   display: grid;
-  grid-template-rows: 50px auto 50px;
-  grid-template-columns: 50px auto 50px;
+  grid-template-rows: 50px auto 50px; /* Even row sizes */
+  grid-template-columns: 50px auto 50px; /* Even column sizes */
 }
 
-/* Top Side */
+/* Top and Bottom Sides */
 .top-side {
   grid-row: 1;
   grid-column: 2;
@@ -92,6 +94,7 @@
   justify-content: space-between;
 }
 
+/* Left and Right Sides */
 .left-side {
   grid-row: 2;
   grid-column: 1;
@@ -112,15 +115,15 @@
 .letter-container {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px; /* Adjusted gap for smaller size */
 }
 
 /* Letters */
 .letter {
   background-color: #e3f2fd;
   border-radius: 50%;
-  padding: 10px;
-  font-size: 1.2rem;
+  padding: 10px; /* Adjusted size for smaller square */
+  font-size: 1rem; /* Adjusted font size */
   font-weight: bold;
   text-align: center;
   cursor: pointer;
@@ -128,24 +131,26 @@
 }
 
 .letter.unplayed-letter {
-  background-color: #e3f2fd;
+  background-color: #e3f2fd; /* Light blue */
 }
 
 .letter.played-letter {
-  background-color: #9c27b0;
+  background-color: #9c27b0; /* Purple for played letters */
   color: white;
 }
 
-/* Markers */
+/* Marker Styles */
 .marker {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #cfd8dc;
+  background-color: #cfd8dc; /* Default inactive marker */
+  margin: 5px auto; /* Center the marker */
+  transition: background-color 0.3s ease;
 }
 
 .marker.active {
-  background-color: #90caf9;
+  background-color: #90caf9; /* Blue for active markers */
 }
 
 /* Controls */

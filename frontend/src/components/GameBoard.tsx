@@ -53,47 +53,91 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
 
       {/* Game Board */}
       <div className="board">
+        {/* Top Side */}
         <div className="top-side">
           {layout[0].split('').map((letter, index) => (
             <div className="letter-container" key={`top-${index}`}>
-              <div className="marker" />
-              <div className="letter" onClick={() => handleLetterClick(letter)}>
+              <div
+                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
+              />
+              <div
+                className={`letter ${
+                  playedWords.some((word) => word.includes(letter))
+                    ? 'played-letter'
+                    : 'unplayed-letter'
+                }`}
+                onClick={() => handleLetterClick(letter)}
+              >
                 {letter}
               </div>
             </div>
           ))}
         </div>
+
+        {/* Left Side */}
         <div className="left-side">
           {layout[1].split('').map((letter, index) => (
             <div className="letter-container" key={`left-${index}`}>
-              <div className="marker" />
-              <div className="letter" onClick={() => handleLetterClick(letter)}>
+              <div
+                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
+              />
+              <div
+                className={`letter ${
+                  playedWords.some((word) => word.includes(letter))
+                    ? 'played-letter'
+                    : 'unplayed-letter'
+                }`}
+                onClick={() => handleLetterClick(letter)}
+              >
                 {letter}
               </div>
             </div>
           ))}
         </div>
+
+        {/* Right Side */}
         <div className="right-side">
           {layout[3].split('').map((letter, index) => (
             <div className="letter-container" key={`right-${index}`}>
-              <div className="marker" />
-              <div className="letter" onClick={() => handleLetterClick(letter)}>
+              <div
+                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
+              />
+              <div
+                className={`letter ${
+                  playedWords.some((word) => word.includes(letter))
+                    ? 'played-letter'
+                    : 'unplayed-letter'
+                }`}
+                onClick={() => handleLetterClick(letter)}
+              >
                 {letter}
               </div>
             </div>
           ))}
         </div>
+
+        {/* Bottom Side */}
         <div className="bottom-side">
           {layout[2].split('').map((letter, index) => (
             <div className="letter-container" key={`bottom-${index}`}>
-              <div className="marker" />
-              <div className="letter" onClick={() => handleLetterClick(letter)}>
+              <div
+                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
+              />
+              <div
+                className={`letter ${
+                  playedWords.some((word) => word.includes(letter))
+                    ? 'played-letter'
+                    : 'unplayed-letter'
+                }`}
+                onClick={() => handleLetterClick(letter)}
+              >
                 {letter}
               </div>
             </div>
           ))}
         </div>
       </div>
+
 
       {/* Controls */}
       <div className="controls">
