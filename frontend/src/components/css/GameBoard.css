@@ -1,19 +1,57 @@
+/* GameBoard.css */
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  .game-tile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border: 1px solid #333;
-    font-size: 1.2rem;
-    font-weight: bold;
-    background-color: #fff;
-  }
-  
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-color: white; /* Ensure square background is white */
+  border: 5px solid black;
+  margin: auto;
+}
+
+.side {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.side.top {
+  top: -20px;
+  left: 0;
+  right: 0;
+  flex-direction: row;
+}
+
+.side.bottom {
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  flex-direction: row;
+}
+
+.side.left {
+  top: 0;
+  bottom: 0;
+  left: -20px;
+  flex-direction: column;
+}
+
+.side.right {
+  top: 0;
+  bottom: 0;
+  right: -20px;
+  flex-direction: column;
+}
+
+.letter {
+  font-size: 1.5rem;
+  background-color: #e7f6ff; /* Light blue background for the letters */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}

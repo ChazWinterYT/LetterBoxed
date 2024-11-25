@@ -1,16 +1,57 @@
-.app {
+/* App container styles */
+.app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
-.main-container {
-  display: flex;
-  flex: 1;
+
+/* Header styles */
+header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
 }
-.game-container {
-  flex: 1;
-  padding: 2rem;
+
+body {
+  background-color: #25648b; /* Light blue for the entire page */
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Footer styles */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+.content-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: calc(100vh - 100px); /* Adjust height excluding the header/footer */
+  overflow: hidden;
+}
+
+.left-menu {
+  width: 250px; /* Fixed width for the menu */
+  background-color: #f9f9f9; /* Light gray for contrast */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for better look */
+  padding: 10px;
+}
+
+.main-content {
+  flex: 1; /* Take up the remaining space */
+  padding: 20px;
+  overflow: auto; /* Allow scrolling if content overflows */
+}
+
+/* Footer stays at the bottom */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  flex-shrink: 0; /* Ensures it doesn't shrink */
 }
