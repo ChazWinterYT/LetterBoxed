@@ -5,7 +5,11 @@
   align-items: center;
   gap: 20px;
   background-color: #2b5c8a; /* Background behind the board */
-  padding: 20px;
+  padding: 40px;
+  width: 100%; /* Ensure it fills the parent container */
+  max-width: 320px; /* Increase this to make it wider */
+  border-radius: 10px; /* Optional: Round the corners */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow */
 }
 
 /* Word Formation Area */
@@ -13,7 +17,7 @@
   width: 100%;
   max-width: 300px;
   text-align: center;
-  background-color: #f0f4f8;
+  background-color: #dae4ef;
   padding: 10px;
   border-radius: 5px;
   font-size: 1.5rem;
@@ -34,7 +38,7 @@
 .played-words-section {
   width: 100%;
   max-width: 300px; /* Ensures wrapping happens sooner */
-  background-color: #f0f4f8;
+  background-color: #dae4ef;
   padding: 10px;
   border-radius: 5px;
   text-align: left; /* Align content to the left */
@@ -71,9 +75,9 @@
   position: relative;
   width: 240px; 
   height: 240px;
-  background-color: #eaebf1;
-  border: 2px solid black;
-  margin: 50px auto;
+  background-color: #dae4ef;
+  border: 4px solid black;
+  margin: 60px auto;
 }
 
 /* Top Side */
@@ -81,7 +85,7 @@
   position: absolute;
   top: -40px; /* Move marker and letter above the square */
   left: 50%;
-  transform: translateX(-50%) translateY(-20%);
+  transform: translateX(-50%) translateY(-32%);
   display: flex;
   justify-content: space-between;
   width: 75%; /* Spread markers and letters evenly */
@@ -98,7 +102,7 @@
   position: absolute;
   bottom: -40px; /* Move marker and letter below the square */
   left: 50%;
-  transform: translateX(-50%) translateY(20%);
+  transform: translateX(-50%) translateY(32%);
   display: flex;
   justify-content: space-between;
   width: 75%;
@@ -115,7 +119,7 @@
   position: absolute;
   top: 50%;
   left: -40px; /* Move marker and letter left of the square */
-  transform: translateY(-50%) translateX(-8%);
+  transform: translateY(-50%) translateX(-22%);
   display: flex;
   flex-direction: column-reverse; /* Letter left of marker */
   justify-content: space-between;
@@ -133,7 +137,7 @@
   position: absolute;
   top: 50%;
   right: -40px; /* Move marker and letter right of the square */
-  transform: translateY(-50%) translateX(8%);
+  transform: translateY(-50%) translateX(22%);
   display: flex;
   flex-direction: column; /* Letter right of marker */
   justify-content: space-between;
@@ -155,23 +159,35 @@
 
 /* Letters */
 .letter {
-  background-color: #e3f2fd;
+  background-color: #e3f2fd; /* Default color */
+  border: 3px solid;
   border-radius: 50%;
   padding: 10px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 1.2s ease, transform 0.2s ease; /* Slow for state changes, fast for hover */
 }
 
 .letter.unplayed-letter {
   background-color: #e3f2fd; /* Light blue */
 }
 
+.letter.unplayed-letter:hover {
+  background-color: #9cc2dd; /* Slightly darker blue for hover */
+  transform: scale(1.05); /* Add a subtle zoom effect */
+}
+
 .letter.played-letter {
   background-color: #9c27b0; /* Purple for played letters */
-  color: white;
+  color: #cdddec;
+}
+
+.letter.played-letter:hover {
+  background-color: #a654b5; /* Slightly lighter purple for hover */
+  transform: scale(1.05); /* Add the zoom effect */
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Fast hover effect */
 }
 
 /* Markers */
@@ -179,11 +195,13 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
+  border: 2px solid;
   background-color: #84888a;
   margin: 5px; /* Space between marker and letter */
 }
 
 .marker.active {
+  background-color: #90caf9;
   animation: pulse 0.5s ease-in-out;
 }
 
@@ -206,7 +224,13 @@
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
-  background-color: white;
+  background-color: #dae4ef; /* Default background color */
   border: 2px solid black;
   border-radius: 5px;
+  transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover transition */
+}
+
+.controls button:hover {
+  background-color: #7bb0dc; /* Hover background color */
+  color: white; /* Optional: Change text color on hover */
 }
