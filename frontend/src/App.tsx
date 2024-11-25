@@ -12,7 +12,6 @@ const App = () => {
   const [layout, setBoard] = useState<string[]>([]);
   const [view, setView] = useState<string>("play-today");
   const [archiveGames, setArchiveGames] = useState<string[]>([]);
-  const [isLoadingArchive, setIsLoadingArchive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
