@@ -1,0 +1,54 @@
+{
+    "ui": {
+        "menu": {
+            "playToday": "आज का NYT गेम खेलें",
+            "archive": "NYT गेम्स का संग्रह",
+            "customGame": "कस्टम गेम बनाएं",
+            "randomGame": "रैंडम गेम बनाएं"
+        },
+        "startGame": "खेल शुरू करें",
+        "submitWord": "शब्द सबमिट करें",
+        "playAgain": "फिर से खेलें",
+        "chooseLanguage": "भाषा चुनें",
+        "backToHome": "chazwinter.com पर वापस जाएं",
+        "languageSelector": "भाषा"
+    },
+    "messages": {
+        "invalidWord": "अमान्य शब्द",
+        "wordAlreadyUsed": "शब्द पहले से इस्तेमाल हो चुका है",
+        "gameNotFound": "गेम नहीं मिला",
+        "gameCreated": "गेम बनाया गया",
+        "gameFetched": "गेम प्राप्त हुआ",
+        "congratulations": "बधाई हो!",
+        "youWin": "आप जीत गए!",
+        "tryAgain": "फिर से प्रयास करें",
+        "loading": "लोड हो रहा है...",
+        "error": "त्रुटि",
+        "invalidInput": "अमान्य इनपुट"
+    },
+    "game": {
+        "boardSize": "बोर्ड का आकार",
+        "gameId": "गेम आईडी",
+        "tryToSolve": "{words} शब्दों में हल करने की कोशिश करें",
+        "twoWordSolutions": "दो-शब्द समाधान",
+        "threeWordSolutions": "तीन-शब्द समाधान",
+        "enterGameLayout": "गेम लेआउट दर्ज करें",
+        "customGame": "कस्टम गेम",
+        "randomGame": "रैंडम गेम",
+        "restartGame": "गेम पुनः प्रारंभ करें",
+        "deleteLetter": "अक्षर हटाएं",
+        "submitWord": "शब्द सबमिट करें"
+    },
+    "instructions": {
+        "howToPlay": "कैसे खेलें",
+        "rules": "नियम",
+        "instructions": "निर्देश"
+    },
+    "header": {
+        "title": "लेटरबॉक्स्ड गेम"
+    },
+    "language": {
+        "currentLanguage": "हिंदी",
+        "language": "भाषा"
+    }
+}

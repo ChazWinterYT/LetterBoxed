@@ -1,37 +1,51 @@
 {
     "ui": {
-        "startGame": "Inizia Gioco",
-        "submitWord": "Invia Parola",
-        "playAgain": "Gioca Ancora",
-        "chooseLanguage": "Scegli Lingua",
-        "backToHome": "Torna alla Home"
+        "menu": {
+            "playToday": "Gioca al gioco NYT di oggi",
+            "archive": "Archivio dei giochi NYT",
+            "customGame": "Crea un gioco personalizzato",
+            "randomGame": "Crea un gioco casuale"
+        },
+        "startGame": "Inizia il gioco",
+        "submitWord": "Invia la parola",
+        "playAgain": "Gioca di nuovo",
+        "chooseLanguage": "Scegli la lingua",
+        "backToHome": "Torna a chazwinter.com",
+        "languageSelector": "Lingua"
     },
     "messages": {
         "invalidWord": "Parola non valida",
         "wordAlreadyUsed": "Parola già utilizzata",
         "gameNotFound": "Gioco non trovato",
-        "gameCreated": "Gioco Creato",
-        "gameFetched": "Gioco Recuperato",
+        "gameCreated": "Gioco creato",
+        "gameFetched": "Gioco recuperato",
         "congratulations": "Congratulazioni!",
         "youWin": "Hai vinto!",
         "tryAgain": "Riprova",
-        "loading": "Caricamento in corso...",
+        "loading": "Caricamento...",
         "error": "Errore",
         "invalidInput": "Input non valido"
     },
     "game": {
-        "boardSize": "Dimensione della Griglia",
-        "gameId": "ID Gioco",
-        "twoWordSolutions": "Soluzioni a Due Parole",
-        "threeWordSolutions": "Soluzioni a Tre Parole",
-        "enterGameLayout": "Inserisci Disposizione Gioco",
-        "customGame": "Gioco Personalizzato",
-        "randomGame": "Gioco Casuale"
+        "boardSize": "Dimensione della griglia",
+        "gameId": "ID del gioco",
+        "tryToSolve": "Prova a risolverlo in {words} parole",
+        "twoWordSolutions": "Soluzioni in due parole",
+        "threeWordSolutions": "Soluzioni in tre parole",
+        "enterGameLayout": "Inserisci la disposizione del gioco",
+        "customGame": "Gioco personalizzato",
+        "randomGame": "Gioco casuale",
+        "restartGame": "Riavvia il gioco",
+        "deleteLetter": "Elimina la lettera",
+        "submitWord": "Invia la parola"
     },
     "instructions": {
-        "howToPlay": "Come Giocare",
+        "howToPlay": "Come giocare",
         "rules": "Regole",
         "instructions": "Istruzioni"
+    },
+    "header": {
+        "title": "Gioco LetterBoxed"
     },
     "language": {
         "currentLanguage": "Italiano",

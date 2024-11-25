@@ -1,0 +1,54 @@
+{
+    "ui": {
+        "menu": {
+            "playToday": "今日のNYTゲームをプレイ",
+            "archive": "NYTゲームアーカイブ",
+            "customGame": "カスタムゲームを作成",
+            "randomGame": "ランダムゲームを作成"
+        },
+        "startGame": "ゲーム開始",
+        "submitWord": "単語を提出",
+        "playAgain": "もう一度プレイ",
+        "chooseLanguage": "言語を選択",
+        "backToHome": "chazwinter.comに戻る",
+        "languageSelector": "言語"
+    },
+    "messages": {
+        "invalidWord": "無効な単語です",
+        "wordAlreadyUsed": "単語は既に使用されています",
+        "gameNotFound": "ゲームが見つかりません",
+        "gameCreated": "ゲームが作成されました",
+        "gameFetched": "ゲームを取得しました",
+        "congratulations": "おめでとうございます！",
+        "youWin": "あなたの勝ちです！",
+        "tryAgain": "もう一度試してください",
+        "loading": "読み込み中...",
+        "error": "エラー",
+        "invalidInput": "無効な入力です"
+    },
+    "game": {
+        "boardSize": "ボードサイズ",
+        "gameId": "ゲームID",
+        "tryToSolve": "{words}語で解決を試みてください",
+        "twoWordSolutions": "2語の解答",
+        "threeWordSolutions": "3語の解答",
+        "enterGameLayout": "ゲームレイアウトを入力",
+        "customGame": "カスタムゲーム",
+        "randomGame": "ランダムゲーム",
+        "restartGame": "ゲームを再開",
+        "deleteLetter": "文字を削除",
+        "submitWord": "単語を提出"
+    },
+    "instructions": {
+        "howToPlay": "プレイ方法",
+        "rules": "ルール",
+        "instructions": "説明"
+    },
+    "header": {
+        "title": "レターボックスゲーム"
+    },
+    "language": {
+        "currentLanguage": "日本語",
+        "language": "言語"
+    }
+}

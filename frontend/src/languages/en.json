@@ -1,10 +1,17 @@
 {
     "ui": {
+        "menu": {
+            "playToday": "Play Today's NYT Game",
+            "archive": "NYT Games Archive",
+            "customGame": "Create Custom Game",
+            "randomGame": "Create Random Game"
+        },
         "startGame": "Start Game",
         "submitWord": "Submit Word",
         "playAgain": "Play Again",
         "chooseLanguage": "Choose Language",
-        "backToHome": "Back to Home"
+        "backToHome": "Back to chazwinter.com",
+        "languageSelector": "Language"
     },
     "messages": {
         "invalidWord": "Invalid word",
@@ -22,16 +29,23 @@
     "game": {
         "boardSize": "Board Size",
         "gameId": "Game ID",
+        "tryToSolve": "Try to solve in {words} words",
         "twoWordSolutions": "Two-Word Solutions",
         "threeWordSolutions": "Three-Word Solutions",
         "enterGameLayout": "Enter Game Layout",
         "customGame": "Custom Game",
-        "randomGame": "Random Game"
+        "randomGame": "Random Game",
+        "restartGame": "Restart Game",
+        "deleteLetter": "Delete Letter",
+        "submitWord": "Submit Word"
     },
     "instructions": {
         "howToPlay": "How to Play",
         "rules": "Rules",
         "instructions": "Instructions"
+    },
+    "header": {
+        "title": "LetterBoxed Game"
     },
     "language": {
         "currentLanguage": "English",

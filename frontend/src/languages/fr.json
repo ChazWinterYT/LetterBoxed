@@ -1,17 +1,24 @@
 {
     "ui": {
-        "startGame": "Commencer le Jeu",
-        "submitWord": "Soumettre le Mot",
+        "menu": {
+            "playToday": "Jouer au jeu NYT d'aujourd'hui",
+            "archive": "Archive des jeux NYT",
+            "customGame": "Créer un jeu personnalisé",
+            "randomGame": "Créer un jeu aléatoire"
+        },
+        "startGame": "Commencer le jeu",
+        "submitWord": "Soumettre le mot",
         "playAgain": "Rejouer",
-        "chooseLanguage": "Choisir la Langue",
-        "backToHome": "Retour à l'Accueil"
+        "chooseLanguage": "Choisir la langue",
+        "backToHome": "Retour à chazwinter.com",
+        "languageSelector": "Langue"
     },
     "messages": {
         "invalidWord": "Mot invalide",
         "wordAlreadyUsed": "Mot déjà utilisé",
         "gameNotFound": "Jeu introuvable",
-        "gameCreated": "Jeu Créé",
-        "gameFetched": "Jeu Récupéré",
+        "gameCreated": "Jeu créé",
+        "gameFetched": "Jeu récupéré",
         "congratulations": "Félicitations !",
         "youWin": "Vous avez gagné !",
         "tryAgain": "Réessayez",
@@ -20,18 +27,25 @@
         "invalidInput": "Entrée invalide"
     },
     "game": {
-        "boardSize": "Taille du Plateau",
-        "gameId": "ID du Jeu",
-        "twoWordSolutions": "Solutions à Deux Mots",
-        "threeWordSolutions": "Solutions à Trois Mots",
-        "enterGameLayout": "Entrer la Disposition du Jeu",
-        "customGame": "Jeu Personnalisé",
-        "randomGame": "Jeu Aléatoire"
+        "boardSize": "Taille du plateau",
+        "gameId": "ID du jeu",
+        "tryToSolve": "Essayez de résoudre en {words} mots",
+        "twoWordSolutions": "Solutions en deux mots",
+        "threeWordSolutions": "Solutions en trois mots",
+        "enterGameLayout": "Entrer la disposition du jeu",
+        "customGame": "Jeu personnalisé",
+        "randomGame": "Jeu aléatoire",
+        "restartGame": "Redémarrer le jeu",
+        "deleteLetter": "Supprimer la lettre",
+        "submitWord": "Soumettre le mot"
     },
     "instructions": {
-        "howToPlay": "Comment Jouer",
+        "howToPlay": "Comment jouer",
         "rules": "Règles",
         "instructions": "Instructions"
+    },
+    "header": {
+        "title": "Jeu LetterBoxed"
     },
     "language": {
         "currentLanguage": "Français",

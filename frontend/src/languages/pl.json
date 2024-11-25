@@ -1,37 +1,51 @@
 {
     "ui": {
-        "startGame": "Rozpocznij Grę",
-        "submitWord": "Zatwierdź Słowo",
-        "playAgain": "Zagraj Ponownie",
-        "chooseLanguage": "Wybierz Język",
-        "backToHome": "Powrót do Strony Głównej"
+        "menu": {
+            "playToday": "Zagraj w dzisiejszą grę NYT",
+            "archive": "Archiwum gier NYT",
+            "customGame": "Utwórz własną grę",
+            "randomGame": "Utwórz losową grę"
+        },
+        "startGame": "Rozpocznij grę",
+        "submitWord": "Zatwierdź słowo",
+        "playAgain": "Zagraj ponownie",
+        "chooseLanguage": "Wybierz język",
+        "backToHome": "Wróć do chazwinter.com",
+        "languageSelector": "Język"
     },
     "messages": {
         "invalidWord": "Nieprawidłowe słowo",
         "wordAlreadyUsed": "Słowo już użyte",
-        "gameNotFound": "Gra nie znaleziona",
-        "gameCreated": "Gra Utworzona",
-        "gameFetched": "Gra Znaleziona",
+        "gameNotFound": "Nie znaleziono gry",
+        "gameCreated": "Gra została utworzona",
+        "gameFetched": "Gra została załadowana",
         "congratulations": "Gratulacje!",
         "youWin": "Wygrałeś!",
-        "tryAgain": "Spróbuj Ponownie",
+        "tryAgain": "Spróbuj ponownie",
         "loading": "Ładowanie...",
         "error": "Błąd",
         "invalidInput": "Nieprawidłowe dane wejściowe"
     },
     "game": {
-        "boardSize": "Rozmiar Planszy",
-        "gameId": "ID Gry",
-        "twoWordSolutions": "Rozwiązania Dwuwyrazowe",
-        "threeWordSolutions": "Rozwiązania Trójwyrazowe",
-        "enterGameLayout": "Wprowadź Układ Gry",
-        "customGame": "Gra Własna",
-        "randomGame": "Gra Losowa"
+        "boardSize": "Rozmiar planszy",
+        "gameId": "ID gry",
+        "tryToSolve": "Spróbuj rozwiązać w {words} słowach",
+        "twoWordSolutions": "Rozwiązania dwuwyrazowe",
+        "threeWordSolutions": "Rozwiązania trzywyrazowe",
+        "enterGameLayout": "Wprowadź układ gry",
+        "customGame": "Gra własna",
+        "randomGame": "Gra losowa",
+        "restartGame": "Zrestartuj grę",
+        "deleteLetter": "Usuń literę",
+        "submitWord": "Zatwierdź słowo"
     },
     "instructions": {
-        "howToPlay": "Jak Grać",
+        "howToPlay": "Jak grać",
         "rules": "Zasady",
         "instructions": "Instrukcje"
+    },
+    "header": {
+        "title": "Gra LetterBoxed"
     },
     "language": {
         "currentLanguage": "Polski",

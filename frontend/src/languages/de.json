@@ -1,37 +1,51 @@
 {
     "ui": {
-        "startGame": "Spiel Starten",
-        "submitWord": "Wort Einreichen",
-        "playAgain": "Nochmal Spielen",
-        "chooseLanguage": "Sprache Wählen",
-        "backToHome": "Zurück zur Startseite"
+        "menu": {
+            "playToday": "Heutiges NYT-Spiel spielen",
+            "archive": "NYT-Spiele-Archiv",
+            "customGame": "Eigenes Spiel erstellen",
+            "randomGame": "Zufälliges Spiel erstellen"
+        },
+        "startGame": "Spiel starten",
+        "submitWord": "Wort einreichen",
+        "playAgain": "Nochmal spielen",
+        "chooseLanguage": "Sprache wählen",
+        "backToHome": "Zurück zu chazwinter.com",
+        "languageSelector": "Sprache"
     },
     "messages": {
         "invalidWord": "Ungültiges Wort",
         "wordAlreadyUsed": "Wort bereits verwendet",
         "gameNotFound": "Spiel nicht gefunden",
-        "gameCreated": "Spiel Erstellt",
-        "gameFetched": "Spiel Abgerufen",
+        "gameCreated": "Spiel erstellt",
+        "gameFetched": "Spiel abgerufen",
         "congratulations": "Herzlichen Glückwunsch!",
         "youWin": "Du hast gewonnen!",
-        "tryAgain": "Nochmal Versuchen",
-        "loading": "Wird geladen...",
+        "tryAgain": "Nochmals versuchen",
+        "loading": "Laden...",
         "error": "Fehler",
         "invalidInput": "Ungültige Eingabe"
     },
     "game": {
         "boardSize": "Brettgröße",
         "gameId": "Spiel-ID",
-        "twoWordSolutions": "Zweiwortlösungen",
-        "threeWordSolutions": "Dreiwortlösungen",
-        "enterGameLayout": "Spiellayout Eingeben",
-        "customGame": "Benutzerdefiniertes Spiel",
-        "randomGame": "Zufälliges Spiel"
+        "tryToSolve": "Versuche, in {words} Wörtern zu lösen",
+        "twoWordSolutions": "Lösungen mit zwei Wörtern",
+        "threeWordSolutions": "Lösungen mit drei Wörtern",
+        "enterGameLayout": "Spielaufbau eingeben",
+        "customGame": "Eigenes Spiel",
+        "randomGame": "Zufälliges Spiel",
+        "restartGame": "Spiel neu starten",
+        "deleteLetter": "Buchstabe löschen",
+        "submitWord": "Wort einreichen"
     },
     "instructions": {
-        "howToPlay": "Wie Man Spielt",
+        "howToPlay": "Spielanleitung",
         "rules": "Regeln",
         "instructions": "Anweisungen"
+    },
+    "header": {
+        "title": "LetterBoxed-Spiel"
     },
     "language": {
         "currentLanguage": "Deutsch",

@@ -1,0 +1,54 @@
+{
+    "ui": {
+        "menu": {
+            "playToday": "Играть в сегодняшнюю игру NYT",
+            "archive": "Архив игр NYT",
+            "customGame": "Создать свою игру",
+            "randomGame": "Создать случайную игру"
+        },
+        "startGame": "Начать игру",
+        "submitWord": "Отправить слово",
+        "playAgain": "Играть снова",
+        "chooseLanguage": "Выбрать язык",
+        "backToHome": "Вернуться на chazwinter.com",
+        "languageSelector": "Язык"
+    },
+    "messages": {
+        "invalidWord": "Неверное слово",
+        "wordAlreadyUsed": "Слово уже использовано",
+        "gameNotFound": "Игра не найдена",
+        "gameCreated": "Игра создана",
+        "gameFetched": "Игра загружена",
+        "congratulations": "Поздравляем!",
+        "youWin": "Вы победили!",
+        "tryAgain": "Попробуйте снова",
+        "loading": "Загрузка...",
+        "error": "Ошибка",
+        "invalidInput": "Неверный ввод"
+    },
+    "game": {
+        "boardSize": "Размер поля",
+        "gameId": "ID игры",
+        "tryToSolve": "Попробуйте решить за {words} слов",
+        "twoWordSolutions": "Решения из двух слов",
+        "threeWordSolutions": "Решения из трёх слов",
+        "enterGameLayout": "Введите расположение поля",
+        "customGame": "Своя игра",
+        "randomGame": "Случайная игра",
+        "restartGame": "Перезапустить игру",
+        "deleteLetter": "Удалить букву",
+        "submitWord": "Отправить слово"
+    },
+    "instructions": {
+        "howToPlay": "Как играть",
+        "rules": "Правила",
+        "instructions": "Инструкции"
+    },
+    "header": {
+        "title": "Игра LetterBoxed"
+    },
+    "language": {
+        "currentLanguage": "Русский",
+        "language": "Язык"
+    }
+}

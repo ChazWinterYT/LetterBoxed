@@ -1,0 +1,54 @@
+{
+    "ui": {
+        "menu": {
+            "playToday": "Jogar o jogo de hoje do NYT",
+            "archive": "Arquivo de jogos do NYT",
+            "customGame": "Criar jogo personalizado",
+            "randomGame": "Criar jogo aleatório"
+        },
+        "startGame": "Iniciar Jogo",
+        "submitWord": "Enviar Palavra",
+        "playAgain": "Jogar Novamente",
+        "chooseLanguage": "Escolher Idioma",
+        "backToHome": "Voltar para chazwinter.com",
+        "languageSelector": "Idioma"
+    },
+    "messages": {
+        "invalidWord": "Palavra inválida",
+        "wordAlreadyUsed": "Palavra já utilizada",
+        "gameNotFound": "Jogo não encontrado",
+        "gameCreated": "Jogo Criado",
+        "gameFetched": "Jogo Carregado",
+        "congratulations": "Parabéns!",
+        "youWin": "Você venceu!",
+        "tryAgain": "Tente Novamente",
+        "loading": "Carregando...",
+        "error": "Erro",
+        "invalidInput": "Entrada inválida"
+    },
+    "game": {
+        "boardSize": "Tamanho do Tabuleiro",
+        "gameId": "ID do Jogo",
+        "tryToSolve": "Tente resolver com {words} palavras",
+        "twoWordSolutions": "Soluções de Duas Palavras",
+        "threeWordSolutions": "Soluções de Três Palavras",
+        "enterGameLayout": "Inserir Layout do Jogo",
+        "customGame": "Jogo Personalizado",
+        "randomGame": "Jogo Aleatório",
+        "restartGame": "Reiniciar Jogo",
+        "deleteLetter": "Apagar Letra",
+        "submitWord": "Enviar Palavra"
+    },
+    "instructions": {
+        "howToPlay": "Como Jogar",
+        "rules": "Regras",
+        "instructions": "Instruções"
+    },
+    "header": {
+        "title": "Jogo LetterBoxed"
+    },
+    "language": {
+        "currentLanguage": "Português",
+        "language": "Idioma"
+    }
+}

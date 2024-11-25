@@ -1,37 +1,51 @@
 {
     "ui": {
-        "startGame": "Starta Spelet",
-        "submitWord": "Skicka Ord",
-        "playAgain": "Spela Igen",
-        "chooseLanguage": "Välj Språk",
-        "backToHome": "Tillbaka till Start"
+        "menu": {
+            "playToday": "Spela dagens NYT-spel",
+            "archive": "NYT-spelarkiv",
+            "customGame": "Skapa eget spel",
+            "randomGame": "Skapa slumpmässigt spel"
+        },
+        "startGame": "Starta spelet",
+        "submitWord": "Skicka in ord",
+        "playAgain": "Spela igen",
+        "chooseLanguage": "Välj språk",
+        "backToHome": "Tillbaka till chazwinter.com",
+        "languageSelector": "Språk"
     },
     "messages": {
         "invalidWord": "Ogiltigt ord",
         "wordAlreadyUsed": "Ordet har redan använts",
         "gameNotFound": "Spelet hittades inte",
-        "gameCreated": "Spelet Skapades",
-        "gameFetched": "Spelet Hämtades",
+        "gameCreated": "Spelet har skapats",
+        "gameFetched": "Spelet har hämtats",
         "congratulations": "Grattis!",
         "youWin": "Du vann!",
-        "tryAgain": "Försök Igen",
+        "tryAgain": "Försök igen",
         "loading": "Laddar...",
         "error": "Fel",
         "invalidInput": "Ogiltig inmatning"
     },
     "game": {
-        "boardSize": "Brädstorlek",
+        "boardSize": "Brädans storlek",
         "gameId": "Spel-ID",
-        "twoWordSolutions": "Tvåords Lösningar",
-        "threeWordSolutions": "Treords Lösningar",
-        "enterGameLayout": "Ange Spelplanens Layout",
-        "customGame": "Anpassat Spel",
-        "randomGame": "Slumpmässigt Spel"
+        "tryToSolve": "Försök lösa med {words} ord",
+        "twoWordSolutions": "Tvåords-lösningar",
+        "threeWordSolutions": "Treords-lösningar",
+        "enterGameLayout": "Ange spelbrädeslayout",
+        "customGame": "Eget spel",
+        "randomGame": "Slumpmässigt spel",
+        "restartGame": "Starta om spelet",
+        "deleteLetter": "Radera bokstav",
+        "submitWord": "Skicka in ord"
     },
     "instructions": {
-        "howToPlay": "Hur man Spelar",
+        "howToPlay": "Hur man spelar",
         "rules": "Regler",
         "instructions": "Instruktioner"
+    },
+    "header": {
+        "title": "LetterBoxed-spel"
     },
     "language": {
         "currentLanguage": "Svenska",

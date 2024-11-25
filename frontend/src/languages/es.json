@@ -1,37 +1,51 @@
 {
     "ui": {
-        "startGame": "Iniciar Juego",
-        "submitWord": "Enviar Palabra",
-        "playAgain": "Jugar de Nuevo",
-        "chooseLanguage": "Elegir Idioma",
-        "backToHome": "Volver al Inicio"
+        "menu": {
+            "playToday": "Jugar el juego de hoy del NYT",
+            "archive": "Archivo de juegos del NYT",
+            "customGame": "Crear juego personalizado",
+            "randomGame": "Crear juego aleatorio"
+        },
+        "startGame": "Iniciar juego",
+        "submitWord": "Enviar palabra",
+        "playAgain": "Jugar de nuevo",
+        "chooseLanguage": "Elegir idioma",
+        "backToHome": "Volver a chazwinter.com",
+        "languageSelector": "Idioma"
     },
     "messages": {
-        "invalidWord": "Palabra no válida",
+        "invalidWord": "Palabra inválida",
         "wordAlreadyUsed": "Palabra ya utilizada",
         "gameNotFound": "Juego no encontrado",
-        "gameCreated": "Juego Creado",
-        "gameFetched": "Juego Recuperado",
+        "gameCreated": "Juego creado",
+        "gameFetched": "Juego obtenido",
         "congratulations": "¡Felicidades!",
         "youWin": "¡Ganaste!",
-        "tryAgain": "Intentar de Nuevo",
+        "tryAgain": "Intentar de nuevo",
         "loading": "Cargando...",
         "error": "Error",
-        "invalidInput": "Entrada no válida"
+        "invalidInput": "Entrada inválida"
     },
     "game": {
-        "boardSize": "Tamaño del Tablero",
-        "gameId": "ID del Juego",
-        "twoWordSolutions": "Soluciones de Dos Palabras",
-        "threeWordSolutions": "Soluciones de Tres Palabras",
-        "enterGameLayout": "Introducir Diseño del Juego",
-        "customGame": "Juego Personalizado",
-        "randomGame": "Juego Aleatorio"
+        "boardSize": "Tamaño del tablero",
+        "gameId": "ID del juego",
+        "tryToSolve": "Intenta resolver en {words} palabras",
+        "twoWordSolutions": "Soluciones de dos palabras",
+        "threeWordSolutions": "Soluciones de tres palabras",
+        "enterGameLayout": "Ingresar diseño del juego",
+        "customGame": "Juego personalizado",
+        "randomGame": "Juego aleatorio",
+        "restartGame": "Reiniciar juego",
+        "deleteLetter": "Borrar letra",
+        "submitWord": "Enviar palabra"
     },
     "instructions": {
-        "howToPlay": "Cómo Jugar",
+        "howToPlay": "Cómo jugar",
         "rules": "Reglas",
         "instructions": "Instrucciones"
+    },
+    "header": {
+        "title": "Juego de LetterBoxed"
     },
     "language": {
         "currentLanguage": "Español",

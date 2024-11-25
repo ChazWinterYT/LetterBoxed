@@ -1,0 +1,54 @@
+{
+    "ui": {
+        "menu": {
+            "playToday": "Mainkan Game NYT Hari Ini",
+            "archive": "Arsip Game NYT",
+            "customGame": "Buat Game Kustom",
+            "randomGame": "Buat Game Acak"
+        },
+        "startGame": "Mulai Permainan",
+        "submitWord": "Kirim Kata",
+        "playAgain": "Main Lagi",
+        "chooseLanguage": "Pilih Bahasa",
+        "backToHome": "Kembali ke chazwinter.com",
+        "languageSelector": "Bahasa"
+    },
+    "messages": {
+        "invalidWord": "Kata tidak valid",
+        "wordAlreadyUsed": "Kata sudah digunakan",
+        "gameNotFound": "Game tidak ditemukan",
+        "gameCreated": "Game berhasil dibuat",
+        "gameFetched": "Game berhasil diambil",
+        "congratulations": "Selamat!",
+        "youWin": "Kamu menang!",
+        "tryAgain": "Coba Lagi",
+        "loading": "Memuat...",
+        "error": "Kesalahan",
+        "invalidInput": "Input tidak valid"
+    },
+    "game": {
+        "boardSize": "Ukuran Papan",
+        "gameId": "ID Game",
+        "tryToSolve": "Coba selesaikan dengan {words} kata",
+        "twoWordSolutions": "Solusi Dua Kata",
+        "threeWordSolutions": "Solusi Tiga Kata",
+        "enterGameLayout": "Masukkan Tata Letak Game",
+        "customGame": "Game Kustom",
+        "randomGame": "Game Acak",
+        "restartGame": "Mulai Ulang Game",
+        "deleteLetter": "Hapus Huruf",
+        "submitWord": "Kirim Kata"
+    },
+    "instructions": {
+        "howToPlay": "Cara Bermain",
+        "rules": "Aturan",
+        "instructions": "Petunjuk"
+    },
+    "header": {
+        "title": "Permainan LetterBoxed"
+    },
+    "language": {
+        "currentLanguage": "Bahasa Indonesia",
+        "language": "Bahasa"
+    }
+}
