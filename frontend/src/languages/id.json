@@ -46,7 +46,8 @@
         "instructions": "Petunjuk"
     },
     "header": {
-        "title": "Jalinan Kata - Permainan LetterBoxed!"
+        "title": "Jalinan Kata",
+        "subtitle": "Permainan LetterBoxed"
     },
     "language": {
         "currentLanguage": "Bahasa Indonesia",

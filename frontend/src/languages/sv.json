@@ -46,7 +46,8 @@
         "instructions": "Instruktioner"
     },
     "header": {
-        "title": "Ordsöm - LetterBoxed-spel!"
+        "title": "Ordsöm",
+        "subtitle": "LetterBoxed-spel"
     },
     "language": {
         "currentLanguage": "Svenska",

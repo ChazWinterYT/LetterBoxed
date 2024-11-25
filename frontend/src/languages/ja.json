@@ -46,7 +46,8 @@
         "instructions": "説明"
     },
     "header": {
-        "title": "言葉の編み物 - レターボックスゲーム"
+        "title": "言葉の編み物",
+        "subtitle": "レターボックスゲーム"
     },
     "language": {
         "currentLanguage": "日本語",

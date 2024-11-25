@@ -1,84 +1,74 @@
-/* App container styles */
+/* General styles for app container */
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
 }
 
-/* Header styles */
-header {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-}
 
+
+/* Body styles */
 body {
-  background-color: #25648b; /* Light blue for the entire page */
+  background-color: #25648b;
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
-/* Footer styles */
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  margin-top: auto;
-}
-
-.content-container {
+/* Button menu styles */
+.button-menu {
   display: flex;
-  height: calc(100vh - 100px); /* Adjust height excluding the header/footer */
-  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* Spacing between buttons */
+  margin: 1rem 0;
 }
 
-.left-menu {
-  width: 250px; /* Fixed width for the menu */
-  background-color: #f9f9f9; /* Light gray for contrast */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for better look */
-  padding: 10px;
+.button-menu button {
+  background-color: #4caf50; /* Green buttons */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 90%; /* Full-width buttons on mobile */
+  max-width: 300px; /* Limit width on larger screens */
+  text-align: center;
 }
 
+.button-menu button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Main content area */
 .main-content {
-  flex: 1; /* Take up the remaining space */
-  padding: 20px;
+  flex: 1; /* Allow the main content to grow/shrink naturally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Ensure items flow from the top */
+  padding: 1rem;
   overflow: auto; /* Allow scrolling if content overflows */
 }
 
-/* Footer stays at the bottom */
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  flex-shrink: 0; /* Ensures it doesn't shrink */
+/* Game board styles */
+.game-board-container {
+  margin-top: 1rem;
 }
 
-/* Mobile-specific styles */
+
+
+/* Mobile-specific adjustments */
 @media (max-width: 768px) {
-  .content-container {
-    flex-direction: column; /* Stack components vertically */
+  .button-menu {
+    gap: 0.75rem; /* Slightly tighter spacing for smaller screens */
   }
 
-  .left-menu {
-    width: 100%;
-    box-shadow: none;
+  .button-menu button {
+    padding: 0.5rem 1rem; /* Reduce button padding for smaller devices */
   }
 
   .main-content {
-    padding: 10px;
-  }
-
-  .game-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  button {
-    width: 90%; /* Ensure buttons are visible */
-    margin: 10px auto; /* Add spacing */
+    padding: 0.5rem; /* Reduce padding for smaller devices */
   }
 }

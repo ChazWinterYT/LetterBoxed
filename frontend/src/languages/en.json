@@ -46,7 +46,8 @@
         "instructions": "Instructions"
     },
     "header": {
-        "title": "Stitch-uations - A LetterBoxed Game!"
+        "title": "Stitch-uations",
+        "subtitle": "A LetterBoxed Game"
     },
     "language": {
         "currentLanguage": "English",

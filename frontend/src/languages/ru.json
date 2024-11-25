@@ -46,7 +46,8 @@
         "instructions": "Инструкции"
     },
     "header": {
-        "title": "Словесная Нить - Игра LetterBoxed"
+        "title": "Словесная Нить",
+        "subtitle": "Игра LetterBoxed"
     },
     "language": {
         "currentLanguage": "Русский",

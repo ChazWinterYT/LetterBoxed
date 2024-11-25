@@ -8,7 +8,8 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo">chazwinter.com</div>
-      <h2>{t("header.title")}</h2>
+      <h2>{t('header.title')}</h2>
+      <h3>{t('header.subtitle')}</h3>
       <select
         className="language-selector"
         value={language}

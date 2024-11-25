@@ -45,7 +45,8 @@
         "instructions": "Anweisungen"
     },
     "header": {
-        "title": "Wortfäden - LetterBoxed-Spiel!"
+        "title": "Wortfäden",
+        "subtitle": "LetterBoxed-Spiel"
     },
     "language": {
         "currentLanguage": "Deutsch",

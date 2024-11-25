@@ -46,7 +46,8 @@
         "instructions": "Instrucciones"
     },
     "header": {
-        "title": "Palabrazos - Juego de LetterBoxed!"
+        "title": "Palabrazos",
+        "subtitle": "Juego de LetterBoxed"
     },
     "language": {
         "currentLanguage": "Español",

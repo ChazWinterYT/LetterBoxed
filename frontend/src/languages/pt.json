@@ -46,7 +46,8 @@
         "instructions": "Instruções"
     },
     "header": {
-        "title": "Stitch-uations - Jogo LetterBoxed"
+        "title": "TramaPalavras",
+        "subtitle": "Jogo LetterBoxed"
     },
     "language": {
         "currentLanguage": "Português",
