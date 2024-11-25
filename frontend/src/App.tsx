@@ -3,7 +3,6 @@ import axios from "axios";
 import Header from "./components/Header";
 import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/ArchiveList";
-import CustomGameForm from "./components/CustomGameForm";
 import Modal from "./components/Modal"; // Import the modal component
 import Footer from "./components/Footer";
 import { useLanguage } from "./context/LanguageContext";

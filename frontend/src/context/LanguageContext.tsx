@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import translations from "../languages/index"; // Translations JSON object
 import languages from "../languages"; // Language metadata
 
@@ -18,10 +18,22 @@ interface LanguageContextProps {
   isPlayable: (code: string) => boolean;
 }
 
-const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextProps | undefined>(
+  undefined
+);
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<string>("en"); // Default language
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [language, setLanguage] = useState<string>(() => {
+    // Load saved language from localStorage or fallback to "en"
+    return localStorage.getItem("language") || "en";
+  });
+
+  useEffect(() => {
+    // Save the selected language to localStorage whenever it changes
+    localStorage.setItem("language", language);
+  }, [language]);
 
   const t = (key: string): string => {
     const keys = key.split(".");
