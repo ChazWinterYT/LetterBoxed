@@ -1,57 +1,111 @@
-/* GameBoard.css */
-.game-board {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  background-color: white; /* Ensure square background is white */
-  border: 5px solid black;
-  margin: auto;
+.game-board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.side {
+.word-formation-area {
+  height: 50px; /* Reserve space for the word formation area */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.current-word {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.controls button {
+  padding: 5px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.board {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border: 5px solid black;
+  margin-bottom: 30px;
+}
+
+.top-side,
+.left-side,
+.right-side,
+.bottom-side {
   position: absolute;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
-.side.top {
+.top-side {
   top: -20px;
-  left: 0;
-  right: 0;
-  flex-direction: row;
+  left: 20px;
+  right: 20px;
 }
 
-.side.bottom {
-  bottom: -20px;
-  left: 0;
-  right: 0;
-  flex-direction: row;
-}
-
-.side.left {
-  top: 0;
-  bottom: 0;
+.left-side {
+  top: 20px;
   left: -20px;
+  bottom: 20px;
   flex-direction: column;
 }
 
-.side.right {
-  top: 0;
-  bottom: 0;
+.right-side {
+  top: 20px;
   right: -20px;
+  bottom: 20px;
   flex-direction: column;
+}
+
+.bottom-side {
+  bottom: -20px;
+  left: 20px;
+  right: 20px;
 }
 
 .letter {
-  font-size: 1.5rem;
-  background-color: #e7f6ff; /* Light blue background for the letters */
+  background-color: #e3f2fd;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 10px;
+  font-size: 1.2rem;
   font-weight: bold;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Controls (Delete and Submit Buttons) */
+.controls {
+  display: flex;
+  gap: 15px; /* Add spacing between buttons */
+  margin-top: 20px; /* Add more space below the board */
+}
+
+.controls button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.controls button:hover {
+  background-color: #e3f2fd;
 }
