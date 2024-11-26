@@ -21,7 +21,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "headers": {
                 "Access-Control-Allow-Origin": "*",  # Allow all origins
                 "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({"message": "Game Layout is required."})
         }
@@ -41,7 +41,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "headers": {
                 "Access-Control-Allow-Origin": "*",  # Allow all origins
                 "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({"message": f"Failed to create game schema: {e}"})
         }
@@ -55,7 +55,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         "headers": {
             "Access-Control-Allow-Origin": "*",  # Allow all origins
             "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-            "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+            "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
         },
         "body": json.dumps({
             "gameId": game_data["gameId"],

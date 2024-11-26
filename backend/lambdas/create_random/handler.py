@@ -25,7 +25,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "headers": {
                 "Access-Control-Allow-Origin": "*",  # Allow all origins
                 "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({
                 "message": "Random game created successfully.",
@@ -40,7 +40,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "headers": {
                 "Access-Control-Allow-Origin": "*",  # Allow all origins
                 "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({"error": str(e)}),
         }

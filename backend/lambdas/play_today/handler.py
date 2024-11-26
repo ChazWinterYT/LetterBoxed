@@ -26,7 +26,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     "headers": {
                         "Access-Control-Allow-Origin": "*",  # Allow all origins
                         "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                        "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                        "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
                     },
                     "body": json.dumps({
                         "message": f"{today}'s game is not yet available, and {yesterday}'s game isn't either. Please try again later."
@@ -39,7 +39,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     "headers": {
                         "Access-Control-Allow-Origin": "*",  # Allow all origins
                         "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                        "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                        "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
                     },
                     "body": json.dumps({
                         "gameId": todays_game["gameId"],
@@ -57,7 +57,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "headers": {
                 "Access-Control-Allow-Origin": "*",  # Allow all origins
                 "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({
                 "gameId": todays_game["gameId"],
@@ -75,7 +75,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "headers": {
                 "Access-Control-Allow-Origin": "*",  # Allow all origins
                 "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type",  # Allowed headers
+                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({
                 "message": f"An error occurred while fetching {today}'s game.",

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
 import Header from "./components/Header";
 import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/ArchiveList";
@@ -7,6 +6,11 @@ import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import Spinner from "./components/Spinner";
 import { useLanguage } from "./context/LanguageContext";
+import {
+  fetchTodaysGame,
+  fetchGameArchive,
+  fetchGameById,
+} from "./services/api"; 
 import "./App.css";
 
 const App = () => {
@@ -16,23 +20,21 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
-  const API_URL = process.env.REACT_APP_API_URL;
   const { t } = useLanguage();
 
   // Fetch today's game
-  const fetchTodaysGame = useCallback(async () => {
+  const loadTodaysGame = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_URL}/play-today`);
-      setBoard(response.data.gameLayout || []);
+      const data = await fetchTodaysGame();
+      setBoard(data.gameLayout || []);
     } catch (error) {
       console.error("Error fetching today's game:", error);
     }
-  }, [API_URL]);
+  }, []);
 
   // Fetch NYT archive with caching
-  const fetchGameArchive = async () => {
+  const loadGameArchive = async () => {
     if (archiveGames.length > 0) {
-      // Use cached data
       setModalContent(
         <ArchiveList games={archiveGames} onGameSelect={loadGameFromArchive} />
       );
@@ -40,23 +42,23 @@ const App = () => {
     }
 
     try {
-      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} />); // Show spinner
-      const response = await axios.get(`${API_URL}/archive`);
-      setArchiveGames(response.data.nytGames || []); // Parse and set archive games
+      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} />);
+      const data = await fetchGameArchive();
+      setArchiveGames(data.nytGames || []);
       setModalContent(
-        <ArchiveList games={response.data.nytGames || []} onGameSelect={loadGameFromArchive} />
-      ); // Update modal content
+        <ArchiveList games={data.nytGames || []} onGameSelect={loadGameFromArchive} />
+      );
     } catch (error) {
       console.error("Error fetching game archive:", error);
-      setModalContent(<p>{t("ui.archive.error")}</p>); // Show error in modal
+      setModalContent(<p>{t("ui.archive.error")}</p>);
     }
   };
 
   // Load a selected game onto the game board
   const loadGameFromArchive = async (gameId: string) => {
     try {
-      const response = await axios.get(`${API_URL}/games/${gameId}`);
-      setBoard(response.data.gameLayout || []);
+      const data = await fetchGameById(gameId);
+      setBoard(data.gameLayout || []);
       setIsModalOpen(false); // Close modal after loading game
     } catch (error) {
       console.error(`Error loading game ${gameId}:`, error);
@@ -66,15 +68,15 @@ const App = () => {
 
   useEffect(() => {
     if (view === "play-today") {
-      fetchTodaysGame();
+      loadTodaysGame();
     }
-  }, [view, fetchTodaysGame]);
+  }, [view, loadTodaysGame]);
 
   // Open the archive modal
   const openArchiveModal = async () => {
     setModalTitle(t("ui.menu.archive"));
     setIsModalOpen(true);
-    await fetchGameArchive(); // Fetch or use cached archive data
+    await loadGameArchive();
   };
 
   // Open custom game modal
