@@ -22,7 +22,7 @@ const App = () => {
 
   const [layout, setBoard] = useState<string[]>([]);
   const [currentGameId, setCurrentGameId] = useState<string | null>(null);
-  const [view, setView] = useState<string>("play-today");
+  //const [view, setView] = useState<string>("play-today");
   const [archiveGames, setArchiveGames] = useState<string[]>([]);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
