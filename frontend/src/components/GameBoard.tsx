@@ -5,6 +5,7 @@ import Spinner from './Spinner';
 
 interface GameBoardProps {
   layout: string[];
+  foundWords: string[];
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {

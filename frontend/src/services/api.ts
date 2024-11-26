@@ -5,8 +5,8 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-// Handle API errors
-const handleError = async (response: Response) => {
+// Handle API errors, otherwise return the response
+const handleErrorOrReturnResponse = async (response: Response) => {
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.message || "Unknown error occurred");
@@ -17,19 +17,19 @@ const handleError = async (response: Response) => {
 // Fetch today's game
 export const fetchTodaysGame = async () => {
   const response = await fetch(`${API_URL}/play-today`, { headers });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
 };
 
 // Fetch archive
 export const fetchGameArchive = async () => {
   const response = await fetch(`${API_URL}/archive`, { headers });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
 };
 
 // Fetch game by ID
 export const fetchGameById = async (gameId: string) => {
   const response = await fetch(`${API_URL}/games/${gameId}`, { headers });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
 };
 
 // Validate word
@@ -39,13 +39,13 @@ export const validateWord = async (word: string) => {
     headers,
     body: JSON.stringify({ word }),
   });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
 };
 
 // Fetch random game
 export const fetchRandomGame = async () => {
   const response = await fetch(`${API_URL}/random-game`, { headers });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
 };
 
 // Create random game
@@ -54,7 +54,7 @@ export const createRandomGame = async () => {
     method: "POST",
     headers,
   });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
 };
 
 // Create custom game
@@ -64,11 +64,19 @@ export const createCustomGame = async (letters: string[]) => {
     headers,
     body: JSON.stringify({ letters }),
   });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
 };
 
 // Prefetch today's game
 export const prefetchTodaysGame = async () => {
   const response = await fetch(`${API_URL}/prefetch`, { headers });
-  return handleError(response);
+  return handleErrorOrReturnResponse(response);
+};
+
+// Fetch a user session for determining game state
+export const fetchUserSession = async (gameId: string, sessionId: string) => {
+  const response = await fetch(
+    `${API_URL}/sessions/${gameId}?sessionId=${sessionId}`
+  );
+  return handleErrorOrReturnResponse(response);
 };

@@ -246,6 +246,10 @@ class LetterBoxedStack(Stack):
                 "handler": "lambdas.game_archive.handler.handler",
                 "name": "GameArchiveLambda"
             },
+            "fetch_user_state": {
+                "handler": "lambdas.fetch_user_state.handler.handler",
+                "name": "FetchUserStateLambda"
+            }
         }
 
         # Create Lambda layer for dependencies
@@ -396,6 +400,17 @@ class LetterBoxedStack(Stack):
             apigateway.LambdaIntegration(lambda_references["create_random"])
         )
         add_cors(random_game_resource)
+        
+        # Set up sessions resource
+        sessions_resource = api.root.add_resource("sessions")
+        
+        # GET /sessions/{gameId}?sessionId=<value> - Fetch a user's game state
+        session_id_resource = sessions_resource.add_resource("{gameId}")
+        session_id_resource.add_method(
+            "GET",
+            apigateway.LambdaIntegration(lambda_references["fetch_user_state"])
+        )
+        add_cors(session_id_resource)
 
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):
