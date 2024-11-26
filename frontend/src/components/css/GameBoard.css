@@ -5,7 +5,8 @@
   align-items: center;
   gap: 20px;
   background-color: #2b5c8a; /* Background behind the board */
-  padding: 40px;
+  padding: 30px;
+  padding-top: 10px;
   width: 100%; /* Ensure it fills the parent container */
   max-width: 320px; /* Increase this to make it wider */
   border-radius: 10px; /* Optional: Round the corners */
@@ -32,6 +33,7 @@
   background-color: #dae4ef;
   padding: 10px;
   border-radius: 5px;
+  border: 2px solid black;
   font-size: 1.5rem;
   font-weight: bold;
   height: 50px; /* Fixed height */
@@ -53,6 +55,7 @@
   background-color: #dae4ef;
   padding: 10px;
   border-radius: 5px;
+  border: 2px solid black;
   text-align: left; /* Align content to the left */
   font-size: 1.1rem; /* Slightly larger font for the heading */
   font-weight: bold;
@@ -183,7 +186,7 @@
 }
 
 .letter.unplayed-letter {
-  background-color: #e3f2fd; /* Light blue */
+  background-color: #cbe5f8; /* Light blue */
 }
 
 .letter.unplayed-letter:hover {
@@ -213,7 +216,7 @@
 }
 
 .marker.active {
-  background-color: #90caf9;
+  background-color: #ed8515;
   animation: pulse 0.5s ease-in-out;
 }
 
@@ -229,7 +232,7 @@
 /* Controls */
 .controls {
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 
 .controls button {
@@ -251,6 +254,7 @@
 .share-game-section {
   margin-top: 0px;
   text-align: center;
+  font-size: 1.2rem;
 }
 
 .share-game-section input {
@@ -259,7 +263,7 @@
   padding: 4px;
   font-size: 1rem;
   text-align: center;
-  border: 1px solid #000000;
+  border: 2px solid #000000;
   border-radius: 5px;
   cursor: pointer;
 }

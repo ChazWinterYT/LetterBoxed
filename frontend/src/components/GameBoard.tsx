@@ -41,16 +41,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
 
   return (
     <div className="game-board-container">
-      {/* Shareable URL */}
-      <div className="share-game-section">
-        <p>{t('game.shareGame')}</p>
-        <input
-          type="text"
-          value={shareableUrl}
-          readOnly
-          onClick={(e) => (e.target as HTMLInputElement).select()} // Auto-select on click
-        />
-      </div>
+      
 
       {/* Word Formation Area */}
       <div className="word-formation-area">
@@ -164,6 +155,18 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
         <button onClick={handleDelete}>{t('game.deleteLetter')}</button>
         <button onClick={handleSubmit}>{t('game.submitWord')}</button>
       </div>
+
+      {/* Shareable URL */}
+      <div className="share-game-section">
+        <p>{t('game.shareGame')}</p>
+        <input
+          type="text"
+          value={shareableUrl}
+          readOnly
+          onClick={(e) => (e.target as HTMLInputElement).select()} // Auto-select on click
+        />
+      </div>
+
     </div>
   );
 };
