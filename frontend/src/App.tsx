@@ -176,7 +176,7 @@ const App = () => {
 };
 
 const AppRouter = () => (
-  <Router>
+  <Router basename="/LetterBoxed/frontend">
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/games/:gameId" element={<App />} />
