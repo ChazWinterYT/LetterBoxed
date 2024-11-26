@@ -53,7 +53,8 @@
         "randomGame": "Slumpmässigt spel",
         "restartGame": "Starta om spelet",
         "deleteLetter": "Radera bokstav",
-        "submitWord": "Skicka in ord"
+        "submitWord": "Skicka in ord",
+        "shareGame": "Dela detta spel:"
     },
     "instructions": {
         "howToPlay": "Hur man spelar",

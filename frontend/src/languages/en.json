@@ -53,7 +53,8 @@
         "randomGame": "Random Game",
         "restartGame": "Restart Game",
         "deleteLetter": "Delete Letter",
-        "submitWord": "Submit Word"
+        "submitWord": "Submit Word",
+        "shareGame": "Share this game:"
     },
     "instructions": {
         "howToPlay": "How to Play",

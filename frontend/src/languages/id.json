@@ -53,7 +53,8 @@
         "randomGame": "Game Acak",
         "restartGame": "Mulai Ulang Game",
         "deleteLetter": "Hapus Huruf",
-        "submitWord": "Kirim Kata"
+        "submitWord": "Kirim Kata",
+        "shareGame": "Bagikan permainan ini:"
     },
     "instructions": {
         "howToPlay": "Cara Bermain",

@@ -6,12 +6,14 @@ import Spinner from './Spinner';
 interface GameBoardProps {
   layout: string[];
   foundWords: string[];
+  gameId: string | null;
 }
 
-const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
+const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
   const { t } = useLanguage();
   const [currentWord, setCurrentWord] = useState<string>('');
   const [playedWords, setPlayedWords] = useState<string[]>([]);
+  const shareableUrl = `${window.location.origin}/games/${gameId}`;
 
   const handleLetterClick = (letter: string) => {
     setCurrentWord((prevWord) => prevWord + letter);
@@ -39,6 +41,17 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout }) => {
 
   return (
     <div className="game-board-container">
+      {/* Shareable URL */}
+      <div className="share-game-section">
+        <p>{t('game.shareGame')}</p>
+        <input
+          type="text"
+          value={shareableUrl}
+          readOnly
+          onClick={(e) => (e.target as HTMLInputElement).select()} // Auto-select on click
+        />
+      </div>
+
       {/* Word Formation Area */}
       <div className="word-formation-area">
         <h3>{""}</h3>

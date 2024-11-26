@@ -53,7 +53,8 @@
         "randomGame": "Случайная игра",
         "restartGame": "Перезапустить игру",
         "deleteLetter": "Удалить букву",
-        "submitWord": "Отправить слово"
+        "submitWord": "Отправить слово",
+        "shareGame": "Поделитесь этой игрой:"
     },
     "instructions": {
         "howToPlay": "Как играть",

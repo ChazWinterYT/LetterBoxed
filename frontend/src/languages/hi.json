@@ -53,7 +53,8 @@
         "randomGame": "रैंडम गेम",
         "restartGame": "गेम पुनः प्रारंभ करें",
         "deleteLetter": "अक्षर हटाएं",
-        "submitWord": "शब्द सबमिट करें"
+        "submitWord": "शब्द सबमिट करें",
+        "shareGame": "इस खेल को साझा करें:"
     },
     "instructions": {
         "howToPlay": "कैसे खेलें",

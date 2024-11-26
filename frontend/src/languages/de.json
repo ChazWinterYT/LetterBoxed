@@ -53,7 +53,8 @@
         "randomGame": "Zufälliges Spiel",
         "restartGame": "Spiel neu starten",
         "deleteLetter": "Buchstabe löschen",
-        "submitWord": "Wort einreichen"
+        "submitWord": "Wort einreichen",
+        "shareGame": "Teile dieses Spiel:"
     },
     "instructions": {
         "howToPlay": "Spielanleitung",

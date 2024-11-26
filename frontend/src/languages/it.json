@@ -53,7 +53,8 @@
         "randomGame": "Gioco casuale",
         "restartGame": "Riavvia il gioco",
         "deleteLetter": "Elimina la lettera",
-        "submitWord": "Invia la parola"
+        "submitWord": "Invia la parola",
+        "shareGame": "Condividi questo gioco:"
     },
     "instructions": {
         "howToPlay": "Come giocare",

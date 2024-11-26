@@ -53,7 +53,8 @@
         "randomGame": "Jeu aléatoire",
         "restartGame": "Redémarrer le jeu",
         "deleteLetter": "Supprimer la lettre",
-        "submitWord": "Soumettre le mot"
+        "submitWord": "Soumettre le mot",
+        "shareGame": "Partagez ce jeu:"
     },
     "instructions": {
         "howToPlay": "Comment jouer",

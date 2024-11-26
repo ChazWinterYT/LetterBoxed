@@ -53,7 +53,8 @@
         "randomGame": "Gra losowa",
         "restartGame": "Zrestartuj grę",
         "deleteLetter": "Usuń literę",
-        "submitWord": "Zatwierdź słowo"
+        "submitWord": "Zatwierdź słowo",
+        "shareGame": "Udostępnij tę grę:"
     },
     "instructions": {
         "howToPlay": "Jak grać",

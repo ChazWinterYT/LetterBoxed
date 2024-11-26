@@ -53,7 +53,8 @@
         "randomGame": "ランダムゲーム",
         "restartGame": "ゲームを再開",
         "deleteLetter": "文字を削除",
-        "submitWord": "単語を提出"
+        "submitWord": "単語を提出",
+        "shareGame": "このゲームを共有する:"
     },
     "instructions": {
         "howToPlay": "プレイ方法",

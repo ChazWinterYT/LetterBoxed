@@ -140,7 +140,7 @@ const App = () => {
         {isGameLoading ? (
           <Spinner message={t("game.loading")} />
         ) : (
-          <GameBoard layout={layout} foundWords={foundWords} />
+          <GameBoard layout={layout} foundWords={foundWords} gameId={currentGameId} />
         )}
       </div>
       <Modal

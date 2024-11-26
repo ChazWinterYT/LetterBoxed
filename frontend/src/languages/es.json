@@ -53,7 +53,8 @@
         "randomGame": "Juego aleatorio",
         "restartGame": "Reiniciar juego",
         "deleteLetter": "Borrar letra",
-        "submitWord": "Enviar palabra"
+        "submitWord": "Enviar palabra",
+        "shareGame": "Comparte este juego:"
     },
     "instructions": {
         "howToPlay": "Cómo jugar",

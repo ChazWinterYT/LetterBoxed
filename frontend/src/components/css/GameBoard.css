@@ -246,3 +246,20 @@
   background-color: #7bb0dc; /* Hover background color */
   color: white; /* Optional: Change text color on hover */
 }
+
+/* Share Game Section */
+.share-game-section {
+  margin-top: 0px;
+  text-align: center;
+}
+
+.share-game-section input {
+  max-width: 300px;
+  min-width: 300px;
+  padding: 4px;
+  font-size: 1rem;
+  text-align: center;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  cursor: pointer;
+}
