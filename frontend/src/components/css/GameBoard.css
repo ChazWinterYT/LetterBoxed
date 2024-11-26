@@ -5,8 +5,9 @@
   align-items: center;
   gap: 20px;
   background-color: #2b5c8a; /* Background behind the board */
-  padding: 30px;
-  padding-top: 10px;
+  padding: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   width: 100%; /* Ensure it fills the parent container */
   max-width: 320px; /* Increase this to make it wider */
   border-radius: 10px; /* Optional: Round the corners */
@@ -252,7 +253,6 @@
 
 /* Share Game Section */
 .share-game-section {
-  margin-top: 0px;
   text-align: center;
   font-size: 1.2rem;
 }

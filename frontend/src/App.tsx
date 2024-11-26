@@ -19,10 +19,8 @@ const App = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { gameId: urlGameId } = useParams<{ gameId: string }>();
-
   const [layout, setBoard] = useState<string[]>([]);
   const [currentGameId, setCurrentGameId] = useState<string | null>(null);
-  //const [view, setView] = useState<string>("play-today");
   const [archiveGames, setArchiveGames] = useState<string[]>([]);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,16 +65,16 @@ const App = () => {
   useEffect(() => {
     if (urlGameId) {
       loadGame(urlGameId); // Load game from URL
-    } else if (view === "play-today") {
+    } else {
       loadTodaysGame(); // Load today's game
     }
-  }, [urlGameId, view, loadGame, loadTodaysGame]);
+  }, [urlGameId, loadGame, loadTodaysGame]);
 
-  // Fetch game archive
+  // Fetch game archive within Archive Modal
   const loadGameArchive = async () => {
     if (archiveGames.length > 0) {
       setModalContent(
-        <ArchiveList games={archiveGames} onGameSelect={loadGame} />
+        <ArchiveList games={archiveGames} onGameSelect={loadGameFromArchive} />
       );
       return;
     }
@@ -85,11 +83,31 @@ const App = () => {
       const data = await fetchGameArchive();
       setArchiveGames(data.nytGames || []);
       setModalContent(
-        <ArchiveList games={data.nytGames || []} onGameSelect={loadGame} />
+        <ArchiveList games={data.nytGames || []} onGameSelect={loadGameFromArchive} />
       );
     } catch (error) {
       console.error("Error fetching game archive:", error);
       setModalContent(<p>{t("ui.archive.error")}</p>);
+    }
+  };
+
+  // Fetch archived game
+  const loadGameFromArchive = async (gameId: string) => {
+    // Close the modal immediately
+    setIsModalOpen(false);
+
+    try {
+      setIsGameLoading(true); // Show the spinner while the game loads
+      const data = await fetchGameById(gameId); // Fetch the selected game
+      setCurrentGameId(gameId); // Set the current game ID
+      setBoard(data.gameLayout || []); // Update the game board layout
+      const sessionProgress = await fetchUserSession("user-session-id", gameId);
+      setFoundWords(sessionProgress.wordsUsed || []); // Update found words
+    } catch (error) {
+      console.error(`Error loading game ${gameId}:`, error);
+      setModalContent(<p>{t("ui.archive.errorLoadingGame")}</p>); // Display error
+    } finally {
+      setIsGameLoading(false); // Hide the spinner when done
     }
   };
 
@@ -129,7 +147,12 @@ const App = () => {
     <div className="app-container">
       <Header />
       <div className="button-menu">
-        <button onClick={() => navigate("/")}>
+        <button
+          onClick={() => {
+            navigate("/"); // Reset the URL to "/"
+            loadTodaysGame(); // Explicitly reload today's game
+          }}
+        >
           {t("ui.menu.playToday")}
         </button>
         <button onClick={openArchiveModal}>{t("ui.menu.archive")}</button>
