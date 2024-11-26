@@ -40,8 +40,8 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
   }
 
   return (
+    
     <div className="game-board-container">
-      
 
       {/* Word Formation Area */}
       <div className="word-formation-area">

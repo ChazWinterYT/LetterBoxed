@@ -1,33 +1,74 @@
+/* Wrapper for Spinner */
 .spinner-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  padding: 10px;
+  padding-top: 30px;
+  background-color: #ffffff; /* White background for spinner */
+  border-radius: 10px; /* Optional rounded corners */
+  border: 2px solid #000; /* Optional border */
+  width: 300px; /* Match the design */
+  height: 120px; /* Match the design */
+  text-align: center; /* Center the text */
+  position: relative; /* Allow absolute positioning */
+}
+
+/* Spinner Styling */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px dotted #8eb0f3;
+  border-style: solid solid dotted dotted;
+  border-radius: 50%;
+  animation: rotation 2s linear infinite;
+  position: absolute; /* Prevent it from shifting with text */
+}
+
+/* Spinner Message Styling */
+.spinner-message {
+  margin-top: 70px; /* Add space below spinner */
+  font-size: 1rem;
+  color: #555; /* Slightly muted color for text */
+  max-width: 100%; /* Prevent message from stretching spinner */
+  text-align: center;
+  word-wrap: break-word; /* Wrap long text */
+}
+
+.spinner::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px dotted #FF3D00;
+  border-style: solid solid dotted;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  animation: rotationBack 1s linear infinite;
+  transform-origin: center center;
+}
+
+/* Keyframes for Spinner Animations */
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(0, 0, 0, 0.1); /* Light gray border */
-    border-top: 4px solid #3498db; /* Blue border for animation */
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .spinner-message {
-    margin-top: 10px;
-    font-size: 1rem;
-    color: #555; /* Slightly muted color for text */
-    text-align: center;
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(-360deg);
   }
-  
+}

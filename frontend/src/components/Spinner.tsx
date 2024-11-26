@@ -1,15 +1,16 @@
-import React from "react";
-import "./css/Spinner.css";
+import React from 'react';
+import './css/Spinner.css';
 
-type SpinnerProps = {
-  message?: string; // Optional message
-};
+interface SpinnerProps {
+  message: string;
+  isModal?: boolean; // New optional prop to indicate modal usage
+}
 
-const Spinner: React.FC<SpinnerProps> = ({ message }) => {
+const Spinner: React.FC<SpinnerProps> = ({ message, isModal = false }) => {
   return (
     <div className="spinner-container">
       <div className="spinner"></div>
-      {message && <p className="spinner-message">{message}</p>} {/* Display message */}
+      <p className="spinner-message">{message}</p>
     </div>
   );
 };

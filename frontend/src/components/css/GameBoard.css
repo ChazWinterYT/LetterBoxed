@@ -17,13 +17,17 @@
 .loading-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100%; /* Full height */
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-  border-radius: 10px; /* Optional: rounded corners */
-  color: #333; /* Darker text for readability */
+  justify-content: center;
+  background-color: #ffffff; /* White background for spinner */
+  border: 2px solid #000; /* Optional: Match game board border */
+  border-radius: 8px;
+  width: 100%;
+  max-width: 300px; /* Ensure it matches spinner's natural size */
+  height: 300px; /* Match game board size */
+  margin: 0 auto;
+  padding: 0; /* Remove padding */
+  box-sizing: border-box; /* Ensure consistent sizing */
 }
 
 /* Word Formation Area */

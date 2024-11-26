@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from "react-router-dom";
 import Header from "./components/Header";
+import ButtonMenu from "./components/ButtonMenu";
 import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/ArchiveList";
 import Footer from "./components/Footer";
@@ -79,7 +80,7 @@ const App = () => {
       return;
     }
     try {
-      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} />);
+      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} isModal={true} />);
       const data = await fetchGameArchive();
       setArchiveGames(data.nytGames || []);
       setModalContent(
@@ -146,20 +147,15 @@ const App = () => {
   return (
     <div className="app-container">
       <Header />
-      <div className="button-menu">
-        <button
-          onClick={() => {
-            navigate("/"); // Reset the URL to "/"
-            loadTodaysGame(); // Explicitly reload today's game
-          }}
-        >
-          {t("ui.menu.playToday")}
-        </button>
-        <button onClick={openArchiveModal}>{t("ui.menu.archive")}</button>
-        <button onClick={openCustomGameModal}>
-          {t("ui.menu.customGame")}
-        </button>
-      </div>
+      <ButtonMenu
+        onPlayToday={() => {
+          navigate("/"); // Reset URL to "/"
+          loadTodaysGame(); // Reload today's game
+        }}
+        onOpenArchive={openArchiveModal}
+        onOpenCustomGame={openCustomGameModal}
+      />
+
       <div className="main-content">
         {isGameLoading ? (
           <Spinner message={t("game.loading")} />

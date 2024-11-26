@@ -1,0 +1,26 @@
+/* Button menu styles */
+.button-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Spacing between buttons */
+    margin: 1rem 0;
+  }
+  
+  .button-menu button {
+    background-color: #1586dd; 
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: solid;
+    border-radius: 40px;
+    border-color: #061f32;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 90%; /* Full-width buttons on mobile */
+    max-width: 300px; /* Limit width on larger screens */
+    text-align: center;
+  }
+  
+  .button-menu button:hover {
+    background-color: #4145b0; 
+  }
