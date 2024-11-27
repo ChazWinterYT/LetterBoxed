@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Routes,
   Route,
   useNavigate,
@@ -369,12 +369,12 @@ const App = () => {
 };
 
 const AppRouter = () => (
-  <Router basename="/LetterBoxed/frontend">
+  <BrowserRouter basename="/LetterBoxed/frontend">
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/games/:gameId" element={<App />} />
     </Routes>
-  </Router>
+  </BrowserRouter>
 );
 
 export default AppRouter;
