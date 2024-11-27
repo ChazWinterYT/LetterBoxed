@@ -8,7 +8,6 @@ from boto3.dynamodb.conditions import Key
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
 
-
 # ====================== Games Table Functions ======================
 
 def add_game_to_db(game_data: Dict[str, Any]) -> bool:
@@ -358,16 +357,23 @@ def fetch_archived_games(limit: int, last_key: Optional[Dict[str, Any]] = None) 
     """
     try:
         table = get_archive_table()
-        query_params = {
+
+        # Build scan parameters
+        scan_params = {
             "Limit": limit,
-            "ScanIndexForward": False,  # Descending order
         }
         if last_key:
-            query_params["ExclusiveStartKey"] = last_key
+            scan_params["ExclusiveStartKey"] = last_key
 
-        response = table.query(**query_params)
+        print(f"Scanning DynamoDB with params: {scan_params}")
+        response = table.scan(**scan_params)
+        print(f"DynamoDB Response: {response}")
+
+        # Sort items in descending order by gameId (if necessary)
+        items = sorted(response.get("Items", []), key=lambda x: x["gameId"], reverse=True)
+
         return {
-            "items": response.get("Items", []),
+            "items": items,
             "lastKey": response.get("LastEvaluatedKey"),  # For pagination
         }
     except Exception as e:

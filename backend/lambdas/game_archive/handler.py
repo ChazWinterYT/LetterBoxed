@@ -21,8 +21,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
         # Parse query parameters
         query_params = event.get("queryStringParameters", {}) or {}
-        limit = int(query_params.get("limit", 20)) # Default to 20 items
-        last_key = query_params.get("lastKey") # Last key for pagination
+        limit = int(query_params.get("limit", 20))  # Default to 20 items
+        last_key = query_params.get("lastKey")  # Last key for pagination
         
         # Decode lastKey if provided
         if last_key:
@@ -34,6 +34,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         last_evaluated_key = result["lastKey"]
         
         # Build the response
+        response_body = {
+            "nytGames": items,
+            "lastKey": json.dumps(last_evaluated_key) if last_evaluated_key else None,
+            "message": "Fetched official NYT games archive successfully.",
+        }
+
         return {
             "statusCode": 200,
             "headers": {
@@ -41,12 +47,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "Access-Control-Allow-Methods": "OPTIONS,GET",  # Allowed methods
                 "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
-            "body": json.dumps({
-                "nytGames": items,
-                "lastKey": json.dumps(last_evaluated_key) if last_evaluated_key else None,
-                "message": "Fetched official NYT games archive successfully."
-            }),
+            "body": json.dumps(response_body),
         }
 
     except Exception as e:
+        print(f"Error in handler: {e}")
         return error_response("Error fetching New York Times Archive", 500)
