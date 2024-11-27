@@ -6,6 +6,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
+import Cookies from "js-cookie";
 import { v4 as uuid4 } from "uuid";
 import Header from "./components/Header";
 import ButtonMenu from "./components/ButtonMenu";
@@ -46,10 +47,15 @@ const App = () => {
 
   // Initialize the user session ID
   useEffect(() => {
-    const sessionId = localStorage.getItem("user-session-id") || uuid4();
-    localStorage.setItem("user-session-id", sessionId);
+    let sessionId = Cookies.get('user-session-id'); // Retrieve the session ID from the cookies
+    if (!sessionId) {
+      sessionId = uuid4(); // Generate a new session ID if none exists
+      Cookies.set('user-session-id', sessionId, { expires: 30, path: '/' }); // Set the cookie with a 30-day expiration
+      console.log("New session ID created and stored in cookies:", sessionId);
+    } else {
+      console.log("Existing session ID retrieved from cookies:", sessionId);
+    }
     setUserSessionId(sessionId);
-    console.log("Initialized user session ID:", sessionId);
   }, []);
 
   // Load a game state from the backend
