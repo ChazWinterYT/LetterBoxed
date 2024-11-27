@@ -23,6 +23,8 @@
         "startGame": "खेल शुरू करें",
         "submitWord": "शब्द सबमिट करें",
         "playAgain": "फिर से खेलें",
+        "confirm": "पुष्टि करें",
+        "cancel": "रद्द करें",
         "chooseLanguage": "भाषा चुनें",
         "backToHome": "chazwinter.com पर वापस जाएं",
         "languageSelector": "भाषा"
@@ -54,7 +56,9 @@
         "restartGame": "गेम पुनः प्रारंभ करें",
         "deleteLetter": "अक्षर हटाएं",
         "submitWord": "शब्द सबमिट करें",
-        "shareGame": "इस खेल को साझा करें:"
+        "shareGame": "इस खेल को साझा करें:",
+        "restartConfirmationTitle": "क्या आप वाकई इस खेल को पुनः आरंभ करना चाहते हैं?",
+        "restartConfirmationMessage": "\"पुष्टि करें\" पर क्लिक करने से आपकी प्रगति हट जाएगी और खेल फिर से शुरू होगा।"
     },
     "instructions": {
         "howToPlay": "कैसे खेलें",

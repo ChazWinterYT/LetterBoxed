@@ -23,6 +23,8 @@
         "startGame": "Iniciar juego",
         "submitWord": "Enviar palabra",
         "playAgain": "Jugar de nuevo",
+        "confirm": "Confirmar",
+        "cancel": "Cancelar",
         "chooseLanguage": "Elegir idioma",
         "backToHome": "Volver a chazwinter.com",
         "languageSelector": "Idioma"
@@ -54,7 +56,9 @@
         "restartGame": "Reiniciar juego",
         "deleteLetter": "Borrar letra",
         "submitWord": "Enviar palabra",
-        "shareGame": "Comparte este juego:"
+        "shareGame": "Comparte este juego:",
+        "restartConfirmationTitle": "¿Estás seguro de que quieres reiniciar este juego?",
+        "restartConfirmationMessage": "Al hacer clic en \"Confirmar\", se eliminará tu progreso y el juego se reiniciará."
     },
     "instructions": {
         "howToPlay": "Cómo jugar",

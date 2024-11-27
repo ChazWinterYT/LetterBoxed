@@ -23,6 +23,8 @@
         "startGame": "Starta spelet",
         "submitWord": "Skicka in ord",
         "playAgain": "Spela igen",
+        "confirm": "Bekräfta",
+        "cancel": "Avbryt",
         "chooseLanguage": "Välj språk",
         "backToHome": "Tillbaka till chazwinter.com",
         "languageSelector": "Språk"
@@ -54,7 +56,9 @@
         "restartGame": "Starta om spelet",
         "deleteLetter": "Radera bokstav",
         "submitWord": "Skicka in ord",
-        "shareGame": "Dela detta spel:"
+        "shareGame": "Dela detta spel:",
+        "restartConfirmationTitle": "Är du säker på att du vill starta om det här spelet?",
+        "restartConfirmationMessage": "Genom att klicka på \"Bekräfta\" tas dina framsteg bort och spelet startas om."
     },
     "instructions": {
         "howToPlay": "Hur man spelar",

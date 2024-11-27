@@ -7,10 +7,17 @@ export interface GameBoardProps {
   layout: string[];
   foundWords: string[];
   gameId: string | null;
-  onWordSubmit?: (word: string) => void; // Optional callback for word submission
+  onWordSubmit?: (word: string) => void;
+  onRestartGame?: () => void; // New prop for restarting the game
 }
 
-const GameBoard: React.FC<GameBoardProps> = ({ layout, foundWords, gameId, onWordSubmit }) => {
+const GameBoard: React.FC<GameBoardProps> = ({
+  layout,
+  foundWords,
+  gameId,
+  onWordSubmit,
+  onRestartGame, // Destructure the new prop
+}) => {
   const { t } = useLanguage();
   const [currentWord, setCurrentWord] = useState<string>('');
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
@@ -32,11 +39,17 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, foundWords, gameId, onWor
     }
   };
 
+  const handleRestart = () => {
+    if (onRestartGame) {
+      onRestartGame(); // Call the restart function passed from props
+    }
+  };
+
   // Display loading spinner and message while layout is not ready
   if (!Array.isArray(layout) || layout.length !== 4) {
     return (
       <div className="loading-container">
-        <Spinner message={t("game.loading")} /> {/* Spinner with translated message */}
+        <Spinner message={t('game.loading')} />
       </div>
     );
   }
@@ -46,7 +59,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, foundWords, gameId, onWor
 
       {/* Word Formation Area */}
       <div className="word-formation-area">
-        <h3>{""}</h3>
+        <h3>{''}</h3>
         <div className="current-word">{currentWord || '\u00A0'}</div>
       </div>
 
@@ -152,7 +165,8 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, foundWords, gameId, onWor
       {/* Controls */}
       <div className="controls">
         <button onClick={handleDelete}>{t('game.deleteLetter')}</button>
-        <button onClick={handleSubmit}>{t('game.submitWord')}</button>
+        <button onClick={handleRestart}>{t('game.restartGame')}</button> 
+        <button onClick={handleSubmit}>{t('game.submitWord')}</button> 
       </div>
 
       {/* Shareable URL */}
@@ -162,7 +176,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, foundWords, gameId, onWor
           type="text"
           value={shareableUrl}
           readOnly
-          onClick={(e) => (e.target as HTMLInputElement).select()} // Auto-select on click
+          onClick={(e) => (e.target as HTMLInputElement).select()}
         />
       </div>
 

@@ -41,7 +41,7 @@ const App = () => {
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
   const [isGameLoading, setIsGameLoading] = useState(false);
 
-  // **NEW**: Add gameLayout to state
+  // Add gameLayout to state
   const [gameLayout, setGameLayout] = useState<string[]>([]);
 
   // Initialize the user session ID
@@ -64,7 +64,6 @@ const App = () => {
         const sessionState = await fetchUserSession(userSessionId, gameId);
         console.log("Fetched session state:", sessionState);
         setFoundWords(sessionState.wordsUsed || []);
-        console.log("Found words set to", sessionState.wordsUsed, "for game ID", gameId);
       } catch (error) {
         console.error("Error fetching game state:", error);
         // If no session exists, start with empty words
@@ -81,19 +80,19 @@ const App = () => {
         console.warn("Cannot save game state: Missing userSessionId or currentGameId.");
         return;
       }
-  
+
       if (!gameLayout || gameLayout.length === 0) {
         console.error("Game layout is not available.");
         return;
       }
-  
+
       const sessionData = {
         sessionId: userSessionId,
         gameId: currentGameId,
-        gameLayout: gameLayout, // Include gameLayout
-        wordsUsed: wordsUsed,    // Use the updated words
+        gameLayout: gameLayout,
+        wordsUsed: wordsUsed,
       };
-  
+
       try {
         console.log("Saving game state:", sessionData);
         await saveSessionState(sessionData);
@@ -123,10 +122,8 @@ const App = () => {
         console.log("Fetched game data:", data);
 
         setCurrentGameId(gameId);
-        console.log("Game ID set to", gameId);
         setLayout(data.gameLayout || []); // Set layout for GameBoard
-        setGameLayout(data.gameLayout || []); // **Set gameLayout for session data**
-        console.log("Game Layout set to", data.gameLayout);
+        setGameLayout(data.gameLayout || []); // Set gameLayout for session data
 
         await loadGameState(gameId); // Fetch session state
 
@@ -161,7 +158,7 @@ const App = () => {
 
         setCurrentGameId(data.gameId);
         setLayout(data.gameLayout || []);
-        setGameLayout(data.gameLayout || []); // **Set gameLayout for session data**
+        setGameLayout(data.gameLayout || []); // Set gameLayout for session data
 
         await loadGameState(data.gameId); // Fetch session state
         navigate(`/games/${data.gameId}`, { replace: true });
@@ -287,6 +284,51 @@ const App = () => {
     );
   }, [t]);
 
+  // Handle Restart Game action
+  const confirmRestartGame = useCallback(async () => {
+    console.log("Restart game confirmed.");
+    setIsModalOpen(false);
+    setFoundWords([]); // Clear the found words
+
+    // Save the cleared state to the backend
+    if (userSessionId && currentGameId) {
+      const sessionData = {
+        sessionId: userSessionId,
+        gameId: currentGameId,
+        gameLayout: gameLayout,
+        wordsUsed: [],
+      };
+
+      try {
+        console.log("Saving cleared game state:", sessionData);
+        await saveSessionState(sessionData);
+        console.log("Cleared game state saved successfully.");
+      } catch (error) {
+        console.error("Error saving cleared game state:", error);
+      }
+    }
+  }, [currentGameId, gameLayout, userSessionId]);
+
+  const cancelRestartGame = useCallback(() => {
+    console.log("Restart game canceled.");
+    setIsModalOpen(false);
+  }, []);
+
+  const handleRestartGame = useCallback(() => {
+    console.log("Restart game initiated.");
+    setModalTitle(t("game.restartConfirmationTitle"));
+    setModalContent(
+      <div className="confirmation-modal-content">
+        <p>{t("game.restartConfirmationMessage")}</p>
+        <div className="modal-buttons">
+          <button onClick={confirmRestartGame}>{t("ui.confirm")}</button>
+          <button onClick={cancelRestartGame}>{t("ui.cancel")}</button>
+        </div>
+      </div>
+    );
+    setIsModalOpen(true);
+  }, [confirmRestartGame, cancelRestartGame, t]);
+
   return (
     <div className="app-container">
       <Header />
@@ -306,9 +348,11 @@ const App = () => {
             foundWords={foundWords}
             gameId={currentGameId}
             onWordSubmit={addWord} // Pass the word submission handler
+            onRestartGame={handleRestartGame} // Pass the restart handler
           />
         )}
       </div>
+
       <Modal
         title={modalTitle}
         isOpen={isModalOpen}

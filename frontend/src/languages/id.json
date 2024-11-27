@@ -23,6 +23,8 @@
         "startGame": "Mulai Permainan",
         "submitWord": "Kirim Kata",
         "playAgain": "Main Lagi",
+        "confirm": "Konfirmasi",
+        "cancel": "Batalkan",
         "chooseLanguage": "Pilih Bahasa",
         "backToHome": "Kembali ke chazwinter.com",
         "languageSelector": "Bahasa"
@@ -54,7 +56,9 @@
         "restartGame": "Mulai Ulang Game",
         "deleteLetter": "Hapus Huruf",
         "submitWord": "Kirim Kata",
-        "shareGame": "Bagikan permainan ini:"
+        "shareGame": "Bagikan permainan ini:",
+        "restartConfirmationTitle": "Apakah Anda yakin ingin memulai ulang permainan ini?",
+        "restartConfirmationMessage": "Mengklik \"Konfirmasi\" akan menghapus kemajuan Anda dan memulai ulang permainan."
     },
     "instructions": {
         "howToPlay": "Cara Bermain",

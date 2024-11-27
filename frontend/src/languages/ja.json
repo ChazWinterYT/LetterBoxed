@@ -23,6 +23,8 @@
         "startGame": "ゲーム開始",
         "submitWord": "単語を提出",
         "playAgain": "もう一度プレイ",
+        "confirm": "確認",
+        "cancel": "キャンセル",
         "chooseLanguage": "言語を選択",
         "backToHome": "chazwinter.comに戻る",
         "languageSelector": "言語"
@@ -54,7 +56,9 @@
         "restartGame": "ゲームを再開",
         "deleteLetter": "文字を削除",
         "submitWord": "単語を提出",
-        "shareGame": "このゲームを共有する:"
+        "shareGame": "このゲームを共有する:",
+        "restartConfirmationTitle": "このゲームを再開しますか？",
+        "restartConfirmationMessage": "\"確認\"をクリックすると、進行状況が削除され、ゲームが再開されます。"
     },
     "instructions": {
         "howToPlay": "プレイ方法",
