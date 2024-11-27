@@ -8,7 +8,7 @@ export interface GameBoardProps {
   foundWords: string[];
   gameId: string | null;
   onWordSubmit?: (word: string) => void;
-  onRestartGame?: () => void; // New prop for restarting the game
+  onRestartGame?: () => void;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -16,33 +16,51 @@ const GameBoard: React.FC<GameBoardProps> = ({
   foundWords,
   gameId,
   onWordSubmit,
-  onRestartGame, // Destructure the new prop
+  onRestartGame,
 }) => {
   const { t } = useLanguage();
-  const [currentWord, setCurrentWord] = useState<string>('');
+
+  // State to track the current word as an array of letters with their sides
+  const [currentWord, setCurrentWord] = useState<{ letter: string; side: string }[]>([]);
+  const [lastSide, setLastSide] = useState<string | null>(null);
+
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
-  const handleLetterClick = (letter: string) => {
-    setCurrentWord((prevWord) => prevWord + letter);
+  const handleLetterClick = (letter: string, side: string) => {
+    if (lastSide === side && currentWord.length > 0) {
+      // Can't click a letter from the same side as the last one
+      return;
+    }
+    setCurrentWord((prevWord) => [...prevWord, { letter, side }]);
+    setLastSide(side);
   };
 
   const handleDelete = () => {
-    setCurrentWord((prevWord) => prevWord.slice(0, -1));
+    setCurrentWord((prevWord) => {
+      const newWord = prevWord.slice(0, -1);
+      const lastLetter = newWord[newWord.length - 1];
+      setLastSide(lastLetter ? lastLetter.side : null);
+      return newWord;
+    });
   };
 
   const handleSubmit = () => {
-    if (currentWord) {
+    if (currentWord.length > 0) {
+      const word = currentWord.map((item) => item.letter).join('');
       if (onWordSubmit) {
-        onWordSubmit(currentWord); // Call the prop callback if provided
+        onWordSubmit(word);
       }
-      setCurrentWord('');
+      setCurrentWord([]);
+      setLastSide(null);
     }
   };
 
   const handleRestart = () => {
     if (onRestartGame) {
-      onRestartGame(); // Call the restart function passed from props
+      onRestartGame();
     }
+    setCurrentWord([]);
+    setLastSide(null);
   };
 
   // Display loading spinner and message while layout is not ready
@@ -54,13 +72,44 @@ const GameBoard: React.FC<GameBoardProps> = ({
     );
   }
 
+  // Function to render a side of the board
+  const renderSide = (sideLetters: string, sideName: string) => {
+    const lettersArray = sideLetters.split('');
+    return lettersArray.map((letter, index) => {
+      const isDisabled = lastSide === sideName && currentWord.length > 0;
+      const letterClass = `letter ${
+        foundWords.some((word) => word.includes(letter))
+          ? 'played-letter'
+          : 'unplayed-letter'
+      } ${isDisabled ? 'disabled-letter' : ''}`;
+      return (
+        <div className="letter-container" key={`${sideName}-${index}`}>
+          <div
+            className={`marker ${
+              currentWord.some((item) => item.letter === letter) ? 'active' : ''
+            }`}
+          />
+          <div
+            className={letterClass}
+            onClick={() => !isDisabled && handleLetterClick(letter, sideName)}
+          >
+            {letter}
+          </div>
+        </div>
+      );
+    });
+  };
+
   return (
     <div className="game-board-container">
-
       {/* Word Formation Area */}
       <div className="word-formation-area">
         <h3>{''}</h3>
-        <div className="current-word">{currentWord || '\u00A0'}</div>
+        <div className="current-word">
+          {currentWord.length > 0
+            ? currentWord.map((item) => item.letter).join('')
+            : '\u00A0'}
+        </div>
       </div>
 
       {/* Played Words Section */}
@@ -78,95 +127,23 @@ const GameBoard: React.FC<GameBoardProps> = ({
       {/* Game Board */}
       <div className="board">
         {/* Top Side */}
-        <div className="top-side">
-          {layout[0].split('').map((letter, index) => (
-            <div className="letter-container" key={`top-${index}`}>
-              <div
-                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
-              />
-              <div
-                className={`letter ${
-                  foundWords.some((word) => word.includes(letter))
-                    ? 'played-letter'
-                    : 'unplayed-letter'
-                }`}
-                onClick={() => handleLetterClick(letter)}
-              >
-                {letter}
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="top-side">{renderSide(layout[0], 'top')}</div>
 
         {/* Left Side */}
-        <div className="left-side">
-          {layout[3].split('').map((letter, index) => (
-            <div className="letter-container" key={`left-${index}`}>
-              <div
-                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
-              />
-              <div
-                className={`letter ${
-                  foundWords.some((word) => word.includes(letter))
-                    ? 'played-letter'
-                    : 'unplayed-letter'
-                }`}
-                onClick={() => handleLetterClick(letter)}
-              >
-                {letter}
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="left-side">{renderSide(layout[3], 'left')}</div>
 
         {/* Right Side */}
-        <div className="right-side">
-          {layout[1].split('').map((letter, index) => (
-            <div className="letter-container" key={`right-${index}`}>
-              <div
-                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
-              />
-              <div
-                className={`letter ${
-                  foundWords.some((word) => word.includes(letter))
-                    ? 'played-letter'
-                    : 'unplayed-letter'
-                }`}
-                onClick={() => handleLetterClick(letter)}
-              >
-                {letter}
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="right-side">{renderSide(layout[1], 'right')}</div>
 
         {/* Bottom Side */}
-        <div className="bottom-side">
-          {layout[2].split('').map((letter, index) => (
-            <div className="letter-container" key={`bottom-${index}`}>
-              <div
-                className={`marker ${currentWord.includes(letter) ? 'active' : ''}`}
-              />
-              <div
-                className={`letter ${
-                  foundWords.some((word) => word.includes(letter))
-                    ? 'played-letter'
-                    : 'unplayed-letter'
-                }`}
-                onClick={() => handleLetterClick(letter)}
-              >
-                {letter}
-              </div>
-            </div>
-          ))}
-        </div>
+        <div className="bottom-side">{renderSide(layout[2], 'bottom')}</div>
       </div>
 
       {/* Controls */}
       <div className="controls">
         <button onClick={handleDelete}>{t('game.deleteLetter')}</button>
-        <button onClick={handleRestart}>{t('game.restartGame')}</button> 
-        <button onClick={handleSubmit}>{t('game.submitWord')}</button> 
+        <button onClick={handleRestart}>{t('game.restartGame')}</button>
+        <button onClick={handleSubmit}>{t('game.submitWord')}</button>
       </div>
 
       {/* Shareable URL */}
@@ -179,7 +156,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
           onClick={(e) => (e.target as HTMLInputElement).select()}
         />
       </div>
-
     </div>
   );
 };

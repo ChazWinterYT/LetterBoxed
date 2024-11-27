@@ -215,6 +215,12 @@
   transition: background-color 0.2s ease, transform 0.2s ease; /* Fast hover effect */
 }
 
+.letter.disabled-letter {
+  pointer-events: none;
+  opacity: 0.5; /* Makes the letter appear grayed out */
+  cursor: not-allowed;
+}
+
 /* Markers */
 .marker {
   width: 16px;
