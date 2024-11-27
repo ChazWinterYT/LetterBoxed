@@ -69,6 +69,9 @@
         "title": "Jalinan Kata",
         "subtitle": "Permainan LetterBoxed"
     },
+    "footer": {
+        "cookieWarning": "Situs ini menggunakan cookie yang sangat diperlukan untuk menyimpan progres permainan Anda. Tidak ada informasi pribadi yang disimpan. Dengan melanjutkan, Anda menyetujui penggunaan ini."
+    },
     "language": {
         "currentLanguage": "Bahasa Indonesia",
         "language": "Bahasa"

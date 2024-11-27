@@ -69,6 +69,9 @@
         "title": "Motissage",
         "subtitle": "Jeu LetterBoxed"
     },
+    "footer": {
+        "cookieWarning": "Ce site utilise des cookies strictement nécessaires pour enregistrer votre progression dans le jeu. Aucune information personnelle n'est stockée. En continuant, vous acceptez cette utilisation."
+    },
     "language": {
         "currentLanguage": "Français",
         "language": "Langue"

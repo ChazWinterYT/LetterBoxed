@@ -69,6 +69,9 @@
         "title": "SłowoSplot",
         "subtitle": "Gra LetterBoxed"
     },
+    "footer": {
+        "cookieWarning": "Ta strona używa ściśle niezbędnych plików cookie do zapisywania postępów w grze. Nie są przechowywane żadne dane osobowe. Kontynuując, wyrażasz zgodę na takie użycie."
+    },
     "language": {
         "currentLanguage": "Polski",
         "language": "Język"

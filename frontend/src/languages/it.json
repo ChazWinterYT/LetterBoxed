@@ -69,6 +69,9 @@
         "title": "Parolami",
         "subtitle": "Gioco LetterBoxed"
     },
+    "footer": {
+        "cookieWarning": "Questo sito utilizza cookie strettamente necessari per salvare i tuoi progressi di gioco. Nessuna informazione personale viene memorizzata. Continuando, accetti questo utilizzo."
+    },
     "language": {
         "currentLanguage": "Italiano",
         "language": "Lingua"

@@ -8,11 +8,17 @@ footer {
   }
 
 footer a {
-    color: #4caf50; /* Green link color */
+    color: #61c365; /* Green link color */
     text-decoration: none; /* Remove underline */
   }
   
   footer a:hover {
     color: #81c784; 
     text-decoration: underline; /* Add underline on hover */
+  }
+
+  .cookie-warning {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #719e78;
   }
