@@ -13,7 +13,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
   const { t } = useLanguage();
   const [currentWord, setCurrentWord] = useState<string>('');
   const [playedWords, setPlayedWords] = useState<string[]>([]);
-  const shareableUrl = `${window.location.origin}/games/${gameId}`;
+  const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
   const handleLetterClick = (letter: string) => {
     setCurrentWord((prevWord) => prevWord + letter);

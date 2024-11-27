@@ -22,7 +22,10 @@ const App = () => {
   const { gameId: urlGameId } = useParams<{ gameId: string }>();
   const [layout, setBoard] = useState<string[]>([]);
   const [currentGameId, setCurrentGameId] = useState<string | null>(null);
-  const [archiveGames, setArchiveGames] = useState<string[]>([]);
+  const [archiveGames, setArchiveGames] = useState<any[]>([]);
+  const [isArchiveLoading, setIsArchiveLoading] = useState(false);
+  const [lastKey, setLastKey] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState(true);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
@@ -73,36 +76,51 @@ const App = () => {
         console.error("Invalid gameId in URL. Loading today's game instead.");
         loadTodaysGame();
       });
-    } else {
+    } else if (!currentGameId) {
+      // Only load today's game if no game is currently loaded
+      console.log("Loading today's game as fallback");
       loadTodaysGame();
     }
-  }, [urlGameId, loadGame, loadTodaysGame]);
+  }, [urlGameId, currentGameId, loadGame, loadTodaysGame]);
 
-  // Fetch game archive within Archive Modal
+  // Fetch game archive with pagination
   const loadGameArchive = async () => {
-    if (archiveGames.length > 0) {
-      setModalContent(
-        <ArchiveList games={archiveGames} onGameSelect={loadGameFromArchive} />
-      );
-      return;
-    }
+    if (isArchiveLoading || !hasMore) return; // Prevent duplicate calls
+    setIsArchiveLoading(true);
+  
     try {
-      setModalContent(<Spinner message={t("ui.archive.archiveLoading")} isModal={true} />);
-      const data = await fetchGameArchive();
-      setArchiveGames(data.nytGames || []);
+      // Set spinner only if `archiveGames` is empty
+      if (archiveGames.length === 0) {
+        setModalContent(<Spinner message={t("ui.archive.archiveLoading")} isModal={true} />);
+      }
+  
+      const data = await fetchGameArchive(lastKey);
+  
+      // Append new games and update state
+      setArchiveGames((prevGames) => [...prevGames, ...(data.nytGames || [])]);
+      setLastKey(data.lastKey || null);
+      setHasMore(!!data.lastKey); // If no lastKey, there are no more games
+  
+      // Update the modal content after successful fetch
       setModalContent(
-        <ArchiveList games={data.nytGames || []} onGameSelect={loadGameFromArchive} />
+        <ArchiveList
+          games={[...archiveGames, ...(data.nytGames || [])]} // Pass updated archiveGames
+          onGameSelect={loadGameFromArchive}
+          onLoadMore={loadGameArchive}
+          hasMore={!!data.lastKey}
+        />
       );
     } catch (error) {
       console.error("Error fetching game archive:", error);
       setModalContent(<p>{t("ui.archive.error")}</p>);
+    } finally {
+      setIsArchiveLoading(false);
     }
   };
 
   // Fetch archived game
   const loadGameFromArchive = async (gameId: string) => {
-    // Close the modal immediately
-    setIsModalOpen(false);
+    setIsModalOpen(false); // Close the modal immediately
 
     try {
       setIsGameLoading(true); // Show the spinner while the game loads

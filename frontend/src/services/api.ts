@@ -20,9 +20,13 @@ export const fetchTodaysGame = async () => {
   return handleErrorOrReturnResponse(response);
 };
 
-// Fetch archive
-export const fetchGameArchive = async () => {
-  const response = await fetch(`${API_URL}/archive`, { headers });
+// Fetch archive, with pagination
+export const fetchGameArchive = async (lastKey: string | null = null, limit: number = 20) => {
+  const params = new URLSearchParams();
+  params.append("limit", limit.toString());
+  if (lastKey) params.append("lastKey", lastKey);
+
+  const response = await fetch(`${API_URL}/archive?${params.toString()}`, { headers });
   return handleErrorOrReturnResponse(response);
 };
 
