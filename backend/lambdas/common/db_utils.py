@@ -2,11 +2,24 @@ import os
 from typing import List, Optional, Dict, Any
 import time
 import boto3
+import decimal
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
 
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
+
+# Utility function to convert DynamoDB Numbers to a JSON-compatible type
+def convert_decimal(obj):
+    if isinstance(obj, list):
+        return [convert_decimal(i) for i in obj]
+    elif isinstance(obj, dict):
+        return {k: convert_decimal(v) for k, v in obj.items()}
+    elif isinstance(obj, decimal.Decimal):
+        return int(obj) if obj % 1 == 0 else float(obj)  # Convert to int if it's a whole number
+    else:
+        return obj
+
 
 # ====================== Games Table Functions ======================
 
@@ -200,6 +213,8 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
                 return None
             print(f"Initialized and saved new game state: {user_game_data}")
 
+        # Convert any Decimal values to JSON-compatible types
+        user_game_data = convert_decimal(user_game_data)
         return user_game_data
 
     except ClientError as e:
@@ -379,18 +394,27 @@ def fetch_archived_games(limit: int, last_key: Optional[Dict[str, Any]] = None) 
 
         print(f"Scanning DynamoDB with params: {scan_params}")
         response = table.scan(**scan_params)
-        print(f"DynamoDB Response: {response}")
+        print(f"DynamoDB Raw Response: {response}")
 
-        # Sort items in descending order by gameId (if necessary)
-        items = sorted(response.get("Items", []), key=lambda x: x["gameId"], reverse=True)
+        # Extract items and sort them in descending order by gameId
+        items = response.get("Items", [])
+        sorted_items = sorted(items, key=lambda x: x["gameId"], reverse=True)
 
+        # Ensure pagination respects the limit after sorting
+        paginated_items = sorted_items[:limit]
+
+        # Return items and lastKey
         return {
-            "items": items,
-            "lastKey": response.get("LastEvaluatedKey"),  # For pagination
+            "items": paginated_items,
+            "lastKey": response.get("LastEvaluatedKey"),  # LastEvaluatedKey for the next request
         }
+
     except Exception as e:
         print(f"Error fetching archived games: {e}")
-        return {"items": [], "lastKey": None}
+        return {
+            "items": [],
+            "lastKey": None
+        }
 
 
 def get_archive_table() -> Any:

@@ -120,7 +120,7 @@ const App = () => {
         setIsGameLoading(false);
       }
     },
-    [currentGameId, navigate, t, userSessionId, loadGameState]
+    [currentGameId, navigate, t, loadGameState]
   );
 
   // Load today's game
@@ -145,7 +145,7 @@ const App = () => {
     } finally {
       setIsGameLoading(false);
     }
-  }, [currentGameId, navigate, userSessionId, loadGameState]);
+  }, [currentGameId, navigate, loadGameState]);
 
   // Handle shareable URL or default to play-today
   useEffect(() => {

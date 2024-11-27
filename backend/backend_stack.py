@@ -36,15 +36,9 @@ class LetterBoxedStack(Stack):
         test_ARCHIVE_TABLE_NAME = "LetterBoxedArchiveTest"
 
         # Production DynamoDB Games table
-        self.prod_game_table = dynamodb.Table(
+        self.prod_game_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedGamesTable",
-            table_name=prod_GAMES_TABLE_NAME,
-            partition_key=dynamodb.Attribute(
-                name="gameId",
-                type=dynamodb.AttributeType.STRING
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.RETAIN  # Retain production resources
+            table_name=prod_GAMES_TABLE_NAME
         )
         
         # Test DynamoDB Games table
@@ -60,15 +54,9 @@ class LetterBoxedStack(Stack):
         )
 
         # Production DynamoDB ValidWords table
-        self.prod_valid_words_table = dynamodb.Table(
+        self.prod_valid_words_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedValidWordsTable",
-            table_name=prod_VALID_WORDS_TABLE_NAME,
-            partition_key=dynamodb.Attribute(
-                name="gameId",
-                type=dynamodb.AttributeType.STRING
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.RETAIN
+            table_name=prod_VALID_WORDS_TABLE_NAME
         )
 
         # Test DynamoDB ValidWords table
@@ -84,20 +72,9 @@ class LetterBoxedStack(Stack):
         )
 
         # Production DynamoDB SessionStates table
-        self.prod_user_game_states_table = dynamodb.Table(
+        self.prod_user_game_states_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedSessionStatesTable",
             table_name=prod_SESSION_STATES_TABLE_NAME,
-            partition_key=dynamodb.Attribute(
-                name="sessionId",
-                type=dynamodb.AttributeType.STRING
-            ),
-            sort_key=dynamodb.Attribute(
-                name="gameId",
-                type=dynamodb.AttributeType.STRING
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.RETAIN,
-            time_to_live_attribute="TTL"
         )
 
         # Test DynamoDB SessionStates table
@@ -118,15 +95,9 @@ class LetterBoxedStack(Stack):
         )
 
         # Production DynamoDB RandomGames table
-        self.prod_random_games_table = dynamodb.Table(
+        self.prod_random_games_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedRandomGamesTable",
-            table_name=prod_RANDOM_GAMES_TABLE_NAME,
-            partition_key=dynamodb.Attribute(
-                name="atomicNumber",
-                type=dynamodb.AttributeType.NUMBER
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.RETAIN
+            table_name=prod_RANDOM_GAMES_TABLE_NAME
         )
 
         # Test DynamoDB RandomGames table
@@ -142,15 +113,9 @@ class LetterBoxedStack(Stack):
         )
 
         # Production DynamoDB Metadata table
-        self.prod_metadata_table = dynamodb.Table(
+        self.prod_metadata_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedMetadataTable",
-            table_name=prod_METADATA_TABLE_NAME,
-            partition_key=dynamodb.Attribute(
-                name="metadataType",
-                type=dynamodb.AttributeType.STRING
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.RETAIN
+            table_name=prod_METADATA_TABLE_NAME
         )
 
         # Test DynamoDB Metadata table
@@ -166,15 +131,9 @@ class LetterBoxedStack(Stack):
         )
         
         # Production DynamoDB Archived Games table
-        self.prod_archive_table = dynamodb.Table(
+        self.prod_archive_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedArchiveTable",
-            table_name=prod_ARCHIVE_TABLE_NAME,
-            partition_key=dynamodb.Attribute(
-                name="gameId",
-                type=dynamodb.AttributeType.STRING
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.RETAIN
+            table_name=prod_ARCHIVE_TABLE_NAME
         )
 
         # Test DynamoDB Archived Games table
@@ -450,7 +409,7 @@ class LetterBoxedStack(Stack):
             "PUT",
             apigateway.LambdaIntegration(lambda_references["save_user_state"])
         )
-        add_cors(game_session_id_resource)
+        add_cors(session_id_resource)
 
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):
