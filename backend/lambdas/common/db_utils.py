@@ -386,35 +386,31 @@ def fetch_archived_games(limit: int, last_key: Optional[Dict[str, Any]] = None) 
         table = get_archive_table()
 
         # Build scan parameters
-        scan_params = {
-            "Limit": limit,
-        }
+        scan_params = {"Limit": limit}
         if last_key:
             scan_params["ExclusiveStartKey"] = last_key
 
         print(f"Scanning DynamoDB with params: {scan_params}")
         response = table.scan(**scan_params)
-        print(f"DynamoDB Raw Response: {response}")
 
-        # Extract items and sort them in descending order by gameId
+        # Debug response
+        print(f"DynamoDB Response: {response}")
+
+        # Extract items and pagination key
         items = response.get("Items", [])
+        last_evaluated_key = response.get("LastEvaluatedKey")
+
+        # Ensure sorting in descending order by `gameId`
         sorted_items = sorted(items, key=lambda x: x["gameId"], reverse=True)
 
-        # Ensure pagination respects the limit after sorting
-        paginated_items = sorted_items[:limit]
-
-        # Return items and lastKey
         return {
-            "items": paginated_items,
-            "lastKey": response.get("LastEvaluatedKey"),  # LastEvaluatedKey for the next request
+            "items": sorted_items[:limit],  # Respect limit after sorting
+            "lastKey": last_evaluated_key,
         }
 
     except Exception as e:
         print(f"Error fetching archived games: {e}")
-        return {
-            "items": [],
-            "lastKey": None
-        }
+        return {"items": [], "lastKey": None}
 
 
 def get_archive_table() -> Any:

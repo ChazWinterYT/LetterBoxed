@@ -52,7 +52,7 @@ const App = () => {
   }, []);
 
   // Load a game state from the backend
-  const loadGameState = async (gameId: string) => {
+  const loadGameState = useCallback(async (gameId: string) => {
     if (!userSessionId) {
       console.error("User session ID is not initialized.");
       return;
@@ -65,7 +65,7 @@ const App = () => {
       // If no session exists, start with empty words
       setFoundWords([]);
     }
-  };
+  }, [userSessionId]);
 
   // Save the current game state to the backend
   const saveGameState = useCallback(async () => {
