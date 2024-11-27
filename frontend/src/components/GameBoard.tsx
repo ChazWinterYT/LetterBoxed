@@ -10,10 +10,9 @@ export interface GameBoardProps {
   onWordSubmit?: (word: string) => void; // Optional callback for word submission
 }
 
-const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) => {
+const GameBoard: React.FC<GameBoardProps> = ({ layout, foundWords, gameId, onWordSubmit }) => {
   const { t } = useLanguage();
   const [currentWord, setCurrentWord] = useState<string>('');
-  const [playedWords, setPlayedWords] = useState<string[]>([]);
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
   const handleLetterClick = (letter: string) => {
@@ -26,7 +25,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) =
 
   const handleSubmit = () => {
     if (currentWord) {
-      setPlayedWords((prevWords) => [...prevWords, currentWord]);
       if (onWordSubmit) {
         onWordSubmit(currentWord); // Call the prop callback if provided
       }
@@ -56,7 +54,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) =
       <div className="played-words-section">
         <h3>{t('game.playedWords')}</h3>
         <div className="played-words">
-          {playedWords.map((word, index) => (
+          {foundWords.map((word, index) => (
             <span key={index} className="played-word">
               {index > 0 ? ` - ${word}` : word}
             </span>
@@ -75,7 +73,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) =
               />
               <div
                 className={`letter ${
-                  playedWords.some((word) => word.includes(letter))
+                  foundWords.some((word) => word.includes(letter))
                     ? 'played-letter'
                     : 'unplayed-letter'
                 }`}
@@ -96,7 +94,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) =
               />
               <div
                 className={`letter ${
-                  playedWords.some((word) => word.includes(letter))
+                  foundWords.some((word) => word.includes(letter))
                     ? 'played-letter'
                     : 'unplayed-letter'
                 }`}
@@ -117,7 +115,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) =
               />
               <div
                 className={`letter ${
-                  playedWords.some((word) => word.includes(letter))
+                  foundWords.some((word) => word.includes(letter))
                     ? 'played-letter'
                     : 'unplayed-letter'
                 }`}
@@ -138,7 +136,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) =
               />
               <div
                 className={`letter ${
-                  playedWords.some((word) => word.includes(letter))
+                  foundWords.some((word) => word.includes(letter))
                     ? 'played-letter'
                     : 'unplayed-letter'
                 }`}

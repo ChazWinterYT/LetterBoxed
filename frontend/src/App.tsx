@@ -28,7 +28,7 @@ const App = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { gameId: urlGameId } = useParams<{ gameId: string }>();
-  const [layout, setLayout] = useState<string[]>([]); // Renamed from setBoard to setLayout for clarity
+  const [layout, setLayout] = useState<string[]>([]);
   const [currentGameId, setCurrentGameId] = useState<string | null>(null);
   const [userSessionId, setUserSessionId] = useState<string | null>(null);
   const [archiveGames, setArchiveGames] = useState<any[]>([]);
@@ -49,48 +49,61 @@ const App = () => {
     const sessionId = localStorage.getItem("user-session-id") || uuid4();
     localStorage.setItem("user-session-id", sessionId);
     setUserSessionId(sessionId);
+    console.log("Initialized user session ID:", sessionId);
   }, []);
 
   // Load a game state from the backend
-  const loadGameState = useCallback(async (gameId: string) => {
-    if (!userSessionId) {
-      console.error("User session ID is not initialized.");
-      return;
-    }
-    try {
-      const sessionState = await fetchUserSession(userSessionId, gameId);
-      setFoundWords(sessionState.wordsUsed || []);
-    } catch (error) {
-      console.error("Error fetching game state:", error);
-      // If no session exists, start with empty words
-      setFoundWords([]);
-    }
-  }, [userSessionId]);
+  const loadGameState = useCallback(
+    async (gameId: string) => {
+      if (!userSessionId) {
+        console.error("User session ID is not initialized.");
+        return;
+      }
+      console.log("Loading game state for gameId:", gameId);
+      try {
+        const sessionState = await fetchUserSession(userSessionId, gameId);
+        console.log("Fetched session state:", sessionState);
+        setFoundWords(sessionState.wordsUsed || []);
+        console.log("Found words set to", sessionState.wordsUsed, "for game ID", gameId);
+      } catch (error) {
+        console.error("Error fetching game state:", error);
+        // If no session exists, start with empty words
+        setFoundWords([]);
+      }
+    },
+    [userSessionId]
+  );
 
   // Save the current game state to the backend
-  const saveGameState = useCallback(async () => {
-    if (!userSessionId || !currentGameId) return;
-
-    // **Ensure gameLayout is available**
-    if (!gameLayout || gameLayout.length === 0) {
-      console.error("Game layout is not available.");
-      return;
-    }
-
-    const sessionData = {
-      sessionId: userSessionId,
-      gameId: currentGameId,
-      gameLayout: gameLayout, // Include gameLayout
-      wordsUsed: foundWords,
-    };
-
-    try {
-      await saveSessionState(sessionData);
-      console.log("Game state saved successfully.");
-    } catch (error) {
-      console.error("Error saving game state:", error);
-    }
-  }, [userSessionId, currentGameId, foundWords, gameLayout]); // Added gameLayout to dependencies
+  const saveGameState = useCallback(
+    async (wordsUsed: string[]) => {
+      if (!userSessionId || !currentGameId) {
+        console.warn("Cannot save game state: Missing userSessionId or currentGameId.");
+        return;
+      }
+  
+      if (!gameLayout || gameLayout.length === 0) {
+        console.error("Game layout is not available.");
+        return;
+      }
+  
+      const sessionData = {
+        sessionId: userSessionId,
+        gameId: currentGameId,
+        gameLayout: gameLayout, // Include gameLayout
+        wordsUsed: wordsUsed,    // Use the updated words
+      };
+  
+      try {
+        console.log("Saving game state:", sessionData);
+        await saveSessionState(sessionData);
+        console.log("Game state saved successfully.");
+      } catch (error) {
+        console.error("Error saving game state:", error);
+      }
+    },
+    [userSessionId, currentGameId, gameLayout]
+  );
 
   // Load game by ID
   const loadGame = useCallback(
@@ -99,23 +112,32 @@ const App = () => {
       updateUrl: boolean = false,
       forceReload: boolean = false
     ) => {
-      if (!forceReload && gameId === currentGameId) return; // Prevent duplicate loads
+      if (!forceReload && gameId === currentGameId) {
+        console.log("Game is already loaded:", gameId);
+        return; // Prevent duplicate loads
+      }
+      console.log("Loading game by ID:", gameId);
       try {
         setIsGameLoading(true);
         const data = await fetchGameById(gameId);
+        console.log("Fetched game data:", data);
 
         setCurrentGameId(gameId);
+        console.log("Game ID set to", gameId);
         setLayout(data.gameLayout || []); // Set layout for GameBoard
         setGameLayout(data.gameLayout || []); // **Set gameLayout for session data**
+        console.log("Game Layout set to", data.gameLayout);
 
         await loadGameState(gameId); // Fetch session state
 
         if (updateUrl) {
+          console.log("Updating URL to:", `/games/${gameId}`);
           navigate(`/games/${gameId}`, { replace: true });
         }
       } catch (error) {
         console.error(`Error loading game ${gameId}:`, error);
         setModalContent(<p>{t("ui.archive.errorLoadingGame")}</p>);
+        setIsModalOpen(true);
       } finally {
         setIsGameLoading(false);
       }
@@ -124,28 +146,33 @@ const App = () => {
   );
 
   // Load today's game
-  const loadTodaysGame = useCallback(async () => {
-    try {
-      setIsGameLoading(true);
-      const data = await fetchTodaysGame();
+  const loadTodaysGame = useCallback(
+    async () => {
+      console.log("Loading today's game.");
+      try {
+        setIsGameLoading(true);
+        const data = await fetchTodaysGame();
+        console.log("Fetched today's game data:", data);
 
-      if (currentGameId === data.gameId) {
-        console.log("Already playing today's game.");
-        return;
+        if (currentGameId === data.gameId) {
+          console.log("Already playing today's game.");
+          return;
+        }
+
+        setCurrentGameId(data.gameId);
+        setLayout(data.gameLayout || []);
+        setGameLayout(data.gameLayout || []); // **Set gameLayout for session data**
+
+        await loadGameState(data.gameId); // Fetch session state
+        navigate(`/games/${data.gameId}`, { replace: true });
+      } catch (error) {
+        console.error("Error fetching today's game:", error);
+      } finally {
+        setIsGameLoading(false);
       }
-
-      setCurrentGameId(data.gameId);
-      setLayout(data.gameLayout || []);
-      setGameLayout(data.gameLayout || []); // **Set gameLayout for session data**
-
-      await loadGameState(data.gameId); // Fetch session state
-      navigate(`/games/${data.gameId}`, { replace: true });
-    } catch (error) {
-      console.error("Error fetching today's game:", error);
-    } finally {
-      setIsGameLoading(false);
-    }
-  }, [currentGameId, navigate, loadGameState]);
+    },
+    [currentGameId, navigate, loadGameState]
+  );
 
   // Handle shareable URL or default to play-today
   useEffect(() => {
@@ -153,76 +180,96 @@ const App = () => {
       console.log("Loading game from URL:", urlGameId);
       loadGame(urlGameId);
     } else if (!urlGameId && !currentGameId) {
+      console.log("No game ID in URL and no current game. Loading today's game.");
       loadTodaysGame();
+    } else {
+      console.log("Game already loaded:", currentGameId);
     }
   }, [urlGameId, currentGameId, loadGame, loadTodaysGame]);
 
   // Add words and save the state
   const addWord = (word: string) => {
+    console.log("Adding word:", word);
     setFoundWords((prevWords) => {
       const updatedWords = [...prevWords, word];
-      saveGameState(); // Save state after adding a word
+      console.log("Updated found words:", updatedWords);
+      saveGameState(updatedWords); // Pass updated words
       return updatedWords;
     });
   };
 
   // Fetch game archive with pagination
-  const loadGameArchive = useCallback(async () => {
-    if (isArchiveLoading || !hasMore) return;
-
-    setIsArchiveLoading(true);
-    try {
-      if (archiveGames.length === 0) {
-        setModalContent(
-          <Spinner message={t("ui.archive.archiveLoading")} isModal={true} />
-        );
+  const loadGameArchive = useCallback(
+    async () => {
+      if (isArchiveLoading || !hasMore) {
+        console.log("Archive is already loading or no more games to load.");
+        return;
       }
 
-      const data = await fetchGameArchive(lastKey);
-      setArchiveGames((prevGames) => [...prevGames, ...(data.nytGames || [])]);
-      setLastKey(data.lastKey || null);
-      setHasMore(!!data.lastKey);
-      setModalContent(
-        <ArchiveList
-          games={[...archiveGames, ...(data.nytGames || [])]}
-          onGameSelect={(gameId) => {
-            setIsModalOpen(false); // Close modal
-            loadGame(gameId, true, true); // Load game and update URL, force reload
-          }}
-          onLoadMore={loadGameArchive}
-          hasMore={!!data.lastKey}
-        />
-      );
-    } catch (error) {
-      console.error("Error fetching game archive:", error);
-      setModalContent(<p>{t("ui.archive.error")}</p>);
-    } finally {
-      setIsArchiveLoading(false);
-    }
-  }, [
-    archiveGames,
-    hasMore,
-    isArchiveLoading,
-    lastKey,
-    loadGame,
-    t,
-    setIsArchiveLoading,
-    setModalContent,
-    setArchiveGames,
-    setLastKey,
-    setHasMore,
-    setIsModalOpen,
-  ]);
+      setIsArchiveLoading(true);
+      try {
+        if (archiveGames.length === 0) {
+          setModalContent(
+            <Spinner message={t("ui.archive.archiveLoading")} isModal={true} />
+          );
+        }
+
+        console.log("Fetching game archive with lastKey:", lastKey);
+        const data = await fetchGameArchive(lastKey);
+        console.log("Fetched archive data:", data);
+
+        setArchiveGames((prevGames) => [...prevGames, ...(data.nytGames || [])]);
+        setLastKey(data.lastKey || null);
+        setHasMore(!!data.lastKey);
+        setModalContent(
+          <ArchiveList
+            games={[...archiveGames, ...(data.nytGames || [])]}
+            onGameSelect={(gameId) => {
+              console.log("Game selected from archive:", gameId);
+              setIsModalOpen(false); // Close modal
+              loadGame(gameId, true, true); // Load game and update URL, force reload
+            }}
+            onLoadMore={loadGameArchive}
+            hasMore={!!data.lastKey}
+          />
+        );
+      } catch (error) {
+        console.error("Error fetching game archive:", error);
+        setModalContent(<p>{t("ui.archive.error")}</p>);
+      } finally {
+        setIsArchiveLoading(false);
+      }
+    },
+    [
+      archiveGames,
+      hasMore,
+      isArchiveLoading,
+      lastKey,
+      loadGame,
+      t,
+      setIsArchiveLoading,
+      setModalContent,
+      setArchiveGames,
+      setLastKey,
+      setHasMore,
+      setIsModalOpen,
+    ]
+  );
 
   // Open Archive Modal
-  const openArchiveModal = useCallback(async () => {
-    setModalTitle(t("ui.menu.archive"));
-    setIsModalOpen(true);
-    await loadGameArchive();
-  }, [loadGameArchive, t]);
+  const openArchiveModal = useCallback(
+    async () => {
+      console.log("Opening archive modal.");
+      setModalTitle(t("ui.menu.archive"));
+      setIsModalOpen(true);
+      await loadGameArchive();
+    },
+    [loadGameArchive, t]
+  );
 
   // Open Custom Game Modal
   const openCustomGameModal = useCallback(() => {
+    console.log("Opening custom game modal.");
     setModalTitle(t("ui.menu.customGame"));
     setIsModalOpen(true);
     setModalContent(
@@ -265,7 +312,10 @@ const App = () => {
       <Modal
         title={modalTitle}
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          console.log("Closing modal.");
+          setIsModalOpen(false);
+        }}
       >
         {modalContent}
       </Modal>
