@@ -5,7 +5,7 @@ import pytest
 import constants
 
 # Set up environment variables for the test environment
-games_table_name = os.environ["GAMES_TABLE_NAME"] = "LetterBoxedGamesTest"
+games_table_name = os.environ["GAMES_TABLE"] = "LetterBoxedGamesTest"
 bucket_name = os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
 dictionary_path = os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
 default_language = os.environ["DEFAULT_LANGUAGE"] = "en"

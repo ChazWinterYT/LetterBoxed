@@ -3,73 +3,50 @@ import json
 from typing import Any, Dict
 import boto3
 from boto3.dynamodb.conditions import Attr
-
-
-# Dynamically retrieve the table name from environment variables
-def get_table() -> Any:
-    dynamodb = boto3.resource("dynamodb")
-    table_name = os.environ.get("GAMES_TABLE_NAME", "LetterBoxedGames") 
-    return dynamodb.Table(table_name)
+from lambdas.common.db_utils import fetch_archived_games
+from lambdas.common.response_utils import error_response
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
-    Fetch an archive of official New York Times games based on the gameId.
-    Supports optional filtering based on the year via query parameters.
+    Lambda handler for retrieving the game archive with pagination.
+
+    Args:
+        event (Dict[str, Any]): The event triggering the Lambda function.
+        context (Any): The Lambda context object.
+
+    Returns:
+        Dict[str, Any]: API Gateway response containing the archive data or an error message.
     """
-    # Parse query parameters for pagination
-    query_params = event.get("queryStringParameters", {})
-    year_filter = query_params.get("year") if query_params else None
-
-    # Build the filter expression
-    filter_expression = Attr("officialGame").eq(True)
-    if year_filter:
-        filter_expression &= Attr("gameId").begins_with(f"{year_filter}")
-
     try:
-        # Initialize variables for pagination
-        nyt_games: list[str] = []
-        last_evaluated_key = None
-        table = get_table()
-
-        while True:
-            # Scan DB table for official NYT games with pagination
-            scan_kwargs = {"FilterExpression": filter_expression}
-            if last_evaluated_key:
-                scan_kwargs["ExclusiveStartKey"] = last_evaluated_key
-
-            response = table.scan(**scan_kwargs)
-            nyt_games.extend(item["gameId"] for item in response.get("Items", []) if item.get("officialGame"))
-
-            # Break the loop if there are no more pages
-            last_evaluated_key = response.get("LastEvaluatedKey")
-            if not last_evaluated_key:
-                break
-
-        # Return the list of official games
+        # Parse query parameters
+        query_params = event.get("queryStringParameters", {}) or {}
+        limit = int(query_params.get("limit", 20)) # Default to 20 items
+        last_key = query_params.get("lastKey") # Last key for pagination
+        
+        # Decode lastKey if provided
+        if last_key:
+            last_key = json.loads(last_key)
+        
+        # Fetch paginated archived games
+        result = fetch_archived_games(limit=limit, last_key=last_key)
+        items = result["items"]
+        last_evaluated_key = result["lastKey"]
+        
+        # Build the response
         return {
             "statusCode": 200,
             "headers": {
                 "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
+                "Access-Control-Allow-Methods": "OPTIONS,GET",  # Allowed methods
                 "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({
-                "nytGames": nyt_games,
+                "nytGames": items,
+                "lastKey": json.dumps(last_evaluated_key) if last_evaluated_key else None,
                 "message": "Fetched official NYT games archive successfully."
-            })
+            }),
         }
 
     except Exception as e:
-        return {
-            "statusCode": 500,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
-            "body": json.dumps({
-                "message": "Error fetching NYT games archive",
-                "error": str(e)
-            })
-        }
+        return error_response("Error fetching New York Times Archive", 500)

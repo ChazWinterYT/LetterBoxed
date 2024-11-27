@@ -28,8 +28,16 @@ export const fetchGameArchive = async () => {
 
 // Fetch game by ID
 export const fetchGameById = async (gameId: string) => {
-  const response = await fetch(`${API_URL}/games/${gameId}`, { headers });
-  return handleErrorOrReturnResponse(response);
+  const response = await fetch(`${API_URL}/games/${gameId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`Error fetching game: ${response.status}`);
+  }
+  return response.json();
 };
 
 // Validate word

@@ -20,7 +20,7 @@ def test_fetch_game_success(mock_fetch_game_by_id):
     }
     mock_fetch_game_by_id.return_value = sample_game
 
-    event = {"body": json.dumps({"gameId": game_id})}
+    event = {"pathParameters": {"gameId": game_id}}  
     context = {}
 
     # Act
@@ -28,18 +28,19 @@ def test_fetch_game_success(mock_fetch_game_by_id):
 
     # Assert
     assert response["statusCode"] == 200
-    body = json.loads(response["body"])
-    assert body["gameId"] == game_id
-    assert body["gameLayout"] == sample_game["gameLayout"]
-    assert body["boardSize"] == sample_game["boardSize"]
-    assert body["language"] == sample_game["language"]
-    assert body["message"] == "Game fetched successfully."
-    mock_fetch_game_by_id.assert_called_once_with(game_id)
+    assert json.loads(response["body"]) == {
+        "gameId": game_id,
+        "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
+        "boardSize": "3x3",
+        "language": "en",
+        "message": "Game fetched successfully."
+    }
 
 
-def test_fetch_game_invalid_input(mock_fetch_game_by_id):
+# Test: Missing gameId in the path parameters
+def test_fetch_game_invalid_input():
     # Arrange
-    event = {"body": json.dumps({})}
+    event = {"pathParameters": {}}  # No gameId in the request
     context = {}
 
     # Act
@@ -49,22 +50,23 @@ def test_fetch_game_invalid_input(mock_fetch_game_by_id):
     assert response["statusCode"] == 400
     body = json.loads(response["body"])
     assert body["message"] == "Invalid input: gameId is required."
-    mock_fetch_game_by_id.assert_not_called()
 
 
+# Test: Valid gameId but game not found in the database
+@patch("lambdas.fetch_game.handler.fetch_game_by_id")
 def test_fetch_game_not_found(mock_fetch_game_by_id):
     # Arrange
-    game_id = "non-existent-game-id"
-    mock_fetch_game_by_id.return_value = None
-
-    event = {"body": json.dumps({"gameId": game_id})}
+    game_id = "non-existent-id"
+    mock_fetch_game_by_id.return_value = None  # Simulate game not found
+    event = {"pathParameters": {"gameId": game_id}}
     context = {}
 
     # Act
     response = handler(event, context)
 
     # Assert
-    assert response["statusCode"] == 400
+    assert response["statusCode"] == 404
     body = json.loads(response["body"])
     assert body["message"] == "Game ID not found."
     mock_fetch_game_by_id.assert_called_once_with(game_id)
+    

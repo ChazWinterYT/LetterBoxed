@@ -26,23 +26,14 @@ class LetterBoxedStack(Stack):
         prod_SESSION_STATES_TABLE_NAME = "LetterBoxedSessionStates"
         prod_RANDOM_GAMES_TABLE_NAME = "LetterBoxedRandomGames"
         prod_METADATA_TABLE_NAME = "LetterBoxedMetadataTable"
+        prod_ARCHIVE_TABLE_NAME = "LetterBoxedArchive"
+        
         test_GAMES_TABLE_NAME = "LetterBoxedGamesTest"
         test_VALID_WORDS_TABLE_NAME = "LetterBoxedValidWords1Test"
         test_SESSION_STATES_TABLE_NAME = "LetterBoxedSessionStatesTest"
         test_RANDOM_GAMES_TABLE_NAME = "LetterBoxedRandomGamesTest"
         test_METADATA_TABLE_NAME = "LetterBoxedMetadataTableTest"
-
-        # Test DynamoDB Games table
-        self.test_game_table = dynamodb.Table(
-            self, "LetterBoxedGamesTestTable",
-            table_name=test_GAMES_TABLE_NAME,
-            partition_key=dynamodb.Attribute(
-                name="gameId",
-                type=dynamodb.AttributeType.STRING
-            ),
-            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.DESTROY  # Test resources should be cleaned up
-        )
+        test_ARCHIVE_TABLE_NAME = "LetterBoxedArchiveTest"
 
         # Production DynamoDB Games table
         self.prod_game_table = dynamodb.Table(
@@ -54,6 +45,18 @@ class LetterBoxedStack(Stack):
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN  # Retain production resources
+        )
+        
+        # Test DynamoDB Games table
+        self.test_game_table = dynamodb.Table(
+            self, "LetterBoxedGamesTestTable",
+            table_name=test_GAMES_TABLE_NAME,
+            partition_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY  # Test resources should be cleaned up
         )
 
         # Production DynamoDB ValidWords table
@@ -161,6 +164,30 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        
+        # Production DynamoDB Archived Games table
+        self.prod_archive_table = dynamodb.Table(
+            self, "LetterBoxedArchiveTable",
+            table_name=prod_ARCHIVE_TABLE_NAME,
+            partition_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
+        )
+
+        # Test DynamoDB Archived Games table
+        self.test_archive_table = dynamodb.Table(
+            self, "LetterBoxedArchiveTestTable",
+            table_name=test_ARCHIVE_TABLE_NAME,
+            partition_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY
+        )
 
 
         # ===========================================================================
@@ -188,29 +215,32 @@ class LetterBoxedStack(Stack):
         # ===========================================================================
 
         # Define common environment for all Lambdas
+        prod_common_environment = {
+            "GAMES_TABLE": prod_GAMES_TABLE_NAME,
+            "VALID_WORDS_TABLE": prod_VALID_WORDS_TABLE_NAME,
+            "SESSION_STATES_TABLE": prod_SESSION_STATES_TABLE_NAME,
+            "RANDOM_GAMES_TABLE": prod_RANDOM_GAMES_TABLE_NAME,
+            "METADATA_TABLE": prod_METADATA_TABLE_NAME,
+            "ARCHIVE_TABLE": prod_ARCHIVE_TABLE_NAME,
+            "DICTIONARY_SOURCE": "s3",
+            "S3_BUCKET_NAME": "chazwinter.com",
+            "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
+            "DEFAULT_LANGUAGE": "en",
+        }
+        
         test_common_environment = {
-            "GAMES_TABLE_NAME": test_GAMES_TABLE_NAME,
+            "GAMES_TABLE": test_GAMES_TABLE_NAME,
             "VALID_WORDS_TABLE": test_VALID_WORDS_TABLE_NAME,
             "SESSION_STATES_TABLE": test_SESSION_STATES_TABLE_NAME,
             "RANDOM_GAMES_TABLE": test_RANDOM_GAMES_TABLE_NAME,
             "METADATA_TABLE": test_METADATA_TABLE_NAME,
+            "ARCHIVE_TABLE": test_ARCHIVE_TABLE_NAME,
             "DICTIONARY_SOURCE": "s3",
             "S3_BUCKET_NAME": "test-dictionary-bucket",
             "DICTIONARY_BASE_S3_PATH": "Dictionaries/",
             "DEFAULT_LANGUAGE": "en",
         }
 
-        prod_common_environment = {
-            "GAMES_TABLE_NAME": prod_GAMES_TABLE_NAME,
-            "VALID_WORDS_TABLE": prod_VALID_WORDS_TABLE_NAME,
-            "SESSION_STATES_TABLE": prod_SESSION_STATES_TABLE_NAME,
-            "RANDOM_GAMES_TABLE": prod_RANDOM_GAMES_TABLE_NAME,
-            "METADATA_TABLE": prod_METADATA_TABLE_NAME,
-            "DICTIONARY_SOURCE": "s3",
-            "S3_BUCKET_NAME": "chazwinter.com",
-            "DICTIONARY_BASE_S3_PATH": "LetterBoxed/Dictionaries/",
-            "DEFAULT_LANGUAGE": "en",
-        }
 
         # Define the Lambda function handlers and their respective names
         lambda_functions = {

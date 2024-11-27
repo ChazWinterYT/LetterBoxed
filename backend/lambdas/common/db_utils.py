@@ -92,7 +92,7 @@ def get_games_table() -> Any:
     Returns:
         boto3.Table: The DynamoDB Table object.
     """
-    table_name = os.environ.get("GAMES_TABLE_NAME", "LetterBoxedGames")
+    table_name = os.environ.get("GAMES_TABLE", "LetterBoxedGames")
     return dynamodb.Table(table_name)
 
 
@@ -318,4 +318,69 @@ def get_metadata_table() -> Any:
         boto3.Table: The DynamoDB Table object.
     """
     table_name = os.environ.get("METADATA_TABLE", "LetterBoxedMetadata")
+    return dynamodb.Table(table_name)
+
+
+# ====================== Archive Table Functions ======================
+
+def add_game_to_archive(game_id: str) -> bool:
+    """
+    Adds a game to the archive DB.
+    
+    Args:
+        game_id (str): The ID of the game to add.
+        game_date (str): The date of the game in ISO 8601 format.
+
+    Returns:
+        bool: True if the operation was successful, False otherwise.
+    """
+    try:
+        table = get_archive_table()
+        table.put_item(Item={
+            "gameId": game_id
+        })
+        return True
+    except ClientError as e:
+        print(f"Error adding game to archive: {e}")
+        return False
+    
+
+def fetch_archived_games(limit: int, last_key: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """
+    Fetches a paginated list of archived games from the archive DB.
+
+    Args:
+        limit (int): The maximum number of items to fetch.
+        last_key (Optional[Dict[str, Any]]): The key to start fetching from (for pagination).
+
+    Returns:
+        Dict[str, Any]: A dictionary containing the items and the LastEvaluatedKey for pagination.
+    """
+    try:
+        table = get_archive_table()
+        query_params = {
+            "Limit": limit,
+            "ScanIndexForward": False,  # Descending order
+        }
+        if last_key:
+            query_params["ExclusiveStartKey"] = last_key
+
+        response = table.query(**query_params)
+        return {
+            "items": response.get("Items", []),
+            "lastKey": response.get("LastEvaluatedKey"),  # For pagination
+        }
+    except Exception as e:
+        print(f"Error fetching archived games: {e}")
+        return {"items": [], "lastKey": None}
+
+
+def get_archive_table() -> Any:
+    """
+    Dynamically retrieves the DynamoDB archive table based on the environment variable.
+
+    Returns:
+        boto3.Table: The DynamoDB Table object.
+    """
+    table_name = os.environ.get("ARCHIVE_TABLE", "LetterBoxedArchive")
     return dynamodb.Table(table_name)

@@ -51,6 +51,10 @@ const App = () => {
     try {
       setIsGameLoading(true);
       const data = await fetchTodaysGame();
+      if (currentGameId === data.gameId) {
+        console.log("Already playing today's game.");
+        return;
+      }
       setCurrentGameId(data.gameId);
       setBoard(data.gameLayout || []);
       const sessionProgress = await fetchUserSession("user-session-id", data.gameId);
@@ -60,14 +64,17 @@ const App = () => {
     } finally {
       setIsGameLoading(false);
     }
-  }, []);
+  }, [currentGameId]);
 
   // Handle shareable URL or default to play-today
   useEffect(() => {
     if (urlGameId) {
-      loadGame(urlGameId); // Load game from URL
+      loadGame(urlGameId).catch(() => {
+        console.error("Invalid gameId in URL. Loading today's game instead.");
+        loadTodaysGame();
+      });
     } else {
-      loadTodaysGame(); // Load today's game
+      loadTodaysGame();
     }
   }, [urlGameId, loadGame, loadTodaysGame]);
 
@@ -160,7 +167,12 @@ const App = () => {
         {isGameLoading ? (
           <Spinner message={t("game.loading")} />
         ) : (
-          <GameBoard layout={layout} foundWords={foundWords} gameId={currentGameId} />
+          <GameBoard
+            key={currentGameId} // Force rerender when game changes
+            layout={layout}
+            foundWords={foundWords}
+            gameId={currentGameId}
+          />
         )}
       </div>
       <Modal

@@ -486,3 +486,93 @@ def test_update_metadata_failure(mock_dynamodb_resource):
         ExpressionAttributeNames={"#val": "value"},
         ExpressionAttributeValues={":newVal": new_value},
     )
+
+# ====================== Archive Table Tests ======================
+
+def test_add_game_to_archive_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_id = "test-game-id"
+
+    # Act
+    result = db_utils.add_game_to_archive(game_id)
+
+    # Assert
+    assert result is True
+    mock_table.put_item.assert_called_once_with(Item={"gameId": game_id})
+
+
+def test_add_game_to_archive_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.put_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="PutItem",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_id = "test-game-id"
+
+    # Act
+    result = db_utils.add_game_to_archive(game_id)
+
+    # Assert
+    assert result is False
+    mock_table.put_item.assert_called_once_with(Item={"gameId": game_id})
+
+
+def test_fetch_archived_games_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    expected_items = [
+        {"gameId": "game-1"},
+        {"gameId": "game-2"},
+    ]
+    mock_table.query.return_value = {"Items": expected_items, "LastEvaluatedKey": {"gameId": "game-2"}}
+
+    # Act
+    result = db_utils.fetch_archived_games(limit=10)
+
+    # Assert
+    assert result["items"] == expected_items
+    assert result["lastKey"] == {"gameId": "game-2"}
+    mock_table.query.assert_called_once_with(Limit=10, ScanIndexForward=False)
+
+
+def test_fetch_archived_games_with_pagination(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    expected_items = [{"gameId": "game-3"}, {"gameId": "game-4"}]
+    mock_table.query.return_value = {"Items": expected_items, "LastEvaluatedKey": {"gameId": "game-4"}}
+    last_key = {"gameId": "game-2"}
+
+    # Act
+    result = db_utils.fetch_archived_games(limit=10, last_key=last_key)
+
+    # Assert
+    assert result["items"] == expected_items
+    assert result["lastKey"] == {"gameId": "game-4"}
+    mock_table.query.assert_called_once_with(
+        Limit=10, ScanIndexForward=False, ExclusiveStartKey=last_key
+    )
+
+
+def test_fetch_archived_games_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.query.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="Query",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Act
+    result = db_utils.fetch_archived_games(limit=10)
+
+    # Assert
+    assert result["items"] == []
+    assert result["lastKey"] is None
+    mock_table.query.assert_called_once_with(Limit=10, ScanIndexForward=False)
+    
