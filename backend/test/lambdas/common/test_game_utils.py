@@ -6,6 +6,7 @@ from lambdas.common.game_utils import (
     sides_list_to_sides_set,
     generate_valid_words,
     create_letter_to_side_mapping,
+    check_game_completion,
 )
 
 @pytest.fixture
@@ -106,3 +107,42 @@ def test_generate_valid_words():
     with patch('lambdas.common.dictionary_utils._load_local_dictionary', return_value=dictionary):
         valid_words = generate_valid_words(game_layout, "en")
         assert valid_words == ["PARDONS", "DAPHNIA", "SNAPDRAGON", "PHONIATRISTS"]
+
+
+def test_check_game_completion_success():
+    # Arrange
+    game_layout = ["PRO", "CTI", "DGN", "SAH"]
+    words_used = ["CHINSTRAP", "PAGODA"]  # Assume these words use all letters
+
+    # Act
+    game_completed, message = check_game_completion(game_layout, words_used)
+
+    # Assert
+    assert game_completed is True
+    assert message == "Puzzle solved successfully! Congrats!"
+    
+    
+def test_check_game_completion_incomplete():
+    # Arrange
+    game_layout = ["PRO", "CTI", "DGN", "SAH"]
+    words_used = ["CHINSTRAP"]  # Only one word used
+
+    # Act
+    game_completed, message = check_game_completion(game_layout, words_used)
+
+    # Assert
+    assert game_completed is False
+    assert message == "Word accepted."
+
+
+def test_check_game_completion_no_words_used():
+    # Arrange
+    game_layout = ["PRO", "CTI", "DGN", "SAH"]
+    words_used = []
+
+    # Act
+    game_completed, message = check_game_completion(game_layout, words_used)
+
+    # Assert
+    assert game_completed is False
+    assert message == "Word accepted."

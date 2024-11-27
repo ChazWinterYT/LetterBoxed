@@ -49,7 +49,24 @@ def standardize_board(game_layout: List[str]) -> List[str]:
     return standardized_sides
 
 
+def check_game_completion(game_layout: list[str], words_used: list[str]) -> tuple[bool, str]:
+    """
+    Checks if the game is completed by verifying if all letters have been used.
 
+    Args:
+        game_layout (list): The game layout containing letters.
+        words_used (list): The list of words used by the user.
+
+    Returns:
+        tuple: (game_completed (bool), message (str)).
+    """
+    all_letters = set("".join(game_layout))
+    used_letters = set("".join(words_used))
+
+    if used_letters == all_letters:
+        return True, "Puzzle solved successfully! Congrats!"
+    else:
+        return False, "Word accepted."
 
 
 def calculate_two_word_solutions(

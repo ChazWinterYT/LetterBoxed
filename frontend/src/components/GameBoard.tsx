@@ -3,13 +3,14 @@ import { useLanguage } from '../context/LanguageContext';
 import './css/GameBoard.css';
 import Spinner from './Spinner';
 
-interface GameBoardProps {
+export interface GameBoardProps {
   layout: string[];
   foundWords: string[];
   gameId: string | null;
+  onWordSubmit?: (word: string) => void; // Optional callback for word submission
 }
 
-const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
+const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId, onWordSubmit }) => {
   const { t } = useLanguage();
   const [currentWord, setCurrentWord] = useState<string>('');
   const [playedWords, setPlayedWords] = useState<string[]>([]);
@@ -26,6 +27,9 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
   const handleSubmit = () => {
     if (currentWord) {
       setPlayedWords((prevWords) => [...prevWords, currentWord]);
+      if (onWordSubmit) {
+        onWordSubmit(currentWord); // Call the prop callback if provided
+      }
       setCurrentWord('');
     }
   };
@@ -40,7 +44,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
   }
 
   return (
-    
     <div className="game-board-container">
 
       {/* Word Formation Area */}
@@ -60,7 +63,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
           ))}
         </div>
       </div>
-
 
       {/* Game Board */}
       <div className="board">
@@ -148,7 +150,6 @@ const GameBoard: React.FC<GameBoardProps> = ({ layout, gameId }) => {
           ))}
         </div>
       </div>
-
 
       {/* Controls */}
       <div className="controls">

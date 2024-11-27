@@ -304,7 +304,7 @@ def test_get_user_game_state_error(mock_dynamodb_resource):
     assert result is None
     mock_table.get_item.assert_called_once_with(Key={"sessionId": session_id, "gameId": game_id})
 
-def test_save_session_state_success(mock_dynamodb_resource):
+def test_save_user_session_state_success(mock_dynamodb_resource):
     # Arrange
     mock_table = create_mock_table()
     session_data = {
@@ -318,13 +318,13 @@ def test_save_session_state_success(mock_dynamodb_resource):
     mock_dynamodb_resource.Table.return_value = mock_table
 
     # Act
-    result = db_utils.save_session_state(session_data)
+    result = db_utils.save_user_session_state(session_data)
 
     # Assert
     assert result is True
     mock_table.put_item.assert_called_once_with(Item=session_data)
 
-def test_save_session_state_failure(mock_dynamodb_resource):
+def test_save_user_session_state_failure(mock_dynamodb_resource):
     # Arrange
     mock_table = create_mock_table()
     session_data = {
@@ -342,7 +342,7 @@ def test_save_session_state_failure(mock_dynamodb_resource):
     mock_dynamodb_resource.Table.return_value = mock_table
 
     # Act
-    result = db_utils.save_session_state(session_data)
+    result = db_utils.save_user_session_state(session_data)
 
     # Assert
     assert result is False

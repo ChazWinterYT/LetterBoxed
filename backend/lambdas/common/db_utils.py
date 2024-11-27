@@ -166,21 +166,26 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
         game_id (str): The unique identifier for the game.
 
     Returns:
-        dict: The user's game state.
+        Optional[dict]: The user's game state, or None if an error occurred.
     """
     try:
         table = get_session_states_table()
         print("Using Session States Table:", table.table_name)
+        
+        # Composite key for querying the table
         key = {
             "sessionId": session_id,
             "gameId": game_id
         }
-        response = table.get_item(Key=key)
-        user_game_data: Dict[str, Any] = response.get("Item")
 
+        # Retrieve the game state from the database
+        response = table.get_item(Key=key)
+        user_game_data: Optional[Dict[str, Any]] = response.get("Item")
+
+        # If no game state exists, initialize it
         if user_game_data is None:
-            # Initialize the game state for a new session
-            return {
+            print(f"No existing game state for session '{session_id}' and game '{game_id}'. Initializing...")
+            user_game_data = {
                 "sessionId": session_id,
                 "gameId": game_id,
                 "wordsUsed": [],
@@ -188,14 +193,21 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
                 "lastUpdated": int(time.time()),
                 "TTL": int(time.time()) + 30 * 24 * 60 * 60,  # 30 days from now
             }
-        
+
+            # Save the initialized state
+            if not save_user_session_state(user_game_data):
+                print(f"Failed to save initialized game state for session '{session_id}', game '{game_id}'.")
+                return None
+            print(f"Initialized and saved new game state: {user_game_data}")
+
         return user_game_data
+
     except ClientError as e:
         print(f"Error fetching game state for session '{session_id}', game '{game_id}': {e}")
         return None
 
 
-def save_session_state(session_data: Dict[str, Any]) -> bool:
+def save_user_session_state(session_data: Dict[str, Any]) -> bool:
     """
     Saves the user's game state to the DynamoDB session states table.
 

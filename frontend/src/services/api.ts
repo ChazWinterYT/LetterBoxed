@@ -86,9 +86,22 @@ export const prefetchTodaysGame = async () => {
 };
 
 // Fetch a user session for determining game state
-export const fetchUserSession = async (gameId: string, sessionId: string) => {
-  const response = await fetch(
-    `${API_URL}/sessions/${gameId}?sessionId=${sessionId}`
-  );
-  return handleErrorOrReturnResponse(response);
+export const fetchUserSession = async (sessionId: string, gameId: string) => {
+  const response = await fetch(`${API_URL}/sessions/${sessionId}?gameId=${gameId}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch session state: ${response.statusText}`);
+  }
+  return await response.json();
 };
+
+// Save a user's session state to the backend
+export const saveSessionState = async (sessionData: any) => {
+  const response = await fetch(
+    `${API_URL}/sessions/${sessionData.sessionId}?gameId=${sessionData.gameId}`, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify(sessionData),
+    }
+  )
+  return handleErrorOrReturnResponse(response)
+}

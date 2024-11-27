@@ -279,6 +279,10 @@ class LetterBoxedStack(Stack):
             "fetch_user_state": {
                 "handler": "lambdas.fetch_user_state.handler.handler",
                 "name": "FetchUserStateLambda"
+            },
+            "save_user_state": {
+                "handler": "lambdas.save_user_state.handler.handler",
+                "name": "SaveUserStateLambda"
             }
         }
 
@@ -425,7 +429,6 @@ class LetterBoxedStack(Stack):
             "GET",
             apigateway.LambdaIntegration(lambda_references["fetch_random"])
         )
-
         # POST /random-game - Create a random game
         random_game_resource.add_method(
             "POST",
@@ -435,14 +438,19 @@ class LetterBoxedStack(Stack):
         
         # Set up sessions resource
         sessions_resource = api.root.add_resource("sessions")
+        session_id_resource = sessions_resource.add_resource("{sessionId}")
         
-        # GET /sessions/{gameId}?sessionId=<value> - Fetch a user's game state
-        session_id_resource = sessions_resource.add_resource("{gameId}")
+        # GET /sessions/{sessionId}?gameId={gameId} - Fetch a user's game state
         session_id_resource.add_method(
             "GET",
             apigateway.LambdaIntegration(lambda_references["fetch_user_state"])
         )
-        add_cors(session_id_resource)
+        # PUT /sessions/{sessionId}?gameId={gameId} - Update a user's game state
+        session_id_resource.add_method(
+            "PUT",
+            apigateway.LambdaIntegration(lambda_references["save_user_state"])
+        )
+        add_cors(game_session_id_resource)
 
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):

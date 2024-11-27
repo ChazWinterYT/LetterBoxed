@@ -16,9 +16,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         dict: The HTTP response object.
     """
     try:
-        # Extract gameId from path parameters
-        game_id = event["pathParameters"].get("gameId")
-        session_id = event["queryStringParameters"].get("sessionId")
+        # Extract sessionId and gameId from parameters
+        session_id = event["pathParameters"]["sessionId"]
+        game_id = event["queryStringParameters"].get("gameId")
         
         if not session_id or not game_id:
             return error_response("sessionId and gameId are required.", 400)
