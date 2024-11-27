@@ -47,15 +47,21 @@ const App = () => {
 
   // Initialize the user session ID
   useEffect(() => {
-    let sessionId = Cookies.get('user-session-id'); // Retrieve the session ID from the cookies
-    if (!sessionId) {
-      sessionId = uuid4(); // Generate a new session ID if none exists
-      Cookies.set('user-session-id', sessionId, { expires: 30, path: '/' }); // Set the cookie with a 30-day expiration
-      console.log("New session ID created and stored in cookies:", sessionId);
+    const currentSessionId = Cookies.get("user-session-id");
+    if (!currentSessionId) {
+      const newSessionId = uuid4();
+      Cookies.set("user-session-id", newSessionId, {
+        path: "/", // Ensure the cookie is available for all paths
+        domain: "chazwinter.com", // Set the domain to handle both www and non-www
+        secure: true, // Ensure the cookie is only sent over HTTPS
+        sameSite: "Lax", // Mitigate CSRF risks while allowing cross-site navigation
+      });
+      setUserSessionId(newSessionId);
+      console.log("Initialized new session ID:", newSessionId);
     } else {
-      console.log("Existing session ID retrieved from cookies:", sessionId);
+      setUserSessionId(currentSessionId);
+      console.log("Existing session ID found:", currentSessionId);
     }
-    setUserSessionId(sessionId);
   }, []);
 
   // Load a game state from the backend
