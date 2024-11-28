@@ -1,14 +1,58 @@
+import sys
 import os
 import boto3
 import json
 import pytest
-import constants
+import constants as c
+import helper_functions as f
 
+from lambdas.create_custom import handler as create_custom_handler
+from lambdas.create_random import handler as create_random_handler, random_game_service
+from lambdas.fetch_game import handler as fetch_game_handler
+from lambdas.fetch_random import handler as fetch_random_handler
+from lambdas.fetch_user_state import handler as fetch_user_state_handler
+from lambdas.game_archive import handler as game_archive_handler
+from lambdas.get_solutions import handler as get_solutions_handler
+from lambdas.play_today import handler as play_today_handler
+from lambdas.prefetch_todays_game import handler as prefetch_todays_game_handler, prefetch_service
+from lambdas.save_user_state import handler as save_user_state_handler
+from lambdas.validate_word import handler as validate_word_handler, word_validator_service
+from lambdas.common import (
+    db_utils,
+    dictionary_utils,
+    game_schema,
+    game_utils
+)
+from lambdas.common.game_schema import create_game_schema
+
+# ===================================================================
 # Set up environment variables for the test environment
-games_table_name = os.environ["GAMES_TABLE"] = "LetterBoxedGamesTest"
-bucket_name = os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
-dictionary_path = os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
-default_language = os.environ["DEFAULT_LANGUAGE"] = "en"
+# ===================================================================
+os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
+os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
+os.environ["DEFAULT_LANGUAGE"] = "en"
+os.environ["GAMES_TABLE"] = "LetterBoxedGamesTest"
+os.environ["VALID_WORDS_TABLE"] = "LetterBoxedValidWords1Test"
+os.environ["SESSION_STATES_TABLE"] = "LetterBoxedSessionStatesTest"
+os.environ["METADATA_TABLE"] = "LetterBoxedMetadataTableTest"
+os.environ["ARCHIVE_TABLE"] = "LetterBoxedArchiveTest"
+os.environ["RANDOM_GAMES_TABLE_EN"] = "LetterBoxedRandomGames_enTest"
+os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
+os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"
+os.environ["RANDOM_GAMES_TABLE_PL"] = "LetterBoxedRandomGames_plTest"
+
+# Define constants for table names
+DYNAMO_DB_TABLE_NAMES = [
+    os.environ["GAMES_TABLE"],
+    os.environ["VALID_WORDS_TABLE"],
+    os.environ["SESSION_STATES_TABLE"],
+    os.environ["METADATA_TABLE"],
+    os.environ["ARCHIVE_TABLE"],
+    os.environ["RANDOM_GAMES_TABLE_EN"],
+    os.environ["RANDOM_GAMES_TABLE_ES"],
+    os.environ["RANDOM_GAMES_TABLE_IT"],
+    os.environ["RANDOM_GAMES_TABLE_PL"],
+]
 
 
 @pytest.fixture(scope="module")
@@ -27,98 +71,74 @@ def setup_aws_resources(aws_clients):
     s3 = aws_clients["s3"]
     
     # Cleanup before tests
-    cleanup_dynamodb_table(dynamodb, games_table_name)
-    assert_table_empty(dynamodb, games_table_name)
+    cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
     
     # Run the tests
     yield
     
     # Cleanup after tests
-    # cleanup_dynamodb_table(dynamodb, games_table_name)
-    # cleanup_s3_bucket(s3)
-    # assert_table_empty(dynamodb, games_table_name)
-    # assert_bucket_empty(s3, bucket_name)
-
+    cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
-def est_full_app_integration(aws_clients):
+# When ready to test, change "est_full_app_integration" to "test_full_app_integration"
+def test_full_app_integration(aws_clients, setup_aws_resources):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]
 
+
     # ===========================================================================
     # Begin Integration Tests
     # ===========================================================================
-
-    # Setup S3 Dictionary
-    # add_en_dictionary_to_s3(s3)
-    # assert_bucket_contains(s3, constants.VALID_DICTIONARY_KEY)
-
-    # Prepare the payload for the CreateCustomLambda function
-    payload_1 = {
-        "body": json.dumps({
-            "gameLayout": constants.VALID_LAYOUT_1,  
-            "language": constants.VALID_LANGUAGE,       
-            "boardSize": constants.VALID_BOARD_SIZE     
-        })
-    }
+    print("BEGINNING INTEGRATION TESTS...")
 
     # Create a custom game
-    print("Creating a valid custom game")
-    create_response = lambda_client.invoke(
-        FunctionName="CreateCustomLambdaTest",
-        InvocationType='RequestResponse',
-        Payload=json.dumps(payload_1)
-    )
-
-    # Read and parse the response payload
-    response_payload = json.loads(create_response['Payload'].read())
-    print("response payload:", response_payload)
-
-    # Check for errors
-    if 'FunctionError' in create_response:
-        error_message = response_payload.get('errorMessage', 'Unknown error')
-        pytest.fail(f"Lambda invocation failed with error: {error_message}")
-
-    # Extract gameId from the response
-    game_id = json.loads(response_payload.get('body', '{}')).get('gameId')
-    assert game_id, "No gameId returned from CreateCustomLambdaTest"
-
-    # Verify the game data in DynamoDB
-    assert_dynamodb_item_exists(dynamodb, game_id)
-
-    # Let's create a functionally equivalent game
-
-    # Now let's fetch the game we just created using the fetch Lambda
+    print("Testing create_custom flow")
+    # First try a bunch of invalid games. These should not add any entries to the DB
+    f.create_custom_missing_layout(aws_clients)
+    f.create_custom_invalid_layout(aws_clients)
+    f.create_custom_size_mismatch(aws_clients)
+    f.create_custom_unsupported_language(aws_clients)
+    f.create_custom_malformed_json(aws_clients)
+    # Now try some valid games. These should add games to the DB.
+    f.create_custom_english_game(aws_clients)
+    f.create_custom_spanish_game(aws_clients)
+    f.create_custom_4x4_game(aws_clients)
 
 
 
-# Cleanup resources and verify cleanup complete
-def cleanup_dynamodb_table(dynamodb, table_name):
-    try:
-        table = dynamodb.Table(table_name)
-        response = table.scan()
-        with table.batch_writer() as batch:
-            for item in response.get("Items", []):
-                batch.delete_item(Key={"gameId": item["gameId"]})
-    except dynamodb.meta.client.exceptions.ResourceNotFoundException:
-        print(f"Table {os.environ['GAME_TABLE']} does not exist. Skipping cleanup.")
 
+# ===========================================================================
+# Cleanup and Table Checking Utilities
+# ===========================================================================
+def cleanup_dynamodb_tables(dynamodb, table_names):
+    for current_table in table_names:
+        try:
+            table = dynamodb.Table(current_table)
 
-def add_en_dictionary_to_s3(s3):
-    print("Uploading dictionary to S3...")
-    s3.put_object(
-        Bucket=bucket_name,
-        Key=constants.VALID_DICTIONARY_KEY,
-        Body=constants.EN_DICTIONARY_1
-    )
+            # Retrieve the key schema to determine the key names dynamically
+            key_schema = table.key_schema
+            key_names = [key["AttributeName"] for key in key_schema]
 
-def assert_bucket_contains(s3, key):
-    """Assert that a specific key exists in the S3 bucket."""
-    objects = s3.list_objects(Bucket=bucket_name).get("Contents", [])
-    keys = [obj["Key"] for obj in objects]
-    assert key in keys, f"Key {key} not found in bucket {bucket_name}."
-    print("Dictionary was found in S3 bucket.")
+            response = table.scan()
+            with table.batch_writer() as batch:
+                for item in response.get("Items", []):
+                    # Dynamically build the key dictionary
+                    key = {key_name: item[key_name] for key_name in key_names}
+                    batch.delete_item(Key=key)
+        except dynamodb.meta.client.exceptions.ResourceNotFoundException:
+            print(f"Table {current_table} does not exist. Skipping cleanup.")
+        except Exception as e:
+            print(f"Error cleaning table {current_table}: {e}")
+
+def assert_tables_empty(dynamodb, table_names):
+    for current_table in table_names:
+        table = dynamodb.Table(current_table)
+        print(f"Verifying {current_table} is empty...")
+        scan = table.scan()
+        assert scan["Count"] == 0, f"Table {current_table} is not empty. Found items: {scan['Items']}"
 
 def assert_dynamodb_item_exists(dynamodb, game_id):
     """Assert that a specific item exists in DynamoDB."""
@@ -127,23 +147,3 @@ def assert_dynamodb_item_exists(dynamodb, game_id):
     assert "Item" in response, f"Item with gameId {game_id} not found in {table}."
     print(f"Item with gameId {game_id} was found in DynamoDB table.")
 
-# ===========================================================================
-# Cleanup Utilities
-# ===========================================================================
-def cleanup_s3_bucket(s3):
-    try:
-        response = s3.list_objects(Bucket=bucket_name)
-        if "Contents" in response:
-            for obj in response["Contents"]:
-                s3.delete_object(Bucket=bucket_name, Key=obj["Key"])
-    except s3.exceptions.NoSuchBucket:
-        print(f"Bucket {bucket_name} does not exist. Skipping cleanup.")
-
-def assert_bucket_empty(s3, bucket_name):
-    objects = s3.list_objects(Bucket=bucket_name).get("Contents", [])
-    assert len(objects) == 0, f"Bucket {bucket_name} is not empty. Found objects: {objects}"
-
-def assert_table_empty(dynamodb, table_name):
-    table = dynamodb.Table(table_name)
-    scan = table.scan()
-    assert scan["Count"] == 0, f"Table {table_name} is not empty. Found items: {scan['Items']}"

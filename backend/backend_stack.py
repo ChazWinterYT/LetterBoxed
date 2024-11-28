@@ -21,6 +21,7 @@ class LetterBoxedStack(Stack):
         # Define DynamoDB Resources
         # ===========================================================================
         
+        # Constants for table names for consistent naming
         prod_GAMES_TABLE_NAME = "LetterBoxedGames"
         prod_VALID_WORDS_TABLE_NAME = "LetterBoxedValidWords1"
         prod_SESSION_STATES_TABLE_NAME = "LetterBoxedSessionStates"
@@ -41,11 +42,16 @@ class LetterBoxedStack(Stack):
         test_RANDOM_GAMES_TABLE_NAME_IT = "LetterBoxedRandomGames_itTest"
         test_RANDOM_GAMES_TABLE_NAME_PL = "LetterBoxedRandomGames_plTest"
 
+        # DB tables must be added to a list so Lambdas can be grated permissions to them
+        prod_table_resources = []
+        test_table_resources = []
+
         # Production DynamoDB Games table
         self.prod_game_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedGamesTable",
             table_name=prod_GAMES_TABLE_NAME
         )
+        prod_table_resources.append(self.prod_game_table)
         
         # Test DynamoDB Games table
         self.test_game_table = dynamodb.Table(
@@ -58,12 +64,14 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY  # Test resources should be cleaned up
         )
+        test_table_resources.append(self.test_game_table)
 
         # Production DynamoDB ValidWords table
         self.prod_valid_words_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedValidWordsTable",
             table_name=prod_VALID_WORDS_TABLE_NAME
         )
+        prod_table_resources.append(self.prod_valid_words_table)
 
         # Test DynamoDB ValidWords table
         self.test_valid_words_table = dynamodb.Table(
@@ -76,12 +84,14 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        test_table_resources.append(self.test_valid_words_table)
 
         # Production DynamoDB SessionStates table
         self.prod_user_game_states_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedSessionStatesTable",
             table_name=prod_SESSION_STATES_TABLE_NAME,
         )
+        prod_table_resources.append(self.prod_user_game_states_table)
 
         # Test DynamoDB SessionStates table
         self.test_user_game_states_table = dynamodb.Table(
@@ -99,12 +109,14 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.DESTROY,
             time_to_live_attribute="TTL"
         )
+        test_table_resources.append(self.test_user_game_states_table)
 
         # Production DynamoDB Metadata table
         self.prod_metadata_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedMetadataTable",
             table_name=prod_METADATA_TABLE_NAME
         )
+        prod_table_resources.append(self.prod_metadata_table)
 
         # Test DynamoDB Metadata table
         self.test_metadata_table = dynamodb.Table(
@@ -117,12 +129,14 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        test_table_resources.append(self.test_metadata_table)
         
         # Production DynamoDB Archived Games table
         self.prod_archive_table = dynamodb.Table.from_table_name(
             self, "LetterBoxedArchiveTable",
             table_name=prod_ARCHIVE_TABLE_NAME
         )
+        prod_table_resources.append(self.prod_archive_table)
 
         # Test DynamoDB Archived Games table
         self.test_archive_table = dynamodb.Table(
@@ -135,6 +149,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        test_table_resources.append(self.test_archive_table)
 
         # Production Random Games Tables in various languages
         # English
@@ -148,6 +163,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN
         )
+        prod_table_resources.append(self.prod_random_games_table_en)
 
         # Spanish
         self.prod_random_games_table_es = dynamodb.Table(
@@ -160,6 +176,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN
         )
+        prod_table_resources.append(self.prod_random_games_table_es)
 
         # Italian
         self.prod_random_games_table_it = dynamodb.Table(
@@ -172,6 +189,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN
         )
+        prod_table_resources.append(self.prod_random_games_table_it)
 
         # Polish
         self.prod_random_games_table_pl = dynamodb.Table(
@@ -184,6 +202,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN
         )
+        prod_table_resources.append(self.prod_random_games_table_pl)
 
         # Test Random Games Tables in various languages
         #English
@@ -197,6 +216,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        test_table_resources.append(self.test_random_games_table_en)
 
         # Spanish
         self.test_random_games_table_es = dynamodb.Table(
@@ -209,6 +229,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        test_table_resources.append(self.test_random_games_table_es)
 
         # Italian
         self.test_random_games_table_it = dynamodb.Table(
@@ -221,9 +242,10 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        test_table_resources.append(self.test_random_games_table_it)
 
         # Polish
-        self.test_random_games_table_p = dynamodb.Table(
+        self.test_random_games_table_pl = dynamodb.Table(
             self, "LetterBoxedRandomGamesTestTable_pl",
             table_name=test_RANDOM_GAMES_TABLE_NAME_PL,
             partition_key=dynamodb.Attribute(
@@ -233,6 +255,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.DESTROY
         )
+        test_table_resources.append(self.test_random_games_table_pl)
 
         # ===========================================================================
         # Define S3 Resources
@@ -341,7 +364,7 @@ class LetterBoxedStack(Stack):
             self, "LambdaLayerRequests",
             code=_lambda.Code.from_asset("lambda_layer"),
             compatible_runtimes=[_lambda.Runtime.PYTHON_3_10],
-            description="Lambda layer that includes the requests library."
+            description="Lambda layer that includes dependency libraries."
         )
 
         # Create Lambda functions and store references to them,
@@ -349,48 +372,29 @@ class LetterBoxedStack(Stack):
         lambda_references = {}
         for lambda_key, lambda_config in lambda_functions.items():
             # Create Production Lambda
-            prod_resources = [
-                self.prod_game_table, 
-                self.prod_valid_words_table, 
-                self.prod_user_game_states_table,
-                self.prod_random_games_table_en,
-                self.prod_random_games_table_es,
-                self.prod_random_games_table_it,
-                self.prod_random_games_table_pl,
-                self.prod_metadata_table,
-                self.prod_archive_table
-            ]
             prod_lambda = self.create_lambda(
                 lambda_key, 
                 lambda_config, 
                 prod_common_environment, 
                 "", 
                 lambda_layer, 
-                prod_resources
+                prod_table_resources
             )
+            # Grant each Lambda S3 read access
             self.prod_bucket.grant_read(prod_lambda)
-            lambda_references[lambda_key] = prod_lambda # Needed for prod only
+            # Save Lambda names for routing with API. Needed for prod only.
+            lambda_references[lambda_key] = prod_lambda 
 
             # Create Test Lambda
-            test_resources = [
-                self.test_game_table, 
-                self.test_valid_words_table, 
-                self.test_user_game_states_table,
-                self.test_random_games_table_en,
-                self.prod_random_games_table_es,
-                self.prod_random_games_table_it,
-                self.prod_random_games_table_pl,
-                self.test_metadata_table,
-                self.test_archive_table
-            ]
             test_lambda = self.create_lambda(
                 lambda_key, 
                 lambda_config, 
                 test_common_environment, 
                 "Test", 
                 lambda_layer, 
-                test_resources
+                test_table_resources
             )
+            # Grant each test Lambda S3 read access to the test bucket
             self.test_bucket.grant_read(test_lambda)
 
 

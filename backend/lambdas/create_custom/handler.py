@@ -4,11 +4,16 @@ from typing import Dict, Any
 from lambdas.common.db_utils import add_game_to_db, add_valid_words_to_db
 from lambdas.common.game_utils import generate_valid_words
 from lambdas.common.game_schema import create_game_schema, validate_board_matches_layout
+from lambdas.common.response_utils import error_response
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     # Parse the event body
-    body = json.loads(event.get("body", "{}"))
+    try:
+        body = json.loads(event.get("body", "{}"))
+    except json.JSONDecodeError as e:
+        return error_response("Invalid JSON.", 400)
+
     game_layout = body.get("gameLayout")
     created_by = body.get("sessionId", "")
     language = body.get("language", "en")  # Default to English
@@ -16,15 +21,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     # Validate input
     if not game_layout:
-        return {
-            "statusCode": 400,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
-            "body": json.dumps({"message": "Game Layout is required."})
-        }
+        return error_response("Game Layout is required.", 400)
 
     # Create the game schema
     try:
@@ -35,16 +32,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             created_by=created_by,
             game_type="custom",
         )
+    except ValueError as e:
+        return error_response("Custom game specs are invalid.", 400)
     except Exception as e:
-        return {
-            "statusCode": 500,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
-            "body": json.dumps({"message": f"Failed to create game schema: {e}"})
-        }
+        return error_response(f"Failed to create game schema: {e}", 500)
 
     # Save the new game schema and valid words to the database
     add_game_to_db(game_data)
