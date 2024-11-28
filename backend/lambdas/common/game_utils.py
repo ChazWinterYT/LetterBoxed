@@ -298,3 +298,14 @@ def update_letter_usage(letter_usage: Counter[str], word: str, increment: bool =
         letter_usage[letter] += change
         if letter_usage[letter] == 0 and not increment:
             del letter_usage[letter]
+
+
+def normalize_to_base(word: str) -> str:
+    """
+    Normalize a word to its base form by removing accents and diacritical marks.
+    """
+    return ''.join(
+        char for char in unicodedata.normalize('NFD', word)
+        if unicodedata.category(char) != 'Mn'
+    )
+    

@@ -1,0 +1,179 @@
+import os
+import glob
+import shutil
+import json
+import requests
+from typing import Any, Dict
+from bs4 import BeautifulSoup
+from datetime import date
+import boto3
+
+# AWS S3 client
+s3 = boto3.client("s3")
+
+# Paths and directories
+script_dir = os.path.dirname(os.path.abspath(__file__))
+temp_dictionary_path = os.path.join(script_dir, "utility", "temp_dictionary.txt")
+final_dictionary_path = os.path.join(script_dir, "utility", "dictionary.txt")
+dictionaries_dir = os.path.join(script_dir, "dictionaries")
+target_directory = os.path.join(script_dir, "dictionaries", "en")
+
+# S3 configuration
+s3_buckets = [
+    {"bucket_name": "chazwinter.com", "prefix": "LetterBoxed/Dictionaries/"},
+    {"bucket_name": "test-dictionary-bucket", "prefix": "Dictionaries/"}
+]
+
+
+def clean_word(word):
+    """Normalize and clean a word."""
+    return word.strip().upper()
+
+
+def merge_word_lists(output_file, *word_lists):
+    """
+    Merge multiple word lists into a single cleaned and deduplicated list.
+    
+    Args:
+        output_file (str): Path to the output file.
+        *word_lists (list): Lists of words to merge.
+    """
+    unique_words = set()
+
+    for word_list in word_lists:
+        if isinstance(word_list, str) and os.path.isfile(word_list):
+            # If word_list is a file path, load it
+            with open(word_list, 'r') as infile:
+                for line in infile:
+                    word = clean_word(line)
+                    if len(word) >= 3 and word.isalpha():
+                        unique_words.add(word)
+        elif isinstance(word_list, list):
+            # If word_list is a Python list, process it directly
+            for word in word_list:
+                word = clean_word(word)
+                if len(word) >= 3 and word.isalpha():
+                    unique_words.add(word)
+
+    # Write sorted unique words to output file
+    with open(output_file, 'w') as outfile:
+        for word in sorted(unique_words):
+            outfile.write(word + '\n')
+
+
+def copy_file(source_file, target_file):
+    """
+    Copy a file to another location.
+
+    Args:
+        source_file (str): The path to the source file.
+        target_file (str): The path to the target file.
+    """
+    shutil.copy(source_file, target_file)
+    print(f"Copied {source_file} to {target_file}")
+
+
+def upload_dictionaries_to_s3():
+    """Upload dictionaries to S3."""
+    for bucket in s3_buckets:
+        for file_path in glob.glob(f"{dictionaries_dir}/**/*", recursive=True):
+            if os.path.isfile(file_path):
+                s3_key = f"{bucket['prefix']}{file_path.replace(dictionaries_dir, '').lstrip('/')}"
+                print(f"Uploading {file_path} to s3://{bucket['bucket_name']}/{s3_key}")
+                s3.upload_file(file_path, bucket["bucket_name"], s3_key)
+
+
+def fetch_todays_game() -> Dict[str, Any]:
+    """
+    Fetches today's game data from the New York Times Letter Boxed page.
+
+    Returns:
+        dict: A dictionary containing today's game data.
+
+    Raises:
+        Exception: If game data cannot be found or parsed from the page.
+    """
+    url = "https://www.nytimes.com/puzzles/letter-boxed"
+    response = requests.get(url)
+    response.raise_for_status()  # Raise an error for bad status codes
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    script_tag = soup.find("script", string=lambda s: s and "window.gameData" in s)
+    if not script_tag:
+        raise Exception("Could not find game data in the page.")
+    
+    # Extract game data from the JSON
+    raw_game_data = script_tag.string.split("=", 1)[1].strip()
+
+    # Strip the trailing semicolon from the end of a JavaScript object
+    if raw_game_data.endswith(";"):
+        raw_game_data = raw_game_data[:-1]
+
+    game_data = json.loads(raw_game_data)
+
+    todays_game = {
+        "gameId": game_data["printDate"],
+        "gameLayout": game_data["sides"],
+        "nytSolution": game_data["ourSolution"],
+        "dictionary": game_data["dictionary"],
+        "par": str(game_data["par"]),
+        "createdBy": game_data.get("editor", ""),
+    }
+
+    return todays_game
+
+
+def merge_nyt_dictionary_to_final(nyt_dictionary, temp_dictionary_path, final_dictionary_path):
+    """
+    Merge the NYT dictionary with the latest dictionary, updating the final dictionary.
+
+    Args:
+        nyt_dictionary (list): List of words from the NYT game.
+        temp_dictionary_path (str): Path to the temporary dictionary file.
+        final_dictionary_path (str): Path to the final dictionary file.
+    """
+    # Step 1: Copy the final dictionary to the temp dictionary
+    copy_file(final_dictionary_path, temp_dictionary_path)
+
+    # Step 2: Create a new temporary output file for the merged result
+    merged_temp_path = temp_dictionary_path + ".merged"
+
+    # Step 3: Merge the NYT dictionary with the temp dictionary
+    merge_word_lists(
+        merged_temp_path,       # New temp file as output
+        temp_dictionary_path,   # Existing dictionary words
+        nyt_dictionary          # NYT dictionary
+    )
+
+    # Step 4: Replace the final dictionary with the merged result
+    copy_file(merged_temp_path, final_dictionary_path)
+
+    # Step 5: Clean up temporary merged file
+    os.remove(merged_temp_path)
+    print(f"Cleaned up temporary file: {merged_temp_path}")
+
+
+def main():
+    """
+    Main function to fetch the NYT game, merge its dictionary with the local dictionary,
+    and upload all dictionaries to S3.
+    """
+    # Fetch today's NYT game data
+    todays_game = fetch_todays_game()
+    nyt_dictionary = todays_game.get("dictionary", [])
+
+    # Merge the NYT dictionary with the latest dictionary
+    merge_nyt_dictionary_to_final(nyt_dictionary, temp_dictionary_path, final_dictionary_path)
+
+    # Copy the updated dictionary to the target directory
+    copy_file(final_dictionary_path, os.path.join(target_directory, "dictionary.txt"))
+
+    # Upload all dictionaries to S3
+    upload_dictionaries_to_s3()
+
+    print("All tasks completed successfully.")
+
+
+if __name__ == "__main__":
+    main()

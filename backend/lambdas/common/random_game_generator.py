@@ -1,5 +1,6 @@
 import random
 import os
+import unicodedata
 import sys
 import time
 from typing import List, Optional, Tuple, Dict, Any
@@ -31,8 +32,8 @@ def load_dictionary(file_path: str) -> List[str]:
 
 def select_two_words(dictionary: List[str], max_attempts: int = 10000) -> Optional[Tuple[str, str]]:
     """
-    Select two words that together contain exactly 12 unique letters and where
-    the first letter of one word matches the last letter of the other.
+    Select two words that together contain exactly 12 unique base letters and where
+    the first base letter of one word matches the last base letter of the other.
 
     Args:
         dictionary (List[str]): List of words from the dictionary.
@@ -43,13 +44,12 @@ def select_two_words(dictionary: List[str], max_attempts: int = 10000) -> Option
     """
     for _ in range(max_attempts):
         word1, word2 = random.sample(dictionary, 2)
-
-        # Ensure the words can connect
-        if word1[-1] == word2[0]:
-            combined_letters = set(word1) | set(word2)
-            if len(combined_letters) == 12:
-                return word1, word2
-
+        # Compare base letters for linking
+        if (
+            normalize_to_base(word1[-1]) == normalize_to_base(word2[0]) and
+            len(set(normalize_to_base(word1 + word2))) == 12  # Ensure 12 unique base letters
+        ):
+            return word1, word2
     return None
 
 
@@ -66,7 +66,10 @@ def generate_layout(word1: str, word2: str) -> Optional[List[str]]:
         Optional[List[str]]: A list of 4 strings representing the sides of the board,
         or None if no valid layout can be generated.
     """
-    combined_letters = word1 + word2[1:]  # Combine words, excluding duplicate shared letter
+    base_word1 = normalize_to_base(word1)
+    base_word2 = normalize_to_base(word2)
+
+    combined_letters = base_word1 + base_word2[1:]  # Combine words, excluding duplicate shared letter
     if len(set(combined_letters)) != 12:
         raise ValueError("The combined words must have exactly 12 unique letters.")
 
@@ -119,6 +122,16 @@ def generate_layout(word1: str, word2: str) -> Optional[List[str]]:
         return None
 
 
+def normalize_to_base(word: str) -> str:
+    """
+    Normalize a word to its base form by removing accents and diacritical marks.
+    """
+    return ''.join(
+        char for char in unicodedata.normalize('NFD', word)
+        if unicodedata.category(char) != 'Mn'
+    )
+
+
 def shuffle_final_layout(layout: List[str]) -> List[str]:
     """
     Shuffle the letters within each side and shuffle the sides themselves.
@@ -141,11 +154,13 @@ def shuffle_final_layout(layout: List[str]) -> List[str]:
 def main() -> Any:
     # Path to the directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", "en", "basic_2000.txt")
+    basic_dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", "es", "basic.txt")
+    basic_dictionary_path = os.path.abspath(basic_dictionary_path)
+    dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", "es", "dictionary.txt")
     dictionary_path = os.path.abspath(dictionary_path)
 
     # Load the dictionary
-    dictionary = load_dictionary(dictionary_path)
+    dictionary = load_dictionary(basic_dictionary_path)
 
     # Try to generate a random game
     word_pair = select_two_words(dictionary)
@@ -169,7 +184,7 @@ def main() -> Any:
     standardized_layout = standardize_board(game_layout)
 
     # Generate valid words for this puzzle
-    valid_words = generate_valid_words(standardized_layout, "en")
+    valid_words = generate_valid_words(standardized_layout, "es")
     print(f"Generated puzzle has {len(valid_words)} valid words.")
 
     # Calculate two word solutions
