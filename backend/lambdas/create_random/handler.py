@@ -4,6 +4,7 @@ from lambdas.common.db_utils import add_game_to_db, add_game_id_to_random_games_
 from lambdas.common.dictionary_utils import get_dictionary
 from lambdas.common.game_schema import create_game_schema
 from lambdas.create_random.random_game_service import create_random_game
+from lambdas.common.response_utils import error_response
 
 
 MAX_RETRIES = 5  # Maximum number of retries for ValueError exceptions
@@ -33,17 +34,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "gameLayout": random_game_data["gameLayout"],
             })
         }
+    except json.JSONDecodeError as e:
+        return error_response("JSON decoding error.", 400)
     except ValueError as e:
         print(f"Handler failed: {e}")
-        return {
-            "statusCode": 500,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
-            "body": json.dumps({"error": str(e)}),
-        }
+        return error_response(f"There was a problem creating the game: {e}", 500)
 
 
 def retry_random_game_creation(language: str, board_size: str, seed_words: Optional[tuple[str, str]]) -> Dict[str, Any]:

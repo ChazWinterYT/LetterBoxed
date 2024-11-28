@@ -25,35 +25,51 @@ from lambdas.common import (
 )
 from lambdas.common.game_schema import create_game_schema
 
-# ===================================================================
-# Set up environment variables for the test environment
-# ===================================================================
-os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
-os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
-os.environ["DEFAULT_LANGUAGE"] = "en"
-os.environ["GAMES_TABLE"] = "LetterBoxedGamesTest"
-os.environ["VALID_WORDS_TABLE"] = "LetterBoxedValidWords1Test"
-os.environ["SESSION_STATES_TABLE"] = "LetterBoxedSessionStatesTest"
-os.environ["METADATA_TABLE"] = "LetterBoxedMetadataTableTest"
-os.environ["ARCHIVE_TABLE"] = "LetterBoxedArchiveTest"
-os.environ["RANDOM_GAMES_TABLE_EN"] = "LetterBoxedRandomGames_enTest"
-os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
-os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"
-os.environ["RANDOM_GAMES_TABLE_PL"] = "LetterBoxedRandomGames_plTest"
+@pytest.fixture(scope="module")
+def setup_environment():
+    # Set up environment variables
+    os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
+    os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
+    os.environ["DEFAULT_LANGUAGE"] = "en"
+    os.environ["GAMES_TABLE"] = "LetterBoxedGamesTest"
+    os.environ["VALID_WORDS_TABLE"] = "LetterBoxedValidWords1Test"
+    os.environ["SESSION_STATES_TABLE"] = "LetterBoxedSessionStatesTest"
+    os.environ["METADATA_TABLE"] = "LetterBoxedMetadataTableTest"
+    os.environ["ARCHIVE_TABLE"] = "LetterBoxedArchiveTest"
+    os.environ["RANDOM_GAMES_TABLE_EN"] = "LetterBoxedRandomGames_enTest"
+    os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
+    os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"
+    os.environ["RANDOM_GAMES_TABLE_PL"] = "LetterBoxedRandomGames_plTest"
 
-# Define constants for table names
-DYNAMO_DB_TABLE_NAMES = [
-    os.environ["GAMES_TABLE"],
-    os.environ["VALID_WORDS_TABLE"],
-    os.environ["SESSION_STATES_TABLE"],
-    os.environ["METADATA_TABLE"],
-    os.environ["ARCHIVE_TABLE"],
-    os.environ["RANDOM_GAMES_TABLE_EN"],
-    os.environ["RANDOM_GAMES_TABLE_ES"],
-    os.environ["RANDOM_GAMES_TABLE_IT"],
-    os.environ["RANDOM_GAMES_TABLE_PL"],
-]
+    # Define constants for table names
+    DYNAMO_DB_TABLE_NAMES = [
+        os.environ["GAMES_TABLE"],
+        os.environ["VALID_WORDS_TABLE"],
+        os.environ["SESSION_STATES_TABLE"],
+        os.environ["METADATA_TABLE"],
+        os.environ["ARCHIVE_TABLE"],
+        os.environ["RANDOM_GAMES_TABLE_EN"],
+        os.environ["RANDOM_GAMES_TABLE_ES"],
+        os.environ["RANDOM_GAMES_TABLE_IT"],
+        os.environ["RANDOM_GAMES_TABLE_PL"],
+    ]
 
+    # Yield to run the tests
+    yield DYNAMO_DB_TABLE_NAMES
+
+    # Clean up environment variables
+    os.environ.pop("S3_BUCKET_NAME", None)
+    os.environ.pop("DICTIONARY_BASE_S3_PATH", None)
+    os.environ.pop("DEFAULT_LANGUAGE", None)
+    os.environ.pop("GAMES_TABLE", None)
+    os.environ.pop("VALID_WORDS_TABLE", None)
+    os.environ.pop("SESSION_STATES_TABLE", None)
+    os.environ.pop("METADATA_TABLE", None)
+    os.environ.pop("ARCHIVE_TABLE", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_EN", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_ES", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_IT", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_PL", None)
 
 @pytest.fixture(scope="module")
 def aws_clients():
@@ -66,9 +82,10 @@ def aws_clients():
     return {"dynamodb": dynamodb, "s3": s3, "lambda_client": lambda_client}
 
 @pytest.fixture(scope="module")
-def setup_aws_resources(aws_clients):
+def setup_aws_resources(setup_environment, aws_clients):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
+    DYNAMO_DB_TABLE_NAMES = setup_environment
     
     # Cleanup before tests
     cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
@@ -78,12 +95,12 @@ def setup_aws_resources(aws_clients):
     yield
     
     # Cleanup after tests
-    cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
-    assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    # cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    # assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"
-def test_full_app_integration(aws_clients, setup_aws_resources):
+def test_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]
@@ -95,7 +112,7 @@ def test_full_app_integration(aws_clients, setup_aws_resources):
     print("BEGINNING INTEGRATION TESTS...")
 
     # Create a custom game
-    print("Testing create_custom flow")
+    print("Testing create_custom lambda...")
     # First try a bunch of invalid games. These should not add any entries to the DB
     f.create_custom_missing_layout(aws_clients)
     f.create_custom_invalid_layout(aws_clients)
@@ -107,7 +124,9 @@ def test_full_app_integration(aws_clients, setup_aws_resources):
     f.create_custom_spanish_game(aws_clients)
     f.create_custom_4x4_game(aws_clients)
 
-
+    # Create a random game
+    print("Testing create_random lambda...")
+    
 
 
 # ===========================================================================

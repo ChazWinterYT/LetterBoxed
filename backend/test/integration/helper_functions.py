@@ -32,7 +32,8 @@ def create_custom_missing_layout(aws_clients):
     """
     dynamodb = aws_clients["dynamodb"]
 
-    response = create_custom_handler.handler(c.CREATE_CUSTOM_EVENT_MISSING_LAYOUT, None)
+    from lambdas.create_custom.handler import handler  # Import the handler function
+    response = handler(c.CREATE_CUSTOM_EVENT_MISSING_LAYOUT, None)
 
     assert response["statusCode"] == 400, f"Expected 400, got {response['statusCode']}"
     assert "Game Layout is required" in response["body"], f"Unexpected body: {response['body']}"
@@ -50,8 +51,8 @@ def create_custom_invalid_layout(aws_clients):
     dynamodb = aws_clients["dynamodb"]
 
     # Call the create_custom handler directly with the invalid payload
-    from lambdas.create_custom.handler import handler  # Import the handler function
     try:
+        from lambdas.create_custom.handler import handler  # Import the handler function
         response = handler(c.CREATE_CUSTOM_EVENT_INVALID_LAYOUT, None)
     except ValueError as e:
         print(f"ValueError raised as expected: {str(e)}")
@@ -76,8 +77,8 @@ def create_custom_size_mismatch(aws_clients):
     dynamodb = aws_clients["dynamodb"]
 
     # Call the create_custom handler directly with the size mismatch payload
-    from lambdas.create_custom.handler import handler  # Import the handler function
     try:
+        from lambdas.create_custom.handler import handler  # Import the handler function
         response = handler(c.CREATE_CUSTOM_EVENT_SIZE_MISMATCH, None)
     except ValueError as e:
         print(f"ValueError raised as expected: {str(e)}")
@@ -102,8 +103,8 @@ def create_custom_unsupported_language(aws_clients):
     dynamodb = aws_clients["dynamodb"]
 
     # Call the create_custom handler directly with the unsupported language payload
-    from lambdas.create_custom.handler import handler  # Import the handler function
     try:
+        from lambdas.create_custom.handler import handler  # Import the handler function
         response = handler(c.CREATE_CUSTOM_EVENT_UNSUPPORTED_LANGUAGE, None)
     except ValueError as e:
         print(f"ValueError raised as expected: {str(e)}")
@@ -128,13 +129,15 @@ def create_custom_malformed_json(aws_clients):
     dynamodb = aws_clients["dynamodb"]
 
     # Call the create_custom handler directly with the malformed JSON payload
-    from lambdas.create_custom.handler import handler  # Import the handler function
     try:
+        from lambdas.create_custom.handler import handler  # Import the handler function
         response = handler(c.CREATE_CUSTOM_EVENT_MALFORMED_JSON, None)
     except json.JSONDecodeError as e:
         print(f"JSONDecodeError raised as expected: {str(e)}")
-        assert "Expecting property name enclosed in double quotes" in str(e), "Expected JSONDecodeError for malformed JSON"
-
+        assert (
+            "Expecting property name enclosed in double quotes" in str(e)
+        ), "Expected JSONDecodeError for malformed JSON"
+        
     # Verify the response
     assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
@@ -152,6 +155,33 @@ def create_custom_english_game(aws_clients):
     This should return a 200 status code, ensure the game is added to the database,
     and validate that the game can be fetched.
     """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Call the create_custom handler directly with the valid English payload
+    from lambdas.create_custom.handler import handler  # Import the handler function
+    response = handler(c.CREATE_CUSTOM_EVENT_VALID_EN, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "gameId" in response_body, "Expected a 'gameId' key in the response body"
+    assert response_body["message"] == "Game created successfully.", "Expected success message in the response body"
+    game_id = response_body["gameId"]
+    print(f"Successfully created game with ID {game_id}")
+
+    # Verify the game exists in the database
+    assert_game_in_db(game_id, dynamodb)
+    assert_valid_words_in_db(game_id, dynamodb)
+
+    # Fetch the game and verify its details
+    fetched_game = db_utils.fetch_game_by_id(game_id)
+    assert fetched_game is not None, "Game should exist in the database"
+    assert fetched_game["twoWordSolutions"] is not None, "Two-word solutions should be calculated"
+    assert fetched_game["gameLayout"] == c.VALID_GAME_LAYOUT_EN, "Game layout does not match expected layout"
+    assert fetched_game["language"] == "en", "Game language does not match expected language"
+    assert fetched_game["boardSize"] == "3x3", "Game board size does not match expected size"
+
+    print("Test for create_custom_english_game passed successfully.")
 
 
 def create_custom_spanish_game(aws_clients):
@@ -160,6 +190,32 @@ def create_custom_spanish_game(aws_clients):
     This should return a 200 status code, ensure the game is added to the database,
     and validate that the game can be fetched.
     """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Call the create_custom handler directly with the valid Spanish payload
+    from lambdas.create_custom.handler import handler  # Import the handler function
+    response = handler(c.CREATE_CUSTOM_EVENT_VALID_ES, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "gameId" in response_body, "Expected 'gameId' in the response body"
+    game_id = response_body["gameId"]
+    print(f"Response gameId: {game_id}")
+
+    # Verify the game was added to the database
+    assert_game_in_db(game_id, dynamodb)
+    assert_valid_words_in_db(game_id, dynamodb)
+
+    # Fetch the game and validate the details
+    fetched_game = db_utils.fetch_game_by_id(game_id)
+    assert fetched_game is not None, f"Game with ID {game_id} should exist in the database"
+    assert fetched_game["twoWordSolutions"] is not None, "Two-word solutions should be calculated"
+    assert fetched_game["gameLayout"] == c.VALID_GAME_LAYOUT_ES, "Game layout does not match expected layout"
+    assert fetched_game["language"] == "es", "Expected game language to be Spanish ('es')"
+    assert fetched_game["boardSize"] == "3x3", "Expected game board size to be '3x3'"
+
+    print(f"Successfully created and verified Spanish game with ID {game_id}.")
 
 
 def create_custom_4x4_game(aws_clients):
