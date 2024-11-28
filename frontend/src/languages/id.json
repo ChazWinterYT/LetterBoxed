@@ -58,7 +58,28 @@
         "submitWord": "Kirim Kata",
         "shareGame": "Bagikan permainan ini:",
         "restartConfirmationTitle": "Apakah Anda yakin ingin memulai ulang permainan ini?",
-        "restartConfirmationMessage": "Mengklik \"Konfirmasi\" akan menghapus kemajuan Anda dan memulai ulang permainan."
+        "restartConfirmationMessage": "Mengklik \"Konfirmasi\" akan menghapus kemajuan Anda dan memulai ulang permainan.",
+        "validateWord": {
+            "valid": [
+                "Kerja bagus!",
+                "Bagus sekali!",
+                "Luar biasa!",
+                "Kamu berhasil!",
+                "Pekerjaan yang hebat!",
+                "Sempurna!",
+                "Mantap!",
+                "Kamu luar biasa!"
+            ],
+            "invalid": [
+                "Ups, kata itu tidak valid.",
+                "Coba lagi, kata itu tidak cocok.",
+                "Belum benar.",
+                "Kata itu tidak ada di kamus.",
+                "Maaf, itu tidak dihitung.",
+                "Hampir, tapi belum cukup."
+            ],
+            "error": "Terjadi kesalahan saat memvalidasi kata."
+        }
     },
     "instructions": {
         "howToPlay": "Cara Bermain",

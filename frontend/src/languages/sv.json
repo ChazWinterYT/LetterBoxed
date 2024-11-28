@@ -58,7 +58,28 @@
         "submitWord": "Skicka in ord",
         "shareGame": "Dela detta spel:",
         "restartConfirmationTitle": "Är du säker på att du vill starta om det här spelet?",
-        "restartConfirmationMessage": "Genom att klicka på \"Bekräfta\" tas dina framsteg bort och spelet startas om."
+        "restartConfirmationMessage": "Genom att klicka på \"Bekräfta\" tas dina framsteg bort och spelet startas om.",
+        "validateWord": {
+            "valid": [
+                "Bra jobbat!",
+                "Väl gjort!",
+                "Utmärkt!",
+                "Du satte den!",
+                "Snyggt gjort!",
+                "Perfekt!",
+                "Fantastiskt!",
+                "Du är glödhet!"
+            ],
+            "invalid": [
+                "Hoppsan, det där är inte ett giltigt ord.",
+                "Försök igen, det ordet fungerar inte.",
+                "Inte riktigt rätt.",
+                "Det finns inte i ordlistan.",
+                "Nej, det räknas inte.",
+                "Nära, men ändå så långt borta."
+            ],
+            "error": "Ett fel uppstod vid valideringen av ordet."
+        }
     },
     "instructions": {
         "howToPlay": "Hur man spelar",

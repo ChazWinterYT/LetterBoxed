@@ -58,7 +58,28 @@
         "submitWord": "Wort einreichen",
         "shareGame": "Teile dieses Spiel:",
         "restartConfirmationTitle": "Sind Sie sicher, dass Sie dieses Spiel neu starten möchten?",
-        "restartConfirmationMessage": "Wenn Sie auf \"Bestätigen\" klicken, wird Ihr Fortschritt entfernt und das Spiel neu gestartet."
+        "restartConfirmationMessage": "Wenn Sie auf \"Bestätigen\" klicken, wird Ihr Fortschritt entfernt und das Spiel neu gestartet.",
+        "validateWord": {
+            "valid": [
+                "Gut gemacht!",
+                "Hervorragend!",
+                "Ausgezeichnet!",
+                "Das hast du geschafft!",
+                "Tolle Arbeit!",
+                "Perfekt!",
+                "Fantastisch!",
+                "Du bist auf Erfolgskurs!"
+            ],
+            "invalid": [
+                "Ups, das ist kein gültiges Wort.",
+                "Versuch es noch einmal, dieses Wort funktioniert nicht.",
+                "Nicht ganz richtig.",
+                "Dieses Wort steht nicht im Wörterbuch.",
+                "Nein, das zählt nicht.",
+                "Knapp daneben ist auch vorbei."
+            ],
+            "error": "Beim Überprüfen des Wortes ist ein Fehler aufgetreten."
+        }
     },
     "instructions": {
         "howToPlay": "Spielanleitung",

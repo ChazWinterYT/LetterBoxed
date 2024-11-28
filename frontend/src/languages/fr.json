@@ -58,7 +58,28 @@
         "submitWord": "Soumettre le mot",
         "shareGame": "Partagez ce jeu:",
         "restartConfirmationTitle": "Êtes-vous sûr de vouloir redémarrer cette partie?",
-        "restartConfirmationMessage": "En cliquant sur \"Confirmer\", votre progression sera supprimée et la partie recommencera."
+        "restartConfirmationMessage": "En cliquant sur \"Confirmer\", votre progression sera supprimée et la partie recommencera.",
+        "validateWord": {
+            "valid": [
+                "Bien joué!",
+                "Excellent travail!",
+                "Magnifique!",
+                "Tu l'as eu!",
+                "Bravo!",
+                "Parfait!",
+                "Génial!",
+                "Tu es en feu!"
+            ],
+            "invalid": [
+                "Oups, ce mot n'est pas valide.",
+                "Essaye encore, ce mot ne fonctionne pas.",
+                "Pas tout à fait.",
+                "Ce mot n'est pas dans le dictionnaire.",
+                "Non, ça ne compte pas.",
+                "Presque, mais ce n'est pas ça."
+            ],
+            "error": "Une erreur s'est produite lors de la validation du mot."
+        }
     },
     "instructions": {
         "howToPlay": "Comment jouer",

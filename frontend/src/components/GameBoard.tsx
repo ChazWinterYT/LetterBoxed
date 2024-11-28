@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { validateWord } from '../services/api';
 import './css/GameBoard.css';
 import Spinner from './Spinner';
 
@@ -23,6 +24,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // State to track the current word as an array of letters with their sides
   const [currentWord, setCurrentWord] = useState<{ letter: string; side: string }[]>([]);
   const [lastSide, setLastSide] = useState<string | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Feedback state
+  const [feedbackType, setFeedbackType] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
@@ -44,14 +47,39 @@ const GameBoard: React.FC<GameBoardProps> = ({
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (currentWord.length > 0) {
-      const word = currentWord.map((item) => item.letter).join('');
-      if (onWordSubmit) {
-        onWordSubmit(word);
+      const word = currentWord.map((item) => item.letter).join("");
+
+      try {
+        // Call the validateWord function from api.ts
+        const response = await validateWord(word);
+
+        if (response.valid) {
+          // Word is valid
+          setFeedbackMessage("Let's go!");
+          setFeedbackType("valid");
+          if (onWordSubmit) {
+            onWordSubmit(word); // Add word to foundWords
+          }
+          setCurrentWord([]);
+          setLastSide(null);
+        } else {
+          // Word is invalid
+          setFeedbackMessage(response.message || "Not a word");
+          setFeedbackType("invalid");
+        }
+      } catch (error) {
+        console.error("Error validating word:", error);
+        setFeedbackMessage(t("game.validateWord.error"));
+        setFeedbackType("invalid");
       }
-      setCurrentWord([]);
-      setLastSide(null);
+
+      // Clear the feedback message after 3 seconds
+      setTimeout(() => {
+        setFeedbackMessage(null);
+        setFeedbackType(null);
+      }, 3000);
     }
   };
 
@@ -111,6 +139,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
             : '\u00A0'}
         </div>
       </div>
+
+      {/* Feedback Message */}
+      {feedbackMessage && (
+        <div
+          className={`feedback-message ${
+            feedbackType === "valid" ? "valid-feedback" : "invalid-feedback"
+          }`}
+        >
+          {feedbackMessage}
+        </div>
+      )}
 
       {/* Played Words Section */}
       <div className="played-words-section">

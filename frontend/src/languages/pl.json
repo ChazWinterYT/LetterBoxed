@@ -58,7 +58,28 @@
         "submitWord": "Zatwierdź słowo",
         "shareGame": "Udostępnij tę grę:",
         "restartConfirmationTitle": "Czy na pewno chcesz zrestartować tę grę?",
-        "restartConfirmationMessage": "Kliknięcie \"Potwierdź\" spowoduje usunięcie postępu i rozpoczęcie gry od nowa."
+        "restartConfirmationMessage": "Kliknięcie \"Potwierdź\" spowoduje usunięcie postępu i rozpoczęcie gry od nowa.",
+        "validateWord": {
+            "valid": [
+                "Świetna robota!",
+                "Brawo!",
+                "Doskonałe!",
+                "Udało się!",
+                "Dobra robota!",
+                "Perfekcyjnie!",
+                "Rewelacyjnie!",
+                "Jesteś w formie!"
+            ],
+            "invalid": [
+                "Ups, to nie jest poprawne słowo.",
+                "Spróbuj ponownie, to słowo nie działa.",
+                "Nie do końca dobrze.",
+                "Tego słowa nie ma w słowniku.",
+                "Nie, to się nie liczy.",
+                "Blisko, ale jednak nie."
+            ],
+            "error": "Wystąpił błąd podczas sprawdzania słowa."
+        }
     },
     "instructions": {
         "howToPlay": "Jak grać",

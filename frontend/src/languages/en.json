@@ -58,7 +58,28 @@
         "submitWord": "Submit Word",
         "shareGame": "Share this game:",
         "restartConfirmationTitle": "Are you sure you want to restart this game?",
-        "restartConfirmationMessage": "Clicking \"Confirm\" will remove your progress and start the game over."
+        "restartConfirmationMessage": "Clicking \"Confirm\" will remove your progress and start the game over.",
+        "validateWord": {
+            "valid": [
+                "Great job!",
+                "Well done!",
+                "Excellent!",
+                "You nailed it!",
+                "Nice work!",
+                "Perfect!",
+                "Awesome!",
+                "You're on fire!"
+            ],
+            "invalid": [
+                "Oops, that's not a valid word.",
+                "Try again, that word doesn't work.",
+                "Not quite right.",
+                "That's not in the dictionary.",
+                "Nope, that doesn't count.",
+                "Close, but no cigar."
+            ],
+            "error": "An error occurred while validating the word."
+        }
     },
     "instructions": {
         "howToPlay": "How to Play",

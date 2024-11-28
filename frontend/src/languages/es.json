@@ -58,7 +58,28 @@
         "submitWord": "Enviar palabra",
         "shareGame": "Comparte este juego:",
         "restartConfirmationTitle": "¿Estás seguro de que quieres reiniciar este juego?",
-        "restartConfirmationMessage": "Al hacer clic en \"Confirmar\", se eliminará tu progreso y el juego se reiniciará."
+        "restartConfirmationMessage": "Al hacer clic en \"Confirmar\", se eliminará tu progreso y el juego se reiniciará.",
+        "validateWord": {
+            "valid": [
+                "¡Bien hecho!",
+                "¡Excelente trabajo!",
+                "¡Magnífico!",
+                "¡Lo lograste!",
+                "¡Bravo!",
+                "¡Perfecto!",
+                "¡Genial!",
+                "¡Estás en racha!"
+            ],
+            "invalid": [
+                "Ups, esa palabra no es válida.",
+                "Inténtalo de nuevo, esa palabra no funciona.",
+                "No es del todo correcto.",
+                "Esa palabra no está en el diccionario.",
+                "No, eso no cuenta.",
+                "Cerca, pero no es suficiente."
+            ],
+            "error": "Ocurrió un error al validar la palabra."
+        }
     },
     "instructions": {
         "howToPlay": "Cómo jugar",
