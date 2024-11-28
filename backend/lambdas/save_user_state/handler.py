@@ -72,6 +72,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "message": message,
                 "gameCompleted": game_completed,
                 "wordsUsed": user_game_state["wordsUsed"],
+                "originalWordsUsed": user_game_state["originalWordsUsed"],
                 "lastUpdated": updated_time,
             }),
         }

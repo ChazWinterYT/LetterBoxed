@@ -30,6 +30,7 @@ def test_valid_custom_game(
         "twoWordSolutions": [("WORD1", "WORD2")],
         "threeWordSolutions": [("WORD3", "WORD4", "WORD5")],
         "validWords": ["WORD1", "WORD2", "WORD3", "WORD4", "WORD5"],
+        "baseValidWords": ["WORD1", "WORD2", "WORD3", "WORD4", "WORD5"],
     }
 
     # Act

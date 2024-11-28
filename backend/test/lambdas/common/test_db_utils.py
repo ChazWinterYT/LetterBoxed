@@ -160,14 +160,15 @@ def test_add_valid_words_to_db_success(mock_dynamodb_resource):
     mock_dynamodb_resource.Table.return_value = mock_table
     game_id = "test-game-id"
     valid_words = ["WORD1", "WORD2", "WORD3"]
+    base_valid_words = ["WORD1", "WORD2", "WORD3"]
 
     # Act
-    result = db_utils.add_valid_words_to_db(game_id, valid_words)
+    result = db_utils.add_valid_words_to_db(game_id, valid_words, base_valid_words)
 
     # Assert
     assert result is True
     mock_table.put_item.assert_called_once_with(
-        Item={"gameId": game_id, "validWords": valid_words}
+        Item={"gameId": game_id, "validWords": valid_words, "baseValidWords": base_valid_words}
     )
 
 def test_add_valid_words_to_db_failure(mock_dynamodb_resource):
@@ -180,14 +181,15 @@ def test_add_valid_words_to_db_failure(mock_dynamodb_resource):
     mock_dynamodb_resource.Table.return_value = mock_table
     game_id = "test-game-id"
     valid_words = ["WORD1", "WORD2", "WORD3"]
+    base_valid_words = ["WORD1", "WORD2", "WORD3"]
 
     # Act
-    result = db_utils.add_valid_words_to_db(game_id, valid_words)
+    result = db_utils.add_valid_words_to_db(game_id, valid_words, base_valid_words)
 
     # Assert
     assert result is False
     mock_table.put_item.assert_called_once_with(
-        Item={"gameId": game_id, "validWords": valid_words}
+        Item={"gameId": game_id, "validWords": valid_words, "baseValidWords": base_valid_words}
     )
 
 def test_fetch_valid_words_by_game_id_success(mock_dynamodb_resource):
@@ -249,6 +251,7 @@ def test_get_user_game_state_existing_session(mock_dynamodb_resource):
         "sessionId": session_id,
         "gameId": game_id,
         "wordsUsed": ["WORD1"],
+        "originalWordsUsed": ["WORD1"],
         "gameCompleted": False,
         "lastUpdated": 1234567890,
         "TTL": 1234567890 + 30 * 24 * 60 * 60,
@@ -281,6 +284,7 @@ def test_get_user_game_state_new_session(mocker, mock_dynamodb_resource):
     assert result["sessionId"] == session_id
     assert result["gameId"] == game_id
     assert result["wordsUsed"] == []
+    assert result["originalWordsUsed"] == []
     assert result["gameCompleted"] is False
     assert result["lastUpdated"] == 1234567890
     assert result["TTL"] == 1234567890 + 30 * 24 * 60 * 60
@@ -359,7 +363,7 @@ def test_add_game_id_to_random_games_db_success(mocker, mock_dynamodb_resource):
 
     # Need to ensure get_random_games_table and get_metadata_table return different tables
     def side_effect(table_name):
-        if table_name == "LetterBoxedRandomGames":
+        if table_name == "LetterBoxedRandomGames_en":
             return mock_random_games_table
         elif table_name == "LetterBoxedMetadata":
             return mock_metadata_table
@@ -385,7 +389,7 @@ def test_fetch_random_game_count_success(mock_dynamodb_resource):
     # Arrange
     mock_table = create_mock_table()
     mock_table.get_item.return_value = {
-        "Item": {"metadataType": "randomGameCount", "value": 100}
+        "Item": {"metadataType": "randomGameCount_en", "value": 100}
     }
     mock_dynamodb_resource.Table.return_value = mock_table
 
@@ -394,7 +398,7 @@ def test_fetch_random_game_count_success(mock_dynamodb_resource):
 
     # Assert
     assert result == 100
-    mock_table.get_item.assert_called_once_with(Key={"metadataType": "randomGameCount"})
+    mock_table.get_item.assert_called_once_with(Key={"metadataType": "randomGameCount_en"})
 
 def test_fetch_random_game_count_no_item(mock_dynamodb_resource):
     # Arrange
@@ -407,7 +411,7 @@ def test_fetch_random_game_count_no_item(mock_dynamodb_resource):
 
     # Assert
     assert result == 0
-    mock_table.get_item.assert_called_once_with(Key={"metadataType": "randomGameCount"})
+    mock_table.get_item.assert_called_once_with(Key={"metadataType": "randomGameCount_en"})
 
 def test_increment_random_game_count_success(mock_dynamodb_resource):
     # Arrange
@@ -423,7 +427,7 @@ def test_increment_random_game_count_success(mock_dynamodb_resource):
     # Assert
     assert result == 101
     mock_table.update_item.assert_called_once_with(
-        Key={"metadataType": "randomGameCount"},
+        Key={"metadataType": "randomGameCount_en"},
         UpdateExpression="SET #val = if_not_exists(#val, :start) + :inc",
         ExpressionAttributeNames={"#val": "value"},
         ExpressionAttributeValues={":start": 0, ":inc": 1},
@@ -443,7 +447,7 @@ def test_increment_random_game_count_failure(mock_dynamodb_resource):
     with pytest.raises(ClientError):
         db_utils.increment_random_game_count()
     mock_table.update_item.assert_called_once_with(
-        Key={"metadataType": "randomGameCount"},
+        Key={"metadataType": "randomGameCount_en"},
         UpdateExpression="SET #val = if_not_exists(#val, :start) + :inc",
         ExpressionAttributeNames={"#val": "value"},
         ExpressionAttributeValues={":start": 0, ":inc": 1},

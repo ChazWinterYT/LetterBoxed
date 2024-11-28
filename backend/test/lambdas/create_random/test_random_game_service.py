@@ -24,6 +24,7 @@ def mock_game_schema():
         "randomSeedWords": ["BULWARK", "KVETCH"],
         "createdBy": "",
         "validWords": ["BULWARK", "KVETCH"],
+        "baseValidWords": ["BULWARK", "KVETCH"]
     }
 
 
@@ -60,7 +61,7 @@ def test_create_random_game_success(
     mock_generate_layout.assert_called_once_with("BULWARK","KVETCH")
     mock_create_game_schema.assert_called_once()
     mock_add_game_to_db.assert_called_once_with(mock_game_schema)
-    mock_add_game_id_to_random_games_db.assert_called_once_with("test-game-id")
+    mock_add_game_id_to_random_games_db.assert_called_once_with("test-game-id", "en")
 
 
 @patch("lambdas.create_random.random_game_service.get_dictionary")

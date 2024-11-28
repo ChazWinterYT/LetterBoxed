@@ -48,7 +48,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     # Save the new game schema and valid words to the database
     add_game_to_db(game_data)
-    add_valid_words_to_db(game_data["gameId"], game_data["validWords"])
+    add_valid_words_to_db(game_data["gameId"], game_data["validWords"], game_data["baseValidWords"])
 
     return {
         "statusCode": 200,

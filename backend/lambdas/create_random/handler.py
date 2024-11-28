@@ -1,5 +1,5 @@
 import json
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from lambdas.common.db_utils import add_game_to_db, add_game_id_to_random_games_db
 from lambdas.common.dictionary_utils import get_dictionary
 from lambdas.common.game_schema import create_game_schema

@@ -1,5 +1,6 @@
 from typing import List, Set, Optional, Dict, Tuple
 import logging
+import unicodedata
 from uuid import uuid4
 from collections import defaultdict, Counter
 from lambdas.common.dictionary_utils import get_dictionary

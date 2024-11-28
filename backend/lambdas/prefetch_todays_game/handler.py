@@ -50,7 +50,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
         # Add today's game to the database
         add_game_to_db(game_object)
-        add_valid_words_to_db(game_id, game_object["validWords"])
+        add_valid_words_to_db(game_id, game_object["validWords"], game_object["baseValidWords"])
         add_game_to_archive(game_id)
 
         return {
