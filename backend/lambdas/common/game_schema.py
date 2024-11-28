@@ -9,6 +9,7 @@ from lambdas.common.game_utils import (
     calculate_three_word_solutions,
     generate_valid_words,
     standardize_board,
+    normalize_to_base,
 )
 
 
@@ -20,6 +21,7 @@ def create_game_schema(
     standardized_hash: Optional[str] = None,
     valid_words: Optional[List[str]] = None,
     valid_word_count: Optional[int] = 0,
+    base_valid_words: Optional[List[str]] = None,
     two_word_solutions: Optional[List[Tuple[str, str]]] = None,
     three_word_solutions: Optional[List[Tuple[str, str, str]]] = None,
     two_word_solution_count: Optional[int] = 0,
@@ -45,6 +47,7 @@ def create_game_schema(
         standardized_hash: Hash of the board layout.
         valid_words: Precomputed list of valid words. Generated if not provided.
         valid_word_count: Total count of valid words in the puzzle.
+        base_valid_words: Precomputed list of valid words, with accents removed.
         two_word_solutions: Precomputed two-word solutions. Generated if not provided.
         three_word_solutions: Precomputed three-word solutions. Generated if not provided.
         two_word_solution_count: Total count of two-word solutions in the puzzle.
@@ -85,6 +88,10 @@ def create_game_schema(
         standardized_game_layout = standardize_board(game_layout)
         standardized_hash = generate_standardized_hash(game_layout)
     valid_words = valid_words or generate_valid_words(game_layout, language) or []
+    base_valid_words = []
+    for word in valid_words:
+        base_word = normalize_to_base(word)
+        base_valid_words.append(base_word)
     two_word_solutions = (
         two_word_solutions 
         or calculate_two_word_solutions(game_layout, language, valid_words=valid_words)
@@ -109,6 +116,7 @@ def create_game_schema(
         "standardizedHash": standardized_hash,
         "validWords": valid_words,
         "validWordCount": len(valid_words),
+        "baseValidWords": base_valid_words,
         "twoWordSolutions": two_word_solutions,
         "threeWordSolutions": three_word_solutions,
         "twoWordSolutionCount": len(two_word_solutions),

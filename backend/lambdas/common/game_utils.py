@@ -60,8 +60,13 @@ def check_game_completion(game_layout: list[str], words_used: list[str]) -> tupl
     Returns:
         tuple: (game_completed (bool), message (str)).
     """
+    base_words = []
+    for word in words_used:
+        base_word = normalize_to_base(word)
+        base_words.append(base_word)
+
     all_letters = set("".join(game_layout))
-    used_letters = set("".join(words_used))
+    used_letters = set("".join(base_words))
 
     if used_letters == all_letters:
         return True, "Puzzle solved successfully! Congrats!"
@@ -92,7 +97,7 @@ def calculate_two_word_solutions(
         if not valid_words or valid_words is None:
             valid_words = generate_valid_words(game_layout, language)
         if not starting_letter_to_words or starting_letter_to_words is None:
-            starting_letter_to_words = create_starting_letter_to_words_dict(game_layout, language)
+            starting_letter_to_words = create_starting_letter_to_words_dict(game_layout, language, valid_words)
     except ValueError as e:
         print(f"Error preprocessing words for two word solution: {e}")
         return []
@@ -108,34 +113,36 @@ def calculate_two_word_solutions(
 
     # Iterate through all valid words
     for word1 in valid_words:
+        base_word1 = normalize_to_base(word1)
         # Update letter usage with word1
-        update_letter_usage(letter_usage, word1, increment=True)
+        update_letter_usage(letter_usage, base_word1, increment=True)
 
         # Look for word2 candidates that start with the last letter of word1
-        last_letter = word1[-1]
+        last_letter = base_word1[-1]
         potential_second_words = starting_letter_to_words[last_letter]
 
         for word2 in potential_second_words:
+            base_word2 = normalize_to_base(word2)
             # Skip pairs that can't cover all letters in the puzzle
-            if len(word1) + len(word2) < total_letters:
+            if len(base_word1) + len(base_word2) < total_letters:
                 continue
 
             # Skip repeated words
-            if word1 == word2:
+            if base_word1 == base_word2:
                 continue
 
             # Update letter usage with word2
-            update_letter_usage(letter_usage, word2, increment=True)
+            update_letter_usage(letter_usage, base_word2, increment=True)
 
             # If all letters have been used, then we have a solution!
             if all(letter_usage[letter] > 0 for letter in all_letters):
-                solutions.append((word1, word2))
+                solutions.append((word1, word2)) # Show the orignial words in the solution
             
             # Revert word2 letter usage so we can try the next candidate
-            update_letter_usage(letter_usage, word2, increment=False)
+            update_letter_usage(letter_usage, base_word2, increment=False)
         
         # Revert word1 letter usage so we can try the next word in the dictionary
-        update_letter_usage(letter_usage, word1, increment=False)
+        update_letter_usage(letter_usage, base_word1, increment=False)
     
     return solutions
 
@@ -224,11 +231,12 @@ def generate_valid_words(game_layout: List[str], language: str = "en") -> List[s
 
     valid_words = []
     for word in dictionary:
-        word = word.upper()
-        if len(word) < 3:
+        base_word = normalize_to_base(word)
+        base_word = base_word.upper()
+        if len(base_word) < 3:
             continue  # Skip words shorter than 3 letters
-        if is_valid_word(word, letter_to_side, all_letters):
-            valid_words.append(word)
+        if is_valid_word(base_word, letter_to_side, all_letters):
+            valid_words.append(word) # Add the original word to the list
 
     return valid_words
 
@@ -263,13 +271,18 @@ def create_letter_to_side_mapping(game_layout: List[str]) -> Dict[str, int]:
     return letter_to_side
 
 
-def create_starting_letter_to_words_dict(game_layout: List[str], language: str) -> Dict[str, List[str]]:
+def create_starting_letter_to_words_dict(
+    game_layout: List[str], 
+    language: str, 
+    valid_words: Optional[List[str]]
+) -> Dict[str, List[str]]:
     """
     Creates a dictionary that maps each starting letter to a list of valid words starting with that letter.
 
     Args:
         game_layout (List[str]): The game layout containing letters.
         language (str): The language of the dictionary to use.
+        valid_words (List[str]): If provided, a list of valid words for this game layout
 
     Returns:
         Dict[str, List[str]]: A dictionary where keys are starting letters and values are lists of words starting with those letters.

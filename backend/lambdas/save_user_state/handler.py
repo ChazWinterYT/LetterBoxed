@@ -38,6 +38,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "sessionId": session_id,
                 "gameId": game_id,
                 "wordsUsed": [],
+                "originalWordsUsed": [], # May contain accents or special characters
                 "gameCompleted": False,
                 "lastUpdated": int(time.time()),
                 "TTL": int(time.time()) + 30 * 24 * 60 * 60,  # 30 days TTL
@@ -46,6 +47,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Update the game state based on the request body
         if "wordsUsed" in body:
             user_game_state["wordsUsed"] = body["wordsUsed"]
+            user_game_state["originalWordsUsed"] = body["originalWordsUsed"]
         
         # Check for game completion
         game_completed, message = check_game_completion(game_layout, user_game_state["wordsUsed"])

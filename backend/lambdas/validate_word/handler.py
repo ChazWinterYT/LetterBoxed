@@ -1,12 +1,13 @@
 import json
 from typing import Any, Dict
-
+from lambdas.common.game_utils import normalize_to_base
 from lambdas.common.db_utils import (
     fetch_game_by_id,
     fetch_valid_words_by_game_id,
     get_user_game_state,
     save_user_session_state,
 )
+from lambdas.validate_word.word_validator_service import find_valid_word_from_normalized
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -47,7 +48,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             )
 
         # Check if the submitted word is valid
-        if submitted_word not in valid_words:
+        matching_word = find_valid_word_from_normalized(submitted_word, valid_words)
+        if not matching_word:
             return _error_response(
                 "Word is not valid for this puzzle.", 200
             )
@@ -84,6 +86,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "body": json.dumps({
                 "valid": True,
                 "message": "Word is valid.",
+                "originalWord": matching_word
             }),
         }
 

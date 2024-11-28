@@ -110,13 +110,14 @@ def get_games_table() -> Any:
 
 # ====================== Valid Words Table Functions ======================
 
-def add_valid_words_to_db(game_id: str, valid_words: List[str]) -> bool:
+def add_valid_words_to_db(game_id: str, valid_words: List[str], base_valid_words: List[str]) -> bool:
     """
     Stores all valid words for a game in a single item in the valid words table.
 
     Args:
         game_id (str): The unique identifier for the game.
         valid_words (list): List of valid words for the game.
+        base_valid_words: List of valid words, with accents removed.
 
     Returns:
         bool: True if operation was successful, False otherwise.
@@ -126,7 +127,8 @@ def add_valid_words_to_db(game_id: str, valid_words: List[str]) -> bool:
         print("Using Valid Words Table:", table.table_name)
         valid_words_entry = {
             "gameId": game_id,
-            "validWords": valid_words
+            "validWords": valid_words,
+            "baseValidWords": base_valid_words
         }
         table.put_item(Item=valid_words_entry)
         return True
@@ -202,6 +204,7 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
                 "sessionId": session_id,
                 "gameId": game_id,
                 "wordsUsed": [],
+                "originalWordsUsed": [],
                 "gameCompleted": False,
                 "lastUpdated": int(time.time()),
                 "TTL": int(time.time()) + 30 * 24 * 60 * 60,  # 30 days from now
@@ -255,19 +258,19 @@ def get_session_states_table() -> Any:
 
 # ====================== Random Game Table Functions ======================
 
-def add_game_id_to_random_games_db(game_id: str) -> int:
+def add_game_id_to_random_games_db(game_id: str, language: str = "en") -> int:
     """
-    Insert the game ID and atomic number into the Random Games table.
+    Insert the game ID and atomic number into the language-specific Random Games table.
 
     Args:
         game_id (str): The unique game ID.
-        atomic_number (int): The atomic number assigned to this game.
-    
+        language (str): The language code for the table (e.g., 'en', 'es').
+
     Returns:
         int: The atomic number assigned to this game.
     """
-    atomic_number = increment_random_game_count()
-    table = get_random_games_table()
+    atomic_number = increment_random_game_count(language)
+    table = get_random_games_table(language)
     table.put_item(Item={
         "atomicNumber": atomic_number,
         "gameId": game_id
@@ -275,40 +278,53 @@ def add_game_id_to_random_games_db(game_id: str) -> int:
     return atomic_number
 
 
-def get_random_games_table() -> Any:
+def get_random_games_table(language: str = "en") -> Any:
     """
-    Dynamically retrieves the DynamoDB Random Games table based on the environment variable.
+    Dynamically retrieves the DynamoDB Random Games table for the specified language.
+
+    Args:
+        language (str): The language code for the table (e.g., 'en', 'es').
 
     Returns:
         boto3.Table: The DynamoDB Table object.
     """
-    table_name = os.environ.get("RANDOM_GAMES_TABLE", "LetterBoxedRandomGames")
+
+    table_name = os.environ.get(f"RANDOM_GAMES_TABLE_{language.upper()}", f"LetterBoxedRandomGames_{language}")
     return dynamodb.Table(table_name)
+
 
 # ====================== Metadata Table Functions ======================
 
-def fetch_random_game_count() -> int:
+def fetch_random_game_count(language: str = "en") -> int:
     """
-    Fetch the current random game count from the metadata table.
+    Fetch the current random game count for the specified language from the metadata table.
+
+    Args:
+        language (str): The language code for the count (e.g., 'en', 'es').
 
     Returns:
-        int: The current count of random games.
+        int: The current count of random games for the language.
     """
     table = get_metadata_table()
-    response = table.get_item(Key={"metadataType": "randomGameCount"})
+    metadata_key = f"randomGameCount_{language}"
+    response = table.get_item(Key={"metadataType": metadata_key})
     return response.get("Item", {}).get("value", 0) if response else 0
 
 
-def increment_random_game_count() -> int:
+def increment_random_game_count(language: str = "en") -> int:
     """
-    Increment the random game count in the metadata table and return the new count.
+    Increment the random game count for the specified language in the metadata table.
+
+    Args:
+        language (str): The language code for the count (e.g., 'en', 'es').
 
     Returns:
-        int: The new count of random games.
+        int: The new count of random games for the language.
     """
     table = get_metadata_table()
+    metadata_key = f"randomGameCount_{language}"
     response = table.update_item(
-        Key={"metadataType": "randomGameCount"},
+        Key={"metadataType": metadata_key},
         UpdateExpression="SET #val = if_not_exists(#val, :start) + :inc",
         ExpressionAttributeNames={"#val": "value"},
         ExpressionAttributeValues={":start": 0, ":inc": 1},
