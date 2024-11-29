@@ -286,7 +286,8 @@ def create_starting_letter_to_words_dict(
         valid_words (List[str]): If provided, a list of valid words for this game layout
 
     Returns:
-        Dict[str, List[str]]: A dictionary where keys are starting letters and values are lists of words starting with those letters.
+        Dict[str, List[str]]: A dictionary where keys are starting letters and values are 
+        lists of words starting with those letters.
     """
     valid_words = generate_valid_words(game_layout, language)
     starting_letter_to_words = defaultdict(list)

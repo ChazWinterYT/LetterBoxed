@@ -95,8 +95,8 @@ def setup_aws_resources(setup_environment, aws_clients):
     yield
     
     # Cleanup after tests
-    # cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
-    # assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"
@@ -111,22 +111,35 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     # ===========================================================================
     print("BEGINNING INTEGRATION TESTS...")
 
-    # Create a custom game
-    print("Testing create_custom lambda...")
-    # First try a bunch of invalid games. These should not add any entries to the DB
+    # First try a bunch of invalid game scenarios. These should not add any entries to the DB
+    # We will assert that the database is empty for each of these tests. 
     f.create_custom_missing_layout(aws_clients)
     f.create_custom_invalid_layout(aws_clients)
     f.create_custom_size_mismatch(aws_clients)
     f.create_custom_unsupported_language(aws_clients)
     f.create_custom_malformed_json(aws_clients)
-    # Now try some valid games. These should add games to the DB.
+    f.create_random_unsupported_language(aws_clients)
+    f.create_random_invalid_board_size(aws_clients)
+    f.create_random_invalid_seed_words(aws_clients)
+    f.create_random_malformed_json(aws_clients)
+    f.create_random_missing_body(aws_clients)
+
+    # Create a custom game
+    print("Testing create_custom lambda...")
     f.create_custom_english_game(aws_clients)
     f.create_custom_spanish_game(aws_clients)
-    f.create_custom_4x4_game(aws_clients)
+    f.create_custom_4x4_game_english(aws_clients)
+    f.create_custom_4x4_game_spanish(aws_clients)
 
     # Create a random game
     print("Testing create_random lambda...")
-    
+    f.create_random_valid_en(aws_clients)
+    f.create_random_valid_es(aws_clients)
+    f.create_random_valid_en_with_seed(aws_clients)
+    f.create_random_valid_es_with_seed(aws_clients)
+    f.create_random_valid_4x4_with_seed_en(aws_clients)
+    f.create_random_valid_4x4_with_seed_es(aws_clients)
+
 
 
 # ===========================================================================

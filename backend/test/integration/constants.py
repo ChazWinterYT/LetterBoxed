@@ -6,6 +6,12 @@ VALID_GAME_LAYOUT_EN = ["VZL", "PMI", "ONA", "ERT"]
 # This gamy layout should yield the solution ["ALIANZA", "AUTOMOVILES"]
 VALID_GAME_LAYOUT_ES = ['SOA', 'EVN', 'ITM', 'ZLU']
 
+# This game layout should yield the solution ["CLAUSTROPHOBE", "ELIMINATED"]
+VALID_GAME_LAYOUT_4x4_EN = ["AERP", "OLSN", "BITC", "HUDM"]
+
+# This game layout should yield the solution ["IMPLEMENTABLE", "ESCUCHADOR"]
+VALID_GAME_LAYOUT_4x4_ES = ["AERP", "DLSN", "BITC", "HUOM"]
+
 # Valid event with a 3x3 layout in English
 CREATE_CUSTOM_EVENT_VALID_EN = {
     "body": json.dumps({
@@ -33,11 +39,22 @@ CREATE_CUSTOM_EVENT_VALID_ES = {
 }
 
 # Valid event with a larger layout (4x4). I have no idea if this will work lol
-CREATE_CUSTOM_EVENT_VALID_LARGE = {
+CREATE_CUSTOM_EVENT_VALID_LARGE_EN = {
     "body": json.dumps({
-        "gameLayout": ["ABCD", "EFGH", "IJKL", "MNOP"], 
+        "gameLayout": VALID_GAME_LAYOUT_4x4_EN, 
         "sessionId": "test-session-id-large",
         "language": "en",
+        "boardSize": "4x4"
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+CREATE_CUSTOM_EVENT_VALID_LARGE_ES = {
+    "body": json.dumps({
+        "gameLayout": VALID_GAME_LAYOUT_4x4_ES, 
+        "sessionId": "test-session-id-large",
+        "language": "es",
         "boardSize": "4x4"
     }),
     "headers": {
@@ -101,3 +118,129 @@ CREATE_CUSTOM_EVENT_MALFORMED_JSON = {
         "Content-Type": "application/json"
     }
 }
+
+
+# ===================================================================
+# Constants for Event Payloads
+# ===================================================================
+
+# Valid event: English game, 3x3 board, no seed words
+CREATE_RANDOM_EVENT_VALID_EN = {
+    "body": json.dumps({
+        "language": "en",
+        "boardSize": "3x3"
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Valid event: Spanish game, 3x3 board, no seed words
+CREATE_RANDOM_EVENT_VALID_ES = {
+    "body": json.dumps({
+        "language": "es",
+        "boardSize": "3x3"
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Valid event: English game, 3x3 board, with seed words
+CREATE_RANDOM_EVENT_VALID_SEED_WORDS_EN = {
+    "body": json.dumps({
+        "language": "en",
+        "boardSize": "3x3",
+        "seedWords": ["VAPORIZE", "ELEMENT"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Valid event: Spanish game, 3x3 board, with seed words
+CREATE_RANDOM_EVENT_VALID_SEED_WORDS_ES = {
+    "body": json.dumps({
+        "language": "es",
+        "boardSize": "3x3",
+        "seedWords": ["ÚNICAMENTE", "ELECTRICOS"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Valid event: English game, 4x4 board, with seed words
+CREATE_RANDOM_EVENT_VALID_4X4_WITH_SEED_EN = {
+    "body": json.dumps({
+        "language": "en",
+        "boardSize": "4x4",
+        "seedWords": ["DISPLACEMENT", "THORNBUSH"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Valid event: Spanish game, 4x4 board, with seed words
+CREATE_RANDOM_EVENT_VALID_4x4_WITH_SEED_ES = {
+    "body": json.dumps({
+        "language": "es",
+        "boardSize": "4x4",
+        "seedWords": ["CHABOLISTA", "AMPURDANÉS"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Invalid event: Unsupported language
+CREATE_RANDOM_EVENT_UNSUPPORTED_LANGUAGE = {
+    "body": json.dumps({
+        "language": "xy",  # xy is not a language, it's a boy
+        "boardSize": "3x3"
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Invalid event: Invalid board size
+CREATE_RANDOM_EVENT_INVALID_BOARD_SIZE = {
+    "body": json.dumps({
+        "language": "en",
+        "boardSize": "5x7"  # '5x7' is unsupported
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Invalid event: Seed words can't form a valid layout (not enough unique letters)
+CREATE_RANDOM_EVENT_INVALID_SEED_WORDS = {
+    "body": json.dumps({
+        "language": "en",
+        "boardSize": "3x3",
+        "seedWords": ["INVALID", "DONUTS"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Invalid event: Malformed JSON
+CREATE_RANDOM_EVENT_MALFORMED_JSON = {
+    "body": '{"language": "en", "boardSize": "3x3"',  # Missing closing brace
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Invalid event: Missing body entirely
+CREATE_RANDOM_EVENT_MISSING_BODY = {
+    "body": None,
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
