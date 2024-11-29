@@ -505,7 +505,9 @@ SAVE_USER_STATE_NONEXISTENT_GAME = {
     }
 }
 
-# Constants for event payloads
+# ===================================================================
+# Constants for Fetch User State Event Payloads
+# ===================================================================
 FETCH_USER_STATE_VALID = {
     "pathParameters": {
         "sessionId": "test-session-valid",
@@ -533,4 +535,88 @@ FETCH_USER_STATE_NONEXISTENT = {
 
 FETCH_USER_STATE_MALFORMED_EVENT = {
     # Missing both pathParameters and queryStringParameters
+}
+
+# ===================================================================
+# Constants for Fetch Random Game Event Payloads
+# ===================================================================
+# Valid event with language parameter (English)
+FETCH_RANDOM_EVENT_VALID_EN = {
+    "queryStringParameters": {
+        "language": "en"
+    },
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Valid event with language parameter (Spanish)
+FETCH_RANDOM_EVENT_VALID_ES = {
+    "queryStringParameters": {
+        "language": "es"
+    },
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Valid event with language parameter (Italian, will be empty)
+FETCH_RANDOM_EVENT_VALID_IT = {
+    "queryStringParameters": {
+        "language": "it"
+    },
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Event with missing language parameter (should default to English)
+FETCH_RANDOM_EVENT_DEFAULT_LANGUAGE = {
+    "queryStringParameters": {},
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Event with missing query parameters entirely
+FETCH_RANDOM_EVENT_MISSING_QUERY_PARAMS = {
+    "queryStringParameters": None,
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Event for a language with no random games available
+FETCH_RANDOM_EVENT_NO_RANDOM_GAMES = {
+    "queryStringParameters": {
+        "language": "it"  # 'it' has no games
+    },
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Invalid language code
+FETCH_RANDOM_EVENT_INVALID_LANGUAGE = {
+    "queryStringParameters": {
+        "language": "xy",  # Invalid language code
+    },
+    "headers": {
+        "Content-Type": "application/json",
+    }
+}
+
+# Invalid query parameters format (not a dictionary)
+FETCH_RANDOM_EVENT_INVALID_QUERY_PARAMS = {
+    "queryStringParameters": "language=en",  # Should be a dictionary
+    "headers": {
+        "Content-Type": "application/json",
+    }
+}
+
+# Malformed event payload (missing queryStringParameters entirely)
+FETCH_RANDOM_EVENT_MALFORMED_EVENT = {
+    "headers": {
+        "Content-Type": "application/json",
+    }
 }

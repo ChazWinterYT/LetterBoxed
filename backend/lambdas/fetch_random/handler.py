@@ -23,17 +23,15 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
     # Extract and validate query parameters
     query_params = event.get("queryStringParameters", {})
-    if not query_params:
+    if query_params is None:
         return error_response("Missing query parameters.", 400)
     
-    language = query_params.get("language")
-    if not language:
-        return error_response("Language paraneter is required.", 400)
-    
+    language = query_params.get("language", "en") # Default to English
 
     # Fetch metadata for the random game count
     max_atomic_number = fetch_random_game_count(language)
-    if not max_atomic_number or max_atomic_number < 1:
+    
+    if not isinstance(max_atomic_number, int) or max_atomic_number < 1:
         return error_response("No random games available for the specified language.", 404)
     
     try:

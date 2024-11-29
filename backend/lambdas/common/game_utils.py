@@ -138,6 +138,9 @@ def calculate_two_word_solutions(
             # If all letters have been used, then we have a solution!
             if all(letter_usage[letter] > 0 for letter in all_letters):
                 solutions.append((word1, word2)) # Show the orignial words in the solution
+                # Limit the number of solutions in case the size is too large
+                if len(solutions) > 999:
+                    return solutions
             
             # Revert word2 letter usage so we can try the next candidate
             update_letter_usage(letter_usage, base_word2, increment=False)

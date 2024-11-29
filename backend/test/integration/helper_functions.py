@@ -744,6 +744,7 @@ def fetch_game_valid_game_id(aws_clients, game_id):
     Test fetch_game flow with a valid gameId taken from a previous integration test.
     This should return a 200 status code and the expected game details.
     """
+    print("Testing fetch_game_valid_game_id")
     dynamodb = aws_clients["dynamodb"]
 
     # Import the handler
@@ -774,6 +775,8 @@ def fetch_game_missing_game_id(aws_clients):
     Test fetch_game handler with a missing gameId in the event payload.
     This should return a 400 status code with an appropriate error message.
     """
+    print("Testing fetch_game_missing_game_id")
+    dynamodb = aws_clients["dynamodb"]
     # Import the handler
     from lambdas.fetch_game.handler import handler
 
@@ -798,6 +801,8 @@ def fetch_game_nonexistent_game_id(aws_clients):
     Test fetch_game handler with a non-existent gameId.
     This should return a 404 status code with an appropriate error message.
     """
+    print("Testing fetch_game_nonexistent_game_id")
+    dynamodb = aws_clients["dynamodb"]
     # Import the handler
     from lambdas.fetch_game.handler import handler
 
@@ -822,6 +827,8 @@ def fetch_game_invalid_json(aws_clients):
     Test fetch_game handler with a malformed JSON payload.
     This should return a 400 status code with an appropriate error message.
     """
+    print("Testing fetch_game_invalid_json")
+    dynamodb = aws_clients["dynamodb"]
     # Import the handler
     from lambdas.fetch_game.handler import handler
 
@@ -1268,6 +1275,7 @@ def fetch_user_state_missing_params(aws_clients):
     Should return a 400 status code.
     """
     print("Entering fetch_user_state_missing_params")
+    dynamodb = aws_clients["dynamodb"]
     # Import the handler
     from lambdas.fetch_user_state.handler import handler
 
@@ -1324,9 +1332,6 @@ def fetch_user_state_nonexistent(aws_clients):
     assert state_in_db["wordsUsed"] == [], "Expected no words used in the database state"
     assert state_in_db["gameCompleted"] is False, "Expected gameCompleted to be False in the database state"
 
-    # Verify no game was added to the database
-    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
-
     print("Successfully fetched and initialized state for a nonexistent session/game.")
 
 
@@ -1336,6 +1341,7 @@ def fetch_user_state_malformed_event(aws_clients):
     Should return a 400 status code.
     """
     print("Entering fetch_user_state_malformed_event")
+    dynamodb = aws_clients["dynamodb"]
     # Import the handler
     from lambdas.fetch_user_state.handler import handler
 
@@ -1345,13 +1351,230 @@ def fetch_user_state_malformed_event(aws_clients):
     # Verify response
     assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
+    print("the message:", response_body["message"])
     assert "message" in response_body, "Expected 'message' key in response body"
-    assert "Missing path or query parameters" in response_body["message"], "Expected missing parameter error message"
+    assert "missing path parameters" in response_body["message"], "Expected missing parameter error message"
 
     # Verify no game was added to the database
     assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
 
     print("Successfully handled malformed event.")
+
+
+# ===================================================================
+# Fetch Random Game Tests
+# ===================================================================
+def fetch_random_valid_game_en(aws_clients):
+    """
+    Test fetch_random handler with a valid request for an English game.
+    This should return a 200 status code and a valid game from the database.
+    """
+    print("Entering function fetch_random_valid_game_en")
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.fetch_random.handler import handler
+
+    # Call the handler with the English payload
+    response = handler(c.FETCH_RANDOM_EVENT_VALID_EN, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "gameId" in response_body, "Expected 'gameId' in the response body"
+    assert "gameLayout" in response_body, "Expected 'gameLayout' in the response body"
+    assert "language" in response_body, "Expected 'language' in the response body"
+    assert "boardSize" in response_body, "Expected 'boardSize' in the response body"
+    assert response_body["language"] == "en", "Expected language to be 'en'"
+
+    # Verify the game exists in the database
+    game_id = response_body["gameId"]
+    assert_game_in_db(game_id, dynamodb)
+
+    print(f"Successfully fetched and verified English random game with ID {game_id}.")
+
+
+def fetch_random_valid_game_es(aws_clients):
+    """
+    Test fetch_random handler with a valid request for a Spanish game.
+    This should return a 200 status code and a valid game from the database.
+    """
+    print("Entering function fetch_random_valid_game_es")
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.fetch_random.handler import handler
+
+    # Call the handler with the Spanish payload
+    response = handler(c.FETCH_RANDOM_EVENT_VALID_ES, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "gameId" in response_body, "Expected 'gameId' in the response body"
+    assert "gameLayout" in response_body, "Expected 'gameLayout' in the response body"
+    assert "language" in response_body, "Expected 'language' in the response body"
+    assert "boardSize" in response_body, "Expected 'boardSize' in the response body"
+    assert response_body["language"] == "es", "Expected language to be 'es'"
+
+    # Verify the game exists in the database
+    game_id = response_body["gameId"]
+    assert_game_in_db(game_id, dynamodb)
+
+    print(f"Successfully fetched and verified Spanish random game with ID {game_id}.")
+
+
+def fetch_random_missing_language(aws_clients):
+    """
+    Test fetch_random handler with a missing language parameter (default to English).
+    This should return a 200 status code and a valid English game from the database.
+    """
+    print("Entering function fetch_random_missing_language")
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.fetch_random.handler import handler
+
+    # Call the handler with the default language payload
+    response = handler(c.FETCH_RANDOM_EVENT_DEFAULT_LANGUAGE, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "gameId" in response_body, "Expected 'gameId' in the response body"
+    assert "gameLayout" in response_body, "Expected 'gameLayout' in the response body"
+    assert "language" in response_body, "Expected 'language' in the response body"
+    assert "boardSize" in response_body, "Expected 'boardSize' in the response body"
+    assert response_body["language"] == "en", "Expected language to default to 'en'"
+
+    # Verify the game exists in the database
+    game_id = response_body["gameId"]
+    assert_game_in_db(game_id, dynamodb)
+
+    print(f"Successfully fetched and verified default (English) random game with ID {game_id}.")
+
+
+def fetch_random_missing_query_params(aws_clients):
+    """
+    Test fetch_random handler with missing query parameters entirely.
+    This should return a 400 status code with an appropriate error message.
+    """
+    print("Entering function fetch_random_missing_query_params")
+    dynamodb = aws_clients["dynamodb"]
+    # Import the handler
+    from lambdas.fetch_random.handler import handler
+
+    # Call the handler with missing query parameters
+    response = handler(c.FETCH_RANDOM_EVENT_MISSING_QUERY_PARAMS, None)
+
+    # Verify the response
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected 'message' in the response body"
+    assert "missing query parameters" in response_body["message"].lower(), \
+        "Expected an error message about missing query parameters"
+
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["METADATA_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_EN"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_ES"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_IT"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_PL"])
+
+    print("Successfully tested missing query parameters.")
+
+
+def fetch_random_no_random_games_available(aws_clients):
+    """
+    Test fetch_random handler for a language with no random games available.
+    This should return a 404 status code with an appropriate error message.
+    """
+    print("Entering function fetch_random_no_random_games_available")
+    dynamodb = aws_clients["dynamodb"]
+    # Import the handler
+    from lambdas.fetch_random.handler import handler
+
+    # Call the handler with a request for Italian, which has no games
+    print("Calling the fetch_random handler with Italian language (no random games available)...")
+    response = handler(c.FETCH_RANDOM_EVENT_VALID_IT, None)
+
+    # Verify the response
+    assert response["statusCode"] == 404, f"Expected 404 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected 'message' in the response body"
+    assert "no random games available" in response_body["message"].lower(), \
+        "Expected an error message about no random games"
+
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["METADATA_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_EN"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_ES"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_IT"])
+    assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_PL"])
+
+    print("Successfully tested no random games available for the specified language.")
+
+
+def fetch_random_invalid_language(aws_clients):
+    """
+    Test fetch_random handler with an invalid language code.
+    This should return a 400 status code with an appropriate error message.
+    """
+    print("Entering function fetch_random_invalid_language")
+    dynamodb = aws_clients["dynamodb"]
+    # Import the handler
+    from lambdas.fetch_random.handler import handler
+
+    # Call the handler with the invalid language payload
+    print("Calling the fetch_random handler with an invalid language...")
+    response = handler(c.FETCH_RANDOM_EVENT_INVALID_LANGUAGE, None)
+
+    # Verify the response
+    print("Verifying the response...")
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert "invalid language" in response_body["message"].lower(), "Expected an error message about invalid language"
+
+    print("Successfully tested fetch_random with an invalid language.")
+
+
+def fetch_random_invalid_query_params(aws_clients):
+    """
+    Test fetch_random handler with invalid query parameters format.
+    This should return a 400 status code with an appropriate error message.
+    """
+    print("Entering function fetch_random_invalid_query_params")
+    dynamodb = aws_clients["dynamodb"]
+    # Import the handler
+    from lambdas.fetch_random.handler import handler
+
+    # Call the handler with invalid query parameters
+    print("Calling the fetch_random handler with invalid query parameters...")
+    response = handler(c.FETCH_RANDOM_EVENT_INVALID_QUERY_PARAMS, None)
+
+    # Verify the response
+    print("Verifying the response...")
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert "missing query parameters" in response_body["message"].lower(), "Expected an error message about missing query parameters"
+
+    print("Successfully tested fetch_random with invalid query parameters.")
+
+def fetch_random_malformed_event(aws_clients):
+    """
+    Test fetch_random handler with a malformed event payload.
+    This should return a 400 status code with an appropriate error message.
+    """
+    print("Entering function fetch_random_malformed_event")
+    dynamodb = aws_clients["dynamodb"]
+
+
 
 
 # ===================================================================

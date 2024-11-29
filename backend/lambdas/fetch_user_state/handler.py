@@ -20,6 +20,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         path_params = event.get("pathParameters")
         query_params = event.get("queryStringParameters")
 
+        if not isinstance(path_params, dict):
+            return error_response("Invalid or missing path parameters.", 400)
+
+        if not isinstance(query_params, dict):
+            return error_response("Invalid or missing query parameters.", 400)
+
         if not path_params or not query_params:
             return error_response("Missing path or query parameters.", 400)
 
