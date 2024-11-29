@@ -155,6 +155,7 @@ def create_custom_malformed_json(aws_clients):
 def create_custom_english_game(aws_clients):
     """
     Test create_custom flow with a valid 3x3 layout in English.
+    Return the game_id so it can be used for further integration tests.
     This should return a 200 status code, ensure the game is added to the database,
     and validate that the game can be fetched.
     """
@@ -184,7 +185,9 @@ def create_custom_english_game(aws_clients):
     assert fetched_game["language"] == "en", "Game language does not match expected language"
     assert fetched_game["boardSize"] == "3x3", "Game board size does not match expected size"
 
-    print("Test for create_custom_english_game passed successfully.")
+    # Return the gameId for further tests
+    print(f"Successfully created English game with ID {game_id}.")
+    return game_id
 
 
 def create_custom_spanish_game(aws_clients):
@@ -576,7 +579,8 @@ def create_random_unsupported_language(aws_clients):
     assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
     assert "message" in response_body, "Expected a 'message' key in the response body"
-    assert "unsupported language" in response_body["message"].lower(), "Expected an error message about unsupported language"
+    assert "unsupported language" in response_body["message"].lower(), \
+        "Expected an error message about unsupported language"
 
     # Verify no game was added to the database
     assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
@@ -737,6 +741,79 @@ def create_random_missing_body(aws_clients):
     print("Verified: No random games were added to the random games table (Spanish).")
 
     print("Successfully tested create_random with a missing body.")
+
+
+# ===================================================================
+# Fetch Game Handler tests
+# ===================================================================
+def fetch_game_valid_game_id(aws_clients, game_id):
+    """
+    Test fetch_game flow with a valid gameId taken from a previous integration test.
+    This should return a 200 status code and the expected game details.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.fetch_game.handler import handler
+
+    # Update the payload with the valid game ID
+    event = c.FETCH_GAME_EVENT_VALID(game_id)
+
+    # Call the handler with the valid payload
+    response = handler(event, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "gameId" in response_body, "Expected 'gameId' in the response body"
+    assert response_body["gameId"] == game_id, f"Expected gameId to be {game_id}, got {response_body['gameId']}"
+
+    # Fetch the game from the DB and compare details
+    fetched_game = db_utils.fetch_game_by_id(game_id)
+    assert fetched_game is not None, f"Game with ID {game_id} should exist in the database"
+    assert fetched_game["gameLayout"] == response_body["gameLayout"], "Game layout does not match the expected layout"
+
+    print(f"Successfully fetched game with ID {game_id}.")
+
+
+def fetch_game_missing_game_id(aws_clients):
+    """
+    Test fetch_game handler with a missing gameId in the event payload.
+    This should return a 400 status code with an appropriate error message.
+    """
+    pass
+
+
+def fetch_game_nonexistent_game_id(aws_clients):
+    """
+    Test fetch_game handler with a non-existent gameId.
+    This should return a 404 status code with an appropriate error message.
+    """
+    pass
+
+
+def fetch_game_invalid_json(aws_clients):
+    """
+    Test fetch_game handler with a malformed JSON payload.
+    This should return a 400 status code with an appropriate error message.
+    """
+    pass
+
+
+def fetch_game_internal_server_error(aws_clients):
+    """
+    Test fetch_game handler when the database fetch raises an exception.
+    This should return a 500 status code with an appropriate error message.
+    """
+    pass
+
+
+def fetch_game_optional_field_defaults(aws_clients):
+    """
+    Test fetch_game handler with optional fields missing in the fetched game data.
+    This should verify that default values are correctly populated.
+    """
+    pass
 
 
 

@@ -57,8 +57,8 @@ def test_create_random_game_success(
     # Assert
     assert result == mock_game_schema
     mock_get_dictionary.assert_called_once_with("en")
-    mock_select_two_words.assert_called_once_with(mock_dictionary)
-    mock_generate_layout.assert_called_once_with("BULWARK","KVETCH")
+    mock_select_two_words.assert_called_once_with(mock_dictionary, "3x3")
+    mock_generate_layout.assert_called_once_with("BULWARK","KVETCH", "3x3")
     mock_create_game_schema.assert_called_once()
     mock_add_game_to_db.assert_called_once_with(mock_game_schema)
     mock_add_game_id_to_random_games_db.assert_called_once_with("test-game-id", "en")
@@ -77,7 +77,7 @@ def test_create_random_game_no_dictionary(mock_get_dictionary):
 @patch("lambdas.create_random.random_game_service.select_two_words")
 def test_select_two_words_success(mock_select_two_words, mock_dictionary):
     # Act
-    word_pair = select_two_words(mock_dictionary)
+    word_pair = select_two_words(mock_dictionary, board_size="3x3")
 
     # Assert
     assert word_pair is not None
@@ -92,7 +92,7 @@ def test_generate_layout_success(mock_generate_layout):
     expected_layout = ["ABL", "CRV", "EHW", "KTU"]  # Standardized
 
     # Act
-    layout = generate_layout("BULWARK", "KVETCH")
+    layout = generate_layout("BULWARK", "KVETCH", "3x3")
 
     # Standardize the generated layout so a shufled board is still seen as equivalent
     standardized_actual = standardize_board(layout) if layout else None

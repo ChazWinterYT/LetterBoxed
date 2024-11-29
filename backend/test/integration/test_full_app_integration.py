@@ -100,7 +100,7 @@ def setup_aws_resources(setup_environment, aws_clients):
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"
-def test_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
+def est_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]
@@ -123,13 +123,19 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.create_random_invalid_seed_words(aws_clients)
     f.create_random_malformed_json(aws_clients)
     f.create_random_missing_body(aws_clients)
+    f.fetch_game_missing_game_id(aws_clients)
+    f.fetch_game_nonexistent_game_id(aws_clients)
+    f.fetch_game_invalid_json(aws_clients)
+    f.fetch_game_internal_server_error(aws_clients)
+    f.fetch_game_optional_field_defaults(aws_clients)
 
-    # Create a custom game
-    print("Testing create_custom lambda...")
-    f.create_custom_english_game(aws_clients)
+    # Create a custom game, and fetch a game by game ID
+    print("Testing create_custom and fetch_game lambdas...")
+    game_id = f.create_custom_english_game(aws_clients)
     f.create_custom_spanish_game(aws_clients)
     f.create_custom_4x4_game_english(aws_clients)
     f.create_custom_4x4_game_spanish(aws_clients)
+    f.fetch_game_valid_game_id(aws_clients, game_id)
 
     # Create a random game
     print("Testing create_random lambda...")
@@ -140,6 +146,7 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.create_random_valid_4x4_with_seed_en(aws_clients)
     f.create_random_valid_4x4_with_seed_es(aws_clients)
 
+    
 
 
 # ===========================================================================

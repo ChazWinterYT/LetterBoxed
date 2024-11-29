@@ -244,3 +244,46 @@ CREATE_RANDOM_EVENT_MISSING_BODY = {
     }
 }
 
+# ===================================================================
+# Constants for Fetch Game Event Payloads
+# ===================================================================
+
+# Valid event with an existing game ID
+FETCH_GAME_EVENT_VALID = lambda game_id: {
+    "body": json.dumps({"gameId": game_id}),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Event with a missing game ID
+FETCH_GAME_EVENT_MISSING_GAME_ID = {
+    "body": json.dumps({}),  # No gameId provided
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Event with a non-existent game ID
+FETCH_GAME_EVENT_NONEXISTENT_GAME_ID = {
+    "body": json.dumps({"gameId": "nonexistent-game-id"}),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Event with invalid JSON payload
+FETCH_GAME_EVENT_INVALID_JSON = {
+    "body": '{"gameId": "missing-quote}',  # Malformed JSON
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Event with a valid game ID but no optional fields
+FETCH_GAME_EVENT_OPTIONAL_FIELDS_DEFAULT = lambda game_id: {
+    "body": json.dumps({"gameId": game_id}),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
