@@ -279,6 +279,22 @@ def add_game_id_to_random_games_db(game_id: str, language: str = "en") -> int:
     return atomic_number
 
 
+def fetch_game_id_from_random_games_db(atomic_number: int, language: str) -> str:
+    """
+    Fetch the game ID for the given atomic number from the Random Games table.
+
+    Args:
+        atomic_number (int): Atomic number to fetch.
+        language (str): Language code.
+
+    Returns:
+        str: Game ID.
+    """
+    random_games_table = get_random_games_table(language)
+    response = random_games_table.get_item(Key={"atomicNumber": atomic_number})
+    return response.get("Item", {}).get("gameId", "")
+    
+
 def get_random_games_table(language: str = "en") -> Any:
     """
     Dynamically retrieves the DynamoDB Random Games table for the specified language.

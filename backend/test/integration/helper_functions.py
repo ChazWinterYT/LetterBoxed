@@ -587,6 +587,8 @@ def create_random_unsupported_language(aws_clients):
     assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["METADATA_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["ARCHIVE_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_EN"])
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_ES"])
 
@@ -618,15 +620,12 @@ def create_random_invalid_board_size(aws_clients):
     print("Checking all relevant DynamoDB tables for unintended changes...")
     # Verify no game was added to the database
     assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
-    print(f"Verified table {os.environ['GAMES_TABLE']} is empty.")
     assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
-    print(f"Verified table {os.environ['VALID_WORDS_TABLE']} is empty.")
     assert_table_is_empty(dynamodb, os.environ["METADATA_TABLE"])
-    print(f"Verified table {os.environ['METADATA_TABLE']} is empty.")
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["ARCHIVE_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_EN"])
-    print(f"Verified table {os.environ['RANDOM_GAMES_TABLE_EN']} is empty.")
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_ES"])
-    print(f"Verified table {os.environ['RANDOM_GAMES_TABLE_ES']} is empty.")
 
     print("Successfully tested create_random with an invalid board size.")
 
@@ -657,15 +656,12 @@ def create_random_invalid_seed_words(aws_clients):
     print("Checking that no game was added to the database...")
     # Verify no game was added to the database
     assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
-    print("Verified: No game was added to the games DB.")
     assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
-    print("Verified: No valid words were added to the valid words DB.")
     assert_table_is_empty(dynamodb, os.environ["METADATA_TABLE"])
-    print("Verified: No metadata was added to the metadata DB.")
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["ARCHIVE_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_EN"])
-    print("Verified: No random games were added to the random games table (English).")
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_ES"])
-    print("Verified: No random games were added to the random games table (Spanish).")
 
     print("Successfully tested create_random with invalid seed words.")
 
@@ -692,17 +688,15 @@ def create_random_malformed_json(aws_clients):
     assert "json decoding error" in response_body["message"].lower(), "Expected an error message about JSON decoding"
 
     print("Checking that no game was added to the database...")
+
     # Verify no game was added to the database
     assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
-    print("Verified: No game was added to the games DB.")
     assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
-    print("Verified: No valid words were added to the valid words DB.")
     assert_table_is_empty(dynamodb, os.environ["METADATA_TABLE"])
-    print("Verified: No metadata was added to the metadata DB.")
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["ARCHIVE_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_EN"])
-    print("Verified: No random games were added to the random games table (English).")
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_ES"])
-    print("Verified: No random games were added to the random games table (Spanish).")
 
     print("Successfully tested create_random with malformed JSON.")
 
@@ -729,17 +723,15 @@ def create_random_missing_body(aws_clients):
     assert "missing body" in response_body["message"].lower(), "Expected an error message about invalid input or missing body"
 
     print("Checking that no game was added to the database...")
+    
     # Verify no game was added to the database
     assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
-    print("Verified: No game was added to the games DB.")
     assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
-    print("Verified: No valid words were added to the valid words DB.")
     assert_table_is_empty(dynamodb, os.environ["METADATA_TABLE"])
-    print("Verified: No metadata was added to the metadata DB.")
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["ARCHIVE_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_EN"])
-    print("Verified: No random games were added to the random games table (English).")
     assert_table_is_empty(dynamodb, os.environ["RANDOM_GAMES_TABLE_ES"])
-    print("Verified: No random games were added to the random games table (Spanish).")
 
     print("Successfully tested create_random with a missing body.")
 
@@ -782,7 +774,23 @@ def fetch_game_missing_game_id(aws_clients):
     Test fetch_game handler with a missing gameId in the event payload.
     This should return a 400 status code with an appropriate error message.
     """
-    pass
+    # Import the handler
+    from lambdas.fetch_game.handler import handler
+
+    # Call the handler
+    response = handler(c.FETCH_GAME_EVENT_MISSING_GAME_ID, None)
+
+    # Verify the response
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert "gameId is required" in response_body["message"], "Expected error message about missing gameId"
+
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
+
+    print("Successfully tested fetch_game with missing gameId.")
 
 
 def fetch_game_nonexistent_game_id(aws_clients):
@@ -790,7 +798,23 @@ def fetch_game_nonexistent_game_id(aws_clients):
     Test fetch_game handler with a non-existent gameId.
     This should return a 404 status code with an appropriate error message.
     """
-    pass
+    # Import the handler
+    from lambdas.fetch_game.handler import handler
+
+    # Call the handler
+    response = handler(c.FETCH_GAME_EVENT_NONEXISTENT_GAME_ID, None)
+
+    # Verify the response
+    assert response["statusCode"] == 404, f"Expected 404 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert "Game ID not found" in response_body["message"], "Expected error message about non-existent gameId"
+
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
+
+    print("Successfully tested fetch_game with a non-existent gameId.")
 
 
 def fetch_game_invalid_json(aws_clients):
@@ -798,23 +822,23 @@ def fetch_game_invalid_json(aws_clients):
     Test fetch_game handler with a malformed JSON payload.
     This should return a 400 status code with an appropriate error message.
     """
-    pass
+    # Import the handler
+    from lambdas.fetch_game.handler import handler
 
+    # Call the handler
+    response = handler(c.FETCH_GAME_EVENT_INVALID_JSON, None)
 
-def fetch_game_internal_server_error(aws_clients):
-    """
-    Test fetch_game handler when the database fetch raises an exception.
-    This should return a 500 status code with an appropriate error message.
-    """
-    pass
+    # Verify the response
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert "Invalid JSON format" in response_body["message"], "Expected error message about invalid JSON format"
 
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
+    assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
 
-def fetch_game_optional_field_defaults(aws_clients):
-    """
-    Test fetch_game handler with optional fields missing in the fetched game data.
-    This should verify that default values are correctly populated.
-    """
-    pass
+    print("Successfully tested fetch_game with malformed JSON.")
 
 
 # ===================================================================
@@ -1256,6 +1280,9 @@ def fetch_user_state_missing_params(aws_clients):
     assert "message" in response_body, "Expected 'message' key in response body"
     assert "sessionId and gameId are required" in response_body["message"], "Expected missing parameter error message"
 
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+
     print("Successfully handled missing parameters.")
 
 
@@ -1297,6 +1324,9 @@ def fetch_user_state_nonexistent(aws_clients):
     assert state_in_db["wordsUsed"] == [], "Expected no words used in the database state"
     assert state_in_db["gameCompleted"] is False, "Expected gameCompleted to be False in the database state"
 
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+
     print("Successfully fetched and initialized state for a nonexistent session/game.")
 
 
@@ -1317,6 +1347,9 @@ def fetch_user_state_malformed_event(aws_clients):
     response_body = json.loads(response["body"])
     assert "message" in response_body, "Expected 'message' key in response body"
     assert "Missing path or query parameters" in response_body["message"], "Expected missing parameter error message"
+
+    # Verify no game was added to the database
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
 
     print("Successfully handled malformed event.")
 

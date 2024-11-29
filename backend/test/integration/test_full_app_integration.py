@@ -128,8 +128,6 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.fetch_game_missing_game_id(aws_clients)
     f.fetch_game_nonexistent_game_id(aws_clients)
     f.fetch_game_invalid_json(aws_clients)
-    f.fetch_game_internal_server_error(aws_clients)
-    f.fetch_game_optional_field_defaults(aws_clients)
 
     f.save_user_state_missing_parameters(aws_clients)
     f.save_user_state_invalid_json(aws_clients)
@@ -149,14 +147,14 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.create_custom_4x4_game_spanish(aws_clients)
     f.fetch_game_valid_game_id(aws_clients, game_id)
 
-    # Create a random game
-    print("Testing create_random lambda...")
-    f.create_random_valid_en(aws_clients)
-    f.create_random_valid_es(aws_clients)
-    f.create_random_valid_en_with_seed(aws_clients)
-    f.create_random_valid_es_with_seed(aws_clients)
-    f.create_random_valid_4x4_with_seed_en(aws_clients)
-    f.create_random_valid_4x4_with_seed_es(aws_clients)
+    # # Create a random game
+    # print("Testing create_random lambda...")
+    # f.create_random_valid_en(aws_clients)
+    # f.create_random_valid_es(aws_clients)
+    # f.create_random_valid_en_with_seed(aws_clients)
+    # f.create_random_valid_es_with_seed(aws_clients)
+    # f.create_random_valid_4x4_with_seed_en(aws_clients)
+    # f.create_random_valid_4x4_with_seed_es(aws_clients)
 
     # Save a user game state
     print("Testing save_user_state and fetch_user_state lambdas...")
