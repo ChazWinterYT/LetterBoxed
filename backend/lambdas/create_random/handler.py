@@ -20,11 +20,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
         language = body.get("language", "en")  # Default to English
         board_size = body.get("boardSize", "3x3")  # Default to 3x3
+        clue = body.get("clue", "")
         
         seed_words = body.get("seedWords", None) # Use seed words if provided
-        # Normalize seed words before sending them to the service
-        if seed_words and language == 'en':
-            seed_words = tuple(word.upper() for word in seed_words) # English requires uppercase
+        if not seed_words:
+            clue = "" # Don't allow a clue if it's not based on seed words
         
 
         # Validate language and board size
@@ -34,7 +34,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             return error_response("Input contains an unsupported language.", 400)
 
         # Retry random game creation if it fails
-        random_game_data = retry_random_game_creation(language, board_size, seed_words)
+        random_game_data = retry_random_game_creation(language, board_size, seed_words, clue)
 
         # Return the game details
         return {
@@ -48,6 +48,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "message": "Random game created successfully.",
                 "gameId": random_game_data["gameId"],
                 "gameLayout": random_game_data["gameLayout"],
+                "clue": random_game_data["clue"]
             })
         }
     except json.JSONDecodeError as e:
@@ -60,12 +61,17 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         return error_response(f"There was a problem creating the game: {e}", 500)
 
 
-def retry_random_game_creation(language: str, board_size: str, seed_words: Optional[tuple[str, str]]) -> Dict[str, Any]:
+def retry_random_game_creation(
+    language: str, 
+    board_size: str, 
+    seed_words: Optional[tuple[str, str]],
+    clue: str
+) -> Dict[str, Any]:
     retries = 0
     while retries < MAX_RETRIES:
         try:
             # Create a random game
-            return create_random_game(language, board_size, seed_words)
+            return create_random_game(language, board_size, seed_words, clue)
         except ValueError as e:
             retries += 1
             print(f"Retrying ({retries}/{MAX_RETRIES}) due to error generating game: {e}")

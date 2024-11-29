@@ -152,18 +152,20 @@ def shuffle_final_layout(layout: List[str]) -> List[str]:
 
 
 def main() -> Any:
+    language = "en"
+
     # Path to the directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    basic_dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", "es", "basic.txt")
+    basic_dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", language, "basic.txt")
     basic_dictionary_path = os.path.abspath(basic_dictionary_path)
-    dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", "es", "dictionary.txt")
+    dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", language, "dictionary.txt")
     dictionary_path = os.path.abspath(dictionary_path)
 
-    # Load the dictionary
-    dictionary = load_dictionary(basic_dictionary_path)
+    # Load the basic dictionary
+    basic_dictionary = load_dictionary(basic_dictionary_path)
 
     # Try to generate a random game
-    word_pair = select_two_words(dictionary)
+    word_pair = select_two_words(basic_dictionary)
 
     if not word_pair:
         print("Failed to find a valid word pair after max attempts.")
@@ -184,11 +186,11 @@ def main() -> Any:
     standardized_layout = standardize_board(game_layout)
 
     # Generate valid words for this puzzle
-    valid_words = generate_valid_words(standardized_layout, "es")
+    valid_words = generate_valid_words(standardized_layout, language)
     print(f"Generated puzzle has {len(valid_words)} valid words.")
 
     # Calculate two word solutions
-    solutions = calculate_two_word_solutions(standardized_layout, "en", valid_words=valid_words)
+    solutions = calculate_two_word_solutions(standardized_layout, language, valid_words=valid_words)
     if not solutions:
         print("Generated layout is not a viable puzzle")
         return None

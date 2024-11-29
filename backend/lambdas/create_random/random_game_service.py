@@ -13,7 +13,12 @@ from lambdas.common.game_schema import create_game_schema
 
 DEFAULT_LANGUAGE = "en"
 
-def create_random_game(language: str = "en", board_size: str = "3x3", seed_words: Optional[tuple[str, str]] = None) -> Dict[str, Optional[List[str]]]:
+def create_random_game(
+    language: str = "en", 
+    board_size: str = "3x3", 
+    seed_words: Optional[tuple[str, str]] = None,
+    clue: Optional[str] = ""
+) -> Dict[str, Optional[List[str]]]:
     """
     Create a random game by selecting two words from the dictionary and generating a layout.
 
@@ -22,6 +27,7 @@ def create_random_game(language: str = "en", board_size: str = "3x3", seed_words
         board_size (str): The size of the board to generate (default: '3x3).
         seed_words (tuple[str, str], optional): The two words to use to generate the puzzle, if provided.
             If not provided, the function will select two compatible words at random.
+        clue (str): A clue for finding the solution based on the seed words.
 
     Returns:
         Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout.
@@ -76,6 +82,7 @@ def create_random_game(language: str = "en", board_size: str = "3x3", seed_words
         board_size=board_size,
         random_seed_words=[word1, word2],
         created_by="",
+        clue=clue,
     )
 
     # Store the game in the games DB
