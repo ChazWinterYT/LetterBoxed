@@ -168,7 +168,12 @@ def test_add_valid_words_to_db_success(mock_dynamodb_resource):
     # Assert
     assert result is True
     mock_table.put_item.assert_called_once_with(
-        Item={"gameId": game_id, "validWords": valid_words, "baseValidWords": base_valid_words}
+        Item={
+            "gameId": game_id, 
+            "validWordCount": len(valid_words),
+            "validWords": valid_words, 
+            "baseValidWords": base_valid_words
+        }
     )
 
 def test_add_valid_words_to_db_failure(mock_dynamodb_resource):
@@ -189,7 +194,12 @@ def test_add_valid_words_to_db_failure(mock_dynamodb_resource):
     # Assert
     assert result is False
     mock_table.put_item.assert_called_once_with(
-        Item={"gameId": game_id, "validWords": valid_words, "baseValidWords": base_valid_words}
+        Item={
+            "gameId": game_id, 
+            "validWordCount": len(valid_words),
+            "validWords": valid_words, 
+            "baseValidWords": base_valid_words
+        }
     )
 
 def test_fetch_valid_words_by_game_id_success(mock_dynamodb_resource):

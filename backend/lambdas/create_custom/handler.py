@@ -38,8 +38,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         return error_response(f"Failed to create game schema: {e}", 500)
 
     # Save the new game schema and valid words to the database
+    valid_words = game_data.pop("validWords") # Remove from main game data to save space
+    base_valid_words = game_data.pop("baseValidWords")
+    add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
+    # Save the rest of the game data to the main table
     add_game_to_db(game_data)
-    add_valid_words_to_db(game_data["gameId"], game_data["validWords"], game_data["baseValidWords"])
 
     return {
         "statusCode": 200,
@@ -50,6 +53,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         },
         "body": json.dumps({
             "gameId": game_data["gameId"],
+            "gameLayout": game_data["gameLayout"],
             "message": "Game created successfully."
         })
     }

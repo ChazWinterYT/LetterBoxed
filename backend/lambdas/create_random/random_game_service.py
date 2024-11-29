@@ -63,8 +63,11 @@ def create_random_game(language: str = "en", board_size: str = "3x3", seed_words
     )
 
     # Store the game in the games DB
+    valid_words = game_data.pop("validWords") # Remove from main game data to save space
+    base_valid_words = game_data.pop("baseValidWords")
+    add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
+    # Save the rest of the game data to the main table
     add_game_to_db(game_data)
-    add_valid_words_to_db(game_data["gameId"], game_data["validWords"], game_data["baseValidWords"])
 
     # Add the game to the random games table and track the count
     atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)

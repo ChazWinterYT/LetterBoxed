@@ -1201,7 +1201,9 @@ def save_user_state_nonexistent_game(aws_clients):
 
     print(f"Successfully tested creation of a new state for non-existent game ID.")
 
-
+# ===================================================================
+# Fetch User State Lambda Tests
+# ===================================================================
 def fetch_user_state_valid(aws_clients):
     """
     Test fetching a valid user state.
@@ -1294,9 +1296,7 @@ def fetch_user_state_malformed_event(aws_clients):
 
     print("Successfully handled malformed event.")
 
-# ===================================================================
-# Save User State Lambda Tests
-# ===================================================================
+
 def fetch_user_state_internal_server_error(aws_clients):
     """
     Simulate an internal server error during fetching.

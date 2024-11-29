@@ -127,6 +127,7 @@ def add_valid_words_to_db(game_id: str, valid_words: List[str], base_valid_words
         print("Using Valid Words Table:", table.table_name)
         valid_words_entry = {
             "gameId": game_id,
+            "validWordCount": len(valid_words),
             "validWords": valid_words,
             "baseValidWords": base_valid_words
         }
