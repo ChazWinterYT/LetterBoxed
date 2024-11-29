@@ -95,7 +95,7 @@ def _fetch_dictionary_from_s3(language: str, dictionary_type: str) -> list[str]:
         dictionary_content = body.decode("utf-8")
         if not isinstance(dictionary_content, str):
             raise TypeError("Unexpected response type: Decoded content is not a string.")
-        return dictionary_content.splitlines()
+        return [line.strip().upper() for line in dictionary_content.splitlines()]
     except ClientError as e:
         if e.response["Error"]["Code"] == "NoSuchKey":
             raise ValueError(f"Dictionary '{dictionary_type}.txt' for language '{language}' not found in S3.") from e

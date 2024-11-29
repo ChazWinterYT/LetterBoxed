@@ -49,7 +49,7 @@ def test_load_local_dictionary_file_not_found(mocker):
 def test_fetch_dictionary_from_s3(mock_s3_client):
     mock_s3_client.get_object.return_value = {"Body": MagicMock(read=lambda: b"word1\nword2\nword3")}
     words = _fetch_dictionary_from_s3("en", "dictionary")
-    assert words == ["word1", "word2", "word3"]
+    assert words == ['WORD1', 'WORD2', 'WORD3']
     mock_s3_client.get_object.assert_called_once_with(
         Bucket="chazwinter.com", 
         Key="LetterBoxed/Dictionaries/en/dictionary.txt"
