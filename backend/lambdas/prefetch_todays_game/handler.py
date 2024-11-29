@@ -35,7 +35,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             }
 
         # Create the game schema using the centralized function
-        game_object = create_game_schema(
+        game_data = create_game_schema(
             game_id=game_id,
             game_layout=todays_game["gameLayout"],
             game_type="nyt",
@@ -49,8 +49,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         )
 
         # Add today's game to the database
-        add_game_to_db(game_object)
-        add_valid_words_to_db(game_id, game_object["validWords"], game_object["baseValidWords"])
+        valid_words = game_data.pop("validWords") # Remove from main game data to save space
+        base_valid_words = game_data.pop("baseValidWords")
+        add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
+
+        add_game_to_db(game_data)
         add_game_to_archive(game_id)
 
         return {

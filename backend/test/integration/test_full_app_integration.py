@@ -94,9 +94,9 @@ def setup_aws_resources(setup_environment, aws_clients):
     # Run the tests
     yield
     
-    # Cleanup after tests
-    cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
-    assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    # # Cleanup after tests (Comment out if you want to see the DB items in AWS)
+    # cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    # assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"

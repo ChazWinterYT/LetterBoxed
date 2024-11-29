@@ -39,21 +39,26 @@ def merge_word_lists(output_file, *word_lists):
         *word_lists (list): Lists of words to merge.
     """
     unique_words = set()
+    word_count = 0
 
     for word_list in word_lists:
         if isinstance(word_list, str) and os.path.isfile(word_list):
             # If word_list is a file path, load it
             with open(word_list, 'r') as infile:
                 for line in infile:
+                    word_count += 1
                     word = clean_word(line)
                     if len(word) >= 3 and word.isalpha():
                         unique_words.add(word)
         elif isinstance(word_list, list):
             # If word_list is a Python list, process it directly
             for word in word_list:
+                word_count += 1
                 word = clean_word(word)
                 if len(word) >= 3 and word.isalpha():
                     unique_words.add(word)
+        print(f"Processed {word_count} words from current word list.")
+        word_count = 0
 
     # Write sorted unique words to output file
     with open(output_file, 'w') as outfile:
@@ -94,6 +99,7 @@ def fetch_todays_game() -> Dict[str, Any]:
         Exception: If game data cannot be found or parsed from the page.
     """
     url = "https://www.nytimes.com/puzzles/letter-boxed"
+    print(f"Getting data from {url}")
     response = requests.get(url)
     response.raise_for_status()  # Raise an error for bad status codes
 
@@ -105,12 +111,16 @@ def fetch_todays_game() -> Dict[str, Any]:
     
     # Extract game data from the JSON
     raw_game_data = script_tag.string.split("=", 1)[1].strip()
+    print("Raw game data fetched.")
 
     # Strip the trailing semicolon from the end of a JavaScript object
     if raw_game_data.endswith(";"):
         raw_game_data = raw_game_data[:-1]
 
     game_data = json.loads(raw_game_data)
+
+    game_id = game_data["printDate"]
+    game_layout = game_data["sides"]
 
     todays_game = {
         "gameId": game_data["printDate"],
@@ -120,7 +130,7 @@ def fetch_todays_game() -> Dict[str, Any]:
         "par": str(game_data["par"]),
         "createdBy": game_data.get("editor", ""),
     }
-
+    print(f"Game for {game_id} fetched: {game_layout}")
     return todays_game
 
 
@@ -147,6 +157,7 @@ def merge_nyt_dictionary_to_final(nyt_dictionary, temp_dictionary_path, final_di
     )
 
     # Step 4: Replace the final dictionary with the merged result
+    print(f"Merge complete! Copying merged dictionary to {final_dictionary_path}")
     copy_file(merged_temp_path, final_dictionary_path)
 
     # Step 5: Clean up temporary merged file
