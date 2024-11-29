@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 import boto3
 import json
 import pytest
@@ -815,6 +816,511 @@ def fetch_game_optional_field_defaults(aws_clients):
     """
     pass
 
+
+# ===================================================================
+# Save User State Lambda Tests
+# ===================================================================
+def save_user_state_valid_initial_state_en(aws_clients):
+    """
+    Test initializing a valid user session state in English.
+    Should create a new entry in the database with the correct initial values.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with the initial payload
+    response = handler(c.SAVE_USER_STATE_INITIAL_PAYLOAD_EN, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert not response_body["gameCompleted"], "Game should not be marked as completed initially"
+    assert response_body["wordsUsed"] == [], "Words used should be empty in the initial state"
+    print(f"Initial response message: {response_body['message']}")
+
+    # Verify the game state was saved in the database
+    user_state = db_utils.get_user_game_state("test-session-state-en", "test-game-state-en")
+    assert user_state is not None, "User game state should exist in the database"
+    assert user_state["wordsUsed"] == [], "Words used should be empty in the initial state"
+    assert user_state["gameCompleted"] is False, "Game should not be completed in the initial state"
+    assert user_state["TTL"] > int(time.time()), "TTL should be set to a future timestamp"
+
+    print(f"Successfully initialized English game state: {user_state}")
+
+
+def save_user_state_valid_update_state_en(aws_clients):
+    """
+    Test updating an existing user session state in English with new words.
+    Should update the words used and extend the TTL.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with the update payload (playing the word "HUMONGOUS")
+    response = handler(c.SAVE_USER_STATE_UPDATE_PAYLOAD_EN, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert not response_body["gameCompleted"], "Game should not be marked as completed yet"
+    assert response_body["wordsUsed"] == ["HUMONGOUS"], "Words used should now include 'HUMONGOUS'"
+    print(f"Update response message: {response_body['message']}")
+
+    # Verify the updated game state in the database
+    user_state = db_utils.get_user_game_state("test-session-state-en", "test-game-state-en")
+    assert user_state is not None, "User game state should still exist in the database"
+    assert user_state["wordsUsed"] == ["HUMONGOUS"], "Words used should match the update"
+    assert user_state["gameCompleted"] is False, "Game should not be completed after the update"
+    assert user_state["TTL"] > int(time.time()), "TTL should be extended to a future timestamp"
+
+    print(f"Successfully updated English game state: {user_state}")
+
+
+def save_user_state_game_completion_en(aws_clients):
+    """
+    Test saving a state in English that completes the game.
+    Should mark the game as completed in the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with the completion payload (playing the word "SCRATCHY")
+    response = handler(c.SAVE_USER_STATE_COMPLETION_PAYLOAD_EN, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert response_body["gameCompleted"], "Game should now be marked as completed"
+    assert response_body["wordsUsed"] == ["HUMONGOUS", "SCRATCHY"], "Words used should now include 'HUMONGOUS' and 'SCRATCHY'"
+    print(f"Completion response message: {response_body['message']}")
+
+    # Verify the updated game state in the database
+    user_state = db_utils.get_user_game_state("test-session-state-en", "test-game-state-en")
+    assert user_state is not None, "User game state should still exist in the database"
+    assert user_state["wordsUsed"] == ["HUMONGOUS", "SCRATCHY"], "Words used should match the update"
+    assert user_state["gameCompleted"], "Game should be marked as completed after the update"
+
+    print(f"Successfully completed English game state: {user_state}")
+
+
+def save_user_state_valid_initial_state_es(aws_clients):
+    """
+    Test saving a valid initial user session state in Spanish.
+    Should initialize the game state in the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with the initial Spanish payload
+    response = handler(c.SAVE_USER_STATE_INITIAL_PAYLOAD_ES, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert not response_body["gameCompleted"], "Game should not be completed at initialization"
+    print(f"Response message: {response_body['message']}")
+
+    # Verify the game state was added to the database
+    user_state = db_utils.get_user_game_state("test-session-state-es", "test-game-state-es")
+    assert user_state is not None, "User game state should exist in the database"
+    assert user_state["wordsUsed"] == [], "Words used should be empty at initialization"
+    assert user_state["originalWordsUsed"] == [], "Original words used should be empty at initialization"
+    assert not user_state["gameCompleted"], "Game should not be completed at initialization"
+
+    print(f"Successfully initialized Spanish game state: {user_state}")
+
+
+def save_user_state_valid_update_state_es(aws_clients):
+    """
+    Test updating an existing user session state in Spanish with new words.
+    Should update the words used and extend the TTL.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler to update the Spanish game state
+    response = handler(c.SAVE_USER_STATE_UPDATE_PAYLOAD_ES, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert not response_body["gameCompleted"], "Game should not be completed after this update"
+    assert "wordsUsed" in response_body, "Expected 'wordsUsed' key in the response body"
+    print(f"Response words used: {response_body['wordsUsed']}")
+
+    # Verify the game state was updated in the database
+    user_state = db_utils.get_user_game_state("test-session-state-es", "test-game-state-es")
+    assert user_state is not None, "User game state should exist in the database"
+    assert user_state["wordsUsed"] == ["UNICAMENTE"], "Words used should include the normalized version of the word"
+    assert user_state["originalWordsUsed"] == ["ÚNICAMENTE"], "Original words used should retain accents"
+    assert not user_state["gameCompleted"], "Game should not be completed after this update"
+
+    # Verify TTL was extended
+    current_time = int(time.time())
+    assert user_state["TTL"] > current_time, "TTL should be extended after the update"
+
+    print(f"Successfully updated Spanish game state: {user_state}")
+
+
+def save_user_state_game_completion_es(aws_clients):
+    """
+    Test saving a state in Spanish that completes the game.
+    Should mark the game as completed in the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with the payload to complete the game
+    response = handler(c.SAVE_USER_STATE_COMPLETION_PAYLOAD_ES, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert response_body["gameCompleted"], "Game should be marked as completed after this update"
+    assert "wordsUsed" in response_body, "Expected 'wordsUsed' key in the response body"
+    print(f"Response words used: {response_body['wordsUsed']}")
+
+    # Verify the game state was updated in the database
+    user_state = db_utils.get_user_game_state("test-session-state-es", "test-game-state-es")
+    assert user_state is not None, "User game state should exist in the database"
+    assert user_state["wordsUsed"] == ["UNICAMENTE", "ELECTRICOS"], "Words used should include all played words"
+    assert user_state["originalWordsUsed"] == ["ÚNICAMENTE", "ELECTRICOS"], "Original words used should retain accents"
+    assert user_state["gameCompleted"], "Game should be marked as completed in the database"
+
+    # Verify TTL was extended
+    current_time = int(time.time())
+    assert user_state["TTL"] > current_time, "TTL should be extended after the update"
+
+    print(f"Successfully completed Spanish game state: {user_state}")
+
+
+def save_user_state_same_session_different_games(aws_clients):
+    """
+    Test saving states with the same user session but different game IDs.
+    Ensure they are stored as separate entries in the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    print("Initializing game state for Game 1...")
+    response1 = handler(c.SAVE_USER_STATE_INIT_GAME1, None)
+    print(f"Response for Game 1 initialization: {response1}")
+
+    print("Initializing game state for Game 2...")
+    response2 = handler(c.SAVE_USER_STATE_INIT_GAME2, None)
+    print(f"Response for Game 2 initialization: {response2}")
+
+    # Verify responses
+    assert response1["statusCode"] == 200, f"Expected 200 for game 1, got {response1['statusCode']}"
+    assert response2["statusCode"] == 200, f"Expected 200 for game 2, got {response2['statusCode']}"
+
+    game_id_1 = json.loads(response1["body"])["gameId"]
+    game_id_2 = json.loads(response2["body"])["gameId"]
+
+    print(f"Game ID 1: {game_id_1}")
+    print(f"Game ID 2: {game_id_2}")
+
+    assert game_id_1 != game_id_2, "Game IDs should be different for this test"
+
+    print("Fetching user state for Game 1...")
+    user_state_game1 = db_utils.get_user_game_state("test-session-same", game_id_1)
+    print(f"User state for Game 1: {user_state_game1}")
+
+    print("Fetching user state for Game 2...")
+    user_state_game2 = db_utils.get_user_game_state("test-session-same", game_id_2)
+    print(f"User state for Game 2: {user_state_game2}")
+
+    assert user_state_game1 is not None, f"State for game ID {game_id_1} should exist"
+    assert user_state_game2 is not None, f"State for game ID {game_id_2} should exist"
+
+    print("Updating game state for Game 1 with unique words...")
+    handler(c.SAVE_USER_STATE_UPDATE_GAME1, None)
+
+    print("Updating game state for Game 2 with unique words...")
+    handler(c.SAVE_USER_STATE_UPDATE_GAME2, None)
+
+    print("Fetching updated user state for Game 1...")
+    updated_game1 = db_utils.get_user_game_state("test-session-same", game_id_1)
+    print(f"Updated user state for Game 1: {updated_game1}")
+
+    print("Fetching updated user state for Game 2...")
+    updated_game2 = db_utils.get_user_game_state("test-session-same", game_id_2)
+    print(f"Updated user state for Game 2: {updated_game2}")
+
+    assert updated_game1["wordsUsed"] == ["HUMONGOUS"], "Game 1 should reflect its unique words"
+    assert updated_game2["wordsUsed"] == ["SCRATCHY"], "Game 2 should reflect its unique words"
+
+    print("Successfully tested same session with different game IDs.")
+
+
+def save_user_state_same_game_different_sessions(aws_clients):
+    """
+    Test saving states with the same game ID but different user sessions.
+    Ensure they are stored as separate entries in the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Initialize two separate game states for the same game ID but different sessions
+    response1 = handler(c.SAVE_USER_STATE_INIT_SESSION1, None)
+    response2 = handler(c.SAVE_USER_STATE_INIT_SESSION2, None)
+
+    # Verify responses
+    assert response1["statusCode"] == 200, f"Expected 200 for session 1, got {response1['statusCode']}"
+    assert response2["statusCode"] == 200, f"Expected 200 for session 2, got {response2['statusCode']}"
+
+    session_id_1 = json.loads(response1["body"])["sessionId"]
+    session_id_2 = json.loads(response2["body"])["sessionId"]
+
+    assert session_id_1 != session_id_2, "Session IDs should be different for this test"
+
+    # Verify both states exist in the database
+    user_state_session1 = db_utils.get_user_game_state(session_id_1, "test-game-same")
+    user_state_session2 = db_utils.get_user_game_state(session_id_2, "test-game-same")
+
+    assert user_state_session1 is not None, f"State for session ID {session_id_1} should exist"
+    assert user_state_session2 is not None, f"State for session ID {session_id_2} should exist"
+
+    # Verify entries are distinct by updating the sessions with different words
+    handler(c.SAVE_USER_STATE_UPDATE_SESSION1, None)  # Play a word in session 1
+    handler(c.SAVE_USER_STATE_UPDATE_SESSION2, None)  # Play a word in session 2
+
+    updated_session1 = db_utils.get_user_game_state(session_id_1, "test-game-same")
+    updated_session2 = db_utils.get_user_game_state(session_id_2, "test-game-same")
+
+    assert updated_session1["wordsUsed"] == ["UNICAMENTE"], "Session 1 should reflect its unique words"
+    assert updated_session2["wordsUsed"] == ["ELECTRICOS"], "Session 2 should reflect its unique words"
+
+    print("Successfully tested same game ID with different user sessions.")
+
+
+def save_user_state_missing_parameters(aws_clients):
+    """
+    Test saving user state when required parameters are missing (e.g., gameLayout, gameId, or sessionId).
+    Should return a 400 status code and ensure no state is added to the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with a payload missing gameLayout
+    print("Testing save_user_state with missing gameLayout...")
+    response = handler(c.SAVE_USER_STATE_MISSING_GAME_LAYOUT, None)
+    print("Response:", response)
+
+    # Verify the response
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert "missing required parameters" in response_body["message"].lower(), (
+        "Expected an error message about missing required parameters"
+    )
+
+    # Verify no state was added to the database
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+
+    print("Successfully tested save_user_state with missing parameters.")
+
+
+def save_user_state_invalid_json(aws_clients):
+    """
+    Test saving user state with a malformed JSON payload.
+    Should return a 400 status code and ensure no state is added to the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with a malformed JSON payload
+    print("Testing save_user_state with invalid JSON...")
+    response = handler(c.SAVE_USER_STATE_INVALID_JSON, None)
+    print("Response:", response)
+
+    # Verify the response
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected a 'message' key in the response body"
+    assert "invalid json format" in response_body["message"].lower(), (
+        "Expected an error message about invalid JSON format"
+    )
+
+    # Verify no state was added to the database
+    assert_table_is_empty(dynamodb, os.environ["SESSION_STATES_TABLE"])
+
+    print("Successfully tested save_user_state with invalid JSON.")
+
+
+def save_user_state_nonexistent_game(aws_clients):
+    """
+    Test saving user state for a non-existent gameId.
+    Should initialize a new game state and store it in the database.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.save_user_state.handler import handler
+
+    # Call the handler with a non-existent gameId payload
+    response = handler(c.SAVE_USER_STATE_NONEXISTENT_GAME, None)
+
+    # Verify the response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "gameId" in response_body, "Expected 'gameId' in the response body"
+    assert response_body["gameId"] == "nonexistent-game-id", "Game ID in response should match the non-existent game ID"
+
+    # Verify a new state is created in the database
+    user_game_state = db_utils.get_user_game_state("test-session-nonexistent", "nonexistent-game-id")
+    assert user_game_state is not None, "Expected a new game state to be created for the non-existent game ID"
+    assert user_game_state["gameCompleted"] is False, "Game should not be marked as completed"
+    assert user_game_state["wordsUsed"] == [], "Words used should be an empty list for a new state"
+
+    print(f"Successfully tested creation of a new state for non-existent game ID.")
+
+
+def fetch_user_state_valid(aws_clients):
+    """
+    Test fetching a valid user state.
+    Should return a 200 status code with the correct game state.
+    """
+    dynamodb = aws_clients["dynamodb"]
+
+    # Import the handler
+    from lambdas.fetch_user_state.handler import handler
+
+    # Initialize a user state in the database
+    db_utils.save_user_session_state({
+        "sessionId": "test-session-valid",
+        "gameId": "test-game-id",
+        "wordsUsed": ["HUMONGOUS"],
+        "originalWordsUsed": ["HUMONGOUS"],
+        "gameCompleted": False,
+        "lastUpdated": 1732846529,
+    })
+
+    # Call the handler
+    response = handler(FETCH_USER_STATE_VALID, None)
+
+    # Verify response
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert response_body["sessionId"] == "test-session-valid", "Session ID mismatch"
+    assert response_body["gameId"] == "test-game-id", "Game ID mismatch"
+    assert response_body["wordsUsed"] == ["HUMONGOUS"], "Words used mismatch"
+
+    print("Successfully fetched valid user state.")
+
+
+def fetch_user_state_missing_params(aws_clients):
+    """
+    Test fetching a user state with missing parameters.
+    Should return a 400 status code.
+    """
+    # Import the handler
+    from lambdas.fetch_user_state.handler import handler
+
+    # Call the handler
+    response = handler(FETCH_USER_STATE_MISSING_PARAMS, None)
+
+    # Verify response
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected 'message' key in response body"
+    assert "sessionId and gameId are required" in response_body["message"], "Expected missing parameter error message"
+
+    print("Successfully handled missing parameters.")
+
+
+def fetch_user_state_nonexistent(aws_clients):
+    """
+    Test fetching a user state for a non-existent game state.
+    Should return a 404 status code.
+    """
+    # Import the handler
+    from lambdas.fetch_user_state.handler import handler
+
+    # Call the handler
+    response = handler(FETCH_USER_STATE_NONEXISTENT, None)
+
+    # Verify response
+    assert response["statusCode"] == 404, f"Expected 404 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected 'message' key in response body"
+    assert "User game state not found" in response_body["message"], "Expected not found error message"
+
+    print("Successfully handled non-existent user state.")
+
+
+def fetch_user_state_malformed_event(aws_clients):
+    """
+    Test fetching a user state with a malformed event.
+    Should return a 400 status code.
+    """
+    # Import the handler
+    from lambdas.fetch_user_state.handler import handler
+
+    # Call the handler
+    response = handler(FETCH_USER_STATE_MALFORMED_EVENT, None)
+
+    # Verify response
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected 'message' key in response body"
+    assert "sessionId and gameId are required" in response_body["message"], "Expected missing parameter error message"
+
+    print("Successfully handled malformed event.")
+
+# ===================================================================
+# Save User State Lambda Tests
+# ===================================================================
+def fetch_user_state_internal_server_error(aws_clients):
+    """
+    Simulate an internal server error during fetching.
+    Should return a 500 status code.
+    """
+    from lambdas.fetch_user_state.handler import handler
+    from lambdas.common.db_utils import get_user_game_state
+
+    # Mock the get_user_game_state function to raise an exception
+    import pytest
+    pytest_mock = pytest.importorskip("pytest_mock")
+    mocker = pytest_mock.MockerFixture()
+    mocker.patch("lambdas.common.db_utils.get_user_game_state", side_effect=Exception("Simulated internal server error"))
+
+    # Call the handler
+    response = handler(FETCH_USER_STATE_VALID_BUT_INTERNAL_ERROR, None)
+
+    # Verify response
+    assert response["statusCode"] == 500, f"Expected 500 status code, got {response['statusCode']}"
+    response_body = json.loads(response["body"])
+    assert "message" in response_body, "Expected 'message' key in response body"
+    assert "internal server error" in response_body["message"].lower(), "Expected internal server error message"
+
+    print("Successfully handled internal server error.")
 
 
 # ===================================================================

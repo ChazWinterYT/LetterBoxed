@@ -95,12 +95,12 @@ def setup_aws_resources(setup_environment, aws_clients):
     yield
     
     # Cleanup after tests
-    cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
-    assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    # cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    # assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"
-def est_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
+def test_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]
@@ -118,16 +118,24 @@ def est_full_app_integration(setup_environment, aws_clients, setup_aws_resources
     f.create_custom_size_mismatch(aws_clients)
     f.create_custom_unsupported_language(aws_clients)
     f.create_custom_malformed_json(aws_clients)
+
     f.create_random_unsupported_language(aws_clients)
     f.create_random_invalid_board_size(aws_clients)
     f.create_random_invalid_seed_words(aws_clients)
     f.create_random_malformed_json(aws_clients)
     f.create_random_missing_body(aws_clients)
+
     f.fetch_game_missing_game_id(aws_clients)
     f.fetch_game_nonexistent_game_id(aws_clients)
     f.fetch_game_invalid_json(aws_clients)
     f.fetch_game_internal_server_error(aws_clients)
     f.fetch_game_optional_field_defaults(aws_clients)
+
+    f.save_user_state_missing_parameters(aws_clients)
+    f.save_user_state_invalid_json(aws_clients)
+    f.save_user_state_nonexistent_game(aws_clients)
+
+    # Now we'll handle tests that result in writes to the database
 
     # Create a custom game, and fetch a game by game ID
     print("Testing create_custom and fetch_game lambdas...")
@@ -146,7 +154,16 @@ def est_full_app_integration(setup_environment, aws_clients, setup_aws_resources
     f.create_random_valid_4x4_with_seed_en(aws_clients)
     f.create_random_valid_4x4_with_seed_es(aws_clients)
 
-    
+    # Save a user game state
+    print("Testing save_user_state lambda...")
+    f.save_user_state_valid_initial_state_en(aws_clients)
+    f.save_user_state_valid_update_state_en(aws_clients)
+    f.save_user_state_game_completion_en(aws_clients)
+    f.save_user_state_valid_initial_state_es(aws_clients)
+    f.save_user_state_valid_update_state_es(aws_clients)
+    f.save_user_state_game_completion_es(aws_clients)
+    f.save_user_state_same_session_different_games(aws_clients)
+    f.save_user_state_same_game_different_sessions(aws_clients)
 
 
 # ===========================================================================

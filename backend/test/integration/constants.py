@@ -287,3 +287,250 @@ FETCH_GAME_EVENT_OPTIONAL_FIELDS_DEFAULT = lambda game_id: {
         "Content-Type": "application/json"
     }
 }
+
+# ===================================================================
+# Constants for Save User State Event Payloads
+# ===================================================================
+SAVE_USER_STATE_INITIAL_PAYLOAD_EN = {
+    "body": json.dumps({
+        "gameLayout": ["THN", "YSO", "ACU", "RMG"],
+        "gameId": "test-game-state-en",
+        "sessionId": "test-session-state-en",
+        "wordsUsed": [],
+        "originalWordsUsed": []
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+SAVE_USER_STATE_UPDATE_PAYLOAD_EN = {
+    "body": json.dumps({
+        "gameLayout": ["THN", "YSO", "ACU", "RMG"],
+        "gameId": "test-game-state-en",
+        "sessionId": "test-session-state-en",
+        "wordsUsed": ["HUMONGOUS"],
+        "originalWordsUsed": ["HUMONGOUS"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+SAVE_USER_STATE_COMPLETION_PAYLOAD_EN = {
+    "body": json.dumps({
+        "gameLayout": ["THN", "YSO", "ACU", "RMG"],
+        "gameId": "test-game-state-en",
+        "sessionId": "test-session-state-en",
+        "wordsUsed": ["HUMONGOUS", "SCRATCHY"],
+        "originalWordsUsed": ["HUMONGOUS", "SCRATCHY"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+SAVE_USER_STATE_INITIAL_PAYLOAD_ES = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-state-es",
+        "sessionId": "test-session-state-es",
+        "wordsUsed": [],
+        "originalWordsUsed": []
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+SAVE_USER_STATE_UPDATE_PAYLOAD_ES = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-state-es",
+        "sessionId": "test-session-state-es",
+        "wordsUsed": ["UNICAMENTE"],
+        "originalWordsUsed": ["ÚNICAMENTE"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+SAVE_USER_STATE_COMPLETION_PAYLOAD_ES = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-state-es",
+        "sessionId": "test-session-state-es",
+        "wordsUsed": ["UNICAMENTE", "ELECTRICOS"],
+        "originalWordsUsed": ["ÚNICAMENTE", "ELECTRICOS"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Initialize game state for Game 1
+SAVE_USER_STATE_INIT_GAME1 = {
+    "body": json.dumps({
+        "gameLayout": ["THN", "YSO", "ACU", "RMG"],
+        "gameId": "test-game-1",
+        "sessionId": "test-session-same",
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Initialize game state for Game 2
+SAVE_USER_STATE_INIT_GAME2 = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-2",
+        "sessionId": "test-session-same",
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Update Game 1
+SAVE_USER_STATE_UPDATE_GAME1 = {
+    "body": json.dumps({
+        "gameLayout": ["THN", "YSO", "ACU", "RMG"],
+        "gameId": "test-game-1",
+        "sessionId": "test-session-same",
+        "wordsUsed": ["HUMONGOUS"],
+        "originalWordsUsed": ["HUMONGOUS"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Update Game 2
+SAVE_USER_STATE_UPDATE_GAME2 = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-2",
+        "sessionId": "test-session-same",
+        "wordsUsed": ["SCRATCHY"],
+        "originalWordsUsed": ["SCRATCHY"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Initialize game state for Session 1
+SAVE_USER_STATE_INIT_SESSION1 = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-same",
+        "sessionId": "test-session-1",
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Initialize game state for Session 2
+SAVE_USER_STATE_INIT_SESSION2 = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-same",
+        "sessionId": "test-session-2",
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Update Session 1
+SAVE_USER_STATE_UPDATE_SESSION1 = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-same",
+        "sessionId": "test-session-1",
+        "wordsUsed": ["UNICAMENTE"],
+        "originalWordsUsed": ["ÚNICAMENTE"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Update Session 2
+SAVE_USER_STATE_UPDATE_SESSION2 = {
+    "body": json.dumps({
+        "gameLayout": ["OER", "MLT", "CSN", "AUI"],
+        "gameId": "test-game-same",
+        "sessionId": "test-session-2",
+        "wordsUsed": ["ELECTRICOS"],
+        "originalWordsUsed": ["ELECTRICOS"]
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+SAVE_USER_STATE_MISSING_GAME_LAYOUT = {
+    "body": json.dumps({
+        "gameId": "test-game-1",
+        "sessionId": "test-session-1"
+        # Missing 'gameLayout'
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+SAVE_USER_STATE_INVALID_JSON = {
+    "body": '{"gameLayout": ["THN", "YSO", "ACU", "RMG"], "gameId": "test-game-1", "sessionId": "test-session-1"',  # Missing closing brace
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Invalid event: Non-existent gameId
+SAVE_USER_STATE_NONEXISTENT_GAME = {
+    "body": json.dumps({
+        "gameLayout": ["ABC", "DEF", "GHI", "JKL"],  # Example layout
+        "gameId": "nonexistent-game-id",  # Non-existent gameId
+        "sessionId": "test-session-nonexistent",  # Test session ID
+        "wordsUsed": [],
+        "originalWordsUsed": []
+    }),
+    "headers": {
+        "Content-Type": "application/json"
+    }
+}
+
+# Constants for event payloads
+FETCH_USER_STATE_VALID = {
+    "pathParameters": {
+        "sessionId": "test-session-valid",
+    },
+    "queryStringParameters": {
+        "gameId": "test-game-id",
+    },
+}
+
+FETCH_USER_STATE_MISSING_PARAMS = {
+    "pathParameters": {
+        "sessionId": "test-session-missing",
+    },
+    "queryStringParameters": {},  # Missing gameId
+}
+
+FETCH_USER_STATE_NONEXISTENT = {
+    "pathParameters": {
+        "sessionId": "test-session-nonexistent",
+    },
+    "queryStringParameters": {
+        "gameId": "nonexistent-game-id",
+    },
+}
+
+FETCH_USER_STATE_MALFORMED_EVENT = {
+    # Missing both pathParameters and queryStringParameters
+}
