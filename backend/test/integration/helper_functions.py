@@ -1209,6 +1209,7 @@ def fetch_user_state_valid(aws_clients):
     Test fetching a valid user state.
     Should return a 200 status code with the correct game state.
     """
+    print("Entering fetch_user_state_valid")
     dynamodb = aws_clients["dynamodb"]
 
     # Import the handler
@@ -1225,7 +1226,7 @@ def fetch_user_state_valid(aws_clients):
     })
 
     # Call the handler
-    response = handler(FETCH_USER_STATE_VALID, None)
+    response = handler(c.FETCH_USER_STATE_VALID, None)
 
     # Verify response
     assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
@@ -1242,11 +1243,12 @@ def fetch_user_state_missing_params(aws_clients):
     Test fetching a user state with missing parameters.
     Should return a 400 status code.
     """
+    print("Entering fetch_user_state_missing_params")
     # Import the handler
     from lambdas.fetch_user_state.handler import handler
 
     # Call the handler
-    response = handler(FETCH_USER_STATE_MISSING_PARAMS, None)
+    response = handler(c.FETCH_USER_STATE_MISSING_PARAMS, None)
 
     # Verify response
     assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
@@ -1259,22 +1261,43 @@ def fetch_user_state_missing_params(aws_clients):
 
 def fetch_user_state_nonexistent(aws_clients):
     """
-    Test fetching a user state for a non-existent game state.
-    Should return a 404 status code.
+    Test fetching user session state for a nonexistent session/game combination.
+    Should initialize and return a new state instead of returning a 404.
     """
+    print("Entering fetch_user_state_nonexistent")
+    dynamodb = aws_clients["dynamodb"]
+
     # Import the handler
     from lambdas.fetch_user_state.handler import handler
 
-    # Call the handler
-    response = handler(FETCH_USER_STATE_NONEXISTENT, None)
+    # Use a nonexistent session and game ID
+    event = {
+        "pathParameters": {"sessionId": "test-session-new"},
+        "queryStringParameters": {"gameId": "test-game-new"}
+    }
+
+    print("Calling the fetch_user_state handler for a nonexistent session/game...")
+    response = handler(event, None)
 
     # Verify response
-    assert response["statusCode"] == 404, f"Expected 404 status code, got {response['statusCode']}"
+    assert response["statusCode"] == 200, f"Expected 200, got {response['statusCode']}"
     response_body = json.loads(response["body"])
-    assert "message" in response_body, "Expected 'message' key in response body"
-    assert "User game state not found" in response_body["message"], "Expected not found error message"
+    print(f"Handler response: {response_body}")
 
-    print("Successfully handled non-existent user state.")
+    # Validate initialized state
+    assert response_body["sessionId"] == "test-session-new", "Session ID does not match"
+    assert response_body["gameId"] == "test-game-new", "Game ID does not match"
+    assert response_body["wordsUsed"] == [], "Expected no words used in the initialized state"
+    assert response_body["originalWordsUsed"] == [], "Expected no original words used in the initialized state"
+    assert response_body["gameCompleted"] is False, "Expected gameCompleted to be False"
+
+    # Check the state exists in the database
+    state_in_db = db_utils.get_user_game_state("test-session-new", "test-game-new")
+    assert state_in_db is not None, "Expected the new state to be saved in the database"
+    assert state_in_db["wordsUsed"] == [], "Expected no words used in the database state"
+    assert state_in_db["gameCompleted"] is False, "Expected gameCompleted to be False in the database state"
+
+    print("Successfully fetched and initialized state for a nonexistent session/game.")
 
 
 def fetch_user_state_malformed_event(aws_clients):
@@ -1282,45 +1305,20 @@ def fetch_user_state_malformed_event(aws_clients):
     Test fetching a user state with a malformed event.
     Should return a 400 status code.
     """
+    print("Entering fetch_user_state_malformed_event")
     # Import the handler
     from lambdas.fetch_user_state.handler import handler
 
     # Call the handler
-    response = handler(FETCH_USER_STATE_MALFORMED_EVENT, None)
+    response = handler(c.FETCH_USER_STATE_MALFORMED_EVENT, None)
 
     # Verify response
     assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
     assert "message" in response_body, "Expected 'message' key in response body"
-    assert "sessionId and gameId are required" in response_body["message"], "Expected missing parameter error message"
+    assert "Missing path or query parameters" in response_body["message"], "Expected missing parameter error message"
 
     print("Successfully handled malformed event.")
-
-
-def fetch_user_state_internal_server_error(aws_clients):
-    """
-    Simulate an internal server error during fetching.
-    Should return a 500 status code.
-    """
-    from lambdas.fetch_user_state.handler import handler
-    from lambdas.common.db_utils import get_user_game_state
-
-    # Mock the get_user_game_state function to raise an exception
-    import pytest
-    pytest_mock = pytest.importorskip("pytest_mock")
-    mocker = pytest_mock.MockerFixture()
-    mocker.patch("lambdas.common.db_utils.get_user_game_state", side_effect=Exception("Simulated internal server error"))
-
-    # Call the handler
-    response = handler(FETCH_USER_STATE_VALID_BUT_INTERNAL_ERROR, None)
-
-    # Verify response
-    assert response["statusCode"] == 500, f"Expected 500 status code, got {response['statusCode']}"
-    response_body = json.loads(response["body"])
-    assert "message" in response_body, "Expected 'message' key in response body"
-    assert "internal server error" in response_body["message"].lower(), "Expected internal server error message"
-
-    print("Successfully handled internal server error.")
 
 
 # ===================================================================

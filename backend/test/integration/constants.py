@@ -519,7 +519,7 @@ FETCH_USER_STATE_MISSING_PARAMS = {
     "pathParameters": {
         "sessionId": "test-session-missing",
     },
-    "queryStringParameters": {},  # Missing gameId
+    "queryStringParameters": {"notGameId": "test-game-id"},  # Missing gameId
 }
 
 FETCH_USER_STATE_NONEXISTENT = {

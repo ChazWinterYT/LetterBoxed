@@ -17,9 +17,15 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
     try:
         # Extract sessionId and gameId from parameters
-        session_id = event["pathParameters"]["sessionId"]
-        game_id = event["queryStringParameters"].get("gameId")
-        
+        path_params = event.get("pathParameters")
+        query_params = event.get("queryStringParameters")
+
+        if not path_params or not query_params:
+            return error_response("Missing path or query parameters.", 400)
+
+        session_id = path_params.get("sessionId")
+        game_id = query_params.get("gameId")
+
         if not session_id or not game_id:
             return error_response("sessionId and gameId are required.", 400)
         

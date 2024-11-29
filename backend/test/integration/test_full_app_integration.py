@@ -135,15 +135,19 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.save_user_state_invalid_json(aws_clients)
     f.save_user_state_nonexistent_game(aws_clients)
 
+    f.fetch_user_state_missing_params(aws_clients)
+    f.fetch_user_state_nonexistent(aws_clients)
+    f.fetch_user_state_malformed_event(aws_clients)
+
     # Now we'll handle tests that result in writes to the database
 
-    # # Create a custom game, and fetch a game by game ID
-    # print("Testing create_custom and fetch_game lambdas...")
-    # game_id = f.create_custom_english_game(aws_clients)
-    # f.create_custom_spanish_game(aws_clients)
-    # f.create_custom_4x4_game_english(aws_clients)
-    # f.create_custom_4x4_game_spanish(aws_clients)
-    # f.fetch_game_valid_game_id(aws_clients, game_id)
+    # Create a custom game, and fetch a game by game ID
+    print("Testing create_custom and fetch_game lambdas...")
+    game_id = f.create_custom_english_game(aws_clients)
+    f.create_custom_spanish_game(aws_clients)
+    f.create_custom_4x4_game_english(aws_clients)
+    f.create_custom_4x4_game_spanish(aws_clients)
+    f.fetch_game_valid_game_id(aws_clients, game_id)
 
     # Create a random game
     print("Testing create_random lambda...")
@@ -154,16 +158,18 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.create_random_valid_4x4_with_seed_en(aws_clients)
     f.create_random_valid_4x4_with_seed_es(aws_clients)
 
-    # # Save a user game state
-    # print("Testing save_user_state lambda...")
-    # f.save_user_state_valid_initial_state_en(aws_clients)
-    # f.save_user_state_valid_update_state_en(aws_clients)
-    # f.save_user_state_game_completion_en(aws_clients)
-    # f.save_user_state_valid_initial_state_es(aws_clients)
-    # f.save_user_state_valid_update_state_es(aws_clients)
-    # f.save_user_state_game_completion_es(aws_clients)
-    # f.save_user_state_same_session_different_games(aws_clients)
-    # f.save_user_state_same_game_different_sessions(aws_clients)
+    # Save a user game state
+    print("Testing save_user_state and fetch_user_state lambdas...")
+    f.save_user_state_valid_initial_state_en(aws_clients)
+    f.save_user_state_valid_update_state_en(aws_clients)
+    f.save_user_state_game_completion_en(aws_clients)
+    f.save_user_state_valid_initial_state_es(aws_clients)
+    f.save_user_state_valid_update_state_es(aws_clients)
+    f.save_user_state_game_completion_es(aws_clients)
+    f.save_user_state_same_session_different_games(aws_clients)
+    f.save_user_state_same_game_different_sessions(aws_clients)
+    f.fetch_user_state_valid(aws_clients)
+    
 
 
 # ===========================================================================
