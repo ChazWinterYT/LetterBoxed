@@ -1,3 +1,4 @@
+import time
 import random
 import unicodedata
 from typing import List, Optional, Tuple, Dict
@@ -28,30 +29,45 @@ def create_random_game(language: str = "en", board_size: str = "3x3", seed_words
     Raises:
         ValueError if a step in the process fails.
     """
+    start_time = time.time()
+    print(f"[INFO] Starting random game creation for language '{language}' and board size '{board_size}'")
+
     # Fetch the dictionary for the specified language
+    dict_start = time.time()
     dictionary = get_dictionary(language)
     basic_dictionary = get_basic_dictionary(language)
+    dict_time = time.time() - dict_start
+    print(f"[INFO] Dictionary fetch completed in {dict_time:.2f} seconds")
+
     if not dictionary:
         raise ValueError("Dictionary not found for the specified language.")
     if not basic_dictionary:
-        raise ValueError("Basic dictionary not found for the speciied language.")
+        raise ValueError("Basic dictionary not found for the specified language.")
 
     # Select two words that can be potentially linked for the random puzzle, if not provided
+    select_words_start = time.time()
     if not seed_words:
-        seed_words = select_two_words(dictionary, board_size)
+        print("Seed words not passed. Selecting two words from basic dictionary.")
+        seed_words = select_two_words(basic_dictionary, board_size)
         if not seed_words:
             raise ValueError("Failed to find a valid pair of words for the game.")
+    select_words_time = time.time() - select_words_start
+    print(f"[INFO] Word selection completed in {select_words_time:.2f} seconds")
 
     word1, word2 = seed_words
-    
+    print(f"[INFO] Selected words: {word1}, {word2}")
+
     # Validate that the two provided words are actually in the dictionary
     if word1 not in dictionary or word2 not in dictionary:
         raise ValueError(f"One or both words ({word1}, {word2}) are not valid dictionary words.")
 
     # Generate the game layout
+    layout_start = time.time()
     game_layout = generate_layout(word1, word2, board_size)
+    layout_time = time.time() - layout_start
     if not game_layout:
         raise ValueError("Failed to generate a valid layout for the game.")
+    print(f"[INFO] Layout generation completed in {layout_time:.2f} seconds")
 
     game_data = create_game_schema(
         game_layout=game_layout,
@@ -63,14 +79,22 @@ def create_random_game(language: str = "en", board_size: str = "3x3", seed_words
     )
 
     # Store the game in the games DB
-    valid_words = game_data.pop("validWords") # Remove from main game data to save space
+    db_start = time.time()
+    valid_words = game_data.pop("validWords")  # Remove from main game data to save space
     base_valid_words = game_data.pop("baseValidWords")
     add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
-    # Save the rest of the game data to the main table
     add_game_to_db(game_data)
+    db_time = time.time() - db_start
+    print(f"[INFO] Database operations completed in {db_time:.2f} seconds")
 
     # Add the game to the random games table and track the count
+    atomic_start = time.time()
     atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)
+    atomic_time = time.time() - atomic_start
+    print(f"[INFO] Atomic number tracking completed in {atomic_time:.2f} seconds")
+
+    total_time = time.time() - start_time
+    print(f"[INFO] Random game creation completed in {total_time:.2f} seconds")
 
     return game_data
 
@@ -89,19 +113,20 @@ def generate_layout(word1: str, word2: str, board_size: str) -> Optional[List[st
         Optional[List[str]]: A list of 4 strings representing the sides of the board,
         or None if no valid layout can be generated.
     """
+    layout_start = time.time()
+    print(f"[INFO] Starting layout generation for words '{word1}' and '{word2}' with board size '{board_size}'")
     try:
         rows, cols = map(int, board_size.lower().split('x'))
     except ValueError:
         raise ValueError(f"Invalid board size format: '{board_size}'. Expected 'm x n'.")
 
     total_spaces = (2 * rows) + (2 * cols)
-    
     base_word1 = normalize_to_base(word1)
     base_word2 = normalize_to_base(word2)
 
     if base_word2[0] != base_word1[-1]:
         return None
-    
+
     combined_letters = base_word1 + base_word2[1:]
     if len(set(combined_letters)) != total_spaces:
         return None
@@ -137,7 +162,12 @@ def generate_layout(word1: str, word2: str, board_size: str) -> Optional[List[st
         return False
 
     if backtrack(0, -1):
-        return shuffle_final_layout(sides)
+        shuffled_sides = shuffle_final_layout(sides)
+        layout_time = time.time() - layout_start
+        print(f"[INFO] Layout generation {shuffled_sides} completed in {layout_time:.2f} seconds")
+        return shuffled_sides
+    layout_time = time.time() - layout_start
+    print(f"[ERROR] Layout generation failed after {layout_time:.2f} seconds")
     return None
 
 
@@ -168,22 +198,24 @@ def select_two_words(dictionary: List[str], board_size: str, max_attempts: int =
     Returns:
         Optional[Tuple[str, str]]: A tuple of two words or None if no pair is found.
     """
+    print(f"[INFO] Starting word selection with board size '{board_size}'")
     try:
         rows, cols = map(int, board_size.lower().split('x'))
     except ValueError:
         raise ValueError(f"Invalid board size format: '{board_size}'. Expected 'm x n'.")
     num_unique_letters_required = (2 * rows) + (2 * cols)
 
-    for _ in range(max_attempts):
+    for attempt in range(max_attempts):
         word1, word2 = random.sample(dictionary, 2)
         base_word1 = normalize_to_base(word1)
         base_word2 = normalize_to_base(word2)
-        # Compare base letters for linking
         if (
-            base_word1[-1] == base_word2[0] and
-            len(set(base_word1 + base_word2)) == num_unique_letters_required 
+            base_word1[-1] == base_word2[0]
+            and len(set(base_word1 + base_word2)) == num_unique_letters_required
         ):
-            return word1, word2 # Return the original words
+            print(f"[INFO] Word selection succeeded after {attempt + 1} attempts")
+            return word1, word2
+    print(f"[ERROR] Word selection failed after {max_attempts} attempts")
     return None
 
 

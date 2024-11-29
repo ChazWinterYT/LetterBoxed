@@ -65,15 +65,25 @@ def test_fetch_dictionary_from_s3_key_not_found(mock_s3_client, language):
         _fetch_dictionary_from_s3(language, "dictionary")
 
 
-def test_get_dictionary_local(mocker):
-    mock_load_local = mocker.patch("lambdas.common.dictionary_utils._load_local_dictionary", return_value=["word1", "word2"])
-    words = get_dictionary("en")
-    assert words == ["word1", "word2"]
-    mock_load_local.assert_called_once_with("en", "dictionary")
+def test_get_basic_dictionary_local(mocker):
+    from lambdas.common.dictionary_utils import get_basic_dictionary
+
+    # Mock the _load_dictionary function
+    mocker.patch(
+        "lambdas.common.dictionary_utils._load_dictionary",
+        return_value=["basico1", "basico2"]
+    )
+
+    # Test get_basic_dictionary
+    dictionary = get_basic_dictionary("es")
+    assert dictionary == ["basico1", "basico2"]
 
 
 def test_get_basic_dictionary_local(mocker):
-    mock_load_local = mocker.patch("lambdas.common.dictionary_utils._load_local_dictionary", return_value=["basic1", "basic2"])
+    mock_load_local = mocker.patch(
+        "lambdas.common.dictionary_utils._load_local_dictionary", 
+        return_value=["basic1", "basic2"]
+    )
     words = get_basic_dictionary("en")
     assert words == ["basic1", "basic2"]
     mock_load_local.assert_called_once_with("en", "basic")

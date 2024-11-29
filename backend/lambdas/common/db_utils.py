@@ -35,7 +35,6 @@ def add_game_to_db(game_data: Dict[str, Any]) -> bool:
     """
     try:
         table = get_games_table()
-        print("Using Games Table:", table.table_name)
         table.put_item(Item=game_data)
         return True
     except ClientError as e:
@@ -55,7 +54,6 @@ def fetch_game_by_id(game_id: str) -> Optional[Dict[str, Any]]:
     """
     try:
         table = get_games_table()
-        print("Using Games Table:", table.table_name)
         response = table.get_item(Key={"gameId": game_id})
         item = response.get("Item")
         return item if item else None
@@ -124,7 +122,6 @@ def add_valid_words_to_db(game_id: str, valid_words: List[str], base_valid_words
     """
     try:
         table = get_valid_words_table()
-        print("Using Valid Words Table:", table.table_name)
         valid_words_entry = {
             "gameId": game_id,
             "validWordCount": len(valid_words),
@@ -150,7 +147,6 @@ def fetch_valid_words_by_game_id(game_id: str) -> Optional[List[str]]:
     """
     try:
         table = get_valid_words_table()
-        print("Using Valid Words Table:", table.table_name)
         response = table.get_item(Key={"gameId": game_id})
         item: Optional[Dict[str, List[str]]] = response.get("Item")
         return item.get("validWords", []) if item else None
@@ -186,7 +182,6 @@ def get_user_game_state(session_id: str, game_id: str) -> Optional[Dict[str, Any
     """
     try:
         table = get_session_states_table()
-        print("Using Session States Table:", table.table_name)
         
         # Composite key for querying the table
         key = {
@@ -238,7 +233,6 @@ def save_user_session_state(session_data: Dict[str, Any]) -> bool:
     """
     try:
         table = get_session_states_table()
-        print("Using Session States Table:", table.table_name)
         table.put_item(Item=session_data)
         return True
     except ClientError as e:

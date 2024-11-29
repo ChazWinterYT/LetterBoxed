@@ -1,3 +1,4 @@
+import os
 import pytest
 import random
 from unittest.mock import MagicMock, patch
@@ -29,6 +30,7 @@ def mock_game_schema():
 
 
 @patch("lambdas.create_random.random_game_service.get_dictionary")
+@patch("lambdas.create_random.random_game_service.get_basic_dictionary")
 @patch("lambdas.create_random.random_game_service.select_two_words")
 @patch("lambdas.create_random.random_game_service.generate_layout")
 @patch("lambdas.create_random.random_game_service.create_game_schema")
@@ -41,11 +43,13 @@ def test_create_random_game_success(
     mock_generate_layout,
     mock_select_two_words,
     mock_get_dictionary,
+    mock_get_basic_dictionary,
     mock_dictionary,
     mock_game_schema,
 ):
     # Arrange
     mock_get_dictionary.return_value = mock_dictionary
+    mock_get_basic_dictionary.return_value = mock_dictionary
     mock_select_two_words.return_value = ("BULWARK", "KVETCH")
     mock_generate_layout.return_value = ["RHV", "WTU", "LBK", "AEC"]
     mock_create_game_schema.return_value = mock_game_schema

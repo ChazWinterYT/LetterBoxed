@@ -1,4 +1,6 @@
 from typing import List, Set, Optional, Dict, Tuple
+import time
+import random
 import logging
 import unicodedata
 from uuid import uuid4
@@ -93,9 +95,11 @@ def calculate_two_word_solutions(
     Returns:
         List[Tuple[str, str]]: Pairs of words representing solutions to the puzzle.
     """
+    print(f"{len(valid_words) if valid_words else 0} valid words passed to the two-word solutions calaulator.")
     try:
         # Preprocess words to generate a list of valid words for this puzzle
-        if not valid_words or valid_words is None:
+        if valid_words is None or len(valid_words) < 1:
+            print("Valid words were not passed to the two-word solutions calculator.")
             valid_words = generate_valid_words(game_layout, language)
         if not starting_letter_to_words or starting_letter_to_words is None:
             starting_letter_to_words = create_starting_letter_to_words_dict(game_layout, language, valid_words)
@@ -103,6 +107,9 @@ def calculate_two_word_solutions(
         print(f"Error preprocessing words for two word solution: {e}")
         return []
     
+    tws_start_time = time.time()
+    print(f"[INFO] Starting two-word solution calculator function.")
+
     # Create a mapping of letters to their sides, and a set of all letters on the board
     # (this requires all letters on the board to be unique)
     letter_to_side = create_letter_to_side_mapping(game_layout)
@@ -113,7 +120,9 @@ def calculate_two_word_solutions(
     letter_usage: Counter[str] = Counter()
 
     # Iterate through all valid words
-    for word1 in valid_words:
+    shuffled_valid_words = valid_words[:]
+    random.shuffle(shuffled_valid_words)
+    for word1 in shuffled_valid_words:
         base_word1 = normalize_to_base(word1)
         # Update letter usage with word1
         update_letter_usage(letter_usage, base_word1, increment=True)
@@ -139,7 +148,9 @@ def calculate_two_word_solutions(
             if all(letter_usage[letter] > 0 for letter in all_letters):
                 solutions.append((word1, word2)) # Show the orignial words in the solution
                 # Limit the number of solutions in case the size is too large
-                if len(solutions) > 999:
+                if len(solutions) > 499:
+                    tws_end_time = time.time() - tws_start_time
+                    print(f"[INFO] 500 solutions found. Ending early. Completed in {tws_end_time:.2f} seconds.")
                     return solutions
             
             # Revert word2 letter usage so we can try the next candidate
@@ -148,6 +159,8 @@ def calculate_two_word_solutions(
         # Revert word1 letter usage so we can try the next word in the dictionary
         update_letter_usage(letter_usage, base_word1, increment=False)
     
+    tws_end_time = time.time() - tws_start_time
+    print(f"[INFO] {len(solutions)} solutions found. Completed in {tws_end_time:.2f} seconds.")
     return solutions
 
 
@@ -223,6 +236,8 @@ def generate_valid_words(game_layout: List[str], language: str = "en") -> List[s
     Returns:
         List[str]: Words valid for the puzzle.
     """
+    gvw_start_time = time.time()
+    print(f"[INFO] Starting valid word generation function.")
     try:
         dictionary = get_dictionary(language)
     except (ValueError, RuntimeError) as e:
@@ -242,6 +257,8 @@ def generate_valid_words(game_layout: List[str], language: str = "en") -> List[s
         if is_valid_word(base_word, letter_to_side, all_letters):
             valid_words.append(word) # Add the original word to the list
 
+    gvw_end_time = time.time() - gvw_start_time
+    print(f"[INFO] Generated {len(valid_words)} valid words in {gvw_end_time:.2f} seconds.")
     return valid_words
 
 
@@ -292,6 +309,7 @@ def create_starting_letter_to_words_dict(
         Dict[str, List[str]]: A dictionary where keys are starting letters and values are 
         lists of words starting with those letters.
     """
+    sltw_start_time = time.time()
     valid_words = generate_valid_words(game_layout, language)
     starting_letter_to_words = defaultdict(list)
 
@@ -299,6 +317,8 @@ def create_starting_letter_to_words_dict(
         first_letter = word[0]
         starting_letter_to_words[first_letter].append(word)
     
+    sltw_end_time = time.time() - sltw_start_time
+    print(f"[INFO] Created starting letter to words dictionary in {sltw_end_time:.2f} seconds.")
     return starting_letter_to_words
 
 

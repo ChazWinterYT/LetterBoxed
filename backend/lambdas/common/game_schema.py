@@ -1,4 +1,5 @@
 from typing import Dict, Any, Optional, List, Tuple
+import time
 import uuid
 import hashlib
 from datetime import datetime, timezone
@@ -65,6 +66,8 @@ def create_game_schema(
     Returns:
         A dictionary representing the game schema.
     """
+    overall_start_time = time.time()
+    print(f"[INFO] Starting create_game_schema function.")
 
     # Validate input fields
     if not validate_board_size(board_size):
@@ -107,6 +110,9 @@ def create_game_schema(
     par = par or "N/A"
     official_game = official_game if official_game is not None else (game_type == "nyt")
     created_time = datetime.utcnow().isoformat()
+
+    overall_time = time.time() - overall_start_time
+    print(f"[INFO] Entire game schema creation completed in {overall_time:.2f} seconds.")
 
     return {
         "gameId": game_id,

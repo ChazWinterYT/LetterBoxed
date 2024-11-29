@@ -104,7 +104,7 @@ def test_generate_valid_words():
     game_layout = ["PRO", "CTI", "DGN", "SAH"]
 
     # Mock the get_cached_dictionary function in the lambdas.common.game_utils module
-    with patch('lambdas.common.dictionary_utils._load_local_dictionary', return_value=dictionary):
+    with patch('lambdas.common.dictionary_utils._load_dictionary', return_value=dictionary):
         valid_words = generate_valid_words(game_layout, "en")
         assert valid_words == ["PARDONS", "DAPHNIA", "SNAPDRAGON", "PHONIATRISTS"]
 

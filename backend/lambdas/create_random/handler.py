@@ -18,9 +18,14 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Parse parameters for the event
         body = json.loads(event.get("body"))
 
-        seed_words = body.get("seedWords", None) # Use seed words if provided
         language = body.get("language", "en")  # Default to English
         board_size = body.get("boardSize", "3x3")  # Default to 3x3
+        
+        seed_words = body.get("seedWords", None) # Use seed words if provided
+        # Normalize seed words before sending them to the service
+        if seed_words and language == 'en':
+            seed_words = tuple(word.upper() for word in seed_words) # English requires uppercase
+        
 
         # Validate language and board size
         if not validate_board_size(board_size):

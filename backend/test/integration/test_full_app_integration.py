@@ -28,6 +28,7 @@ from lambdas.common.game_schema import create_game_schema
 @pytest.fixture(scope="module")
 def setup_environment():
     # Set up environment variables
+    os.environ["DICTIONARY_SOURCE"] = "s3"
     os.environ["S3_BUCKET_NAME"] = "test-dictionary-bucket"
     os.environ["DICTIONARY_BASE_S3_PATH"] = "Dictionaries/"
     os.environ["DEFAULT_LANGUAGE"] = "en"
@@ -58,6 +59,7 @@ def setup_environment():
     yield DYNAMO_DB_TABLE_NAMES
 
     # Clean up environment variables
+    os.environ.pop("DICTIONARY_SOURCE", None)
     os.environ.pop("S3_BUCKET_NAME", None)
     os.environ.pop("DICTIONARY_BASE_S3_PATH", None)
     os.environ.pop("DEFAULT_LANGUAGE", None)

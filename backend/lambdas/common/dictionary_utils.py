@@ -57,9 +57,13 @@ def _load_dictionary(language: str, dictionary_type: str) -> list[str]:
         list[str]: A list of words from the specified dictionary.
     """
     if DICTIONARY_SOURCE == "s3":
-        return _fetch_dictionary_from_s3(language, dictionary_type)
+        print(f"Fetching dictionary from S3: {language}:{dictionary_type}")
+        dictionary = _fetch_dictionary_from_s3(language, dictionary_type)
     else:
-        return _load_local_dictionary(language, dictionary_type)
+        print(f"Loading local dictionary for {language}:{dictionary_type}")
+        dictionary = _load_local_dictionary(language, dictionary_type)
+     
+    return dictionary
 
 
 def _fetch_dictionary_from_s3(language: str, dictionary_type: str) -> list[str]:
@@ -75,9 +79,6 @@ def _fetch_dictionary_from_s3(language: str, dictionary_type: str) -> list[str]:
     """
     s3_bucket_name = os.getenv("S3_BUCKET_NAME")
     s3_base_path = os.getenv("DICTIONARY_BASE_S3_PATH", "")
-
-    print(f"Using S3 client: {s3}")
-    print(f"Bucket: {s3_bucket_name}, Key: {s3_base_path}{language}/{dictionary_type}.txt")
 
     if not s3_bucket_name:
         raise ValueError("S3_BUCKET_NAME is not set in the environment.")
