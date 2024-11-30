@@ -6,11 +6,13 @@ __pycache__
 .venv
 *.egg-info
 
+utility
+
 # CDK asset staging directory
 .cdk.staging
 cdk.out
 venv
-utility
+
 
 .env
 lambda_layer
