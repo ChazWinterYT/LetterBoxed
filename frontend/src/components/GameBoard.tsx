@@ -29,13 +29,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [lastSide, setLastSide] = useState<string | null>(null);
   const [validationMessage, setValidationMessage] = useState<string | null>(null); // Feedback state
   const [validationStatus, setValidationStatus] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
+  const [lastLetter, setLastLetter] = useState<string | null>(null);
+  const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
   const handleLetterClick = (letter: string, side: string) => {
-    if (lastSide === side && currentWord.length > 0) {
-      // Can't click a letter from the same side as the last one
-      return;
+    if (currentWord.length === 0) {
+      // First letter after lastLetter; ensure it doesn't come from lastLetterSide
+      if (lastLetterSide && side === lastLetterSide) {
+        return; // Can't start with a letter from the same side as lastLetter
+      }
+    } else {
+      // Prevent clicking a letter from the same side as the last one
+      if (lastSide === side) {
+        return;
+      }
     }
     setCurrentWord((prevWord) => [...prevWord, { letter, side }]);
     setLastSide(side);
@@ -43,9 +52,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   const handleDelete = () => {
     setCurrentWord((prevWord) => {
+      if (prevWord.length <= (lastLetter ? 1 : 0)) {
+        // Can't delete lastLetter
+        return prevWord;
+      }
       const newWord = prevWord.slice(0, -1);
-      const lastLetter = newWord[newWord.length - 1];
-      setLastSide(lastLetter ? lastLetter.side : null);
+      const lastLetterItem = newWord[newWord.length - 1];
+      setLastSide(lastLetterItem ? lastLetterItem.side : null);
       return newWord;
     });
   };
@@ -62,37 +75,41 @@ const GameBoard: React.FC<GameBoardProps> = ({
         const validationResult = await validateWord(word, gameId, sessionId);
   
         if (validationResult.valid) {
-          const randomValidMessage = getRandomPhrase('game.validateWord.valid'); // Select a random valid message
-          
+          const randomValidMessage = getRandomPhrase('game.validateWord.valid');
           console.log("Word is valid:", randomValidMessage);
   
           if (onWordSubmit) {
             onWordSubmit(word);
           }
   
-          setValidationMessage(randomValidMessage); // Show success message
+          setValidationMessage(randomValidMessage);
           setValidationStatus("valid");
-          setCurrentWord([]);
+  
+          // Update lastLetter and lastLetterSide
+          const lastItem = currentWord[currentWord.length - 1];
+          setLastLetter(lastItem.letter);
+          setLastLetterSide(lastItem.side);
+  
+          // Start the new word with the last letter
+          setCurrentWord([{ letter: lastItem.letter, side: lastItem.side }]);
           setLastSide(null);
         } else {
-          const randomInvalidMessage = getRandomPhrase('game.validateWord.invalid'); // Select a random invalid message
-          
+          const randomInvalidMessage = getRandomPhrase('game.validateWord.invalid');
           console.log("Word is invalid:", randomInvalidMessage);
   
-          setValidationMessage(randomInvalidMessage); // Show failure message
+          setValidationMessage(randomInvalidMessage);
           setValidationStatus("invalid");
         }
       } catch (error) {
         console.error("Error validating word:", error);
-        const errorMessage = t('game.validateWord.error'); // Use t() for single string
-        setValidationMessage(errorMessage); // Show error message
+        const errorMessage = t('game.validateWord.error');
+        setValidationMessage(errorMessage);
         setValidationStatus("invalid");
       }
   
-      // Clear message and status after 2 seconds
       setTimeout(() => {
-        setValidationMessage(''); // Clear the message
-        setValidationStatus(null); // Reset the status
+        setValidationMessage('');
+        setValidationStatus(null);
       }, 2000);
     }
   };
@@ -103,6 +120,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
     setCurrentWord([]);
     setLastSide(null);
+    setLastLetter(null);
+    setLastLetterSide(null);
   };
 
   // Display loading spinner and message while layout is not ready
@@ -148,8 +167,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
       <div className="word-formation-area">
         <h3>{''}</h3>
         <div className="current-word">
-          {currentWord.length > 0
-            ? currentWord.map((item) => item.letter).join('')
+          {lastLetter && (
+            <span className="fixed-letter">{lastLetter}</span>
+          )}
+          {currentWord.length > (lastLetter ? 1 : 0)
+            ? currentWord.slice(lastLetter ? 1 : 0).map((item) => item.letter).join('')
             : '\u00A0'}
         </div>
       </div>
