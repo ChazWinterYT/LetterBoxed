@@ -39,6 +39,7 @@ const App = () => {
   const [hasMore, setHasMore] = useState(true);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [originalWordsUsed, setOriginalWordsUsed] = useState<string[]>([]);
+  const [gameCompleted, setGameCompleted] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
@@ -78,10 +79,12 @@ const App = () => {
         const sessionState = await fetchUserSession(userSessionId, gameId);
         console.log("Fetched session state:", sessionState);
         setFoundWords(sessionState.wordsUsed || []);
+        setOriginalWordsUsed(sessionState.originalWordsUsed || []);
       } catch (error) {
         console.error("Error fetching game state:", error);
         // If no session exists, start with empty words
         setFoundWords([]);
+        setOriginalWordsUsed([]);
       }
     },
     [userSessionId]
@@ -133,6 +136,12 @@ const App = () => {
       console.log("Loading game by ID:", gameId);
       try {
         setIsGameLoading(true);
+        
+        // Reset state before loading new game
+        setFoundWords([]);
+        setOriginalWordsUsed([]);
+        setGameCompleted(false);
+
         const data = await fetchGameById(gameId);
         console.log("Fetched game data:", data);
 
@@ -202,7 +211,7 @@ const App = () => {
   // Add words and save the state
   const addWord = async (word: string) => {
     console.log("Adding word:", word);
-
+  
     if (!currentGameId || !userSessionId) {
       console.warn("Cannot validate word: Missing currentGameId or userSessionId.");
       return;
@@ -214,21 +223,21 @@ const App = () => {
       if (validationResult.valid) {
         const { submittedWord, originalWord } = validationResult;
   
-        // Update foundWords and originalWordsUsed
-        setFoundWords((prevWords) => {
-          const updatedWords = [...prevWords, submittedWord];
-          console.log("Updated found words:", updatedWords);
-          return updatedWords;
-        });
+        // Create updated arrays
+        const newFoundWords = [...foundWords, submittedWord];
+        const newOriginalWordsUsed = [...originalWordsUsed, originalWord];
   
-        setOriginalWordsUsed((prevOriginalWords) => {
-          const updatedOriginalWords = [...prevOriginalWords, originalWord];
-          console.log("Updated original words:", updatedOriginalWords);
-          return updatedOriginalWords;
-        });
+        // Update the state
+        setFoundWords(newFoundWords);
+        setOriginalWordsUsed(newOriginalWordsUsed);
   
         // Save the updated state
-        saveGameState([...foundWords, submittedWord], [...originalWordsUsed, originalWord]);
+        saveGameState(newFoundWords, newOriginalWordsUsed);
+  
+        // Check for game completion
+        if (validationResult.gameCompleted) {
+          handleGameCompleted();
+        }
       } else {
         console.warn("Invalid word:", validationResult.message);
       }
@@ -332,6 +341,7 @@ const App = () => {
     setIsModalOpen(false);
     setFoundWords([]); // Clear the found words
     setOriginalWordsUsed([]); // Clear original words too
+    setGameCompleted(false);
 
     // Save the cleared state to the backend
     if (userSessionId && currentGameId) {
@@ -373,6 +383,14 @@ const App = () => {
     setIsModalOpen(true);
   }, [confirmRestartGame, cancelRestartGame, t]);
 
+  const handleGameCompleted = useCallback(() => {
+    console.log("Game completed! You win!");
+    setModalTitle(t("game.puzzleSolvedTitle"));
+    setModalContent(<p>{t("game.puzzleSolvedMessage")}</p>);
+    setIsModalOpen(true);
+    setGameCompleted(true);
+  }, [t]);
+
   return (
     <div className="app-container">
       <Header />
@@ -394,6 +412,8 @@ const App = () => {
             sessionId={userSessionId}
             onWordSubmit={addWord} // Pass the word submission handler
             onRestartGame={handleRestartGame} // Pass the restart handler
+            onGameCompleted={handleGameCompleted} // Pass the game completed handler
+            gameCompleted={gameCompleted} // Pass the gameCompleted state
           />
         )}
       </div>

@@ -48,6 +48,8 @@
         "boardSize": "Размер поля",
         "gameId": "ID игры",
         "tryToSolve": "Попробуйте решить за {words} слов",
+        "puzzleSolvedTitle": "ВЫ ВЫИГРАЛИ",
+        "puzzleSolvedMessage": "Вы решили головоломку! Поздравляем!!!",
         "twoWordSolutions": "Решения из двух слов",
         "threeWordSolutions": "Решения из трёх слов",
         "enterGameLayout": "Введите расположение поля",

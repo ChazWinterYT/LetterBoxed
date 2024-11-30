@@ -48,6 +48,8 @@
         "boardSize": "ボードサイズ",
         "gameId": "ゲームID",
         "tryToSolve": "{words}語で解決を試みてください",
+        "puzzleSolvedTitle": "あなたの勝ち",
+        "puzzleSolvedMessage": "パズルを解きました！おめでとうございます！！！",
         "twoWordSolutions": "2語の解答",
         "threeWordSolutions": "3語の解答",
         "enterGameLayout": "ゲームレイアウトを入力",

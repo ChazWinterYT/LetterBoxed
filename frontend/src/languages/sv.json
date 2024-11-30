@@ -48,6 +48,8 @@
         "boardSize": "Brädans storlek",
         "gameId": "Spel-ID",
         "tryToSolve": "Försök lösa med {words} ord",
+        "puzzleSolvedTitle": "DU VANN",
+        "puzzleSolvedMessage": "Du löste pusslet! Grattis!!!",
         "twoWordSolutions": "Tvåords-lösningar",
         "threeWordSolutions": "Treords-lösningar",
         "enterGameLayout": "Ange spelbrädeslayout",

@@ -9,8 +9,10 @@ export interface GameBoardProps {
   foundWords: string[];
   gameId: string | null;
   sessionId: string | null;
+  gameCompleted: boolean;
   onWordSubmit?: (word: string) => void;
   onRestartGame?: () => void;
+  onGameCompleted?: () => void;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -18,8 +20,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
   foundWords,
   gameId,
   sessionId,
+  gameCompleted,
   onWordSubmit,
   onRestartGame,
+  onGameCompleted,
 }) => {
   const { t } = useLanguage();
   const { getRandomPhrase } = useLanguage();
@@ -35,6 +39,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
   const handleLetterClick = (letter: string, side: string) => {
+    if (gameCompleted) {
+      return; // Don't allow letter clicks whenthe game is finished
+    }
+    
     if (currentWord.length === 0) {
       // First letter after lastLetter; ensure it doesn't come from lastLetterSide
       if (lastLetterSide && side === lastLetterSide) {
@@ -51,6 +59,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const handleDelete = () => {
+    if (gameCompleted) {
+      return; // Don't allow deletions when the game is complete
+    }
+    
     setCurrentWord((prevWord) => {
       if (prevWord.length <= (lastLetter ? 1 : 0)) {
         // Can't delete lastLetter
@@ -90,13 +102,20 @@ const GameBoard: React.FC<GameBoardProps> = ({
           setLastLetter(lastItem.letter);
           setLastLetterSide(lastItem.side);
   
-          // Start the new word with the last letter
-          setCurrentWord([{ letter: lastItem.letter, side: lastItem.side }]);
-          setLastSide(null);
+          //Check if the game is complete
+          if (validationResult.gameCompleted) {
+            if (onGameCompleted) {
+              onGameCompleted();
+            }
+            setCurrentWord([]); // clear current word
+          } else {
+            // Start the new word with the last letter
+            setCurrentWord([{ letter: lastItem.letter, side: lastItem.side }]);
+            setLastSide(null);
+          }
         } else {
           const randomInvalidMessage = getRandomPhrase('game.validateWord.invalid');
           console.log("Word is invalid:", randomInvalidMessage);
-  
           setValidationMessage(randomInvalidMessage);
           setValidationStatus("invalid");
         }
@@ -216,9 +235,15 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
       {/* Controls */}
       <div className="controls">
-        <button onClick={handleDelete}>{t('game.deleteLetter')}</button>
-        <button onClick={handleRestart}>{t('game.restartGame')}</button>
-        <button onClick={handleSubmit}>{t('game.submitWord')}</button>
+        <button onClick={handleDelete} disabled={gameCompleted}>
+          {t('game.deleteLetter')}
+        </button>
+        <button onClick={handleRestart}>
+          {t('game.restartGame')}
+        </button>
+        <button onClick={handleSubmit} disabled={gameCompleted}>
+          {t('game.submitWord')}
+        </button>
       </div>
 
       {/* Shareable URL */}

@@ -48,6 +48,8 @@
         "boardSize": "Board Size",
         "gameId": "Game ID",
         "tryToSolve": "Try to solve in {words} words",
+        "puzzleSolvedTitle": "YOU WIN",
+        "puzzleSolvedMessage": "You solved the puzzle! Congratulations!!!",
         "twoWordSolutions": "Two-Word Solutions",
         "threeWordSolutions": "Three-Word Solutions",
         "enterGameLayout": "Enter Game Layout",

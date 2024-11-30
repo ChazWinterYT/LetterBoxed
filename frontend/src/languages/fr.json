@@ -48,6 +48,8 @@
         "boardSize": "Taille du plateau",
         "gameId": "ID du jeu",
         "tryToSolve": "Essayez de résoudre en {words} mots",
+        "puzzleSolvedTitle": "VOUS GAGNEZ",
+        "puzzleSolvedMessage": "Vous avez résolu l'énigme ! Félicitations !!!",
         "twoWordSolutions": "Solutions en deux mots",
         "threeWordSolutions": "Solutions en trois mots",
         "enterGameLayout": "Entrer la disposition du jeu",

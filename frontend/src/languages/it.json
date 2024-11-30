@@ -48,6 +48,8 @@
         "boardSize": "Dimensione della griglia",
         "gameId": "ID del gioco",
         "tryToSolve": "Prova a risolverlo in {words} parole",
+        "puzzleSolvedTitle": "HAI VINTO",
+        "puzzleSolvedMessage": "Hai risolto il puzzle! Congratulazioni!!!",
         "twoWordSolutions": "Soluzioni in due parole",
         "threeWordSolutions": "Soluzioni in tre parole",
         "enterGameLayout": "Inserisci la disposizione del gioco",

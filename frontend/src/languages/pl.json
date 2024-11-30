@@ -48,6 +48,8 @@
         "boardSize": "Rozmiar planszy",
         "gameId": "ID gry",
         "tryToSolve": "Spróbuj rozwiązać w {words} słowach",
+        "puzzleSolvedTitle": "WYGRAŁEŚ",
+        "puzzleSolvedMessage": "Rozwiązałeś zagadkę! Gratulacje!!!",
         "twoWordSolutions": "Rozwiązania dwuwyrazowe",
         "threeWordSolutions": "Rozwiązania trzywyrazowe",
         "enterGameLayout": "Wprowadź układ gry",

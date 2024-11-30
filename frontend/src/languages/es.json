@@ -48,6 +48,8 @@
         "boardSize": "Tamaño del tablero",
         "gameId": "ID del juego",
         "tryToSolve": "Intenta resolver en {words} palabras",
+        "puzzleSolvedTitle": "TÚ GANAS",
+        "puzzleSolvedMessage": "¡Has resuelto el rompecabezas! ¡Felicidades!!!",
         "twoWordSolutions": "Soluciones de dos palabras",
         "threeWordSolutions": "Soluciones de tres palabras",
         "enterGameLayout": "Ingresar diseño del juego",

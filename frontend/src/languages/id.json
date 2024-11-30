@@ -48,6 +48,8 @@
         "boardSize": "Ukuran Papan",
         "gameId": "ID Game",
         "tryToSolve": "Coba selesaikan dengan {words} kata",
+        "puzzleSolvedTitle": "KAMU MENANG",
+        "puzzleSolvedMessage": "Kamu telah menyelesaikan teka-teki! Selamat!!!",
         "twoWordSolutions": "Solusi Dua Kata",
         "threeWordSolutions": "Solusi Tiga Kata",
         "enterGameLayout": "Masukkan Tata Letak Game",

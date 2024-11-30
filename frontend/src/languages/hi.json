@@ -48,6 +48,8 @@
         "boardSize": "बोर्ड का आकार",
         "gameId": "गेम आईडी",
         "tryToSolve": "{words} शब्दों में हल करने की कोशिश करें",
+        "puzzleSolvedTitle": "आप जीत गए",
+        "puzzleSolvedMessage": "आपने पहेली सुलझा ली! बधाई हो!!!",
         "twoWordSolutions": "दो-शब्द समाधान",
         "threeWordSolutions": "तीन-शब्द समाधान",
         "enterGameLayout": "गेम लेआउट दर्ज करें",

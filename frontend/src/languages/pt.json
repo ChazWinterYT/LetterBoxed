@@ -48,6 +48,8 @@
         "boardSize": "Tamanho do Tabuleiro",
         "gameId": "ID do Jogo",
         "tryToSolve": "Tente resolver com {words} palavras",
+        "puzzleSolvedTitle": "VOCÊ GANHOU",
+        "puzzleSolvedMessage": "Você resolveu o quebra-cabeça! Parabéns!!!",
         "twoWordSolutions": "Soluções de Duas Palavras",
         "threeWordSolutions": "Soluções de Três Palavras",
         "enterGameLayout": "Inserir Layout do Jogo",
