@@ -449,12 +449,12 @@ const App = () => {
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          numberOfPieces={10000}
+          numberOfPieces={6000}
           recycle={false} // Confetti will not loop
           gravity={0.1}
           style={{ zIndex: 1001, position: 'fixed', top: 0, left: 0 }}
           friction={0.99}
-          colors={['#000000', '#550055', '#aa00aa', '#990011', '#ff69b4', '#ffA500']}
+          colors={['#000000', '#000000', '#550055', '#aa00aa', '#990011', '#ff69b4', '#ffA500']}
         />
       )}
       <Footer />
