@@ -143,7 +143,7 @@
 /* Left Side */
 .left-side {
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: -40px; /* Move marker and letter left of the square */
   transform: translateY(-50%) translateX(-26%);
   display: flex;
@@ -161,7 +161,7 @@
 /* Right Side */
 .right-side {
   position: absolute;
-  top: 50%;
+  top: 42%;
   right: -40px; /* Move marker and letter right of the square */
   transform: translateY(-50%) translateX(26%);
   display: flex;
