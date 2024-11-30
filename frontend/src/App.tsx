@@ -398,7 +398,7 @@ const App = () => {
 
     setTimeout(() => {
       setShowConfetti(false);
-    }, 5000); // Make confetti disappear
+    }, 10000); // Make confetti disappear
   }, [t]);
 
   return (
@@ -443,7 +443,7 @@ const App = () => {
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          numberOfPieces={10000}
+          numberOfPieces={5000}
           recycle={false} // Confetti will not loop
           gravity={0.2}
           style={{ zIndex: 2000, position: 'fixed', top: 0, left: 0 }}
