@@ -113,8 +113,8 @@
   left: 50%;
   transform: translateX(-50%) translateY(-36%);
   display: flex;
-  justify-content: space-between;
-  width: 75%; /* Spread markers and letters evenly */
+  justify-content: space-evenly;
+  width: 90%; /* Spread markers and letters evenly */
 }
 
 .top-side .letter-container {
@@ -130,8 +130,8 @@
   left: 50%;
   transform: translateX(-50%) translateY(36%);
   display: flex;
-  justify-content: space-between;
-  width: 75%;
+  justify-content: space-evenly;
+  width: 90%;
 }
 
 .bottom-side .letter-container {
@@ -143,13 +143,13 @@
 /* Left Side */
 .left-side {
   position: absolute;
-  top: 58%;
+  top: 50%;
   left: -40px; /* Move marker and letter left of the square */
   transform: translateY(-50%) translateX(-26%);
   display: flex;
   flex-direction: column-reverse; /* Letter left of marker */
-  justify-content: space-between;
-  height: 75%; /* Spread markers and letters evenly */
+  justify-content: space-evenly;
+  height: 90%; /* Spread markers and letters evenly */
 }
 
 .left-side .letter-container {
@@ -161,13 +161,13 @@
 /* Right Side */
 .right-side {
   position: absolute;
-  top: 42%;
+  top: 50%;
   right: -40px; /* Move marker and letter right of the square */
   transform: translateY(-50%) translateX(26%);
   display: flex;
   flex-direction: column; /* Letter right of marker */
-  justify-content: space-between;
-  height: 75%;
+  justify-content: space-evenly;
+  height: 90%;
 }
 
 .right-side .letter-container {
