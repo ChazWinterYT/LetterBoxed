@@ -202,16 +202,11 @@ const App = () => {
 
   // Handle shareable URL or default to play-today
   useEffect(() => {
-    if (urlGameId && urlGameId !== currentGameId) {
-      console.log("Loading game from URL:", urlGameId);
-      loadGame(urlGameId);
-    } else if (!urlGameId && !currentGameId) {
+    if (userSessionId && !urlGameId && !currentGameId) {
       console.log("No game ID in URL and no current game. Loading today's game.");
       loadTodaysGame();
-    } else {
-      console.log("Game already loaded:", currentGameId);
     }
-  }, [urlGameId, loadGame, loadTodaysGame]);
+  }, [userSessionId, urlGameId, currentGameId, loadTodaysGame]);
 
   // Add words and save the state
   const addWord = async (word: string) => {
