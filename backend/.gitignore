@@ -10,7 +10,7 @@ __pycache__
 .cdk.staging
 cdk.out
 venv
-#utility
+utility
 
 .env
 lambda_layer
