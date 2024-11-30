@@ -7,6 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import Cookies from "js-cookie";
+import Confetti from 'react-confetti'
 import { v4 as uuid4 } from "uuid";
 import Header from "./components/Header";
 import ButtonMenu from "./components/ButtonMenu";
@@ -40,6 +41,7 @@ const App = () => {
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [originalWordsUsed, setOriginalWordsUsed] = useState<string[]>([]);
   const [gameCompleted, setGameCompleted] = useState<boolean>(false);
+  const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
@@ -394,6 +396,11 @@ const App = () => {
     setModalContent(<p>{t("game.puzzleSolvedMessage")}</p>);
     setIsModalOpen(true);
     setGameCompleted(true);
+    setShowConfetti(true);
+
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 5000); // Make confetti disappear
   }, [t]);
 
   return (
@@ -433,6 +440,17 @@ const App = () => {
       >
         {modalContent}
       </Modal>
+
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          numberOfPieces={1000}
+          recycle={false} // Confetti will not loop
+          gravity={0.2}
+          style={{ zIndex: 2000, position: 'fixed', top: 0, left: 0 }}
+        />
+      )}
       <Footer />
     </div>
   );
