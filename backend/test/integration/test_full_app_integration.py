@@ -164,7 +164,7 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.fetch_random_valid_game_es(aws_clients)
     f.fetch_random_missing_language(aws_clients)
 
-    # Save a user game state
+    # Save and fetch a user game state
     print("Testing save_user_state and fetch_user_state lambdas...")
     f.save_user_state_valid_initial_state_en(aws_clients)
     f.save_user_state_valid_update_state_en(aws_clients)
@@ -177,6 +177,21 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
     f.save_user_state_same_session_different_games(aws_clients)
     f.save_user_state_same_game_different_sessions(aws_clients)
     f.fetch_user_state_valid(aws_clients)
+
+    # Validate a word
+    f.validate_word_invalid_json(aws_clients)
+    f.validate_word_missing_parameters(aws_clients)
+    f.validate_word_nonexistent_game(aws_clients)
+    
+    game_id = f.validate_word_successful(aws_clients) # Save the game_id for future tests
+    f.validate_word_already_used(aws_clients, game_id)
+    f.validate_word_invalid(aws_clients, game_id)
+    f.validate_word_chaining_rule_violation(aws_clients, game_id)
+    f.validate_word_successful_chain(aws_clients, game_id)
+    f.validate_word_empty_words_list(aws_clients, game_id)
+
+
+
 
     
 # ===========================================================================

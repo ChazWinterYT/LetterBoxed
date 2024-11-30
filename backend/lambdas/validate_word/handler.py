@@ -21,11 +21,17 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     Returns:
     - dict: The response object with statusCode and body.
     """
+    try: 
+        body = json.loads(event.get('body', {}))
+    except json.JSONDecodeError:
+        return _error_response(
+            "Invalid JSON in request.", 400
+        )
+    
     try:
         # Extract parameters from the event
-        body = json.loads(event.get('body', '{}'))
         game_id = body.get('gameId')
-        submitted_word = body.get('word').upper()  # Normalize to uppercase
+        submitted_word = body.get('word')
         session_id = body.get('sessionId')
 
         # Validate required parameters

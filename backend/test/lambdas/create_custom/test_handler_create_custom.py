@@ -37,7 +37,7 @@ def test_valid_custom_game(
     response = handler(valid_event, {})
 
     # Assert
-    assert response["statusCode"] == 200
+    assert response["statusCode"] == 201
     assert "test-game-id" in response["body"]
     mock_add_game_to_db.assert_called_once()
 

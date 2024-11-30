@@ -45,7 +45,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     add_game_to_db(game_data)
 
     return {
-        "statusCode": 200,
+        "statusCode": 201,
         "headers": {
             "Access-Control-Allow-Origin": "*",  # Allow all origins
             "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods

@@ -545,7 +545,7 @@ class LetterBoxedStack(Stack):
                     "*.md"
                 ],
             ),
-            timeout=Duration.seconds(60),
+            timeout=Duration.seconds(120),
             layers=[layer],
             environment=environment,
             function_name=lambda_config["name"] + function_suffix

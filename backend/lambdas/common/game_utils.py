@@ -81,7 +81,8 @@ def calculate_two_word_solutions(
     game_layout: List[str],
     language: str = "en",
     valid_words: Optional[List[str]] = None,
-    starting_letter_to_words: Optional[Dict[str, List[str]]] = None
+    starting_letter_to_words: Optional[Dict[str, List[str]]] = None,
+    time_limit: Optional[float] = 45.0
 ) -> List[Tuple[str, str]]:
     """
     Calculate the two-word solutions to the given puzzle input.
@@ -132,6 +133,12 @@ def calculate_two_word_solutions(
         potential_second_words = starting_letter_to_words[last_letter]
 
         for word2 in potential_second_words:
+            # Stop the function if the time limit is exceeded
+            if time.time() - tws_start_time > time_limit:
+                print(f"[INFO] Time limit of {time_limit}s exceeded. \
+                    Returning {len(solutions)} solutions found so far.")
+                return solutions if solutions else []
+            
             base_word2 = normalize_to_base(word2)
             # Skip pairs that can't cover all letters in the puzzle
             if len(base_word1) + len(base_word2) < total_letters:

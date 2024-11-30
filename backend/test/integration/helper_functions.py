@@ -167,7 +167,7 @@ def create_custom_english_game(aws_clients):
     response = handler(c.CREATE_CUSTOM_EVENT_VALID_EN, None)
 
     # Verify the response
-    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    assert response["statusCode"] == 201, f"Expected 200 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
     assert "gameId" in response_body, "Expected a 'gameId' key in the response body"
     assert response_body["message"] == "Game created successfully.", "Expected success message in the response body"
@@ -204,7 +204,7 @@ def create_custom_spanish_game(aws_clients):
     response = handler(c.CREATE_CUSTOM_EVENT_VALID_ES, None)
 
     # Verify the response
-    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    assert response["statusCode"] == 201, f"Expected 200 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
     assert "gameId" in response_body, "Expected 'gameId' in the response body"
     game_id = response_body["gameId"]
@@ -238,7 +238,7 @@ def create_custom_4x4_game_english(aws_clients):
     response = handler(c.CREATE_CUSTOM_EVENT_VALID_LARGE_EN, None)
 
     # Verify the response
-    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    assert response["statusCode"] == 201, f"Expected 200 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
     assert "gameId" in response_body, "Expected 'gameId' in the response body"
     game_id = response_body["gameId"]
@@ -272,7 +272,7 @@ def create_custom_4x4_game_spanish(aws_clients):
     response = handler(c.CREATE_CUSTOM_EVENT_VALID_LARGE_ES, None)
 
     # Verify the response
-    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}"
+    assert response["statusCode"] == 201, f"Expected 200 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
     assert "gameId" in response_body, "Expected 'gameId' in the response body"
     game_id = response_body["gameId"]
@@ -1678,3 +1678,276 @@ def assert_table_is_empty(dynamodb, table_name):
     print(f"Verifying {table_name} is empty...")
     scan = table.scan()
     assert scan["Count"] == 0, f"Table {table_name} is not empty. Found items: {scan['Items']}"
+
+# ===================================================================
+# Validate Word Tests
+# ===================================================================
+def setup_game_and_state(aws_clients):
+    """
+    Create a known valid game and save its state for testing.
+    Returns gameId and sessionId for further tests.
+    """
+    from lambdas.create_custom.handler import handler as create_handler
+    from lambdas.save_user_state.handler import handler as save_handler
+
+    # Step 1: Create a known good game
+    response = create_handler(c.CREATE_CUSTOM_EVENT_VALID_EN, None)
+    assert response["statusCode"] == 201, f"Game creation failed: {response}"
+    response_body = json.loads(response["body"])
+    game_id = response_body["gameId"]
+
+    # Step 2: Save initial game state
+    initial_state_payload = {
+        "body": json.dumps({
+            "gameId": game_id,
+            "gameLayout": response_body["gameLayout"],
+            "sessionId": "test-session-id",
+            "wordsUsed": [],
+            "originalWordsUsed": []
+        }),
+        "headers": {"Content-Type": "application/json"}
+    }
+    save_response = save_handler(initial_state_payload, None)
+    assert save_response["statusCode"] == 200, f"Saving game state failed: {save_response}"
+
+    print(f"Game setup complete. gameId: {game_id}, sessionId: test-session-id")
+    return game_id, "test-session-id"
+
+
+def validate_word_successful(aws_clients):
+    """Test validating a valid word with all rules adhered to."""
+    print("\nTesting function validate_word_successful")
+    from lambdas.validate_word.handler import handler as validate_handler
+    from lambdas.save_user_state.handler import handler as save_handler
+
+    game_id, session_id = setup_game_and_state(aws_clients)
+
+    # Step 1: Validate a known good word
+    response = validate_handler(c.VALIDATE_WORD_SUCCESSFUL_PAYLOAD(game_id), None)
+
+    assert response["statusCode"] == 200, f"Validation failed: {response}"
+    response_body = json.loads(response["body"])
+    assert response_body["valid"] is True, f"'valid' should be True, but was {response_body['valid']}"
+    assert response_body["message"] == "Word is valid.", f"Returned message was {response_body['message']}"
+    print("Successfully validated a correct word.")
+
+    # Save the user state for the next tests
+    save_response = save_handler(c.SAVE_USER_STATE_PAYLOAD_FOR_VALIDATE_WORD(game_id), None)
+    assert save_response["statusCode"] == 200, f"Saving game state failed: {save_response}"
+
+    # Return the game ID for future tests
+    return game_id
+
+
+def validate_word_already_used(aws_clients, game_id):
+    """Test validating a word that has already been used."""
+    print("\nTesting function validate_word_already_used")
+    print(f"Playing game ID", game_id)
+    from lambdas.validate_word.handler import handler as validate_handler
+
+    # Validate the same word again from the previous test
+    repeated_response = validate_handler(c.VALIDATE_WORD_ALREADY_USED_PAYLOAD(game_id), None)
+
+    print("Repeated response:", repeated_response)
+
+    assert repeated_response["statusCode"] == 200, f"Validation failed for repeated word: {repeated_response}"
+    repeated_body = json.loads(repeated_response["body"])
+    assert repeated_body["valid"] is False, f"'valid' should be False, but was {repeated_body['valid']}"
+    assert "already been used" in repeated_body["message"], f"Returned message was {repeated_body['message']}"
+
+    # Verify that the original user game state is not changed
+    user_state = db_utils.get_user_game_state("test-session-id", game_id)
+    assert user_state is not None, "User game state should not be None."
+    assert user_state["wordsUsed"] == ["VAPORIZE"], f"Unexpected wordsUsed: {user_state['wordsUsed']}"
+
+    print("Successfully validated that the word was already used.")
+
+
+def validate_word_invalid(aws_clients, game_id):
+    """Test validating a word that is not in the valid words list."""
+    print("\nTesting function validate_word_invalid")
+    print(f"Playing game ID", game_id)
+    from lambdas.validate_word.handler import handler as validate_handler
+
+    # Call the validate handler with an invalid word payload
+    invalid_response = validate_handler(c.VALIDATE_WORD_INVALID_PAYLOAD(game_id), None)
+
+    print("Invalid response:", invalid_response)
+
+    # Assertions
+    assert invalid_response["statusCode"] == 200, f"Validation failed for invalid word: {invalid_response}"
+    invalid_body = json.loads(invalid_response["body"])
+    assert invalid_body["valid"] is False, f"'valid' should be False, but was {invalid_body['valid']}"
+    assert "not valid" in invalid_body["message"], f"Returned message was {invalid_body['message']}"
+
+    # Verify that the original user game state is not changed
+    user_state = db_utils.get_user_game_state("test-session-id", game_id)
+    assert user_state is not None, "User game state should not be None."
+    assert user_state["wordsUsed"] == ["VAPORIZE"], f"Unexpected wordsUsed: {user_state['wordsUsed']}"
+
+    print("Successfully validated that the word was invalid and the game state is unchanged.")
+
+
+def validate_word_chaining_rule_violation(aws_clients, game_id):
+    """Test validating a word that violates the chaining rule."""
+    print("\nTesting function validate_word_chaining_rule_violation")
+    print(f"Playing game ID", game_id)
+    from lambdas.validate_word.handler import handler as validate_handler
+    from lambdas.common.db_utils import get_user_game_state
+
+    # Call the validate handler with a word that violates the chaining rule
+    chaining_rule_response = validate_handler(c.VALIDATE_WORD_CHAINING_RULE_VIOLATION_PAYLOAD(game_id), None)
+
+    print("Chaining rule response:", chaining_rule_response)
+
+    # Assertions
+    assert chaining_rule_response["statusCode"] == 200, f"Validation failed for chaining rule violation: {chaining_rule_response}"
+    chaining_rule_body = json.loads(chaining_rule_response["body"])
+    assert chaining_rule_body["valid"] is False, f"'valid' should be False, but was {chaining_rule_body['valid']}"
+    assert "must start with the last letter of the previous word" in chaining_rule_body["message"], (
+        f"Returned message was {chaining_rule_body['message']}"
+    )
+
+    # Verify the user state remains unchanged
+    user_state = get_user_game_state("test-session-id", game_id)
+    assert user_state is not None, "User game state should not be None."
+    assert user_state["wordsUsed"] == ["VAPORIZE"], f"Unexpected wordsUsed: {user_state['wordsUsed']}"
+
+    print("Successfully validated chaining rule violation and verified user state remains unchanged.")
+
+
+def validate_word_successful_chain(aws_clients, game_id):
+    """Test validating a word that successfully chains with the previous word."""
+    print("\nTesting function validate_word_successful_chain")
+    from lambdas.validate_word.handler import handler as validate_handler
+
+    # Payload for validating the next word "ELEMENT", which chains with "VAPORIZE"
+    chain_payload = c.VALIDATE_WORD_CHAINING_SUCCESS_PAYLOAD(game_id)
+
+    # Validate the chained word
+    response = validate_handler(chain_payload, None)
+
+    print("Chained word validation response:", response)
+
+    # Assertions
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}."
+    response_body = json.loads(response["body"])
+    assert response_body["valid"] is True, f"'valid' should be True, but was {response_body['valid']}."
+    assert response_body["message"] == "Word is valid.", f"Unexpected message: {response_body['message']}."
+
+    print("Successfully validated a chained word.")
+
+
+def validate_word_nonexistent_game(aws_clients):
+    """Test validating a word for a nonexistent game ID."""
+    print("\nTesting function validate_word_nonexistent_game")
+    from lambdas.validate_word.handler import handler as validate_handler
+
+    # Call the validate handler with a nonexistent game ID
+    response = validate_handler(c.VALIDATE_WORD_NONEXISTENT_GAME_PAYLOAD, None)
+
+    print("Nonexistent game response:", response)
+
+    # Assertions
+    assert response["statusCode"] == 404, f"Expected 404 status code, got {response['statusCode']}."
+    response_body = json.loads(response["body"])
+    assert response_body["valid"] is False, f"'valid' should be False, but was {response_body['valid']}."
+    assert "Game with specified game ID not found" in response_body["message"], (
+        f"Unexpected message: {response_body['message']}"
+    )
+
+    print("Successfully validated nonexistent game ID.")
+
+
+def validate_word_empty_words_list(aws_clients, game_id):
+    """Test validating the first word in a new session (no chaining rule)."""
+    print("\nTesting function validate_word_empty_words_list")
+    from lambdas.validate_word.handler import handler as validate_handler
+
+    # Validate the first word
+    response = validate_handler(c.VALIDATE_WORD_DIFFERENT_SESSION_PAYLOAD(game_id), None)
+
+    print("First word validation response:", response)
+
+    # Assertions
+    assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}."
+    response_body = json.loads(response["body"])
+    assert response_body["valid"] is True, f"'valid' should be True, but was {response_body['valid']}."
+    assert response_body["message"] == "Word is valid.", f"Unexpected message: {response_body['message']}."
+
+    print("Successfully validated the first word.")
+
+
+def validate_word_missing_parameters(aws_clients):
+    """Test validating a word with missing required parameters."""
+    print("\nTesting function validate_word_missing_parameters")
+    from lambdas.validate_word.handler import handler as validate_handler
+
+    # Missing gameId in the payload
+    missing_game_id_payload = c.VALIDATE_WORD_MISSING_GAME_ID_PAYLOAD
+
+    response_missing_game_id = validate_handler(missing_game_id_payload, None)
+    print("Response with missing gameId:", response_missing_game_id)
+
+    # Assertions for missing gameId
+    assert response_missing_game_id["statusCode"] == 400, (
+        f"Expected 400 status code for missing gameId, got {response_missing_game_id['statusCode']}."
+    )
+    response_body = json.loads(response_missing_game_id["body"])
+    assert response_body["valid"] is False, f"'valid' should be False, but was {response_body['valid']}."
+    assert "gameId" in response_body["message"], f"Expected error message to mention 'gameId', but got: {response_body['message']}."
+
+    # Missing word in the payload
+    missing_word_payload = c.VALIDATE_WORD_MISSING_WORD_PAYLOAD
+
+    response_missing_word = validate_handler(missing_word_payload, None)
+    print("Response with missing word:", response_missing_word)
+
+    # Assertions for missing word
+    assert response_missing_word["statusCode"] == 400, (
+        f"Expected 400 status code for missing word, got {response_missing_word['statusCode']}."
+    )
+    response_body = json.loads(response_missing_word["body"])
+    assert response_body["valid"] is False, f"'valid' should be False, but was {response_body['valid']}."
+    assert "word" in response_body["message"], f"Expected error message to mention 'word', but got: {response_body['message']}."
+
+    # Missing sessionId in the payload
+    missing_session_id_payload = c.VALIDATE_WORD_MISSING_SESSION_ID_PAYLOAD
+
+    response_missing_session_id = validate_handler(missing_session_id_payload, None)
+    print("Response with missing sessionId:", response_missing_session_id)
+
+    # Assertions for missing sessionId
+    assert response_missing_session_id["statusCode"] == 400, (
+        f"Expected 400 status code for missing sessionId, got {response_missing_session_id['statusCode']}."
+    )
+    response_body = json.loads(response_missing_session_id["body"])
+    assert response_body["valid"] is False, f"'valid' should be False, but was {response_body['valid']}."
+    assert "sessionId" in response_body["message"], f"Expected error message to mention 'sessionId', but got: {response_body['message']}."
+
+    print("Successfully tested validation for missing required parameters.")
+
+
+def validate_word_invalid_json(aws_clients):
+    """Test validating a word with malformed JSON in the event body."""
+    print("\nTesting function validate_word_invalid_json")
+    from lambdas.validate_word.handler import handler as validate_handler
+
+    # Malformed JSON payload
+    malformed_json_payload = c.VALIDATE_WORD_INVALID_JSON_PAYLOAD
+
+    # Call the handler with malformed JSON
+    response = validate_handler(malformed_json_payload, None)
+    print("Response with malformed JSON:", response)
+
+    # Assertions
+    assert response["statusCode"] == 400, (
+        f"Expected 400 status code for malformed JSON, got {response['statusCode']}."
+    )
+    response_body = json.loads(response["body"])
+    assert response_body["valid"] is False, f"'valid' should be False, but was {response_body['valid']}."
+    assert "Invalid JSON" in response_body["message"], (
+        f"Expected error message to mention 'Invalid JSON', but got: {response_body['message']}."
+    )
+
+    print("Successfully tested validation for malformed JSON.")

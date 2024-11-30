@@ -17,7 +17,8 @@ def create_random_game(
     language: str = "en", 
     board_size: str = "3x3", 
     seed_words: Optional[tuple[str, str]] = None,
-    clue: Optional[str] = ""
+    clue: Optional[str] = "",
+    created_by: Optional[str] = None
 ) -> Dict[str, Optional[List[str]]]:
     """
     Create a random game by selecting two words from the dictionary and generating a layout.
@@ -81,7 +82,7 @@ def create_random_game(
         language=language,
         board_size=board_size,
         random_seed_words=[word1, word2],
-        created_by="",
+        created_by=created_by,
         clue=clue,
     )
 

@@ -187,14 +187,12 @@ def main() -> Any:
 
     # Generate valid words for this puzzle
     valid_words = generate_valid_words(standardized_layout, language)
-    print(f"Generated puzzle has {len(valid_words)} valid words.")
 
     # Calculate two word solutions
     solutions = calculate_two_word_solutions(standardized_layout, language, valid_words=valid_words)
     if not solutions:
         print("Generated layout is not a viable puzzle")
         return None
-    print(f"Found {len(solutions)} two-word solutions to this puzzle.")
 
     print("Viable random puzzle generated!")
 

@@ -163,7 +163,9 @@ CREATE_RANDOM_EVENT_VALID_SEED_WORDS_ES = {
     "body": json.dumps({
         "language": "es",
         "boardSize": "3x3",
-        "seedWords": ["ÚNICAMENTE", "ELECTRICOS"]
+        "seedWords": ["ÚNICAMENTE", "ELECTRICOS"],
+        "clue": "a special kind of lightning",
+        "createdBy": "Jose Testusero"
     }),
     "headers": {
         "Content-Type": "application/json"
@@ -175,7 +177,9 @@ CREATE_RANDOM_EVENT_VALID_4X4_WITH_SEED_EN = {
     "body": json.dumps({
         "language": "en",
         "boardSize": "4x4",
-        "seedWords": ["DISPLACEMENT", "THORNBUSH"]
+        "seedWords": ["DISPLACEMENT", "THORNBUSH"],
+        "clue": "moving plant",
+        "createdBy": "Test User"
     }),
     "headers": {
         "Content-Type": "application/json"
@@ -505,6 +509,18 @@ SAVE_USER_STATE_NONEXISTENT_GAME = {
     }
 }
 
+# For use in validate word lambda test
+SAVE_USER_STATE_PAYLOAD_FOR_VALIDATE_WORD = lambda game_id: {
+    "body": json.dumps({
+        "gameId": game_id,
+        "sessionId": "test-session-id",
+        "wordsUsed": ["VAPORIZE"],
+        "originalWordsUsed": ["VAPORIZE"],
+        "gameLayout": ["VZL", "PMI", "ONA", "ERT"]
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
 # ===================================================================
 # Constants for Fetch User State Event Payloads
 # ===================================================================
@@ -619,4 +635,115 @@ FETCH_RANDOM_EVENT_MALFORMED_EVENT = {
     "headers": {
         "Content-Type": "application/json",
     }
+}
+
+# ===================================================================
+# Constants for Validate Word Event Payloads
+# ===================================================================
+# Successful validation
+VALIDATE_WORD_SUCCESSFUL_PAYLOAD = lambda game_id: {
+    "body": json.dumps({
+        "gameId": game_id,
+        "word": "VAPORIZE",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Word already used
+VALIDATE_WORD_ALREADY_USED_PAYLOAD = lambda game_id: {
+    "body": json.dumps({
+        "gameId": game_id,
+        "word": "VAPORIZE",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Missing parameters
+VALIDATE_WORD_MISSING_PARAMETERS_PAYLOAD = {
+    "body": json.dumps({
+        "word": "MISSINGPARAMSWORD"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Nonexistent game
+VALIDATE_WORD_NONEXISTENT_GAME_PAYLOAD = {
+    "body": json.dumps({
+        "gameId": "nonexistent-game-id",
+        "word": "ELEMENT",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Invalid word (fits the puzzle, but not in dictionary)
+VALIDATE_WORD_INVALID_PAYLOAD = lambda game_id: {
+    "body": json.dumps({
+        "gameId": game_id,
+        "word": "PAVEME",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Chaining rule violation (first word is VAPORIZE)
+VALIDATE_WORD_CHAINING_RULE_VIOLATION_PAYLOAD = lambda game_id: {
+    "body": json.dumps({
+        "gameId": game_id,
+        "word": "PAVEMENT",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Chaining rule success (first word is VAPORIZE)
+VALIDATE_WORD_CHAINING_SUCCESS_PAYLOAD = lambda game_id: {
+    "body": json.dumps({
+        "gameId": game_id,
+        "word": "ELEMENT",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Empty words list (first word validation)
+VALIDATE_WORD_DIFFERENT_SESSION_PAYLOAD = lambda game_id: {
+    "body": json.dumps({
+        "gameId": game_id,
+        "word": "PAVEMENT",
+        "sessionId": "different-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+VALIDATE_WORD_MISSING_GAME_ID_PAYLOAD = {
+    "body": json.dumps({
+        "word": "VAPORIZE",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+VALIDATE_WORD_MISSING_WORD_PAYLOAD = {
+    "body": json.dumps({
+        "gameId": "test-game-id",
+        "sessionId": "test-session-id"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+VALIDATE_WORD_MISSING_SESSION_ID_PAYLOAD = {
+    "body": json.dumps({
+        "gameId": "test-game-id",
+        "word": "VAPORIZE"
+    }),
+    "headers": {"Content-Type": "application/json"}
+}
+
+# Invalid JSON
+VALIDATE_WORD_INVALID_JSON_PAYLOAD = {
+    "body": '{"gameId": "existing-game-id", "word": "INVALIDJSON, "sessionId": "existing-session-id"}',  # Malformed JSON
+    "headers": {"Content-Type": "application/json"}
 }
