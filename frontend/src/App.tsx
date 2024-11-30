@@ -238,7 +238,7 @@ const App = () => {
         saveGameState(newFoundWords, newOriginalWordsUsed);
 
         console.log("Validation Result:", validationResult);
-        
+
         // Check for game completion
         if (validationResult.gameCompleted) {  
           handleGameCompleted();
@@ -443,7 +443,7 @@ const App = () => {
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          numberOfPieces={1000}
+          numberOfPieces={10000}
           recycle={false} // Confetti will not loop
           gravity={0.2}
           style={{ zIndex: 2000, position: 'fixed', top: 0, left: 0 }}
