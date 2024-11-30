@@ -98,6 +98,7 @@
   background-color: #dae4ef;
   border: 4px solid black;
   margin: 60px auto;
+  z-index: 100;
 }
 
 /* Top Side */
@@ -229,6 +230,7 @@
   border: 2px solid;
   background-color: #84888a;
   margin: 5px; /* Space between marker and letter */
+  z-index: 500;
 }
 
 .marker.active {

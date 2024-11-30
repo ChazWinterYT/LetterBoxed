@@ -240,7 +240,7 @@ const App = () => {
         console.log("Validation Result:", validationResult);
 
         // Check for game completion
-        if (validationResult.gameCompleted) {  
+        if (validationResult.gameCompleted || true) {  
           handleGameCompleted();
         }
       } else {
@@ -443,10 +443,12 @@ const App = () => {
         <Confetti
           width={window.innerWidth}
           height={window.innerHeight}
-          numberOfPieces={5000}
+          numberOfPieces={10000}
           recycle={false} // Confetti will not loop
-          gravity={0.2}
-          style={{ zIndex: 2000, position: 'fixed', top: 0, left: 0 }}
+          gravity={0.1}
+          style={{ zIndex: 1001, position: 'fixed', top: 0, left: 0 }}
+          friction={0.99}
+          colors={['#000000', '#550055', '#aa00aa', '#990011', '#ffc0cb']}
         />
       )}
       <Footer />
