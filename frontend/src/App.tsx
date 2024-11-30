@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import {
   BrowserRouter,
+  Routes,
+  Route,
   useNavigate,
   useParams,
 } from "react-router-dom";
@@ -200,11 +202,19 @@ const App = () => {
 
   // Handle shareable URL or default to play-today
   useEffect(() => {
-    if (userSessionId && !urlGameId && !currentGameId) {
+    console.log("Detected URL gameId:", urlGameId);
+  
+    // If a new gameId is in the URL, load it
+    if (urlGameId && urlGameId !== currentGameId) {
+      console.log("Loading game from URL:", urlGameId);
+      loadGame(urlGameId, false, true); // Do not update URL; force reload
+    } else if (!urlGameId && !currentGameId) {
       console.log("No game ID in URL and no current game. Loading today's game.");
       loadTodaysGame();
+    } else {
+      console.log("Game already loaded:", currentGameId);
     }
-  }, [userSessionId, urlGameId, currentGameId, loadTodaysGame]);
+  }, [urlGameId, currentGameId, loadGame, loadTodaysGame]);
 
   // Add words and save the state
   const addWord = async (word: string) => {
@@ -454,7 +464,12 @@ const App = () => {
 
 const AppRouter = () => (
   <BrowserRouter basename="/LetterBoxed/frontend">
-    <App />
+    <Routes>
+      {/* Route for the main app */}
+      <Route path="/" element={<App />} />
+      {/* Route for accessing a specific game */}
+      <Route path="/games/:gameId" element={<App />} />
+    </Routes>
   </BrowserRouter>
 );
 
