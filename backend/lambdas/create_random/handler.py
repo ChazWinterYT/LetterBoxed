@@ -3,7 +3,7 @@ from typing import Dict, Any, Optional
 from lambdas.common.db_utils import add_game_to_db, add_game_id_to_random_games_db
 from lambdas.common.dictionary_utils import get_dictionary
 from lambdas.common.game_schema import create_game_schema, validate_board_size, validate_language
-from lambdas.create_random.random_game_service import create_random_game
+from lambdas.create_random.random_game_service import create_random_game, create_random_small_board_game
 from lambdas.common.response_utils import error_response
 
 
@@ -16,26 +16,36 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             return error_response("Missing body in JSON event.", 400)
             
         # Parse parameters for the event
-        body = json.loads(event.get("body"))
+        body = json.loads(event.get("body", {}))
 
         language = body.get("language", "en")  # Default to English
         board_size = body.get("boardSize", "3x3")  # Default to 3x3
         clue = body.get("clue", "")
         created_by = body.get("createdBy", None)
+        single_word = body.get("fromSingleWord", False)
         
-        seed_words = body.get("seedWords", None) # Use seed words if provided
-        if not seed_words:
-            clue = "" # Don't allow a clue if it's not based on seed words
-        
-
         # Validate language and board size
         if not validate_board_size(board_size):
             return error_response("Input contains an invalid board size.", 400)
         if not validate_language(language):
             return error_response("Input contains an unsupported language.", 400)
-
-        # Retry random game creation if it fails
-        random_game_data = retry_random_game_creation(language, board_size, seed_words, clue, created_by)
+        
+        # Use seed words if provided
+        seed_words = body.get("seedWords", None) # Can be a tuple or a single string
+        
+        if not seed_words:
+            clue = "" # Don't allow a clue if it's not based on seed words
+        
+        small_boards = ["1x1", "2x2"]
+        if board_size not in small_boards and isinstance(seed_words, str):
+            return error_response("Only small boards can have a single seed word", 400)
+        
+        # Special handling for small boards
+        if board_size in small_boards and single_word:
+            random_game_data = create_random_small_board_game(language, board_size, seed_words, clue, created_by)
+        else:
+            # Use existing service for all other boards
+            random_game_data = retry_random_game_creation(language, board_size, seed_words, clue, created_by)
 
         # Return the game details
         return {

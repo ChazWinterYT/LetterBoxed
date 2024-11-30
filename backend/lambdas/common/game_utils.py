@@ -77,10 +77,58 @@ def check_game_completion(game_layout: list[str], words_used: list[str]) -> tupl
         return False, "Word accepted."
 
 
+def calculate_one_word_solutions(
+    game_layout: List[str],
+    valid_words: List[str],
+    language: str = "en",
+    time_limit: Optional[float] = 45.0
+) -> List[str]:
+    """
+    Calculate the one-word solutions for a 2x2 board.
+
+    Args:
+        game_layout (List[str]): The input letters for this game (2x2 grid).
+        valid_words (List[str]): Pre-calculated list of valid words.
+        language (str, optional): The language of the word dictionary.
+        time_limit (float, optional): Time limit for the solution calculation.
+
+    Returns:
+        List[str]: List of one-word solutions.
+    """
+    print("[INFO] Generating one-word solutions...")
+    ows_start_time = time.time()
+    one_word_solutions = []
+    
+    # Create a mapping of letters to their sides, and a set of all letters on the board
+    # (this requires all letters on the board to be unique)
+    letter_to_side = create_letter_to_side_mapping(game_layout)
+    all_letters = set(letter_to_side.keys())
+    
+    # Make sure we have the correct number of unique letters
+    total_letters = len(all_letters)
+    
+    # Iterate over valid_words and check if any of them are one-word solutions
+    for word in valid_words:
+        # Meet all criteria
+        if (
+            len(word) >= total_letters # Must have enough letters to fill the board
+            and set(word) == all_letters # Uses every letter in the game layout with no extras
+            and is_valid_word(word, letter_to_side, all_letters) # Alternates sides
+        ):
+            one_word_solutions.append(word)
+        # Check time limit
+        if time_limit and time.time() - ows_start_time > time_limit:
+            print(f"{time_limit}s Time limit exceeded while calculating one-word solutions.")
+            break
+    
+    print(f"[INFO] {len(one_word_solutions)} one-word solutions found.")
+    return one_word_solutions
+
+
 def calculate_two_word_solutions(
     game_layout: List[str],
+    valid_words: List[str],
     language: str = "en",
-    valid_words: Optional[List[str]] = None,
     starting_letter_to_words: Optional[Dict[str, List[str]]] = None,
     time_limit: Optional[float] = 45.0
 ) -> List[Tuple[str, str]]:
@@ -96,12 +144,11 @@ def calculate_two_word_solutions(
     Returns:
         List[Tuple[str, str]]: Pairs of words representing solutions to the puzzle.
     """
-    print(f"{len(valid_words) if valid_words else 0} valid words passed to the two-word solutions calaulator.")
+    print(f"[INFO] {len(valid_words) if valid_words else 0} valid words passed to the two-word solutions calaulator.")
     try:
         # Preprocess words to generate a list of valid words for this puzzle
         if valid_words is None or len(valid_words) < 1:
-            print("Valid words were not passed to the two-word solutions calculator.")
-            valid_words = generate_valid_words(game_layout, language)
+            raise ValueError("Did not receive valid words from game schema.")
         if not starting_letter_to_words or starting_letter_to_words is None:
             starting_letter_to_words = create_starting_letter_to_words_dict(game_layout, language, valid_words)
     except ValueError as e:
@@ -134,7 +181,7 @@ def calculate_two_word_solutions(
 
         for word2 in potential_second_words:
             # Stop the function if the time limit is exceeded
-            if time.time() - tws_start_time > time_limit:
+            if time.time() - tws_start_time > (time_limit or 45.0):
                 print(f"[INFO] Time limit of {time_limit}s exceeded. \
                     Returning {len(solutions)} solutions found so far.")
                 return solutions if solutions else []

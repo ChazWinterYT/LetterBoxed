@@ -10,7 +10,7 @@ def validate_board_size(board_size: str) -> bool:
     Returns:
         bool: True if the board size is valid, False otherwise.
     """
-    valid_board_sizes = ["3x3", "4x4", "5x5"]
+    valid_board_sizes = ["1x1", "2x2", "3x3", "4x4", "5x5"]
     return board_size in valid_board_sizes
 
 
