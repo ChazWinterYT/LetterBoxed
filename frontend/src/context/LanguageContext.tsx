@@ -14,6 +14,7 @@ interface LanguageContextProps {
   language: string;
   setLanguage: (lang: string) => void;
   t: (key: string) => string;
+  getRandomPhrase: (key: string) => string;
   availableLanguages: typeof languages;
   isPlayable: (code: string) => boolean;
 }
@@ -50,6 +51,27 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
     return typeof translation === "string" ? translation : key; // Return the translation if it's a string, otherwise fallback to the key
   };
 
+  const getRandomPhrase = (key: string): string => {
+    const keys = key.split(".");
+    let translation: any = typedTranslations[language]; // Start with the root translation for the current language
+  
+    for (const k of keys) {
+      if (translation && typeof translation === "object") {
+        translation = translation[k];
+      } else {
+        break; // Exit loop if translation is not an object
+      }
+    }
+  
+    if (Array.isArray(translation)) {
+      const randomIndex = Math.floor(Math.random() * translation.length);
+      return translation[randomIndex];
+    }
+  
+    console.warn(`Translation key "${key}" does not point to an array.`);
+    return key; // Fallback to the key if it's not an array
+  };
+
   const isPlayable = (code: string): boolean => {
     const lang = languages.find((lang) => lang.code === code);
     return lang?.playable || false;
@@ -61,6 +83,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
         language,
         setLanguage,
         t,
+        getRandomPhrase,
         availableLanguages: languages,
         isPlayable,
       }}

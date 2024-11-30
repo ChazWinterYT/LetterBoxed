@@ -254,7 +254,9 @@ CREATE_RANDOM_EVENT_MISSING_BODY = {
 
 # Valid event with an existing game ID
 FETCH_GAME_EVENT_VALID = lambda game_id: {
-    "body": json.dumps({"gameId": game_id}),
+    "pathParameters": {
+        "gameId": game_id
+    },
     "headers": {
         "Content-Type": "application/json"
     }
@@ -286,7 +288,9 @@ FETCH_GAME_EVENT_INVALID_JSON = {
 
 # Event with a valid game ID but no optional fields
 FETCH_GAME_EVENT_OPTIONAL_FIELDS_DEFAULT = lambda game_id: {
-    "body": json.dumps({"gameId": game_id}),
+    "pathParameters": {
+        "gameId": game_id
+    },
     "headers": {
         "Content-Type": "application/json"
     }

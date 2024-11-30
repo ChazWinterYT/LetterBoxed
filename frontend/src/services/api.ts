@@ -45,11 +45,11 @@ export const fetchGameById = async (gameId: string) => {
 };
 
 // Validate word
-export const validateWord = async (word: string) => {
+export const validateWord = async (word: string, gameId: string, sessionId: string) => {
   const response = await fetch(`${API_URL}/validate`, {
     method: "POST",
     headers,
-    body: JSON.stringify({ word }),
+    body: JSON.stringify({ word, gameId, sessionId }), // Include gameId and sessionId
   });
   return handleErrorOrReturnResponse(response);
 };

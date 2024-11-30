@@ -92,6 +92,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "body": json.dumps({
                 "valid": True,
                 "message": "Word is valid.",
+                "submittedWord": submitted_word,
                 "originalWord": matching_word
             }),
         }

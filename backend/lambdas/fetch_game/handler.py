@@ -10,16 +10,8 @@ logger.setLevel(logging.INFO)
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     logger.info(f"Received event: {json.dumps(event)}")
 
-    # Parse gameId from path parameters
-    try:
-        # Ensure the event body is valid JSON
-        body = json.loads(event.get("body", "{}"))
-    except json.JSONDecodeError as e:
-        logger.error(f"JSON decode error: {str(e)}")
-        return error_response("Invalid JSON format in request body.", 400)
-
-    # Parse gameId from path parameters
-    game_id = body.get("gameId") or event.get("pathParameters", {}).get("gameId")
+    # Extract gameId from path parameters
+    game_id = event.get("pathParameters", {}).get("gameId")
     if not game_id:
         logger.error("Missing gameId in request")
         return error_response("Invalid input: gameId is required.", 400)

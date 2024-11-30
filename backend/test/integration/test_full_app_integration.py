@@ -129,7 +129,6 @@ def test_full_app_integration(setup_environment, aws_clients, setup_aws_resource
 
     f.fetch_game_missing_game_id(aws_clients)
     f.fetch_game_nonexistent_game_id(aws_clients)
-    f.fetch_game_invalid_json(aws_clients)
 
     f.save_user_state_missing_parameters(aws_clients)
     f.save_user_state_invalid_json(aws_clients)

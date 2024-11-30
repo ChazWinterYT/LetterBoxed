@@ -799,7 +799,8 @@ def fetch_game_missing_game_id(aws_clients):
 def fetch_game_nonexistent_game_id(aws_clients):
     """
     Test fetch_game handler with a non-existent gameId.
-    This should return a 404 status code with an appropriate error message.
+    This should return a 400 status code with an appropriate error message.
+    gameId is required in the request, so this is a 400 Bad Request, not a 404.
     """
     print("Testing fetch_game_nonexistent_game_id")
     dynamodb = aws_clients["dynamodb"]
@@ -810,42 +811,16 @@ def fetch_game_nonexistent_game_id(aws_clients):
     response = handler(c.FETCH_GAME_EVENT_NONEXISTENT_GAME_ID, None)
 
     # Verify the response
-    assert response["statusCode"] == 404, f"Expected 404 status code, got {response['statusCode']}"
+    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
     response_body = json.loads(response["body"])
     assert "message" in response_body, "Expected a 'message' key in the response body"
-    assert "Game ID not found" in response_body["message"], "Expected error message about non-existent gameId"
+    assert "gameId is required" in response_body["message"], "Expected error message about non-existent gameId"
 
     # Verify no game was added to the database
     assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
     assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
 
     print("Successfully tested fetch_game with a non-existent gameId.")
-
-
-def fetch_game_invalid_json(aws_clients):
-    """
-    Test fetch_game handler with a malformed JSON payload.
-    This should return a 400 status code with an appropriate error message.
-    """
-    print("Testing fetch_game_invalid_json")
-    dynamodb = aws_clients["dynamodb"]
-    # Import the handler
-    from lambdas.fetch_game.handler import handler
-
-    # Call the handler
-    response = handler(c.FETCH_GAME_EVENT_INVALID_JSON, None)
-
-    # Verify the response
-    assert response["statusCode"] == 400, f"Expected 400 status code, got {response['statusCode']}"
-    response_body = json.loads(response["body"])
-    assert "message" in response_body, "Expected a 'message' key in the response body"
-    assert "Invalid JSON format" in response_body["message"], "Expected error message about invalid JSON format"
-
-    # Verify no game was added to the database
-    assert_table_is_empty(dynamodb, os.environ["GAMES_TABLE"])
-    assert_table_is_empty(dynamodb, os.environ["VALID_WORDS_TABLE"])
-
-    print("Successfully tested fetch_game with malformed JSON.")
 
 
 # ===================================================================

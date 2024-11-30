@@ -8,6 +8,7 @@ export interface GameBoardProps {
   layout: string[];
   foundWords: string[];
   gameId: string | null;
+  sessionId: string | null;
   onWordSubmit?: (word: string) => void;
   onRestartGame?: () => void;
 }
@@ -16,16 +17,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
   layout,
   foundWords,
   gameId,
+  sessionId,
   onWordSubmit,
   onRestartGame,
 }) => {
   const { t } = useLanguage();
+  const { getRandomPhrase } = useLanguage();
 
   // State to track the current word as an array of letters with their sides
   const [currentWord, setCurrentWord] = useState<{ letter: string; side: string }[]>([]);
   const [lastSide, setLastSide] = useState<string | null>(null);
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null); // Feedback state
-  const [feedbackType, setFeedbackType] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
+  const [validationMessage, setValidationMessage] = useState<string | null>(null); // Feedback state
+  const [validationStatus, setValidationStatus] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
@@ -49,37 +52,48 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   const handleSubmit = async () => {
     if (currentWord.length > 0) {
-      const word = currentWord.map((item) => item.letter).join("");
-
+      const word = currentWord.map((item) => item.letter).join('');
+      if (!gameId || !sessionId) {
+        console.error("Missing gameId or sessionId for validation.");
+        return;
+      }
+  
       try {
-        // Call the validateWord function from api.ts
-        const response = await validateWord(word);
-
-        if (response.valid) {
-          // Word is valid
-          setFeedbackMessage("Let's go!");
-          setFeedbackType("valid");
+        const validationResult = await validateWord(word, gameId, sessionId);
+  
+        if (validationResult.valid) {
+          const randomValidMessage = getRandomPhrase('game.validateWord.valid'); // Select a random valid message
+          
+          console.log("Word is valid:", randomValidMessage);
+  
           if (onWordSubmit) {
-            onWordSubmit(word); // Add word to foundWords
+            onWordSubmit(word);
           }
+  
+          setValidationMessage(randomValidMessage); // Show success message
+          setValidationStatus("valid");
           setCurrentWord([]);
           setLastSide(null);
         } else {
-          // Word is invalid
-          setFeedbackMessage(response.message || "Not a word");
-          setFeedbackType("invalid");
+          const randomInvalidMessage = getRandomPhrase('game.validateWord.invalid'); // Select a random invalid message
+          
+          console.log("Word is invalid:", randomInvalidMessage);
+  
+          setValidationMessage(randomInvalidMessage); // Show failure message
+          setValidationStatus("invalid");
         }
       } catch (error) {
         console.error("Error validating word:", error);
-        setFeedbackMessage(t("game.validateWord.error"));
-        setFeedbackType("invalid");
+        const errorMessage = t('game.validateWord.error'); // Use t() for single string
+        setValidationMessage(errorMessage); // Show error message
+        setValidationStatus("invalid");
       }
-
-      // Clear the feedback message after 3 seconds
+  
+      // Clear message and status after 2 seconds
       setTimeout(() => {
-        setFeedbackMessage(null);
-        setFeedbackType(null);
-      }, 3000);
+        setValidationMessage(''); // Clear the message
+        setValidationStatus(null); // Reset the status
+      }, 2000);
     }
   };
 
@@ -141,13 +155,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
       </div>
 
       {/* Feedback Message */}
-      {feedbackMessage && (
+      {validationMessage && (
         <div
           className={`feedback-message ${
-            feedbackType === "valid" ? "valid-feedback" : "invalid-feedback"
+            validationStatus === "valid" ? "valid-feedback" : "invalid-feedback"
           }`}
         >
-          {feedbackMessage}
+          {validationMessage}
         </div>
       )}
 

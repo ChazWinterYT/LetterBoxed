@@ -22,6 +22,7 @@ import {
   fetchGameArchive,
   fetchUserSession,
   saveSessionState,
+  validateWord,
 } from "./services/api";
 import "./App.css";
 
@@ -37,6 +38,7 @@ const App = () => {
   const [lastKey, setLastKey] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [foundWords, setFoundWords] = useState<string[]>([]);
+  const [originalWordsUsed, setOriginalWordsUsed] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
@@ -87,24 +89,25 @@ const App = () => {
 
   // Save the current game state to the backend
   const saveGameState = useCallback(
-    async (wordsUsed: string[]) => {
+    async (wordsUsed: string[], originalWordsUsed: string[]) => {
       if (!userSessionId || !currentGameId) {
         console.warn("Cannot save game state: Missing userSessionId or currentGameId.");
         return;
       }
-
+  
       if (!gameLayout || gameLayout.length === 0) {
         console.error("Game layout is not available.");
         return;
       }
-
+  
       const sessionData = {
         sessionId: userSessionId,
         gameId: currentGameId,
         gameLayout: gameLayout,
         wordsUsed: wordsUsed,
+        originalWordsUsed: originalWordsUsed, // Include original words
       };
-
+  
       try {
         console.log("Saving game state:", sessionData);
         await saveSessionState(sessionData);
@@ -197,14 +200,41 @@ const App = () => {
   }, [urlGameId, currentGameId, loadGame, loadTodaysGame]);
 
   // Add words and save the state
-  const addWord = (word: string) => {
+  const addWord = async (word: string) => {
     console.log("Adding word:", word);
-    setFoundWords((prevWords) => {
-      const updatedWords = [...prevWords, word];
-      console.log("Updated found words:", updatedWords);
-      saveGameState(updatedWords); // Pass updated words
-      return updatedWords;
-    });
+
+    if (!currentGameId || !userSessionId) {
+      console.warn("Cannot validate word: Missing currentGameId or userSessionId.");
+      return;
+    }
+  
+    try {
+      // Validate the word
+      const validationResult = await validateWord(word, currentGameId, userSessionId);
+      if (validationResult.valid) {
+        const { submittedWord, originalWord } = validationResult;
+  
+        // Update foundWords and originalWordsUsed
+        setFoundWords((prevWords) => {
+          const updatedWords = [...prevWords, submittedWord];
+          console.log("Updated found words:", updatedWords);
+          return updatedWords;
+        });
+  
+        setOriginalWordsUsed((prevOriginalWords) => {
+          const updatedOriginalWords = [...prevOriginalWords, originalWord];
+          console.log("Updated original words:", updatedOriginalWords);
+          return updatedOriginalWords;
+        });
+  
+        // Save the updated state
+        saveGameState([...foundWords, submittedWord], [...originalWordsUsed, originalWord]);
+      } else {
+        console.warn("Invalid word:", validationResult.message);
+      }
+    } catch (error) {
+      console.error("Error validating word:", error);
+    }
   };
 
   // Fetch game archive with pagination
@@ -301,6 +331,7 @@ const App = () => {
     console.log("Restart game confirmed.");
     setIsModalOpen(false);
     setFoundWords([]); // Clear the found words
+    setOriginalWordsUsed([]); // Clear original words too
 
     // Save the cleared state to the backend
     if (userSessionId && currentGameId) {
@@ -309,6 +340,7 @@ const App = () => {
         gameId: currentGameId,
         gameLayout: gameLayout,
         wordsUsed: [],
+        originalWordsUsed: [],
       };
 
       try {
@@ -359,6 +391,7 @@ const App = () => {
             layout={layout}
             foundWords={foundWords}
             gameId={currentGameId}
+            sessionId={userSessionId}
             onWordSubmit={addWord} // Pass the word submission handler
             onRestartGame={handleRestartGame} // Pass the restart handler
           />
