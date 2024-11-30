@@ -39,7 +39,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
 
   // Get the number of letters to display from the boardSize string
-  const [topBottomCount, leftRightCount] = boardSize.split('x').map(Number);
+  // const [topBottomCount, leftRightCount] = boardSize.split('x').map(Number);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 

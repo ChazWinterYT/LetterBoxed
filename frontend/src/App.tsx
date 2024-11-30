@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import {
   BrowserRouter,
-  Routes,
-  Route,
   useNavigate,
   useParams,
 } from "react-router-dom";
