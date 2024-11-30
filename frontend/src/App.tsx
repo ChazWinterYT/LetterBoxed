@@ -80,6 +80,7 @@ const App = () => {
         console.log("Fetched session state:", sessionState);
         setFoundWords(sessionState.wordsUsed || []);
         setOriginalWordsUsed(sessionState.originalWordsUsed || []);
+        setGameCompleted(sessionState.gameCompleted || false);
       } catch (error) {
         console.error("Error fetching game state:", error);
         // If no session exists, start with empty words
@@ -233,9 +234,13 @@ const App = () => {
   
         // Save the updated state
         saveGameState(newFoundWords, newOriginalWordsUsed);
-  
+
+        // Fetch the updated session state to check if the game is completed
+        const sessionState = await fetchUserSession(userSessionId, currentGameId)
+        console.log("Session state result:", sessionState)
+
         // Check for game completion
-        if (validationResult.gameCompleted) {
+        if (sessionState.gameCompleted) {
           handleGameCompleted();
         }
       } else {
