@@ -85,7 +85,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         game_layout = game_data["gameLayout"]
         words_used = user_game_state["wordsUsed"].copy()
         words_used.append(submitted_word)
-        game_completed = check_game_completion(game_layout, words_used)
+        game_completed, is_valid = check_game_completion(game_layout, words_used)
         
         return {
             "statusCode": 200,
@@ -95,7 +95,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "Access-Control-Allow-Headers": "Content-Type,Authorization",
             },
             "body": json.dumps({
-                "valid": True,
+                "valid": is_valid,
                 "message": "Word is valid.",
                 "submittedWord": submitted_word,
                 "originalWord": matching_word,
