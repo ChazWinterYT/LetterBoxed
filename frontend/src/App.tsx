@@ -237,12 +237,10 @@ const App = () => {
         // Save the updated state
         saveGameState(newFoundWords, newOriginalWordsUsed);
 
-        // Fetch the updated session state to check if the game is completed
-        const sessionState = await fetchUserSession(userSessionId, currentGameId)
-        console.log("Session state result:", sessionState)
-
+        console.log("Validation Result:", validationResult);
+        
         // Check for game completion
-        if (sessionState.gameCompleted) {
+        if (validationResult.gameCompleted) {  
           handleGameCompleted();
         }
       } else {

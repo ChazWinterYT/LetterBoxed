@@ -1,6 +1,6 @@
 import json
 from typing import Any, Dict
-from lambdas.common.game_utils import normalize_to_base
+from lambdas.common.game_utils import normalize_to_base, check_game_completion
 from lambdas.common.db_utils import (
     fetch_game_by_id,
     fetch_valid_words_by_game_id,
@@ -81,7 +81,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                     f"Word '{submitted_word}' must start with the last letter of the previous word '{last_word}", 200
                 )
 
-        # All checks passed
+        # All checks passed. Check game completion.
+        game_layout = game_data["gameLayout"]
+        words_used = user_game_state["wordsUsed"].copy()
+        words_used.append(submitted_word)
+        game_completed = check_game_completion(game_layout, words_used)
+        
         return {
             "statusCode": 200,
             "headers": {
@@ -93,7 +98,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "valid": True,
                 "message": "Word is valid.",
                 "submittedWord": submitted_word,
-                "originalWord": matching_word
+                "originalWord": matching_word,
+                "gameCompleted": game_completed
             }),
         }
 
