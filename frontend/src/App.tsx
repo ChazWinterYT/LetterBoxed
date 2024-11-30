@@ -240,7 +240,7 @@ const App = () => {
         console.log("Validation Result:", validationResult);
 
         // Check for game completion
-        if (validationResult.gameCompleted || true) {  
+        if (validationResult.gameCompleted) {  
           handleGameCompleted();
         }
       } else {
