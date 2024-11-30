@@ -444,7 +444,7 @@ const App = () => {
           gravity={0.1}
           style={{ zIndex: 1001, position: 'fixed', top: 0, left: 0 }}
           friction={0.99}
-          colors={['#000000', '#550055', '#aa00aa', '#990011', '#ffc0cb']}
+          colors={['#000000', '#550055', '#aa00aa', '#990011', '#ffc0cb', '#ffA500']}
         />
       )}
       <Footer />
