@@ -32,6 +32,7 @@ const App = () => {
   const navigate = useNavigate();
   const { gameId: urlGameId } = useParams<{ gameId: string }>();
   const [layout, setLayout] = useState<string[]>([]);
+  const [boardSize, setBoardSize] = useState<string>("3x3");
   const [currentGameId, setCurrentGameId] = useState<string | null>(null);
   const [userSessionId, setUserSessionId] = useState<string | null>(null);
   const [archiveGames, setArchiveGames] = useState<any[]>([]);
@@ -151,6 +152,7 @@ const App = () => {
         setCurrentGameId(gameId);
         setLayout(data.gameLayout || []); // Set layout for GameBoard
         setGameLayout(data.gameLayout || []); // Set gameLayout for session data
+        setBoardSize(data.boardSize || "3x3"); // Set board Size for display
 
         await loadGameState(gameId); // Fetch session state
 
@@ -209,7 +211,7 @@ const App = () => {
     } else {
       console.log("Game already loaded:", currentGameId);
     }
-  }, [urlGameId, currentGameId, loadGame, loadTodaysGame]);
+  }, [urlGameId, loadGame, loadTodaysGame]);
 
   // Add words and save the state
   const addWord = async (word: string) => {
@@ -424,6 +426,7 @@ const App = () => {
             onRestartGame={handleRestartGame} // Pass the restart handler
             onGameCompleted={handleGameCompleted} // Pass the game completed handler
             gameCompleted={gameCompleted} // Pass the gameCompleted state
+            boardSize={boardSize}
           />
         )}
       </div>
@@ -458,10 +461,7 @@ const App = () => {
 
 const AppRouter = () => (
   <BrowserRouter basename="/LetterBoxed/frontend">
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/games/:gameId" element={<App />} />
-    </Routes>
+    <App />
   </BrowserRouter>
 );
 

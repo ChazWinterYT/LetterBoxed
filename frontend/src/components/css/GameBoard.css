@@ -1,3 +1,8 @@
+:root {
+  --top-bottom-count: 3;
+  --left-right-count: 3;
+}
+
 /* Game Board Container */
 .game-board-container {
   display: flex;

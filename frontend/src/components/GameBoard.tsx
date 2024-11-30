@@ -13,6 +13,7 @@ export interface GameBoardProps {
   onWordSubmit?: (word: string) => void;
   onRestartGame?: () => void;
   onGameCompleted?: () => void;
+  boardSize: string;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -24,6 +25,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   onWordSubmit,
   onRestartGame,
   onGameCompleted,
+  boardSize,
 }) => {
   const { t } = useLanguage();
   const { getRandomPhrase } = useLanguage();
@@ -35,6 +37,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [validationStatus, setValidationStatus] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
   const [lastLetter, setLastLetter] = useState<string | null>(null);
   const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
+
+  // Get the number of letters to display from the boardSize string
+  const [topBottomCount, leftRightCount] = boardSize.split('x').map(Number);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
