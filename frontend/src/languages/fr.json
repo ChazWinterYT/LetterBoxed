@@ -57,6 +57,7 @@
         "randomGame": "Jouer une partie aléatoire",
         "randomGameOptions": "Options de jeu aléatoire",
         "selectGameLanguage": "Choisir une langue de jeu",
+        "selectGameLanguageDesc": "Cela n'affecte pas la langue d'affichage du site web.",
         "selectBoardSize": "Choisir une taille de plateau",
         "restartGame": "Redémarrer le jeu",
         "deleteLetter": "Supprimer la lettre",

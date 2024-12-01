@@ -57,6 +57,7 @@
         "randomGame": "Play a Random Game",
         "randomGameOptions": "Random Game Options",
         "selectGameLanguage": "Select a Game Language",
+        "selectGameLanguageDesc": "This does not affect the display language of the website.",
         "selectBoardSize": "Select a Board Size",
         "restartGame": "Restart Game",
         "deleteLetter": "Delete Letter",

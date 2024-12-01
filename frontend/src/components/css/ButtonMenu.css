@@ -16,8 +16,8 @@
     border-color: #061f32;
     font-size: 1rem;
     cursor: pointer;
-    width: 90%; /* Full-width buttons on mobile */
-    max-width: 300px; /* Limit width on larger screens */
+    width: 200%; /* Full-width buttons on mobile */
+    max-width: 240px; /* Limit width on larger screens */
     text-align: center;
   }
   

@@ -57,6 +57,7 @@
         "randomGame": "Zagraj w Losową Grę",
         "randomGameOptions": "Opcje Losowej Gry",
         "selectGameLanguage": "Wybierz Język Gry",
+        "selectGameLanguageDesc": "To nie wpływa na język wyświetlania strony internetowej.",
         "selectBoardSize": "Wybierz Rozmiar Planszy",
         "restartGame": "Zrestartuj grę",
         "deleteLetter": "Usuń literę",

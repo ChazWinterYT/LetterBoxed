@@ -57,6 +57,7 @@
         "randomGame": "Играть в случайную игру",
         "randomGameOptions": "Параметры случайной игры",
         "selectGameLanguage": "Выберите язык игры",
+        "selectGameLanguageDesc": "Это не влияет на язык отображения веб-сайта.",
         "selectBoardSize": "Выберите размер поля",
         "restartGame": "Перезапустить игру",
         "deleteLetter": "Удалить букву",

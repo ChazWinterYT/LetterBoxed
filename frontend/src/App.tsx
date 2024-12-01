@@ -317,26 +317,31 @@ const App = () => {
   );
 
   // Function to fetch a random game by language
-  const fetchRandomGameByLanguage = async (language: string) => {
-    console.log(`Fetching random game for language: ${language}`);
-    try {
-      const randomGame = await fetchRandomGame(language);
-      console.log("Fetched random game:", randomGame);
-
-      setCurrentGameId(randomGame.gameId);
-      setLayout(randomGame.gameLayout || []);
-      setGameLayout(randomGame.gameLayout || []);
-      setBoardSize(randomGame.boardSize || "3x3");
-      setIsModalOpen(false);
-      navigate(`/games/${randomGame.gameId}`, { replace: true });
-
-      // Load game state if necessary
-      await loadGameState(randomGame.gameId);
-    } catch (error) {
-      console.error("Failed to fetch random game:", error);
-      setModalContent(<p>{t("ui.randomGame.errorLoading")}</p>);
-    }
-  };
+  const fetchRandomGameByLanguage = useCallback(
+    async (language: string) => {
+      console.log(`Fetching random game for language: ${language}`);
+      try {
+        const randomGame = await fetchRandomGame(language);
+        console.log("Fetched random game:", randomGame);
+        
+        setCurrentGameId(randomGame.gameId);
+        setLayout(randomGame.gameLayout || []);
+        setGameLayout(randomGame.gameLayout || []);
+        setBoardSize(randomGame.boardSize || "3x3");
+        
+        setIsModalOpen(false); // Close the modal
+        
+        navigate(`/games/${randomGame.gameId}`, { replace: true });
+        
+        // Load game state if necessary
+        await loadGameState(randomGame.gameId);
+      } catch (error) {
+        console.error("Failed to fetch random game:", error);
+        setModalContent(<p>{t("ui.randomGame.errorLoading")}</p>);
+      }
+    },
+    [navigate, loadGameState, t]
+  );
 
   // Function to open the random game modal
   const openRandomGameModal = useCallback(() => {
@@ -346,9 +351,13 @@ const App = () => {
     setModalContent(
       <div className="random-game-options">
         <h2>{t("game.selectGameLanguage")}</h2>
-        <div className="language-buttons">
+        <p>{t("game.selectGameLanguageDesc")}</p>
+        <div className="button-menu">
           {Object.keys(gameLanguages).map((langCode) => (
-            <button key={langCode} onClick={() => fetchRandomGameByLanguage(langCode)}>
+            <button
+              key={langCode}
+              onClick={() => fetchRandomGameByLanguage(langCode)}
+            >
               {t(`language.${langCode}`)}
             </button>
           ))}

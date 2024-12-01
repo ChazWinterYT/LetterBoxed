@@ -154,7 +154,7 @@ def shuffle_final_layout(layout: List[str]) -> List[str]:
 
 
 def main() -> Any:
-    small_board = True
+    small_board = False
     
     if not small_board:
         create_random_game(

@@ -57,6 +57,7 @@
         "randomGame": "Mainkan Permainan Acak",
         "randomGameOptions": "Opsi Permainan Acak",
         "selectGameLanguage": "Pilih Bahasa Permainan",
+        "selectGameLanguageDesc": "Ini tidak memengaruhi bahasa tampilan situs web.",
         "selectBoardSize": "Pilih Ukuran Papan",
         "restartGame": "Mulai Ulang Game",
         "deleteLetter": "Hapus Huruf",

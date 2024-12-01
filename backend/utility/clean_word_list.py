@@ -91,11 +91,11 @@ def filter_basic_dictionary(main_dict_file, basic_dict_file, output_file):
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# # Example for French
-# french_input_file = os.path.join(script_dir, "espanol_basic.txt")
-# french_output_file = os.path.join(script_dir, "espanol_basic_cleaned.txt")
-# clean_word_list(french_input_file, french_output_file)
-# print(f"Cleaned French word list saved to {french_output_file}")
+# Example for French
+french_input_file = os.path.join(script_dir, "basic.txt")
+french_output_file = os.path.join(script_dir, "basic_cleaned.txt")
+clean_word_list(french_input_file, french_output_file)
+print(f"Cleaned French word list saved to {french_output_file}")
 
 # # Example for Spanish
 # spanish_input_file = os.path.join(script_dir, "espanol.txt")
@@ -108,7 +108,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 # clean_word_list_with_numbers(polish_input_file, polish_output_file)
 # print(f"Cleaned Polish word list saved to {polish_output_file}")
 
-main_dict_file = os.path.join(script_dir, "pl.txt")
-basic_dict_file = os.path.join(script_dir, "pl_basic.txt")
-output_file = os.path.join(script_dir, "pl_basic_cleaned.txt")
-filter_basic_dictionary(main_dict_file, basic_dict_file, output_file)
+# main_dict_file = os.path.join(script_dir, "pl.txt")
+# basic_dict_file = os.path.join(script_dir, "pl_basic.txt")
+# output_file = os.path.join(script_dir, "pl_basic_cleaned.txt")
+# filter_basic_dictionary(main_dict_file, basic_dict_file, output_file)

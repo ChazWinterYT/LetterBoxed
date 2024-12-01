@@ -57,6 +57,7 @@
         "randomGame": "ランダムゲームをプレイ",
         "randomGameOptions": "ランダムゲームのオプション",
         "selectGameLanguage": "ゲーム言語を選択",
+        "selectGameLanguageDesc": "これはウェブサイトの表示言語には影響しません。",
         "selectBoardSize": "ボードサイズを選択",
         "restartGame": "ゲームを再開",
         "deleteLetter": "文字を削除",

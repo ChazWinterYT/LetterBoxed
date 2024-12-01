@@ -57,6 +57,7 @@
         "randomGame": "एक रैंडम गेम खेलें",
         "randomGameOptions": "रैंडम गेम विकल्प",
         "selectGameLanguage": "गेम भाषा चुनें",
+        "selectGameLanguageDesc": "यह वेबसाइट की प्रदर्शन भाषा को प्रभावित नहीं करता।",
         "selectBoardSize": "बोर्ड आकार चुनें",
         "restartGame": "गेम पुनः प्रारंभ करें",
         "deleteLetter": "अक्षर हटाएं",

@@ -57,6 +57,7 @@
         "randomGame": "Spela ett Slumpmässigt Spel",
         "randomGameOptions": "Alternativ för Slumpmässigt Spel",
         "selectGameLanguage": "Välj ett Spelspråk",
+        "selectGameLanguageDesc": "Detta påverkar inte webbplatsens visningsspråk.",
         "selectBoardSize": "Välj en Brädsstorlek",
         "restartGame": "Starta om spelet",
         "deleteLetter": "Radera bokstav",

@@ -57,6 +57,7 @@
         "randomGame": "Gioca un Gioco Casuale",
         "randomGameOptions": "Opzioni Gioco Casuale",
         "selectGameLanguage": "Seleziona una Lingua di Gioco",
+        "selectGameLanguageDesc": "Questo non influisce sulla lingua di visualizzazione del sito web.",
         "selectBoardSize": "Seleziona una Dimensione della Griglia",
         "restartGame": "Riavvia il gioco",
         "deleteLetter": "Elimina la lettera",
