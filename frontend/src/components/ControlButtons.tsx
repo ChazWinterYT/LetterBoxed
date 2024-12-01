@@ -4,6 +4,7 @@ import './css/ControlButtons.css'
 
 interface ControlButtonsProps {
   onDelete: () => void;
+  onRemoveLastWord: () => void;
   onRestart: () => void;
   onSubmit: () => void;
   onShowHint: () => void;
@@ -12,6 +13,7 @@ interface ControlButtonsProps {
 
 const ControlButtons: React.FC<ControlButtonsProps> = ({
   onDelete,
+  onRemoveLastWord,
   onRestart,
   onSubmit,
   onShowHint,
@@ -24,6 +26,9 @@ const ControlButtons: React.FC<ControlButtonsProps> = ({
       <div className="control-row">
           <button onClick={onDelete} disabled={gameCompleted}>
           {t('game.deleteLetter')}
+          </button>
+          <button onClick={onRemoveLastWord} disabled={gameCompleted}>
+            {t("game.removeLastWord")}
           </button>
           <button onClick={onSubmit} disabled={gameCompleted}>
           {t('game.submitWord')}

@@ -448,6 +448,14 @@ const App = () => {
     setIsModalOpen(true);
   }, [confirmRestartGame, cancelRestartGame, t]);
 
+  const handleWordSubmit = (newWord: string) => {
+    setFoundWords((prevWords) => [...prevWords, newWord]);
+  }
+
+  const handleRemoveLastWord = (updatedWords: string[]) => {
+    setFoundWords(updatedWords);
+  };
+
   const handleGameCompleted = useCallback(() => {
     console.log("Game completed! You win!");
     setModalTitle(t("game.puzzleSolvedTitle"));
@@ -476,12 +484,12 @@ const App = () => {
           <Spinner message={t("game.loading")} />
         ) : (
           <GameBoard
-            key={currentGameId}
             layout={layout}
             foundWords={foundWords}
             gameId={currentGameId}
             sessionId={userSessionId}
-            onWordSubmit={addWord} // Pass the word submission handler
+            onWordSubmit={handleWordSubmit} // Pass the word submission handler
+            onRemoveLastWord={handleRemoveLastWord}
             onRestartGame={handleRestartGame} // Pass the restart handler
             onGameCompleted={handleGameCompleted} // Pass the game completed handler
             gameCompleted={gameCompleted} // Pass the gameCompleted state

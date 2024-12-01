@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { validateWord } from '../services/api';
 import './css/GameBoard.css';
@@ -10,10 +10,11 @@ export interface GameBoardProps {
   foundWords: string[];
   gameId: string | null;
   sessionId: string | null;
-  gameCompleted: boolean;
   onWordSubmit?: (word: string) => void;
+  onRemoveLastWord?: (updatedWords: string[]) => void;
   onRestartGame?: () => void;
   onGameCompleted?: () => void;
+  gameCompleted: boolean;
   boardSize: string;
   hint?: string;
 }
@@ -23,10 +24,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
   foundWords,
   gameId,
   sessionId,
-  gameCompleted,
   onWordSubmit,
+  onRemoveLastWord,
   onRestartGame,
   onGameCompleted,
+  gameCompleted,
   boardSize,
   hint,
 }) => {
@@ -44,24 +46,29 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
+  useEffect(() => {
+    console.log("lastLetter:", lastLetter);
+    console.log("lastLetterSide:", lastLetterSide);
+    console.log("lastSide:", lastSide);
+  }, [lastLetter, lastLetterSide, lastSide]);
+
   const handleLetterClick = (letter: string, side: string) => {
     if (gameCompleted) {
-      return; // Don't allow letter clicks whenthe game is finished
+      return; // Don't allow letter clicks when the game is finished
     }
-    
+  
     if (currentWord.length === 0) {
-      // First letter after lastLetter; ensure it doesn't come from lastLetterSide
-      if (lastLetterSide && side === lastLetterSide) {
-        return; // Can't start with a letter from the same side as lastLetter
-      }
+      // Reset lastLetterSide when starting a new word
+      setLastLetterSide(null);
     } else {
       // Prevent clicking a letter from the same side as the last one
       if (lastSide === side) {
         return;
       }
     }
+  
     setCurrentWord((prevWord) => [...prevWord, { letter, side }]);
-    setLastSide(side);
+    setLastSide(side); // Update the lastSide to the currently clicked side
   };
 
   const handleDelete = () => {
@@ -79,6 +86,56 @@ const GameBoard: React.FC<GameBoardProps> = ({
       setLastSide(lastLetterItem ? lastLetterItem.side : null);
       return newWord;
     });
+  };
+
+  const handleRemoveLastWord = () => {
+    if (foundWords.length === 0) {
+      console.warn("No words to remove");
+      return;
+    }
+  
+    const updatedWords = [...foundWords];
+    const lastWord = updatedWords.pop();
+  
+    if (onRemoveLastWord) {
+      onRemoveLastWord(updatedWords);
+    }
+  
+    if (updatedWords.length > 0) {
+      // Handle state restoration based on the previous word
+      const previousWord = updatedWords[updatedWords.length - 1];
+      const lastLetterOfPreviousWord = previousWord[previousWord.length - 1];
+  
+      // Determine the side name based on the layout index
+      const sideOfLastLetterIndex = layout.findIndex((side) =>
+        side.includes(lastLetterOfPreviousWord)
+      );
+  
+      if (sideOfLastLetterIndex === -1) {
+        console.error("Could not find the side of the last letter. This should not happen.");
+        return;
+      }
+  
+      // Map index to side name
+      const sideNames = ['top', 'right', 'bottom', 'left'];
+      const sideOfLastLetter = sideNames[sideOfLastLetterIndex];
+  
+      setLastLetter(lastLetterOfPreviousWord);
+      setLastLetterSide(sideOfLastLetter);
+      setLastSide(sideOfLastLetter);
+      setCurrentWord([
+        {
+          letter: lastLetterOfPreviousWord,
+          side: sideOfLastLetter,
+        },
+      ]);
+    } else {
+      // Reset state when no words remain
+      setLastLetter(null);
+      setLastLetterSide(null);
+      setLastSide(null);
+      setCurrentWord([]);
+    }
   };
 
   const handleSubmit = async () => {
@@ -117,7 +174,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
           } else {
             // Start the new word with the last letter
             setCurrentWord([{ letter: lastItem.letter, side: lastItem.side }]);
-            setLastSide(null);
           }
         } else {
           const randomInvalidMessage = getRandomPhrase('game.validateWord.invalid');
@@ -162,7 +218,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const renderSide = (sideLetters: string, sideName: string) => {
     const lettersArray = sideLetters.split('');
     return lettersArray.map((letter, index) => {
-      const isDisabled = lastSide === sideName && currentWord.length > 0;
+      const isDisabled = lastSide === sideName || (currentWord.length === 0 && lastLetterSide === sideName);
       const letterClass = `letter ${
         foundWords.some((word) => word.includes(letter))
           ? 'played-letter'
@@ -242,6 +298,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       {/* Controls */}
       <ControlButtons
         onDelete={handleDelete}
+        onRemoveLastWord={handleRemoveLastWord}
         onRestart={handleRestart}
         onSubmit={handleSubmit}
         onShowHint={() => setIsHintVisible(true)}
