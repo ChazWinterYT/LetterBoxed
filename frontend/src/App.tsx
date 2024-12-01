@@ -345,7 +345,7 @@ const App = () => {
     setIsModalOpen(true);
     setModalContent(
       <div className="random-game-options">
-        <h2>{t("game.selectLanguage")}</h2>
+        <h2>{t("game.selectGameLanguage")}</h2>
         <div className="language-buttons">
           {Object.keys(gameLanguages).map((langCode) => (
             <button key={langCode} onClick={() => fetchRandomGameByLanguage(langCode)}>
@@ -355,7 +355,7 @@ const App = () => {
         </div>
       </div>
     );
-  }, [t]);
+  }, [t, fetchRandomGameByLanguage]);
 
   // Open Archive Modal
   const openArchiveModal = useCallback(
