@@ -163,7 +163,7 @@ def main() -> Any:
         )
     else:
         create_random_small_board_game(
-            "en",
+            "pl",
             "2x2"
         )
 
@@ -248,7 +248,7 @@ def benchmark(n: int) -> None:
 
 
 if __name__ == "__main__":
-    RUN_BENCHMARK = False  # Set to False to disable benchmarking
+    RUN_BENCHMARK = True  # Set to False to disable benchmarking
     
     # Set up environment variables
     os.environ["DICTIONARY_SOURCE"] = "s3"

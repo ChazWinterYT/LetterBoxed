@@ -97,6 +97,18 @@
     },
     "language": {
         "currentLanguage": "Polski",
-        "language": "Język"
+        "language": "Język",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "es": "Hiszpański",
+        "fr": "Francuski",
+        "hi": "Hinduski",
+        "id": "Indonezyjski",
+        "it": "Włoski",
+        "ja": "Japoński",
+        "pl": "Polski",
+        "pt": "Portugalski",
+        "ru": "Rosyjski",
+        "sv": "Szwedzki"
     }
 }

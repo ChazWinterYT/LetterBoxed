@@ -7,6 +7,7 @@ __pycache__
 *.egg-info
 
 utility
+dictionaries
 
 # CDK asset staging directory
 .cdk.staging

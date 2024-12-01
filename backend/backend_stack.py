@@ -10,6 +10,7 @@ from aws_cdk import (
     CfnOutput,
     RemovalPolicy,
     Duration,
+    Size
 )
 from constructs import Construct
 
@@ -529,6 +530,7 @@ class LetterBoxedStack(Stack):
                     "**/.vscode",
                     "**/*.pyc",
                     "cdk.out",
+                    "dictionaries",
                     "venv",
                     "lambda_layer",
                     "*.iml",
@@ -546,6 +548,8 @@ class LetterBoxedStack(Stack):
                 ],
             ),
             timeout=Duration.seconds(120),
+            memory_size=1024,
+            ephemeral_storage_size=Size.gibibytes(2),
             layers=[layer],
             environment=environment,
             function_name=lambda_config["name"] + function_suffix

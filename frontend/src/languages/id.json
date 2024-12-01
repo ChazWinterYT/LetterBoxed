@@ -97,6 +97,18 @@
     },
     "language": {
         "currentLanguage": "Bahasa Indonesia",
-        "language": "Bahasa"
+        "language": "Bahasa",
+        "en": "Inggris",
+        "de": "Jerman",
+        "es": "Spanyol",
+        "fr": "Prancis",
+        "hi": "Hindi",
+        "id": "Indonesia",
+        "it": "Italia",
+        "ja": "Jepang",
+        "pl": "Polski",
+        "pt": "Portugis",
+        "ru": "Rusia",
+        "sv": "Swedia"
     }
 }

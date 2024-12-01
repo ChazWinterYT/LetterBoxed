@@ -140,8 +140,8 @@ def create_random_small_board_game(
     dict_start = time.time()
     dictionary = get_dictionary(language)
     # Let's try using the full dictionary for now
-    # basic_dictionary = get_basic_dictionary(language) 
-    basic_dictionary = dictionary
+    basic_dictionary = get_basic_dictionary(language) 
+    # basic_dictionary = dictionary
     
     dict_time = time.time() - dict_start
     print(f"[INFO] Dictionary fetch completed in {dict_time:.2f} seconds")

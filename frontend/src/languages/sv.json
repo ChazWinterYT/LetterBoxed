@@ -97,6 +97,18 @@
     },
     "language": {
         "currentLanguage": "Svenska",
-        "language": "Språk"
+        "language": "Språk",
+        "en": "Engelska",
+        "de": "Tyska",
+        "es": "Spanska",
+        "fr": "Franska",
+        "hi": "Hindi",
+        "id": "Indonesiska",
+        "it": "Italienska",
+        "ja": "Japanska",
+        "pl": "Polska",
+        "pt": "Portugisiska",
+        "ru": "Ryska",
+        "sv": "Svenska"
     }
 }
