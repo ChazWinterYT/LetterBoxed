@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   background-color: #1d4f7e; /* Background behind the board */
   padding: 40px;
   padding-top: 20px;
@@ -102,7 +102,7 @@
   height: 240px;
   background-color: #dae4ef;
   border: 4px solid black;
-  margin: 60px auto;
+  margin: 70px auto;
   z-index: 100;
 }
 
@@ -311,13 +311,27 @@
 }
 
 .hint-display {
-  margin-top: 0.5rem; /* Add space above the hint section */
-  height: 1.0rem; /* Ensure consistent reserved space for the hint */
+  margin-top: 0.1rem; /* Add minimal space above the hint section */
+  margin-bottom: 0.3rem; /* Reduce space below the hint section */
+  max-height: 60px;
   display: flex;
   justify-content: center; /* Center-align text */
   align-items: center; /* Vertically align text */
-  font-size: 1rem; /* Adjust text size */
+  font-size: 1.2rem; /* Adjust text size */
   color: #333; /* Default text color */
+  border: 2px solid rgba(67, 14, 93, 0.6); /* Add a subtle border with transparency */
+  border-radius: 8px; /* Make the corners rounded */
+  padding: 0rem 1rem; /* Add padding for a comfortable box shape */
+  background-color: rgba(146, 29, 197, 0.6); /* Semi-transparent pink background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: add a soft shadow for depth */
+  visibility: hidden; /* Hide the box by default */
+  opacity: 0; /* Make it fully transparent */
+  transition: opacity 0.3s ease-in-out; /* Add a fade-in effect */
+}
+
+.hint-display.visible {
+  visibility: visible; /* Make it visible */
+  opacity: 1; /* Fully opaque */
 }
 
 .hint-text {
@@ -327,6 +341,7 @@
 
 /* Share Game Section */
 .share-game-section {
+  margin-top: 0.3rem; /* Reduce space above the share section */
   text-align: center;
   font-size: 1.2rem;
   color: #bed4e9;

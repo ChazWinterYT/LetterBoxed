@@ -2,25 +2,25 @@
 .controls {
   display: flex;
   flex-direction: column; /* Stack the rows vertically */
-  gap: 1rem; /* Space between rows */
+  gap: 0.6rem; /* Space between rows */
   align-items: center; /* Center buttons horizontally */
 }
 
-.control-row {
-  display: flex;
-  justify-content: center; /* Center buttons within each row */
-  gap: 1rem; /* Space between buttons */
-}
+  .control-row {
+    display: flex;
+    justify-content: center; /* Center buttons within each row */
+    gap: 0.5rem; /* Space between buttons */
+  }
   
   .controls button {
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 10px 16px;
+    font-size: 0.96rem;
     cursor: pointer;
     background-color: #dae4ef; /* Default background color */
     border: 3px solid black;
-    border-radius: 1.8rem;
-    min-width: 100px;
-    max-width: 160px;
+    border-radius: 1.5rem;
+    min-width: 90px;
+    max-width: 150px;
     transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover transition */
   }
   

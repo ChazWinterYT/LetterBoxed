@@ -306,12 +306,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
       />
 
       {/* Hint Display Section */}
-      <div className="hint-display">
-        {isHintVisible && (
-          <p className="hint-text">
-            {hint ? hint : t('game.noHintAvailable')}
-          </p>
-        )}
+      <div className={`hint-display ${isHintVisible && hint ? 'visible' : ''}`}>
+        <p className="hint-text">
+          {hint ? hint : t('game.noHintAvailable')}
+        </p>
       </div>
 
       {/* Shareable URL */}
