@@ -48,8 +48,16 @@
         "boardSize": "Brädans storlek",
         "gameId": "Spel-ID",
         "tryToSolve": "Försök lösa med {words} ord",
-        "puzzleSolvedTitle": "DU VANN",
-        "puzzleSolvedMessage": "Du löste pusslet! Grattis!!!",
+        "complete": {
+            "puzzleSolvedTitle": "DU VANN!",
+            "puzzleSolvedMessage": "Du löste pusslet! Grattis!!!",
+            "officialSolution": "Detta pussel skapades med ordet/orden",
+            "numberOfOneWordSolutions": "Antal enordslösningar funna",
+            "numberOfTwoWordSolutions": "Antal tvåordslösningar funna",
+            "someOneWordSolutions": "Några möjliga enordslösningar",
+            "someTwoWordSolutions": "Några möjliga tvåordslösningar",
+            "playAnotherButton": "Spela en till?"
+        },
         "twoWordSolutions": "Tvåords-lösningar",
         "threeWordSolutions": "Treords-lösningar",
         "enterGameLayout": "Ange spelbrädeslayout",

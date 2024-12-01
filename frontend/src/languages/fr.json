@@ -48,8 +48,16 @@
         "boardSize": "Taille du plateau",
         "gameId": "ID du jeu",
         "tryToSolve": "Essayez de résoudre en {words} mots",
-        "puzzleSolvedTitle": "VOUS GAGNEZ",
-        "puzzleSolvedMessage": "Vous avez résolu l'énigme ! Félicitations !!!",
+        "complete": {
+            "puzzleSolvedTitle": "VOUS GAGNEZ!",
+            "puzzleSolvedMessage": "Vous avez résolu l'énigme ! Félicitations !!!",
+            "officialSolution": "Ce puzzle a été généré à partir du ou des mots",
+            "numberOfOneWordSolutions": "Nombre de solutions en un mot trouvées",
+            "numberOfTwoWordSolutions": "Nombre de solutions en deux mots trouvées",
+            "someOneWordSolutions": "Quelques solutions possibles en un mot",
+            "someTwoWordSolutions": "Quelques solutions possibles en deux mots",
+            "playAnotherButton": "En jouer un autre?"
+        },
         "twoWordSolutions": "Solutions en deux mots",
         "threeWordSolutions": "Solutions en trois mots",
         "enterGameLayout": "Entrer la disposition du jeu",
@@ -67,18 +75,18 @@
         "noHintAvailable": "Aucun indice n'est disponible pour ce jeu.",
         "hintError": "Erreur lors de la récupération de l'indice. Veuillez réessayer plus tard.",
         "shareGame": "Partagez ce jeu:",
-        "restartConfirmationTitle": "Êtes-vous sûr de vouloir redémarrer cette partie?",
+        "restartConfirmationTitle": "Êtes-vous sûr de vouloir redémarrer cette partie ?",
         "restartConfirmationMessage": "En cliquant sur \"Confirmer\", votre progression sera supprimée et la partie recommencera.",
         "validateWord": {
             "valid": [
-                "Bien joué!",
-                "Excellent travail!",
-                "Magnifique!",
-                "Tu l'as eu!",
-                "Bravo!",
-                "Parfait!",
-                "Génial!",
-                "Tu es en feu!"
+                "Bien joué !",
+                "Excellent travail !",
+                "Magnifique !",
+                "Tu l'as eu !",
+                "Bravo !",
+                "Parfait !",
+                "Génial !",
+                "Tu es en feu !"
             ],
             "invalid": [
                 "Oups, ce mot n'est pas valide.",

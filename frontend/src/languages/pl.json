@@ -48,8 +48,16 @@
         "boardSize": "Rozmiar planszy",
         "gameId": "ID gry",
         "tryToSolve": "Spróbuj rozwiązać w {words} słowach",
-        "puzzleSolvedTitle": "WYGRAŁEŚ",
-        "puzzleSolvedMessage": "Rozwiązałeś zagadkę! Gratulacje!!!",
+        "complete": {
+            "puzzleSolvedTitle": "WYGRYWASZ!",
+            "puzzleSolvedMessage": "Rozwiązałeś zagadkę! Gratulacje!!!",
+            "officialSolution": "Ta zagadka została wygenerowana za pomocą słów",
+            "numberOfOneWordSolutions": "Liczba znalezionych rozwiązań jedno-słowowych",
+            "numberOfTwoWordSolutions": "Liczba znalezionych rozwiązań dwu-słowowych",
+            "someOneWordSolutions": "Niektóre możliwe rozwiązania jedno-słowowe",
+            "someTwoWordSolutions": "Niektóre możliwe rozwiązania dwu-słowowe",
+            "playAnotherButton": "Zagraj ponownie?"
+        },
         "twoWordSolutions": "Rozwiązania dwuwyrazowe",
         "threeWordSolutions": "Rozwiązania trzywyrazowe",
         "enterGameLayout": "Wprowadź układ gry",

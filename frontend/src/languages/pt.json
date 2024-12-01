@@ -48,8 +48,16 @@
         "boardSize": "Tamanho do Tabuleiro",
         "gameId": "ID do Jogo",
         "tryToSolve": "Tente resolver com {words} palavras",
-        "puzzleSolvedTitle": "VOCÊ GANHOU",
-        "puzzleSolvedMessage": "Você resolveu o quebra-cabeça! Parabéns!!!",
+        "complete": {
+            "puzzleSolvedTitle": "VOCÊ GANHOU!",
+            "puzzleSolvedMessage": "Você resolveu o quebra-cabeça! Parabéns!!!",
+            "officialSolution": "Este quebra-cabeça foi gerado usando a(s) palavra(s)",
+            "numberOfOneWordSolutions": "Número de soluções de uma palavra encontradas",
+            "numberOfTwoWordSolutions": "Número de soluções de duas palavras encontradas",
+            "someOneWordSolutions": "Algumas possíveis soluções de uma palavra",
+            "someTwoWordSolutions": "Algumas possíveis soluções de duas palavras",
+            "playAnotherButton": "Jogar novamente?"
+        },
         "twoWordSolutions": "Soluções de Duas Palavras",
         "threeWordSolutions": "Soluções de Três Palavras",
         "enterGameLayout": "Inserir Layout do Jogo",

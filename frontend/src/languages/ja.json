@@ -48,8 +48,16 @@
         "boardSize": "ボードサイズ",
         "gameId": "ゲームID",
         "tryToSolve": "{words}語で解決を試みてください",
-        "puzzleSolvedTitle": "あなたの勝ち",
-        "puzzleSolvedMessage": "パズルを解きました！おめでとうございます！！！",
+        "complete": {
+            "puzzleSolvedTitle": "勝ちました！",
+            "puzzleSolvedMessage": "パズルを解きました！おめでとうございます!!!",
+            "officialSolution": "このパズルは、次の単語を使用して生成されました",
+            "numberOfOneWordSolutions": "見つかった1単語の解答の数",
+            "numberOfTwoWordSolutions": "見つかった2単語の解答の数",
+            "someOneWordSolutions": "可能な1単語の解答例",
+            "someTwoWordSolutions": "可能な2単語の解答例",
+            "playAnotherButton": "もう一度プレイしますか？"
+        },
         "twoWordSolutions": "2語の解答",
         "threeWordSolutions": "3語の解答",
         "enterGameLayout": "ゲームレイアウトを入力",

@@ -48,8 +48,16 @@
         "boardSize": "बोर्ड का आकार",
         "gameId": "गेम आईडी",
         "tryToSolve": "{words} शब्दों में हल करने की कोशिश करें",
-        "puzzleSolvedTitle": "आप जीत गए",
-        "puzzleSolvedMessage": "आपने पहेली सुलझा ली! बधाई हो!!!",
+        "complete": {
+            "puzzleSolvedTitle": "आप जीत गए!",
+            "puzzleSolvedMessage": "आपने पहेली हल कर ली! बधाई हो!!!",
+            "officialSolution": "यह पहेली इन शब्दों का उपयोग करके बनाई गई थी",
+            "numberOfOneWordSolutions": "एक-शब्द समाधान की संख्या",
+            "numberOfTwoWordSolutions": "दो-शब्द समाधान की संख्या",
+            "someOneWordSolutions": "कुछ संभावित एक-शब्द समाधान",
+            "someTwoWordSolutions": "कुछ संभावित दो-शब्द समाधान",
+            "playAnotherButton": "दूसरा खेलें?"
+        },
         "twoWordSolutions": "दो-शब्द समाधान",
         "threeWordSolutions": "तीन-शब्द समाधान",
         "enterGameLayout": "गेम लेआउट दर्ज करें",

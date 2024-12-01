@@ -48,8 +48,16 @@
         "boardSize": "Dimensione della griglia",
         "gameId": "ID del gioco",
         "tryToSolve": "Prova a risolverlo in {words} parole",
-        "puzzleSolvedTitle": "HAI VINTO",
-        "puzzleSolvedMessage": "Hai risolto il puzzle! Congratulazioni!!!",
+        "complete": {
+            "puzzleSolvedTitle": "HAI VINTO!",
+            "puzzleSolvedMessage": "Hai risolto il puzzle! Congratulazioni!!!",
+            "officialSolution": "Questo puzzle è stato generato usando la/le parola/e",
+            "numberOfOneWordSolutions": "Numero di soluzioni con una parola trovate",
+            "numberOfTwoWordSolutions": "Numero di soluzioni con due parole trovate",
+            "someOneWordSolutions": "Alcune possibili soluzioni con una parola",
+            "someTwoWordSolutions": "Alcune possibili soluzioni con due parole",
+            "playAnotherButton": "Giocane un altro?"
+        },
         "twoWordSolutions": "Soluzioni in due parole",
         "threeWordSolutions": "Soluzioni in tre parole",
         "enterGameLayout": "Inserisci la disposizione del gioco",

@@ -48,8 +48,16 @@
         "boardSize": "Ukuran Papan",
         "gameId": "ID Game",
         "tryToSolve": "Coba selesaikan dengan {words} kata",
-        "puzzleSolvedTitle": "KAMU MENANG",
-        "puzzleSolvedMessage": "Kamu telah menyelesaikan teka-teki! Selamat!!!",
+        "complete": {
+            "puzzleSolvedTitle": "KAMU MENANG!",
+            "puzzleSolvedMessage": "Kamu menyelesaikan teka-teki! Selamat!!!",
+            "officialSolution": "Teka-teki ini dibuat menggunakan kata-kata",
+            "numberOfOneWordSolutions": "Jumlah solusi satu kata yang ditemukan",
+            "numberOfTwoWordSolutions": "Jumlah solusi dua kata yang ditemukan",
+            "someOneWordSolutions": "Beberapa solusi satu kata yang mungkin",
+            "someTwoWordSolutions": "Beberapa solusi dua kata yang mungkin",
+            "playAnotherButton": "Mainkan Lagi?"
+        },
         "twoWordSolutions": "Solusi Dua Kata",
         "threeWordSolutions": "Solusi Tiga Kata",
         "enterGameLayout": "Masukkan Tata Letak Game",

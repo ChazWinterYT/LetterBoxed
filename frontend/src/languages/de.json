@@ -48,8 +48,16 @@
         "boardSize": "Brettgröße",
         "gameId": "Spiel-ID",
         "tryToSolve": "Versuche, in {words} Wörtern zu lösen",
-        "puzzleSolvedTitle": "DU GEWINNST",
-        "puzzleSolvedMessage": "Du hast das Rätsel gelöst! Herzlichen Glückwunsch!!!",
+        "complete": {
+            "puzzleSolvedTitle": "DU GEWINNST!",
+            "puzzleSolvedMessage": "Du hast das Rätsel gelöst! Herzlichen Glückwunsch!!!",
+            "officialSolution": "Dieses Rätsel wurde mit den Wörtern erstellt",
+            "numberOfOneWordSolutions": "Anzahl der gefundenen Ein-Wort-Lösungen",
+            "numberOfTwoWordSolutions": "Anzahl der gefundenen Zwei-Wort-Lösungen",
+            "someOneWordSolutions": "Einige mögliche Ein-Wort-Lösungen",
+            "someTwoWordSolutions": "Einige mögliche Zwei-Wort-Lösungen",
+            "playAnotherButton": "Noch eins spielen?"
+        },
         "twoWordSolutions": "Lösungen mit zwei Wörtern",
         "threeWordSolutions": "Lösungen mit drei Wörtern",
         "enterGameLayout": "Spielaufbau eingeben",

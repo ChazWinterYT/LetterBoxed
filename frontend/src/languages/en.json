@@ -49,7 +49,7 @@
         "gameId": "Game ID",
         "tryToSolve": "Try to solve in {words} words",
         "complete": {
-            "puzzleSolvedTitle": "YOU WIN",
+            "puzzleSolvedTitle": "YOU WIN!",
             "puzzleSolvedMessage": "You solved the puzzle! Congratulations!!!",
             "officialSolution": "This puzzle was generated using the word(s)",
             "numberOfOneWordSolutions": "Number of one-word solutions found",

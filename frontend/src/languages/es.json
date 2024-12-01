@@ -48,8 +48,16 @@
         "boardSize": "Tamaño del tablero",
         "gameId": "ID del juego",
         "tryToSolve": "Intenta resolver en {words} palabras",
-        "puzzleSolvedTitle": "TÚ GANAS",
-        "puzzleSolvedMessage": "¡Has resuelto el rompecabezas! ¡Felicidades!!!",
+        "complete": {
+            "puzzleSolvedTitle": "¡GANASTE!",
+            "puzzleSolvedMessage": "¡Resolvió el acertijo! ¡Felicidades!!!",
+            "officialSolution": "Este rompecabezas se generó usando la(s) palabra(s)",
+            "numberOfOneWordSolutions": "Número de soluciones de una palabra encontradas",
+            "numberOfTwoWordSolutions": "Número de soluciones de dos palabras encontradas",
+            "someOneWordSolutions": "Algunas posibles soluciones de una palabra",
+            "someTwoWordSolutions": "Algunas posibles soluciones de dos palabras",
+            "playAnotherButton": "¿Jugar otra?"
+        },
         "twoWordSolutions": "Soluciones de dos palabras",
         "threeWordSolutions": "Soluciones de tres palabras",
         "enterGameLayout": "Ingresar diseño del juego",

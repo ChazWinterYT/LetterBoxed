@@ -48,8 +48,16 @@
         "boardSize": "Размер поля",
         "gameId": "ID игры",
         "tryToSolve": "Попробуйте решить за {words} слов",
-        "puzzleSolvedTitle": "ВЫ ВЫИГРАЛИ",
-        "puzzleSolvedMessage": "Вы решили головоломку! Поздравляем!!!",
+        "complete": {
+            "puzzleSolvedTitle": "ВЫ ПОБЕДИЛИ!",
+            "puzzleSolvedMessage": "Вы решили головоломку! Поздравляем!!!",
+            "officialSolution": "Эта головоломка была создана с использованием слова(слов)",
+            "numberOfOneWordSolutions": "Количество найденных однословных решений",
+            "numberOfTwoWordSolutions": "Количество найденных двусловных решений",
+            "someOneWordSolutions": "Некоторые возможные однословные решения",
+            "someTwoWordSolutions": "Некоторые возможные двусловные решения",
+            "playAnotherButton": "Сыграть еще раз?"
+        },
         "twoWordSolutions": "Решения из двух слов",
         "threeWordSolutions": "Решения из трёх слов",
         "enterGameLayout": "Введите расположение поля",
