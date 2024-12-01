@@ -236,21 +236,19 @@ const App = () => {
       if (validationResult.valid) {
         const { submittedWord, originalWord } = validationResult;
   
-        // Create updated arrays
-        const newFoundWords = [...foundWords, submittedWord];
-        const newOriginalWordsUsed = [...originalWordsUsed, originalWord];
+        // Update state
+        const updatedFoundWords = [...foundWords, submittedWord];
+        const updatedOriginalWords = [...originalWordsUsed, originalWord];
   
-        // Update the state
-        setFoundWords(newFoundWords);
-        setOriginalWordsUsed(newOriginalWordsUsed);
+        // Save updated state
+        setFoundWords(updatedFoundWords);
+        setOriginalWordsUsed(updatedOriginalWords);
+        saveGameState(updatedFoundWords, updatedOriginalWords);
   
-        // Save the updated state
-        saveGameState(newFoundWords, newOriginalWordsUsed);
-
         console.log("Validation Result:", validationResult);
-
-        // Check for game completion
-        if (validationResult.gameCompleted) {  
+  
+        // Check if game is completed
+        if (validationResult.gameCompleted) {
           handleGameCompleted();
         }
       } else {
@@ -449,11 +447,17 @@ const App = () => {
   }, [confirmRestartGame, cancelRestartGame, t]);
 
   const handleWordSubmit = (newWord: string) => {
-    setFoundWords((prevWords) => [...prevWords, newWord]);
-  }
+    addWord(newWord);
+  };
 
   const handleRemoveLastWord = (updatedWords: string[]) => {
+    console.log("Removing last word. Updated words:", updatedWords);
+  
+    // Update the local state
     setFoundWords(updatedWords);
+  
+    // Save the updated game state
+    saveGameState(updatedWords, originalWordsUsed.slice(0, updatedWords.length));
   };
 
   const handleGameCompleted = useCallback(() => {

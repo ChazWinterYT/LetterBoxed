@@ -96,6 +96,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   
     const updatedWords = [...foundWords];
     const lastWord = updatedWords.pop();
+    console.log("Last word removed:", lastWord);
   
     if (onRemoveLastWord) {
       onRemoveLastWord(updatedWords);
