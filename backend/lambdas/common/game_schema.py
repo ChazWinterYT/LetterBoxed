@@ -185,4 +185,4 @@ def generate_game_id() -> str:
     Returns:
         str: A unique identifier string.
     """
-    return str(uuid.uuid4())
+    return str(uuid.uuid4())[-12:]
