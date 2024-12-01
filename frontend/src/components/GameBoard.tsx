@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { validateWord } from '../services/api';
 import './css/GameBoard.css';
 import Spinner from './Spinner';
+import ControlButtons from './ControlButtons';
 
 export interface GameBoardProps {
   layout: string[];
@@ -239,17 +240,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
       </div>
 
       {/* Controls */}
-      <div className="controls">
-        <button onClick={handleDelete} disabled={gameCompleted}>
-          {t('game.deleteLetter')}
-        </button>
-        <button onClick={handleRestart}>
-          {t('game.restartGame')}
-        </button>
-        <button onClick={handleSubmit} disabled={gameCompleted}>
-          {t('game.submitWord')}
-        </button>
-      </div>
+      <ControlButtons
+        onDelete={handleDelete}
+        onRestart={handleRestart}
+        onSubmit={handleSubmit}
+        gameCompleted={gameCompleted}
+      />
 
       {/* Shareable URL */}
       <div className="share-game-section">

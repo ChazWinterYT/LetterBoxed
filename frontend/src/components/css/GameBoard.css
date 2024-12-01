@@ -297,27 +297,6 @@
   }
 }
 
-/* Controls */
-.controls {
-  display: flex;
-  gap: 10px;
-}
-
-.controls button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  background-color: #dae4ef; /* Default background color */
-  border: 2px solid black;
-  border-radius: 5px;
-  transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover transition */
-}
-
-.controls button:hover {
-  background-color: #7bb0dc; /* Hover background color */
-  color: white; /* Optional: Change text color on hover */
-}
-
 /* Game Completed Message */
 .game-completed-message {
   margin: 20px auto;
