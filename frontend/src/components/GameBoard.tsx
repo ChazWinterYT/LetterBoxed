@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { validateWord } from '../services/api';
 import './css/GameBoard.css';
 import Spinner from './Spinner';
 import ControlButtons from './ControlButtons';
+import { ValidationResult } from '../types/validation';
 
 export interface GameBoardProps {
   layout: string[];
@@ -13,7 +14,7 @@ export interface GameBoardProps {
   onWordSubmit?: (word: string) => void;
   onRemoveLastWord?: (updatedWords: string[]) => void;
   onRestartGame?: () => void;
-  onGameCompleted?: () => void;
+  onGameCompleted?: (validationResult: ValidationResult) => void;
   gameCompleted: boolean;
   boardSize: string;
   hint?: string;
@@ -45,12 +46,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
-
-  useEffect(() => {
-    console.log("lastLetter:", lastLetter);
-    console.log("lastLetterSide:", lastLetterSide);
-    console.log("lastSide:", lastSide);
-  }, [lastLetter, lastLetterSide, lastSide]);
 
   const handleLetterClick = (letter: string, side: string) => {
     if (gameCompleted) {
@@ -169,7 +164,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           //Check if the game is complete
           if (validationResult.gameCompleted) {
             if (onGameCompleted) {
-              onGameCompleted();
+              onGameCompleted(validationResult);
             }
             setCurrentWord([]); // clear current word
           } else {
@@ -183,7 +178,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           setValidationStatus("invalid");
         }
       } catch (error) {
-        console.error("Error validating word:", error);
+        console.error("handleSubmit: Error validating word:", error);
         const errorMessage = t('game.validateWord.error');
         setValidationMessage(errorMessage);
         setValidationStatus("invalid");

@@ -15,7 +15,7 @@
 
 /* Modal Content */
 .modal-content {
-  background: #b4d0ec;
+  background: #b5d9ef;
   border-radius: 10px;
   padding: 20px;
   width: 90%; /* Mobile-friendly width */
@@ -39,6 +39,7 @@
 /* Modal Title */
 .modal-title {
   font-size: 1.5rem;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
@@ -82,4 +83,66 @@
 
 .language-buttons button:hover {
   background-color: #4145b0;
+}
+
+/* You Won screen styles */
+.game-completed-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #f9fafb;
+  border: 3px solid #d236c5;
+  border-radius: 12px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.game-completed-content p {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.game-completed-content button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #4878cf;
+  border: 4px solid #061f32;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.game-completed-content button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.game-completed-content button:active {
+  background-color: #3d8e41;
+}
+
+.game-completed-content .solution-section {
+  margin: 15px 0;
+}
+
+.game-completed-content .solution-section p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.game-completed-content .highlight {
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.game-completed-content .separator {
+  margin: 10px 0;
+  width: 80%;
+  height: 1px;
+  background-color: #ddd;
 }

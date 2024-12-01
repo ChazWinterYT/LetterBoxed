@@ -27,6 +27,7 @@ import {
   validateWord,
   fetchRandomGame,
 } from "./services/api";
+import { ValidationResult } from "./types/validation";
 import "./App.css";
 
 const App = () => {
@@ -232,7 +233,7 @@ const App = () => {
   
     try {
       // Validate the word
-      const validationResult = await validateWord(word, currentGameId, userSessionId);
+      const validationResult: ValidationResult = await validateWord(word, currentGameId, userSessionId);
       if (validationResult.valid) {
         const { submittedWord, originalWord } = validationResult;
   
@@ -249,7 +250,7 @@ const App = () => {
   
         // Check if game is completed
         if (validationResult.gameCompleted) {
-          handleGameCompleted();
+          handleGameCompleted(validationResult);
         }
       } else {
         console.warn("Invalid word:", validationResult.message);
@@ -460,18 +461,66 @@ const App = () => {
     saveGameState(updatedWords, originalWordsUsed.slice(0, updatedWords.length));
   };
 
-  const handleGameCompleted = useCallback(() => {
-    console.log("Game completed! You win!");
-    setModalTitle(t("game.puzzleSolvedTitle"));
-    setModalContent(<p>{t("game.puzzleSolvedMessage")}</p>);
-    setIsModalOpen(true);
-    setGameCompleted(true);
-    setShowConfetti(true);
+  const handleGameCompleted = useCallback(
+    (validationResult: ValidationResult) => {
+      console.log("Game completed! You win!");
+      const {
+        officialSolution = [],
+        someOneWordSolutions = [],
+        someTwoWordSolutions = [],
+      } = validationResult;
+  
+      setModalTitle(t("game.puzzleSolvedTitle"));
+  
+      const content = (
+        <div className="game-completed-content">
+          <p>{t("game.puzzleSolvedMessage")}</p>
+  
+          {officialSolution.length > 0 && (
+            <p>
+              {t("game.officialSolution")}: {officialSolution.join(", ")}
+            </p>
+          )}
+  
+          {someOneWordSolutions.length > 0 && (
+            <p>
+              {t("game.oneWordSolutions")}: {someOneWordSolutions.join(", ")}
+            </p>
+          )}
+  
+          {someTwoWordSolutions.length > 0 && (
+            <p>
+              {t("game.twoWordSolutions")}:{" "}
+              {someTwoWordSolutions
+                .map(([word1, word2]) => `${word1} - ${word2}`)
+                .join(", ")}
+            </p>
+          )}
+  
+          <button
+            onClick={() => {
+              console.log("Play another game");
+              openRandomGameModal(); // Reuse your existing random game modal logic
+            }}
+          >
+            {t("game.playAnother")}
+          </button>
+        </div>
+      );
+  
+      setModalContent(content);
+      setIsModalOpen(true);
+      setGameCompleted(true);
+      setShowConfetti(true);
+  
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 10000); // Make confetti disappear
+    },
+    [t, openRandomGameModal]
+  );
+  
 
-    setTimeout(() => {
-      setShowConfetti(false);
-    }, 10000); // Make confetti disappear
-  }, [t]);
 
   return (
     <div className="app-container">

@@ -108,14 +108,20 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             if "oneWordSolutions" in game_data and game_data["oneWordSolutions"]:
                 some_one_word_solutions = random.sample(
                     game_data["oneWordSolutions"],
-                    min(game_data["oneWordSolutionCount"], NUM_SAMPLE_SOLUTIONS)
+                    min(
+                        len(game_data["oneWordSolutions"]), 
+                        NUM_SAMPLE_SOLUTIONS
+                    )
                 )
                 
             # Also provide a sample of two-word solutions if available
             if "twoWordSolutions" in game_data and game_data["twoWordSolutions"]:
                 some_two_word_solutions = random.sample(
                     [tuple(solution) for solution in game_data["twoWordSolutions"]],
-                    min(game_data["twoWordSolutionCount"], NUM_SAMPLE_SOLUTIONS)
+                    min(
+                        len(game_data["twoWordSolutions"]), 
+                        NUM_SAMPLE_SOLUTIONS
+                    )
                 )
             
         return {

@@ -9,15 +9,29 @@ from boto3.dynamodb.conditions import Key
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
 
-# Utility function to convert DynamoDB Numbers to a JSON-compatible type
 def convert_decimal(obj):
-    if isinstance(obj, list):
-        return [convert_decimal(i) for i in obj]
-    elif isinstance(obj, dict):
+    """
+    Recursively converts DynamoDB Decimal types to JSON-compatible types.
+    
+    Args:
+        obj: The object to be converted (can be dict, list, or other types).
+    
+    Returns:
+        A JSON-compatible version of the object.
+    """
+    if isinstance(obj, dict):
         return {k: convert_decimal(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_decimal(i) for i in obj]
+    elif isinstance(obj, tuple):
+        return tuple(convert_decimal(i) for i in obj)  # Ensure tuple compatibility
+    elif isinstance(obj, set):
+        return {convert_decimal(i) for i in obj}  # Ensure set compatibility
     elif isinstance(obj, decimal.Decimal):
-        return int(obj) if obj % 1 == 0 else float(obj)  # Convert to int if it's a whole number
+        # Convert to int if it's a whole number, otherwise convert to float
+        return int(obj) if obj % 1 == 0 else float(obj)
     else:
+        # Return the object as is if no conversion is needed
         return obj
 
 
@@ -66,7 +80,9 @@ def fetch_game_by_id(game_id: str) -> Optional[Dict[str, Any]]:
         table = get_games_table()
         response = table.get_item(Key={"gameId": game_id})
         item = response.get("Item")
-        return item if item else None
+        
+        # Convert decimal items before returning the item
+        return convert_decimal(item) if item else None
     except ClientError as e:
         print(f"Error fetching game by gameId: {e}")
         return None
