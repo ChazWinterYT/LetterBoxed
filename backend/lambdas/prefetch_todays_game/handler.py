@@ -4,7 +4,6 @@ from lambdas.prefetch_todays_game.prefetch_service import fetch_todays_game
 from lambdas.common.db_utils import (
     add_game_to_db, 
     fetch_game_by_id, 
-    add_valid_words_to_db,
     add_game_to_archive
 )
 from lambdas.common.game_schema import create_game_schema
@@ -49,11 +48,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             clue="",
         )
 
-        # Add today's game to the database
-        valid_words = game_data.pop("validWords") # Remove from main game data to save space
-        base_valid_words = game_data.pop("baseValidWords")
-        add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
-
+        # Add today's game to the games and archives DB tables
         add_game_to_db(game_data)
         add_game_to_archive(game_id)
 

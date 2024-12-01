@@ -25,14 +25,35 @@ def test_add_game_to_db_success(mock_dynamodb_resource):
     # Arrange
     mock_table = create_mock_table()
     mock_dynamodb_resource.Table.return_value = mock_table
-    game_data = {"gameId": "test-game-id", "gameLayout": ["ABC", "DEF", "GHI", "JKL"]}
+    game_data = {
+        "gameId": "test-game-id",
+        "gameLayout": ["ABC", "DEF", "GHI", "JKL"],
+        "validWords": ["WORD1", "WORD2"],
+        "baseValidWords": ["WORD1", "WORD2"]
+    }
 
     # Act
     result = db_utils.add_game_to_db(game_data)
 
     # Assert
     assert result is True
-    mock_table.put_item.assert_called_once_with(Item=game_data)
+
+    # Verify both calls
+    expected_calls = [
+        mock.call.put_item(Item={
+            "gameId": "test-game-id",
+            "validWordCount": 2,
+            "validWords": ["WORD1", "WORD2"],
+            "baseValidWords": ["WORD1", "WORD2"]
+        }),
+        mock.call.put_item(Item={
+            "gameId": "test-game-id",
+            "gameLayout": ["ABC", "DEF", "GHI", "JKL"]
+        })
+    ]
+    assert mock_table.put_item.call_count == 2
+    mock_table.put_item.assert_has_calls(expected_calls, any_order=True)
+
 
 def test_add_game_to_db_failure(mock_dynamodb_resource):
     # Arrange
@@ -42,14 +63,27 @@ def test_add_game_to_db_failure(mock_dynamodb_resource):
         operation_name="PutItem",
     )
     mock_dynamodb_resource.Table.return_value = mock_table
-    game_data = {"gameId": "test-game-id", "gameLayout": ["ABC", "DEF", "GHI", "JKL"]}
+    game_data = {
+        "gameId": "test-game-id",
+        "gameLayout": ["ABC", "DEF", "GHI", "JKL"],
+        "validWords": ["WORD1", "WORD2"],
+        "baseValidWords": ["WORD1", "WORD2"]
+    }
 
     # Act
     result = db_utils.add_game_to_db(game_data)
 
     # Assert
     assert result is False
-    mock_table.put_item.assert_called_once_with(Item=game_data)
+
+    # Verify the first call only
+    mock_table.put_item.assert_called_once_with(Item={
+        "gameId": "test-game-id",
+        "validWordCount": 2,
+        "validWords": ["WORD1", "WORD2"],
+        "baseValidWords": ["WORD1", "WORD2"]
+    })
+
 
 def test_fetch_game_by_id_success(mock_dynamodb_resource):
     # Arrange

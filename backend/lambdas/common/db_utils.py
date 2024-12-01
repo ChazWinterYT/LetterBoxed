@@ -26,6 +26,8 @@ def convert_decimal(obj):
 def add_game_to_db(game_data: Dict[str, Any]) -> bool:
     """
     Adds a game entry to the DynamoDB table.
+    Also adds the valid words for that game into the Valid Words table, so
+    it doesn't need to be done manually in the handler.
 
     Args:
         game_data (dict): A dictionary containing all game details.
@@ -34,6 +36,14 @@ def add_game_to_db(game_data: Dict[str, Any]) -> bool:
         bool: True if operation was successful, False otherwise.
     """
     try:
+        # First add the valid words to the ValidWords Table
+        game_id = game_data["gameId"]
+        valid_words = game_data.pop("validWords")  # Remove from main game data to save space
+        base_valid_words = game_data.pop("baseValidWords")
+        if not add_valid_words_to_db(game_id, valid_words, base_valid_words):
+            return False
+        
+        # Then add the rest of the data to the Games DB
         table = get_games_table()
         table.put_item(Item=game_data)
         return True

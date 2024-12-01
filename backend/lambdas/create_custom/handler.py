@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any
 
-from lambdas.common.db_utils import add_game_to_db, add_valid_words_to_db
+from lambdas.common.db_utils import add_game_to_db
 from lambdas.common.game_utils import generate_valid_words
 from lambdas.common.game_schema import create_game_schema, validate_board_matches_layout
 from lambdas.common.response_utils import error_response
@@ -37,11 +37,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     except Exception as e:
         return error_response(f"Failed to create game schema: {e}", 500)
 
-    # Save the new game schema and valid words to the database
-    valid_words = game_data.pop("validWords") # Remove from main game data to save space
-    base_valid_words = game_data.pop("baseValidWords")
-    add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
-    # Save the rest of the game data to the main table
+    # Save the new game schema to the database
     add_game_to_db(game_data)
 
     return {

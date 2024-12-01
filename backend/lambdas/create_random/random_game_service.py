@@ -7,7 +7,6 @@ from lambdas.common.dictionary_utils import get_dictionary, get_basic_dictionary
 from lambdas.common.db_utils import (
     add_game_to_db,
     add_game_id_to_random_games_db,
-    add_valid_words_to_db
 )
 from lambdas.common.game_schema import create_game_schema
 
@@ -94,9 +93,6 @@ def create_random_game(
 
     # Store the game in the games DB
     db_start = time.time()
-    valid_words = game_data.pop("validWords")  # Remove from main game data to save space
-    base_valid_words = game_data.pop("baseValidWords")
-    add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
     add_game_to_db(game_data)
     db_time = time.time() - db_start
     print(f"[INFO] Database operations completed in {db_time:.2f} seconds")
@@ -184,9 +180,6 @@ def create_random_small_board_game(
     
     # Store the game in the games DB
     db_start = time.time()
-    valid_words = game_data.pop("validWords")  # Remove from main game data to save space
-    base_valid_words = game_data.pop("baseValidWords")
-    add_valid_words_to_db(game_data["gameId"], valid_words, base_valid_words)
     add_game_to_db(game_data)
     db_time = time.time() - db_start
     print(f"[INFO] Database operations completed in {db_time:.2f} seconds")

@@ -2,7 +2,6 @@ import json
 import requests
 from typing import Any, Dict
 from bs4 import BeautifulSoup
-from datetime import date
 from lambdas.common.db_utils import fetch_game_by_id
 
 def fetch_todays_game() -> Dict[str, Any]:
