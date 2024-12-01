@@ -47,6 +47,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                         "boardSize": todays_game["boardSize"],
                         "language": todays_game["language"],
                         "par": todays_game["par"],
+                        "hint": todays_game.get("clue", ""),
                         "message": f"{today}'s game is not available yet. Serving {yesterday}'s game instead."
                     })
                 }
@@ -65,6 +66,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "boardSize": todays_game["boardSize"],
                 "language": todays_game["language"],
                 "par": todays_game["par"],
+                "hint": todays_game.get("clue", ""),
                 "message": f"{today}'s game fetched successfully."
             })
         }
@@ -78,7 +80,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
             },
             "body": json.dumps({
-                "message": f"An error occurred while fetching {today}'s game.",
+                "message": f"An error occurred while fetching today's game.",
                 "error": str(e)
             })
         }

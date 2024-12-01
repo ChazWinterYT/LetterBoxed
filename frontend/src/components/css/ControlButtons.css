@@ -1,8 +1,16 @@
 /* Controls */
 .controls {
-    display: flex;
-    gap: 10px;
-  }
+  display: flex;
+  flex-direction: column; /* Stack the rows vertically */
+  gap: 1rem; /* Space between rows */
+  align-items: center; /* Center buttons horizontally */
+}
+
+.control-row {
+  display: flex;
+  justify-content: center; /* Center buttons within each row */
+  gap: 1rem; /* Space between buttons */
+}
   
   .controls button {
     padding: 10px 20px;
@@ -11,6 +19,7 @@
     background-color: #dae4ef; /* Default background color */
     border: 3px solid black;
     border-radius: 5px;
+    min-width: 160px;
     transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover transition */
   }
   

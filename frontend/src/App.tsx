@@ -49,6 +49,7 @@ const App = () => {
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
   const [isGameLoading, setIsGameLoading] = useState(false);
+  const [hint, setHint] = useState<string | null>(null);
 
   // Add gameLayout to state
   const [gameLayout, setGameLayout] = useState<string[]>([]);
@@ -155,6 +156,7 @@ const App = () => {
         setLayout(data.gameLayout || []); // Set layout for GameBoard
         setGameLayout(data.gameLayout || []); // Set gameLayout for session data
         setBoardSize(data.boardSize || "3x3"); // Set board Size for display
+        setHint(data.hint || null);
 
         await loadGameState(gameId); // Fetch session state
 
@@ -190,6 +192,7 @@ const App = () => {
         setCurrentGameId(data.gameId);
         setLayout(data.gameLayout || []);
         setGameLayout(data.gameLayout || []); // Set gameLayout for session data
+        setHint(data.hint || "");
 
         await loadGameState(data.gameId); // Fetch session state
         navigate(`/games/${data.gameId}`, { replace: true });
@@ -483,6 +486,7 @@ const App = () => {
             onGameCompleted={handleGameCompleted} // Pass the game completed handler
             gameCompleted={gameCompleted} // Pass the gameCompleted state
             boardSize={boardSize}
+            hint={hint || ""}
           />
         )}
       </div>

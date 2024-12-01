@@ -310,6 +310,21 @@
   max-width: 600px;
 }
 
+.hint-display {
+  margin-top: 0.5rem; /* Add space above the hint section */
+  height: 1.0rem; /* Ensure consistent reserved space for the hint */
+  display: flex;
+  justify-content: center; /* Center-align text */
+  align-items: center; /* Vertically align text */
+  font-size: 1rem; /* Adjust text size */
+  color: #333; /* Default text color */
+}
+
+.hint-text {
+  font-weight: bold;
+  color: #e7f0f7; /* Highlight the hint text */
+}
+
 /* Share Game Section */
 .share-game-section {
   text-align: center;

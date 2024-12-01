@@ -95,7 +95,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "Access-Control-Allow-Headers": "Content-Type,Authorization",
             },
             "body": json.dumps({
-                "valid": is_valid,
+                "valid": True,
                 "message": "Word is valid.",
                 "submittedWord": submitted_word,
                 "originalWord": matching_word,

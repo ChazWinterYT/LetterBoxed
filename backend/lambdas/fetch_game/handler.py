@@ -39,6 +39,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "gameLayout": game_data.get("gameLayout"),
             "boardSize": game_data.get("boardSize", "3x3"), # Default to 3x3
             "language": game_data.get("language", "en"), # Default to English
+            "hint": game_data.get("clue", ""),
             "message": "Game fetched successfully."
         })
     }

@@ -29,6 +29,8 @@ def test_play_today_game_exists(mock_dynamodb_table):
     event = {}
     context = {}
     response = handler(event, context)
+    
+    print("result:", response)
 
     # Assert
     assert response["statusCode"] == 200
@@ -55,6 +57,8 @@ def test_play_today_fallback_to_yesterday(mock_dynamodb_table):
     event = {}
     context = {}
     response = handler(event, context)
+    
+    print("result:", response)
 
     # Assert
     assert response["statusCode"] == 200

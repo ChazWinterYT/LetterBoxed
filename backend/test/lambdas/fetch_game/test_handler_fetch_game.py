@@ -33,6 +33,7 @@ def test_fetch_game_success(mock_fetch_game_by_id):
         "gameLayout": ["ABC", "DEF", "GHI", "XYZ"],
         "boardSize": "3x3",
         "language": "en",
+        "hint": "",
         "message": "Game fetched successfully."
     }
 

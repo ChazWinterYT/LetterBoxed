@@ -102,7 +102,7 @@ def setup_aws_resources(setup_environment, aws_clients):
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"
-def test_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
+def est_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]

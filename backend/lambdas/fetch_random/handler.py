@@ -63,6 +63,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "gameLayout": game_data["gameLayout"],
                 "language": game_data["language"],
                 "boardSize": game_data["boardSize"],
+                "hint": game_data["clue"],
             })
         }
     except Exception as e:

@@ -15,6 +15,7 @@ export interface GameBoardProps {
   onRestartGame?: () => void;
   onGameCompleted?: () => void;
   boardSize: string;
+  hint?: string;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -27,20 +28,19 @@ const GameBoard: React.FC<GameBoardProps> = ({
   onRestartGame,
   onGameCompleted,
   boardSize,
+  hint,
 }) => {
   const { t } = useLanguage();
   const { getRandomPhrase } = useLanguage();
+  const [isHintVisible, setIsHintVisible] = useState(false);
+  const [validationMessage, setValidationMessage] = useState<string | null>(null); // Feedback state
+  const [validationStatus, setValidationStatus] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
 
   // State to track the current word as an array of letters with their sides
   const [currentWord, setCurrentWord] = useState<{ letter: string; side: string }[]>([]);
   const [lastSide, setLastSide] = useState<string | null>(null);
-  const [validationMessage, setValidationMessage] = useState<string | null>(null); // Feedback state
-  const [validationStatus, setValidationStatus] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
   const [lastLetter, setLastLetter] = useState<string | null>(null);
   const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
-
-  // Get the number of letters to display from the boardSize string
-  // const [topBottomCount, leftRightCount] = boardSize.split('x').map(Number);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
 
@@ -244,8 +244,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
         onDelete={handleDelete}
         onRestart={handleRestart}
         onSubmit={handleSubmit}
+        onShowHint={() => setIsHintVisible(true)}
         gameCompleted={gameCompleted}
       />
+
+      {/* Hint Display Section */}
+      <div className="hint-display">
+        {isHintVisible && (
+          <p className="hint-text">
+            {hint ? hint : t('game.noHintAvailable')}
+          </p>
+        )}
+      </div>
 
       {/* Shareable URL */}
       <div className="share-game-section">
