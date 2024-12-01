@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import Spinner from "./components/Spinner";
 import { useLanguage } from "./context/LanguageContext";
+import { gameLanguages } from "./languages/index";
 import {
   fetchTodaysGame,
   fetchGameById,
@@ -24,6 +25,7 @@ import {
   fetchUserSession,
   saveSessionState,
   validateWord,
+  fetchRandomGame,
 } from "./services/api";
 import "./App.css";
 
@@ -314,6 +316,47 @@ const App = () => {
     ]
   );
 
+  // Function to fetch a random game by language
+  const fetchRandomGameByLanguage = async (language: string) => {
+    console.log(`Fetching random game for language: ${language}`);
+    try {
+      const randomGame = await fetchRandomGame(language);
+      console.log("Fetched random game:", randomGame);
+
+      setCurrentGameId(randomGame.gameId);
+      setLayout(randomGame.gameLayout || []);
+      setGameLayout(randomGame.gameLayout || []);
+      setBoardSize(randomGame.boardSize || "3x3");
+      setIsModalOpen(false);
+      navigate(`/games/${randomGame.gameId}`, { replace: true });
+
+      // Load game state if necessary
+      await loadGameState(randomGame.gameId);
+    } catch (error) {
+      console.error("Failed to fetch random game:", error);
+      setModalContent(<p>{t("ui.randomGame.errorLoading")}</p>);
+    }
+  };
+
+  // Function to open the random game modal
+  const openRandomGameModal = useCallback(() => {
+    console.log("Opening random game modal.");
+    setModalTitle(t("game.randomGameOptions"));
+    setIsModalOpen(true);
+    setModalContent(
+      <div className="random-game-options">
+        <h2>{t("game.selectLanguage")}</h2>
+        <div className="language-buttons">
+          {Object.keys(gameLanguages).map((langCode) => (
+            <button key={langCode} onClick={() => fetchRandomGameByLanguage(langCode)}>
+              {t(`language.${langCode}`)}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }, [t]);
+
   // Open Archive Modal
   const openArchiveModal = useCallback(
     async () => {
@@ -413,6 +456,7 @@ const App = () => {
         onPlayToday={loadTodaysGame}
         onOpenArchive={openArchiveModal}
         onOpenCustomGame={openCustomGameModal}
+        onPlayRandomGame={openRandomGameModal}
       />
 
       <div className="main-content">

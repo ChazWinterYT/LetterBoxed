@@ -7,12 +7,14 @@ interface ButtonMenuProps {
   onPlayToday: () => void;
   onOpenArchive: () => void;
   onOpenCustomGame: () => void;
+  onPlayRandomGame: () => void;
 }
 
 const ButtonMenu: React.FC<ButtonMenuProps> = ({
   onPlayToday,
   onOpenArchive,
   onOpenCustomGame,
+  onPlayRandomGame,
 }) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
       </button>
       <button onClick={onOpenArchive}>{t("ui.menu.archive")}</button>
       <button onClick={onOpenCustomGame}>{t("ui.menu.customGame")}</button>
+      <button onClick={onPlayRandomGame}>{t("game.randomGame")}</button>
     </div>
   );
 };

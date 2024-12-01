@@ -48,3 +48,38 @@
   text-align: left;
   flex-grow: 1; 
 }
+
+/* Random game modal styles */
+.random-game-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.random-game-options .language-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.language-buttons button {
+  background-color: #1586dd;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: solid;
+  border-radius: 40px;
+  border-color: #061f32;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 90%;
+  max-width: 300px;
+  text-align: center;
+}
+
+.language-buttons button:hover {
+  background-color: #4145b0;
+}

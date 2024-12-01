@@ -55,8 +55,10 @@ export const validateWord = async (word: string, gameId: string, sessionId: stri
 };
 
 // Fetch random game
-export const fetchRandomGame = async () => {
-  const response = await fetch(`${API_URL}/random-game`, { headers });
+export const fetchRandomGame = async (language: string) => {
+  const response = await fetch(`${API_URL}/random-game?language=${language}`, {
+    headers,
+  });
   return handleErrorOrReturnResponse(response);
 };
 
