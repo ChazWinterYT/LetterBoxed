@@ -154,17 +154,17 @@ def shuffle_final_layout(layout: List[str]) -> List[str]:
 
 
 def main() -> Any:
-    small_board = False
+    small_board = True
     
-    if not small_board:
+    if small_board:
+        create_random_small_board_game(
+            "en",
+            "2x2"
+        )
+    else:
         create_random_game(
             "en",
             "3x3",
-        )
-    else:
-        create_random_small_board_game(
-            "pl",
-            "2x2"
         )
 
 # def main() -> Any:
