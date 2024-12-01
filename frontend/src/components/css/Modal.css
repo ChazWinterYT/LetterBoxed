@@ -99,10 +99,10 @@
 }
 
 .game-completed-content p {
-  margin: 10px 0;
+  margin: 0px 0;
   font-size: 1.2rem;
   color: #333;
-  line-height: 1.5;
+  line-height: 1.3;
 }
 
 .game-completed-content button {
@@ -111,7 +111,7 @@
   font-size: 1.1rem;
   color: white;
   background-color: #4878cf;
-  border: 4px solid #061f32;
+  border: 3px solid #061f32;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;

@@ -470,40 +470,55 @@ const App = () => {
         someTwoWordSolutions = [],
       } = validationResult;
   
-      setModalTitle(t("game.puzzleSolvedTitle"));
+      setModalTitle(t("game.complete.puzzleSolvedTitle"));
   
       const content = (
         <div className="game-completed-content">
-          <p>{t("game.puzzleSolvedMessage")}</p>
-  
+          <p><b>{t("game.complete.puzzleSolvedMessage")}</b></p>
+      
           {officialSolution.length > 0 && (
             <p>
-              {t("game.officialSolution")}: {officialSolution.join(", ")}
+              {t("game.complete.officialSolution")}: {officialSolution.join(", ")}
             </p>
           )}
-  
+      
           {someOneWordSolutions.length > 0 && (
-            <p>
-              {t("game.oneWordSolutions")}: {someOneWordSolutions.join(", ")}
-            </p>
+            <div className="solution-section">
+              <p>
+                <b>{t("game.complete.numberOfOneWordSolutions")}:</b> {someOneWordSolutions.length}
+              </p>
+              <p>
+                {t("game.complete.someOneWordSolutions")}:
+              </p>
+              <p>{someOneWordSolutions.join(", ")}</p>
+            </div>
           )}
-  
+      
           {someTwoWordSolutions.length > 0 && (
-            <p>
-              {t("game.twoWordSolutions")}:{" "}
-              {someTwoWordSolutions
-                .map(([word1, word2]) => `${word1} - ${word2}`)
-                .join(", ")}
-            </p>
+            <div className="solution-section">
+              <p>
+                <b>{t("game.complete.numberOfTwoWordSolutions")}:</b> {someTwoWordSolutions.length}
+              </p>
+              <p>
+                {t("game.complete.someTwoWordSolutions")}:
+              </p>
+              <ul>
+                {someTwoWordSolutions.map(([word1, word2], index) => (
+                  <li key={`two-word-${index}`}>
+                    [{word1} - {word2}]
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
-  
+      
           <button
             onClick={() => {
               console.log("Play another game");
-              openRandomGameModal(); // Reuse your existing random game modal logic
+              openRandomGameModal();
             }}
           >
-            {t("game.playAnother")}
+            {t("game.complete.playAnotherButton")}
           </button>
         </div>
       );

@@ -48,8 +48,16 @@
         "boardSize": "Board Size",
         "gameId": "Game ID",
         "tryToSolve": "Try to solve in {words} words",
-        "puzzleSolvedTitle": "YOU WIN",
-        "puzzleSolvedMessage": "You solved the puzzle! Congratulations!!!",
+        "complete": {
+            "puzzleSolvedTitle": "YOU WIN",
+            "puzzleSolvedMessage": "You solved the puzzle! Congratulations!!!",
+            "officialSolution": "This puzzle was generated using the word(s)",
+            "numberOfOneWordSolutions": "Number of one-word solutions found",
+            "numberOfTwoWordSolutions": "Number of two-word solutions found",
+            "someOneWordSolutions": "Some possible one-word solutions",
+            "someTwoWordSolutions": "Some possible two-word solutions",
+            "playAnotherButton": "Play Another?"
+        },
         "twoWordSolutions": "Two-Word Solutions",
         "threeWordSolutions": "Three-Word Solutions",
         "enterGameLayout": "Enter Game Layout",
