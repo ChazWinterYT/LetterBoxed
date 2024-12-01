@@ -44,7 +44,7 @@ def create_random_game(
     dictionary = get_dictionary(language)
     basic_dictionary = get_basic_dictionary(language)
     # Use the full dictionary for larger boards
-    larger_boards = ["4x4", "5x5"]
+    larger_boards = ["3x3", "4x4", "5x5"]
     if board_size in larger_boards:
         basic_dictionary = dictionary
     
