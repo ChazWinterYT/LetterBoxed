@@ -138,6 +138,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "originalWord": matching_word,
                 "gameCompleted": game_completed,
                 "officialSolution": official_solution,
+                "numOneWordSolutions": len(game_data["oneWordSolutions"]),
+                "numTwoWordSolutions": len(game_data["twoWordSolutions"]),
                 "someOneWordSolutions": some_one_word_solutions,
                 "someTwoWordSolutions": some_two_word_solutions,
             }),

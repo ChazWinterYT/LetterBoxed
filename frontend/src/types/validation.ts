@@ -7,4 +7,6 @@ export interface ValidationResult {
     officialSolution: string[]; // Array of strings
     someOneWordSolutions: string[]; // Array of strings
     someTwoWordSolutions: [string, string][]; // Array of tuples (string, string)
+    numOneWordSolutions: number;
+    numTwoWordSolutions: number;
   }

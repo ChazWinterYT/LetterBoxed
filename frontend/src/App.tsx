@@ -468,6 +468,8 @@ const App = () => {
         officialSolution = [],
         someOneWordSolutions = [],
         someTwoWordSolutions = [],
+        numOneWordSolutions = 0,
+        numTwoWordSolutions = 0,
       } = validationResult;
   
       setModalTitle(t("game.complete.puzzleSolvedTitle"));
@@ -485,7 +487,7 @@ const App = () => {
           {someOneWordSolutions.length > 0 && (
             <div className="solution-section">
               <p>
-                <b>{t("game.complete.numberOfOneWordSolutions")}:</b> {someOneWordSolutions.length}
+                <b>{t("game.complete.numberOfOneWordSolutions")}:</b> {numOneWordSolutions}
               </p>
               <p>
                 {t("game.complete.someOneWordSolutions")}:
@@ -497,7 +499,7 @@ const App = () => {
           {someTwoWordSolutions.length > 0 && (
             <div className="solution-section">
               <p>
-                <b>{t("game.complete.numberOfTwoWordSolutions")}:</b> {someTwoWordSolutions.length}
+                <b>{t("game.complete.numberOfTwoWordSolutions")}:</b> {numTwoWordSolutions}
               </p>
               <p>
                 {t("game.complete.someTwoWordSolutions")}:
