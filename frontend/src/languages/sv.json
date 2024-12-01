@@ -61,6 +61,7 @@
         "selectBoardSize": "Välj en Brädsstorlek",
         "restartGame": "Starta om spelet",
         "deleteLetter": "Radera bokstav",
+        "removeLastWord": "Ta bort sista ordet",
         "submitWord": "Skicka in ord",
         "showHint": "Visa ledtråd",
         "noHintAvailable": "Ingen ledtråd är tillgänglig för det här spelet.",

@@ -61,6 +61,7 @@
         "selectBoardSize": "Wähle eine Brettgröße",
         "restartGame": "Spiel neu starten",
         "deleteLetter": "Buchstabe löschen",
+        "removeLastWord": "Letztes Wort entfernen",
         "submitWord": "Wort einreichen",
         "showHint": "Tipp anzeigen",
         "noHintAvailable": "Für dieses Spiel ist kein Tipp verfügbar.",

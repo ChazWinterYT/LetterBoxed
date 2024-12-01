@@ -61,6 +61,7 @@
         "selectBoardSize": "Выберите размер поля",
         "restartGame": "Перезапустить игру",
         "deleteLetter": "Удалить букву",
+        "removeLastWord": "Удалить последнее слово",
         "submitWord": "Отправить слово",
         "showHint": "Показать подсказку",
         "noHintAvailable": "Подсказка для этой игры недоступна.",

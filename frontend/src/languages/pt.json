@@ -61,6 +61,7 @@
         "selectBoardSize": "Selecionar o Tamanho do Tabuleiro",
         "restartGame": "Reiniciar Jogo",
         "deleteLetter": "Apagar Letra",
+        "removeLastWord": "Remover última palavra",
         "submitWord": "Enviar Palavra",
         "showHint": "Mostrar dica",
         "noHintAvailable": "Nenhuma dica disponível para este jogo.",

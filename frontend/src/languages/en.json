@@ -61,6 +61,7 @@
         "selectBoardSize": "Select a Board Size",
         "restartGame": "Restart Game",
         "deleteLetter": "Delete Letter",
+        "removeLastWord": "Remove Last Word",
         "submitWord": "Submit Word",
         "showHint": "Show Hint",
         "noHintAvailable": "No hint is available for this game.",

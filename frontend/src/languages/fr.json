@@ -61,6 +61,7 @@
         "selectBoardSize": "Choisir une taille de plateau",
         "restartGame": "Redémarrer le jeu",
         "deleteLetter": "Supprimer la lettre",
+        "removeLastWord": "Supprimer le dernier mot",
         "submitWord": "Soumettre le mot",
         "showHint": "Afficher un indice",
         "noHintAvailable": "Aucun indice n'est disponible pour ce jeu.",

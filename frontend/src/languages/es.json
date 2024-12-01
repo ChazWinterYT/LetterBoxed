@@ -61,6 +61,7 @@
         "selectBoardSize": "Selecciona un tamaño de tablero",
         "restartGame": "Reiniciar juego",
         "deleteLetter": "Borrar letra",
+        "removeLastWord": "Eliminar última palabra",
         "submitWord": "Enviar palabra",
         "showHint": "Mostrar pista",
         "noHintAvailable": "No hay pista disponible para este juego.",

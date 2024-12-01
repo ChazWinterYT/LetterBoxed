@@ -61,6 +61,7 @@
         "selectBoardSize": "Pilih Ukuran Papan",
         "restartGame": "Mulai Ulang Game",
         "deleteLetter": "Hapus Huruf",
+        "removeLastWord": "Hapus Kata Terakhir",
         "submitWord": "Kirim Kata",
         "showHint": "Tampilkan Petunjuk",
         "noHintAvailable": "Tidak ada petunjuk yang tersedia untuk game ini.",

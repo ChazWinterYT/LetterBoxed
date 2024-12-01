@@ -61,6 +61,7 @@
         "selectBoardSize": "ボードサイズを選択",
         "restartGame": "ゲームを再開",
         "deleteLetter": "文字を削除",
+        "removeLastWord": "最後の単語を削除",
         "submitWord": "単語を提出",
         "showHint": "ヒントを表示",
         "noHintAvailable": "このゲームにはヒントがありません。",

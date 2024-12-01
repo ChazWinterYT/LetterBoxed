@@ -61,6 +61,7 @@
         "selectBoardSize": "Seleziona una Dimensione della Griglia",
         "restartGame": "Riavvia il gioco",
         "deleteLetter": "Elimina la lettera",
+        "removeLastWord": "Rimuovi l'ultima parola",
         "submitWord": "Invia la parola",
         "showHint": "Mostra suggerimento",
         "noHintAvailable": "Nessun suggerimento disponibile per questo gioco.",
