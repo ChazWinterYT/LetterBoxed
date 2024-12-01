@@ -1,4 +1,5 @@
 import json
+import random
 from typing import Any, Dict
 from lambdas.common.game_utils import normalize_to_base, check_game_completion
 from lambdas.common.db_utils import (
@@ -85,8 +86,38 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         game_layout = game_data["gameLayout"]
         words_used = user_game_state["wordsUsed"].copy()
         words_used.append(submitted_word)
-        game_completed, is_valid = check_game_completion(game_layout, words_used)
+        game_completed, completion_message = check_game_completion(game_layout, words_used)
         
+        # If the game is complete, also send the solution to the user
+        official_solution = []
+        some_one_word_solutions = []
+        some_two_word_solutions = []
+        if game_completed:
+            # Prioritize NYT solution if it exists
+            if "nytSolution" in game_data and game_data["nytSolution"]:
+                official_solution = game_data["nytSolution"]
+            # Otherwise, prefer a one word solution if it exists
+            elif "randomSeedWord" in game_data and game_data["randomSeedWord"]:
+                official_solution = [game_data["randomSeedWord"]]
+            # Otherwise, use the two word solution if it exists
+            elif "randomSeedWords" in game_data and game_data["randomSeedWords"]:
+                official_solution = game_data["randomSeedWords"]
+            
+            # Also provide a sample of one-word solutions if available
+            NUM_SAMPLE_SOLUTIONS = 5 # How many solutions to show
+            if "oneWordSolutions" in game_data and game_data["oneWordSolutions"]:
+                some_one_word_solutions = random.sample(
+                    game_data["oneWordSolutions"],
+                    min(game_data["oneWordSolutionCount"], NUM_SAMPLE_SOLUTIONS)
+                )
+                
+            # Also provide a sample of two-word solutions if available
+            if "twoWordSolutions" in game_data and game_data["twoWordSolutions"]:
+                some_two_word_solutions = random.sample(
+                    [tuple(solution) for solution in game_data["twoWordSolutions"]],
+                    min(game_data["twoWordSolutionCount"], NUM_SAMPLE_SOLUTIONS)
+                )
+            
         return {
             "statusCode": 200,
             "headers": {
@@ -96,15 +127,18 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             },
             "body": json.dumps({
                 "valid": True,
-                "message": "Word is valid.",
+                "message": completion_message,
                 "submittedWord": submitted_word,
                 "originalWord": matching_word,
-                "gameCompleted": game_completed
+                "gameCompleted": game_completed,
+                "officialSolution": official_solution,
+                "someOneWordSolutions": some_one_word_solutions,
+                "someTwoWordSolutions": some_two_word_solutions,
             }),
         }
 
     except Exception as e:
-        print(f"Error during validation: {e}")
+        print(f"Error during validation: {e.with_traceback}")
         return _error_response(f"An unexpected error occurred: {e}", 500)
     
 

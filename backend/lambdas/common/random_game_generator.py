@@ -5,156 +5,16 @@ import sys
 import time
 from typing import List, Optional, Tuple, Dict, Any
 from collections import Counter
+from unittest.mock import patch, MagicMock
+import boto3
 
 # Add the backend directory to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-
-from lambdas.common.game_utils import (
-    standardize_board,
-    generate_valid_words,
-    calculate_two_word_solutions,
-)
-
 from lambdas.create_random.random_game_service import create_random_game, create_random_small_board_game
 
 
-def load_dictionary(file_path: str) -> List[str]:
-    """
-    Load the dictionary from the specified file.
-
-    Args:
-        file_path (str): Path to the dictionary file.
-
-    Returns:
-        List[str]: List of words in the dictionary.
-    """
-    with open(file_path, 'r') as file:
-        return [line.strip().upper() for line in file if line.strip().isalpha()]
-    
-
-def select_two_words(dictionary: List[str], max_attempts: int = 10000) -> Optional[Tuple[str, str]]:
-    """
-    Select two words that together contain exactly 12 unique base letters and where
-    the first base letter of one word matches the last base letter of the other.
-
-    Args:
-        dictionary (List[str]): List of words from the dictionary.
-        max_attempts (int): Maximum number of attempts to find a valid pair.
-
-    Returns:
-        Optional[Tuple[str, str]]: A tuple of two words or None if no pair is found.
-    """
-    for _ in range(max_attempts):
-        word1, word2 = random.sample(dictionary, 2)
-        # Compare base letters for linking
-        if (
-            normalize_to_base(word1[-1]) == normalize_to_base(word2[0]) and
-            len(set(normalize_to_base(word1 + word2))) == 12  # Ensure 12 unique base letters
-        ):
-            return word1, word2
-    return None
-
-
-def generate_layout(word1: str, word2: str) -> Optional[List[str]]:
-    """
-    Generate a game layout with letters from two words distributed across 4 sides,
-    maintaining adjacency constraints and handling shared and repeated letters.
-
-    Args:
-        word1 (str): The first word.
-        word2 (str): The second word.
-
-    Returns:
-        Optional[List[str]]: A list of 4 strings representing the sides of the board,
-        or None if no valid layout can be generated.
-    """
-    base_word1 = normalize_to_base(word1)
-    base_word2 = normalize_to_base(word2)
-
-    combined_letters = base_word1 + base_word2[1:]  # Combine words, excluding duplicate shared letter
-    if len(set(combined_letters)) != 12:
-        raise ValueError("The combined words must have exactly 12 unique letters.")
-
-    sides = [""] * 4  # Initialize 4 empty sides
-    letter_to_side: Dict[str, int] = {}  # Track where each letter is placed
-
-    def backtrack(index: int, current_side: int) -> bool:
-        # Base case: all letters are placed
-        if index == len(combined_letters):
-            return True
-
-        letter = combined_letters[index]
-
-        # If letter already placed, ensure adjacency rule is respected
-        if letter in letter_to_side:
-            next_side = letter_to_side[letter]
-            if next_side == current_side:
-                return False  # Violates adjacency rule
-            return backtrack(index + 1, next_side)
-
-        # Randomize side order
-        side_indices = list(range(4))
-        random.shuffle(side_indices)
-
-        # Try placing the letter on each valid side
-        for side_index in side_indices:
-            if side_index == current_side or len(sides[side_index]) >= 3:
-                continue  # Skip same side or full side
-
-            # Place the letter
-            sides[side_index] += letter
-            letter_to_side[letter] = side_index
-
-            # Recurse to the next letter
-            if backtrack(index + 1, side_index):
-                return True
-
-            # Undo placement (backtrack)
-            sides[side_index] = sides[side_index][:-1]
-            del letter_to_side[letter]
-
-        # If no valid placement found, return False
-        return False
-
-    # Start the backtracking process
-    if backtrack(0, -1):
-        # Shuffle the layout for additional randomness
-        return shuffle_final_layout(sides)
-    else:
-        return None
-
-
-def normalize_to_base(word: str) -> str:
-    """
-    Normalize a word to its base form by removing accents and diacritical marks.
-    """
-    return ''.join(
-        char for char in unicodedata.normalize('NFD', word)
-        if unicodedata.category(char) != 'Mn'
-    )
-
-
-def shuffle_final_layout(layout: List[str]) -> List[str]:
-    """
-    Shuffle the letters within each side and shuffle the sides themselves.
-
-    Args:
-        layout (List[str]): The generated layout with letters placed.
-
-    Returns:
-        List[str]: The shuffled layout.
-    """
-    # Shuffle letters within each side
-    shuffled_sides = [''.join(random.sample(side, len(side))) for side in layout]
-
-    # Shuffle the sides
-    random.shuffle(shuffled_sides)
-
-    return shuffled_sides
-
-
 def main() -> Any:
-    small_board = True
+    small_board = False
     
     if small_board:
         create_random_small_board_game(

@@ -149,6 +149,7 @@ def create_game_schema(
         "oneWordSolutions": one_word_solutions,
         "twoWordSolutions": two_word_solutions,
         "threeWordSolutions": three_word_solutions,
+        "oneWordSolutionCount": len(one_word_solutions),
         "twoWordSolutionCount": len(two_word_solutions),
         "threeWordSolutionCount": len(three_word_solutions),
         "nytSolution": nyt_solution,
