@@ -11,7 +11,7 @@ from lambdas.common.db_utils import (
 from lambdas.common.game_schema import create_game_schema
 
 DEFAULT_LANGUAGE = "en"
-USE_BASIC_DICTIONARY = False # Determine which dictionary to use for seed words
+USE_BASIC_DICTIONARY = True # Determine which dictionary to use for seed words
 
 def create_random_game(
     language: str = "en", 
