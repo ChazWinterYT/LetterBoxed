@@ -3,18 +3,22 @@
   --left-right-count: 3;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* Game Board Container */
 .game-board-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background-color: #1d4f7e; /* Background behind the board */
-  padding: 40px;
+  padding: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  width: 100%; /* Ensure it fills the parent container */
-  max-width: 320px; /* Increase this to make it wider */
+  width: 102%; /* Ensure it fills the parent container */
+  max-width: 360px; /* Increase this to make it wider */
   border-radius: 20px; /* Optional: Round the corners */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow */
 }
@@ -39,6 +43,7 @@
 .word-formation-area {
   width: 100%;
   max-width: 300px;
+  max-height: 100px;
   text-align: center;
   background-color: #dae4ef;
   padding: 10px;
@@ -102,7 +107,7 @@
   height: 240px;
   background-color: #dae4ef;
   border: 4px solid black;
-  margin: 70px auto;
+  margin: 66px auto;
   z-index: 100;
 }
 
@@ -111,7 +116,7 @@
   position: absolute;
   top: -40px; /* Move marker and letter above the square */
   left: 50%;
-  transform: translateX(-50%) translateY(-36%);
+  transform: translateX(-50%) translateY(-32%);
   display: flex;
   justify-content: space-evenly;
   width: 90%; /* Spread markers and letters evenly */
@@ -128,7 +133,7 @@
   position: absolute;
   bottom: -40px; /* Move marker and letter below the square */
   left: 50%;
-  transform: translateX(-50%) translateY(36%);
+  transform: translateX(-50%) translateY(32%);
   display: flex;
   justify-content: space-evenly;
   width: 90%;
@@ -145,7 +150,7 @@
   position: absolute;
   top: 50%;
   left: -40px; /* Move marker and letter left of the square */
-  transform: translateY(-50%) translateX(-26%);
+  transform: translateY(-50%) translateX(-18%);
   display: flex;
   flex-direction: column-reverse; /* Letter left of marker */
   justify-content: space-evenly;
@@ -163,7 +168,7 @@
   position: absolute;
   top: 50%;
   right: -40px; /* Move marker and letter right of the square */
-  transform: translateY(-50%) translateX(26%);
+  transform: translateY(-50%) translateX(18%);
   display: flex;
   flex-direction: column; /* Letter right of marker */
   justify-content: space-evenly;
@@ -229,12 +234,12 @@
 
 /* Markers */
 .marker {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   border: 2px solid;
   background-color: #84888a;
-  margin: 5px; /* Space between marker and letter */
+  margin: 4px; /* Space between marker and letter */
   cursor: pointer;
   transition: background-color 0.3s ease;
   z-index: 500;
