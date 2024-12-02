@@ -14,7 +14,7 @@ from lambdas.create_random.random_game_service import create_random_game, create
 
 
 def main() -> Any:
-    small_board = True
+    small_board = False
     
     if small_board:
         create_random_small_board_game(

@@ -11,6 +11,7 @@ from lambdas.common.db_utils import (
 from lambdas.common.game_schema import create_game_schema
 
 DEFAULT_LANGUAGE = "en"
+USE_BASIC_DICTIONARY = False # Determine which dictionary to use for seed words
 
 def create_random_game(
     language: str = "en", 
@@ -42,9 +43,9 @@ def create_random_game(
     # Fetch the dictionary for the specified language
     dict_start = time.time()
     dictionary = get_dictionary(language)
-    basic_dictionary = get_basic_dictionary(language)
+    basic_dictionary = get_basic_dictionary(language) if USE_BASIC_DICTIONARY else dictionary
     # Use the full dictionary for larger boards
-    larger_boards = ["3x3", "4x4", "5x5"]
+    larger_boards = ["4x4", "5x5"]
     if board_size in larger_boards:
         basic_dictionary = dictionary
     
@@ -135,9 +136,8 @@ def create_random_small_board_game(
     # Fetch the dictionary for the specified language
     dict_start = time.time()
     dictionary = get_dictionary(language)
-    # Let's try using the full dictionary for now
-    basic_dictionary = get_basic_dictionary(language) 
-    # basic_dictionary = dictionary
+    basic_dictionary = get_basic_dictionary(language) if USE_BASIC_DICTIONARY else dictionary
+
     
     dict_time = time.time() - dict_start
     print(f"[INFO] Dictionary fetch completed in {dict_time:.2f} seconds")
