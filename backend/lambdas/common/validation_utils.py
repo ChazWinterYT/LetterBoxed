@@ -94,7 +94,7 @@ def validate_language(language: str) -> bool:
     Returns:
         bool: True if the language is supported, False otherwise.
     """
-    valid_languages = ["en", "es", "fr", "pl", "de", "it", "sv"]
+    valid_languages = ["en", "es", "fr", "pl", "de", "it", "ru", "sv"]
     return language in valid_languages
 
 

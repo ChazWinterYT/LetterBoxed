@@ -32,6 +32,7 @@ class LetterBoxedStack(Stack):
         prod_RANDOM_GAMES_TABLE_NAME_ES = "LetterBoxedRandomGames_es"
         prod_RANDOM_GAMES_TABLE_NAME_IT = "LetterBoxedRandomGames_it"
         prod_RANDOM_GAMES_TABLE_NAME_PL = "LetterBoxedRandomGames_pl"
+        prod_RANDOM_GAMES_TABLE_NAME_RU = "LetterBoxedRandomGames_ru"
 
         test_GAMES_TABLE_NAME = "LetterBoxedGamesTest"
         test_VALID_WORDS_TABLE_NAME = "LetterBoxedValidWords1Test"
@@ -42,6 +43,7 @@ class LetterBoxedStack(Stack):
         test_RANDOM_GAMES_TABLE_NAME_ES = "LetterBoxedRandomGames_esTest"
         test_RANDOM_GAMES_TABLE_NAME_IT = "LetterBoxedRandomGames_itTest"
         test_RANDOM_GAMES_TABLE_NAME_PL = "LetterBoxedRandomGames_plTest"
+        test_RANDOM_GAMES_TABLE_NAME_RU = "LetterBoxedRandomGames_ruTest"
 
         # DB tables must be added to a list so Lambdas can be grated permissions to them
         prod_table_resources = []
@@ -205,6 +207,19 @@ class LetterBoxedStack(Stack):
         )
         prod_table_resources.append(self.prod_random_games_table_pl)
 
+        # Russian
+        self.prod_random_games_table_ru = dynamodb.Table(
+            self, "LetterBoxedRandomGamesTable_ru",
+            table_name=prod_RANDOM_GAMES_TABLE_NAME_RU,
+            partition_key=dynamodb.Attribute(
+                name="atomicNumber",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
+        )
+        prod_table_resources.append(self.prod_random_games_table_ru)
+
         # Test Random Games Tables in various languages
         #English
         self.test_random_games_table_en = dynamodb.Table(
@@ -258,6 +273,19 @@ class LetterBoxedStack(Stack):
         )
         test_table_resources.append(self.test_random_games_table_pl)
 
+        # Russian
+        self.test_random_games_table_ru = dynamodb.Table(
+            self, "LetterBoxedRandomGamesTestTable_ru",
+            table_name=test_RANDOM_GAMES_TABLE_NAME_RU,
+            partition_key=dynamodb.Attribute(
+                name="atomicNumber",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY
+        )
+        test_table_resources.append(self.test_random_games_table_ru)
+
         # ===========================================================================
         # Define S3 Resources
         # ===========================================================================
@@ -291,6 +319,7 @@ class LetterBoxedStack(Stack):
             "RANDOM_GAMES_TABLE_ES": prod_RANDOM_GAMES_TABLE_NAME_ES,
             "RANDOM_GAMES_TABLE_IT": prod_RANDOM_GAMES_TABLE_NAME_IT,
             "RANDOM_GAMES_TABLE_PL": prod_RANDOM_GAMES_TABLE_NAME_PL,
+            "RANDOM_GAMES_TABLE_RU": prod_RANDOM_GAMES_TABLE_NAME_RU,
             "METADATA_TABLE": prod_METADATA_TABLE_NAME,
             "ARCHIVE_TABLE": prod_ARCHIVE_TABLE_NAME,
             "DICTIONARY_SOURCE": "s3",
@@ -307,6 +336,7 @@ class LetterBoxedStack(Stack):
             "RANDOM_GAMES_TABLE_ES": test_RANDOM_GAMES_TABLE_NAME_ES,
             "RANDOM_GAMES_TABLE_IT": test_RANDOM_GAMES_TABLE_NAME_IT,
             "RANDOM_GAMES_TABLE_PL": test_RANDOM_GAMES_TABLE_NAME_PL,
+            "RANDOM_GAMES_TABLE_RU": test_RANDOM_GAMES_TABLE_NAME_RU,
             "METADATA_TABLE": test_METADATA_TABLE_NAME,
             "ARCHIVE_TABLE": test_ARCHIVE_TABLE_NAME,
             "DICTIONARY_SOURCE": "s3",

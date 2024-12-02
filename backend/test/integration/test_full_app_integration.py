@@ -41,6 +41,7 @@ def setup_environment():
     os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
     os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"
     os.environ["RANDOM_GAMES_TABLE_PL"] = "LetterBoxedRandomGames_plTest"
+    os.environ["RANDOM_GAMES_TABLE_RU"] = "LetterBoxedRandomGames_ruTest"
 
     # Define constants for table names
     DYNAMO_DB_TABLE_NAMES = [
@@ -53,6 +54,7 @@ def setup_environment():
         os.environ["RANDOM_GAMES_TABLE_ES"],
         os.environ["RANDOM_GAMES_TABLE_IT"],
         os.environ["RANDOM_GAMES_TABLE_PL"],
+        os.environ["RANDOM_GAMES_TABLE_RU"],
     ]
 
     # Yield to run the tests
