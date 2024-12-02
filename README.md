@@ -1,3 +1,6 @@
+There are open issues...if you dare!
+https://github.com/ChazWinterYT/LetterBoxed/issues
+
 # Letter Boxed Clone
 
 A clone of The New York Times' **Letter Boxed** game, built as a web app to practice coding, algorithm design, and AWS resources. The game supports custom puzzles, random board generation, and solution generation for user-created games, leveraging AWS Lambda, S3, and DynamoDB.
