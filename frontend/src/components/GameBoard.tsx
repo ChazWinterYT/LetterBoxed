@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { validateWord } from '../services/api';
 import './css/GameBoard.css';
@@ -46,6 +46,32 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
+
+  useEffect(() => {
+    if (!gameCompleted && foundWords.length > 0) {
+      console.log("There are words already played. We need to use the last letter.")
+      const lastWord = foundWords[foundWords.length - 1];
+      const lastLetterOfLastWord = lastWord[lastWord.length - 1];
+
+      // Determine the side of he last letter
+      const sideIndex = layout.findIndex((side) => side.includes(lastLetterOfLastWord));
+      if (sideIndex === -1) {
+        console.error("Could not determine side for last letter.");
+        return;
+      }
+
+      const sideNames = ['top', 'right', 'bottom', 'left'];
+      const sideName = sideNames[sideIndex];
+
+      // Update the state
+      setLastLetter(lastLetterOfLastWord);
+      setLastLetterSide(sideName);
+      setLastSide(sideName);
+
+      // Add the last letter to the word formation area
+      setCurrentWord([{ letter: lastLetterOfLastWord, side: sideName }]);
+    }
+  }, [foundWords, layout]);
 
   const handleLetterClick = (letter: string, side: string) => {
     if (gameCompleted) {
