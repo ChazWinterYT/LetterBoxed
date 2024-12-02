@@ -99,6 +99,45 @@
             "error": "Ocurrió un error al validar la palabra."
         }
     },
+    "form": {
+        "boardSize": "Tamaño del tablero",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "Una palabra semilla",
+          "two": "Dos palabras semilla"
+        },
+        "seedWords": "Palabras semilla",
+        "clearWord": "Borrar palabra",
+        "longTimeWarning": "ADVERTENCIA: Generar un juego puede tardar hasta 60 segundos. Por favor, no actualice ni salga de la página, o no recibirá el enlace de su juego.",
+        "generateGame": "Generar juego",
+        "cancel": "Cancelar",
+        "instructions": {
+          "enterSeedWord": "Ingrese una palabra semilla",
+          "seedWordChoice": "Para tableros pequeños, puede usar una o dos palabras semilla.",
+          "boardSize": "Seleccione un tamaño para el tablero"
+        },
+        "success": {
+            "gameCreationSuccess": "¡Juego generado con éxito!",
+            "gameLink": "¡Comparte este juego con tus amigos!",
+            "goToGame": "¡Juega tu juego ahora!",
+            "createAnotherGame": "¿Crear otro?"
+        },
+        "error": {
+            "wordsNotConnected": "La última letra de la Palabra 1 debe ser la misma que la primera letra de la Palabra 2.",
+            "notEnoughLetters": "No hay suficientes letras únicas para este tamaño de tablero.",
+            "tooManyLetters": "Hay demasiadas letras únicas para este tamaño de tablero.",
+            "lettersRequired": "letras requeridas",
+            "lettersUsed": "letras usadas",
+            "_context1": "Por ejemplo: '12 letras requeridas. 7 letras usadas.'",
+            "doubleLetters": "No puedes tener la misma letra consecutivamente.",
+            "notInDictionary": "Una (o ambas) palabras ingresadas no están en el diccionario.",
+            "genericError": "Ocurrió un error al crear su juego."
+        }
+    },
     "instructions": {
         "howToPlay": "Cómo jugar",
         "rules": "Reglas",

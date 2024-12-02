@@ -99,6 +99,45 @@
             "error": "Wystąpił błąd podczas sprawdzania słowa."
         }
     },
+    "form": {
+        "boardSize": "Rozmiar Planszy",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "Jedno Słowo Kluczowe",
+          "two": "Dwa Słowa Kluczowe"
+        },
+        "seedWords": "Słowa Kluczowe",
+        "clearWord": "Wyczyść Słowo",
+        "longTimeWarning": "UWAGA: Generowanie gry może zająć do 60 sekund. Nie odświeżaj ani nie opuszczaj strony, inaczej nie otrzymasz linku do gry.",
+        "generateGame": "Wygeneruj Grę",
+        "cancel": "Anuluj",
+        "instructions": {
+          "enterSeedWord": "Wprowadź słowo kluczowe",
+          "seedWordChoice": "Dla małych plansz możesz użyć jednego lub dwóch słów kluczowych.",
+          "boardSize": "Wybierz rozmiar planszy do gry"
+        },
+        "success": {
+            "gameCreationSuccess": "Gra została pomyślnie wygenerowana!",
+            "gameLink": "Udostępnij tę grę znajomym!",
+            "goToGame": "Zagraj teraz w swoją grę!",
+            "createAnotherGame": "Utworzyć kolejną?"
+        },
+        "error": {
+            "wordsNotConnected": "Ostatnia litera Słowa 1 musi być taka sama jak pierwsza litera Słowa 2.",
+            "notEnoughLetters": "Za mało unikalnych liter dla tego rozmiaru planszy.",
+            "tooManyLetters": "Zbyt wiele unikalnych liter dla tego rozmiaru planszy.",
+            "lettersRequired": "wymaganych liter",
+            "lettersUsed": "użytych liter",
+            "_context1": "Na przykład: '12 wymaganych liter. 7 użytych liter.'",
+            "doubleLetters": "Nie możesz mieć dwóch takich samych liter obok siebie.",
+            "notInDictionary": "Jedno (lub oba) wprowadzone słowa nie znajdują się w słowniku.",
+            "genericError": "Wystąpił błąd podczas tworzenia gry."
+        }
+    },
     "instructions": {
         "howToPlay": "Jak grać",
         "rules": "Zasady",

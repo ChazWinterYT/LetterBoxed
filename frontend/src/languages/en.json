@@ -99,6 +99,45 @@
             "error": "An error occurred while validating the word."
         }
     },
+    "form": {
+        "boardSize": "Board Size",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "One Seed Word",
+          "two": "Two Seed Words"
+        },
+        "seedWords": "Seed Words",
+        "clearWord": "Clear Word",
+        "longTimeWarning": "WARNING: Generating a game can take up to 60 seconds. Please do not refresh or exit the page, or you will not receive your game link.",
+        "generateGame": "Generate Game",
+        "cancel": "Cancel",
+        "instructions": {
+          "enterSeedWord": "Enter a seed word",
+          "seedWordChoice": "For small game boards, you can use one or two seed words.",
+          "boardSize": "Select a size for the game board"
+        },
+        "success": {
+            "gameCreationSuccess": "Game generated successfully!",
+            "gameLink": "Share this game with your friends!",
+            "goToGame": "Play your game now!",
+            "createAnotherGame": "Create another?"
+        },
+        "error": {
+            "wordsNotConnected": "The last letter of Word 1 must be the same as the first letter of Word 2.",
+            "notEnoughLetters": "There are not enough unique letters for this board size.",
+            "tooManyLetters": "There are too many unique letters for this board size.",
+            "lettersRequired": "letters required",
+            "lettersUsed": "letters used",
+            "_context1": "As in, '12 letters required. 7 letters used.'",
+            "doubleLetters": "You cannot have the same letter next to itself.",
+            "notInDictionary": "One (or both) words you entered are not in the dictionary.",
+            "genericError": "An error occurred while creating your game."
+        }
+    },
     "instructions": {
         "howToPlay": "How to Play",
         "rules": "Rules",

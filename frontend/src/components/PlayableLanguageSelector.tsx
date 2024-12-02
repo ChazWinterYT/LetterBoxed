@@ -1,4 +1,4 @@
-import languages, { Language } from "../languages";
+import languages, { Language } from "../languages/languages";
 
 const PlayableLanguageSelector = () => (
   <select>

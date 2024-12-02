@@ -99,6 +99,45 @@
             "error": "Si è verificato un errore durante la validazione della parola."
         }
     },
+    "form": {
+        "boardSize": "Dimensione del Tabellone",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "Una Parola Chiave",
+          "two": "Due Parole Chiave"
+        },
+        "seedWords": "Parole Chiave",
+        "clearWord": "Cancella Parola",
+        "longTimeWarning": "ATTENZIONE: La generazione del gioco potrebbe richiedere fino a 60 secondi. Non aggiornare o uscire dalla pagina, altrimenti non riceverai il link al tuo gioco.",
+        "generateGame": "Genera Gioco",
+        "cancel": "Annulla",
+        "instructions": {
+          "enterSeedWord": "Inserisci una parola chiave",
+          "seedWordChoice": "Per tabelloni piccoli, puoi utilizzare una o due parole chiave.",
+          "boardSize": "Seleziona una dimensione per il tabellone"
+        },
+        "success": {
+            "gameCreationSuccess": "Gioco generato con successo!",
+            "gameLink": "Condividi questo gioco con i tuoi amici!",
+            "goToGame": "Gioca ora al tuo gioco!",
+            "createAnotherGame": "Crearne un altro?"
+        },
+        "error": {
+            "wordsNotConnected": "L'ultima lettera della Parola 1 deve essere la stessa della prima lettera della Parola 2.",
+            "notEnoughLetters": "Non ci sono abbastanza lettere uniche per questa dimensione del tabellone.",
+            "tooManyLetters": "Ci sono troppe lettere uniche per questa dimensione del tabellone.",
+            "lettersRequired": "lettere richieste",
+            "lettersUsed": "lettere usate",
+            "_context1": "Ad esempio, '12 lettere richieste. 7 lettere usate.'",
+            "doubleLetters": "Non puoi avere la stessa lettera accanto a se stessa.",
+            "notInDictionary": "Una (o entrambe) le parole inserite non sono nel dizionario.",
+            "genericError": "Si è verificato un errore durante la creazione del gioco."
+        }
+    },
     "instructions": {
         "howToPlay": "Come giocare",
         "rules": "Regole",

@@ -99,6 +99,45 @@
             "error": "単語の確認中にエラーが発生しました。"
         }
     },
+    "form": {
+        "boardSize": "ボードサイズ",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "シードワード1つ",
+          "two": "シードワード2つ"
+        },
+        "seedWords": "シードワード",
+        "clearWord": "ワードをクリア",
+        "longTimeWarning": "警告: ゲームの生成には最大で60秒かかる場合があります。ページを更新したり離れたりすると、ゲームリンクを受け取れません。",
+        "generateGame": "ゲームを生成",
+        "cancel": "キャンセル",
+        "instructions": {
+          "enterSeedWord": "シードワードを入力してください",
+          "seedWordChoice": "小さいボードの場合、1つまたは2つのシードワードを使用できます。",
+          "boardSize": "ゲームボードのサイズを選択してください"
+        },
+        "success": {
+            "gameCreationSuccess": "ゲームが正常に生成されました！",
+            "gameLink": "このゲームを友達と共有しましょう！",
+            "goToGame": "今すぐゲームをプレイ！",
+            "createAnotherGame": "別のゲームを作成しますか？"
+        },
+        "error": {
+            "wordsNotConnected": "単語1の最後の文字は、単語2の最初の文字と同じでなければなりません。",
+            "notEnoughLetters": "このボードサイズには十分な一意の文字がありません。",
+            "tooManyLetters": "このボードサイズには一意の文字が多すぎます。",
+            "lettersRequired": "必要な文字",
+            "lettersUsed": "使用された文字",
+            "_context1": "例えば、「必要な文字:12。使用された文字:7。」",
+            "doubleLetters": "同じ文字を隣り合わせにすることはできません。",
+            "notInDictionary": "入力した単語の1つ (または両方) は辞書にありません。",
+            "genericError": "ゲームの作成中にエラーが発生しました。"
+        }
+    },
     "instructions": {
         "howToPlay": "プレイ方法",
         "rules": "ルール",

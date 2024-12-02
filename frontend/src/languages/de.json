@@ -99,6 +99,45 @@
             "error": "Beim Überprüfen des Wortes ist ein Fehler aufgetreten."
         }
     },
+    "form": {
+        "boardSize": "Brettgröße",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "Ein Ausgangswort",
+          "two": "Zwei Ausgangswörter"
+        },
+        "seedWords": "Ausgangswörter",
+        "clearWord": "Wort löschen",
+        "longTimeWarning": "WARNUNG: Das Generieren eines Spiels kann bis zu 60 Sekunden dauern. Bitte aktualisieren oder verlassen Sie die Seite nicht, sonst erhalten Sie keinen Spiel-Link.",
+        "generateGame": "Spiel generieren",
+        "cancel": "Abbrechen",
+        "instructions": {
+          "enterSeedWord": "Geben Sie ein Ausgangswort ein",
+          "seedWordChoice": "Für kleine Bretter können Sie ein oder zwei Ausgangswörter verwenden.",
+          "boardSize": "Wählen Sie eine Brettgröße aus"
+        },
+        "success": {
+            "gameCreationSuccess": "Spiel erfolgreich generiert!",
+            "gameLink": "Teilen Sie dieses Spiel mit Ihren Freunden!",
+            "goToGame": "Jetzt spielen!",
+            "createAnotherGame": "Noch eins erstellen?"
+        },
+        "error": {
+            "wordsNotConnected": "Der letzte Buchstabe von Wort 1 muss mit dem ersten Buchstaben von Wort 2 übereinstimmen.",
+            "notEnoughLetters": "Es gibt nicht genug einzigartige Buchstaben für diese Brettgröße.",
+            "tooManyLetters": "Es gibt zu viele einzigartige Buchstaben für diese Brettgröße.",
+            "lettersRequired": "Buchstaben erforderlich",
+            "lettersUsed": "Buchstaben verwendet",
+            "_context1": "Zum Beispiel: '12 Buchstaben erforderlich. 7 Buchstaben verwendet.'",
+            "doubleLetters": "Sie können denselben Buchstaben nicht nebeneinander haben.",
+            "notInDictionary": "Eines (oder beide) der eingegebenen Wörter ist nicht im Wörterbuch.",
+            "genericError": "Beim Erstellen Ihres Spiels ist ein Fehler aufgetreten."
+        }
+    },
     "instructions": {
         "howToPlay": "Spielanleitung",
         "rules": "Regeln",

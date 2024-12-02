@@ -99,6 +99,45 @@
             "error": "Une erreur s'est produite lors de la validation du mot."
         }
     },
+    "form": {
+        "boardSize": "Taille du plateau",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "Un mot de départ",
+          "two": "Deux mots de départ"
+        },
+        "seedWords": "Mots de départ",
+        "clearWord": "Effacer le mot",
+        "longTimeWarning": "ATTENTION : La génération d'un jeu peut prendre jusqu'à 60 secondes. Veuillez ne pas actualiser ou quitter la page, sinon vous ne recevrez pas le lien de votre jeu.",
+        "generateGame": "Générer le jeu",
+        "cancel": "Annuler",
+        "instructions": {
+          "enterSeedWord": "Entrez un mot de départ",
+          "seedWordChoice": "Pour les petits plateaux, vous pouvez utiliser un ou deux mots de départ.",
+          "boardSize": "Sélectionnez une taille pour le plateau"
+        },
+        "success": {
+            "gameCreationSuccess": "Jeu généré avec succès !",
+            "gameLink": "Partagez ce jeu avec vos amis !",
+            "goToGame": "Jouez à votre jeu maintenant !",
+            "createAnotherGame": "En créer un autre ?"
+        },
+        "error": {
+            "wordsNotConnected": "La dernière lettre du Mot 1 doit être identique à la première lettre du Mot 2.",
+            "notEnoughLetters": "Il n'y a pas assez de lettres uniques pour cette taille de plateau.",
+            "tooManyLetters": "Il y a trop de lettres uniques pour cette taille de plateau.",
+            "lettersRequired": "lettres nécessaires",
+            "lettersUsed": "lettres utilisées",
+            "_context1": "Par exemple : '12 lettres nécessaires. 7 lettres utilisées.'",
+            "doubleLetters": "Vous ne pouvez pas avoir la même lettre côte à côte.",
+            "notInDictionary": "Un (ou les deux) des mots saisis n'est pas dans le dictionnaire.",
+            "genericError": "Une erreur s'est produite lors de la création de votre jeu."
+        }
+    },
     "instructions": {
         "howToPlay": "Comment jouer",
         "rules": "Règles",

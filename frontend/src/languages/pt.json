@@ -99,6 +99,45 @@
             "error": "Ocorreu um erro ao validar a palavra."
         }
     },
+    "form": {
+        "boardSize": "Tamanho do Tabuleiro",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "Uma Palavra Semente",
+          "two": "Duas Palavras Semente"
+        },
+        "seedWords": "Palavras Semente",
+        "clearWord": "Limpar Palavra",
+        "longTimeWarning": "AVISO: A geração do jogo pode levar até 60 segundos. Não atualize ou saia da página, ou você não receberá o link do jogo.",
+        "generateGame": "Gerar Jogo",
+        "cancel": "Cancelar",
+        "instructions": {
+          "enterSeedWord": "Insira uma palavra semente",
+          "seedWordChoice": "Para tabuleiros pequenos, você pode usar uma ou duas palavras semente.",
+          "boardSize": "Selecione um tamanho para o tabuleiro do jogo"
+        },
+        "success": {
+            "gameCreationSuccess": "Jogo gerado com sucesso!",
+            "gameLink": "Compartilhe este jogo com seus amigos!",
+            "goToGame": "Jogue seu jogo agora!",
+            "createAnotherGame": "Criar outro?"
+        },
+        "error": {
+            "wordsNotConnected": "A última letra da Palavra 1 deve ser a mesma da primeira letra da Palavra 2.",
+            "notEnoughLetters": "Não há letras únicas suficientes para este tamanho de tabuleiro.",
+            "tooManyLetters": "Há letras únicas demais para este tamanho de tabuleiro.",
+            "lettersRequired": "letras necessárias",
+            "lettersUsed": "letras usadas",
+            "_context1": "Como em, '12 letras necessárias. 7 letras usadas.'",
+            "doubleLetters": "Você não pode ter a mesma letra ao lado dela mesma.",
+            "notInDictionary": "Uma (ou ambas) palavras inseridas não estão no dicionário.",
+            "genericError": "Ocorreu um erro ao criar seu jogo."
+        }
+    },
     "instructions": {
         "howToPlay": "Como Jogar",
         "rules": "Regras",

@@ -99,6 +99,45 @@
             "error": "Terjadi kesalahan saat memvalidasi kata."
         }
     },
+    "form": {
+        "boardSize": "Ukuran Papan",
+        "boardSizes": {
+          "2x2": "2x2",
+          "3x3": "3x3",
+          "4x4": "4x4"
+        },
+        "numSeedWords": {
+          "one": "Satu Kata Benih",
+          "two": "Dua Kata Benih"
+        },
+        "seedWords": "Kata Benih",
+        "clearWord": "Hapus Kata",
+        "longTimeWarning": "PERINGATAN: Membuat permainan dapat memakan waktu hingga 60 detik. Jangan segarkan atau keluar dari halaman, atau Anda tidak akan menerima tautan permainan Anda.",
+        "generateGame": "Buat Permainan",
+        "cancel": "Batal",
+        "instructions": {
+          "enterSeedWord": "Masukkan kata benih",
+          "seedWordChoice": "Untuk papan kecil, Anda dapat menggunakan satu atau dua kata benih.",
+          "boardSize": "Pilih ukuran untuk papan permainan"
+        },
+        "success": {
+            "gameCreationSuccess": "Permainan berhasil dibuat!",
+            "gameLink": "Bagikan permainan ini dengan teman-teman Anda!",
+            "goToGame": "Mainkan permainan Anda sekarang!",
+            "createAnotherGame": "Buat yang lain?"
+        },
+        "error": {
+            "wordsNotConnected": "Huruf terakhir dari Kata 1 harus sama dengan huruf pertama dari Kata 2.",
+            "notEnoughLetters": "Tidak cukup huruf unik untuk ukuran papan ini.",
+            "tooManyLetters": "Terlalu banyak huruf unik untuk ukuran papan ini.",
+            "lettersRequired": "huruf diperlukan",
+            "lettersUsed": "huruf digunakan",
+            "_context1": "Seperti, '12 huruf diperlukan. 7 huruf digunakan.'",
+            "doubleLetters": "Anda tidak dapat memiliki huruf yang sama bersebelahan.",
+            "notInDictionary": "Satu (atau kedua) kata yang Anda masukkan tidak ada di kamus.",
+            "genericError": "Terjadi kesalahan saat membuat permainan Anda."
+        }
+    },
     "instructions": {
         "howToPlay": "Cara Bermain",
         "rules": "Aturan",
