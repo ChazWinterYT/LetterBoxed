@@ -71,7 +71,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       // Add the last letter to the word formation area
       setCurrentWord([{ letter: lastLetterOfLastWord, side: sideName }]);
     }
-  }, [foundWords, layout]);
+  }, [gameCompleted, foundWords, layout]);
 
   const handleLetterClick = (letter: string, side: string) => {
     if (gameCompleted) {
