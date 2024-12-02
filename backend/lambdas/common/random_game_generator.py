@@ -23,8 +23,8 @@ def main() -> Any:
         )
     else:
         create_random_game(
-            "ru",
-            "3x3",
+            "en",
+            "5x5",
         )
 
 # def main() -> Any:
