@@ -124,6 +124,7 @@ if __name__ == "__main__":
     os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
     os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"
     os.environ["RANDOM_GAMES_TABLE_PL"] = "LetterBoxedRandomGames_plTest"
+    os.environ["RANDOM_GAMES_TABLE_RU"] = "LetterBoxedRandomGames_ruTest"
     
     if RUN_BENCHMARK:
         benchmark(10)  # Change 10 to the desired number of iterations

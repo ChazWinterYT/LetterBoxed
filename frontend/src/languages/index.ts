@@ -31,6 +31,7 @@ export const gameLanguages = {
   en,
   es,
   pl,
+  ru,
 }
 
 export default translations;
