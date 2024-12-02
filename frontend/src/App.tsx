@@ -78,7 +78,7 @@ const App = () => {
   const loadGameState = useCallback(
     async (gameId: string) => {
       if (!userSessionId) {
-        console.error("User session ID is not initialized.");
+        console.log("User session ID is not initialized.");
         return;
       }
       console.log("Loading game state for gameId:", gameId);
