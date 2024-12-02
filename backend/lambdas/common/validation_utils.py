@@ -1,4 +1,74 @@
-from typing import List
+from typing import List, Dict, Tuple, Optional, Any
+import decimal
+
+
+def validate_game_schema(game_item: Dict) -> Dict:
+    """
+    Validates a game item and populates missing fields with default values.
+    """
+    if game_item is None:
+        return None
+    
+    defaults = {
+        "gameId": "",
+        "gameLayout": [],
+        "gameType": "",
+        "officialGame": False,
+        "standardizedHash": "",
+        "validWords": [],
+        "validWordCount": 0,
+        "baseValidWords": [],
+        "oneWordSolutions": [],
+        "twoWordSolutions": [],
+        "threeWordSolutions": [],
+        "oneWordSolutionCount": 0,
+        "twoWordSolutionCount": 0,
+        "threeWordSolutionCount": 0,
+        "nytSolution": [],
+        "randomSeedWord": "",
+        "randomSeedWords": [],
+        "dictionary": [],
+        "par": "",
+        "boardSize": "3x3",
+        "language": "en",
+        "createdAt": "",
+        "createdBy": "",
+        "clue": "",
+    }
+    
+    # Populate missing fields with their defaults
+    for field, default in defaults.items():
+        if field not in game_item or game_item[field] is None:
+            game_item[field] = default
+    
+    return convert_decimal(game_item)
+
+
+def convert_decimal(obj: Any) -> Any:
+    """
+    Recursively converts DynamoDB Decimal types to JSON-compatible types.
+    
+    Args:
+        obj: The object to be converted (can be dict, list, or other types).
+    
+    Returns:
+        A JSON-compatible version of the object.
+    """
+    if isinstance(obj, dict):
+        return {k: convert_decimal(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_decimal(i) for i in obj]
+    elif isinstance(obj, tuple):
+        return tuple(convert_decimal(i) for i in obj)  # Ensure tuple compatibility
+    elif isinstance(obj, set):
+        return {convert_decimal(i) for i in obj}  # Ensure set compatibility
+    elif isinstance(obj, decimal.Decimal):
+        # Convert to int if it's a whole number, otherwise convert to float
+        return int(obj) if obj % 1 == 0 else float(obj)
+    else:
+        # Return the object as is if no conversion is needed
+        return obj
+    
 
 def validate_board_size(board_size: str) -> bool:
     """

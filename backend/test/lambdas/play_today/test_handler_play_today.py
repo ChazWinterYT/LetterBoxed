@@ -82,6 +82,7 @@ def test_play_today_no_games_available(mock_dynamodb_table):
     event = {}
     context = {}
     response = handler(event, context)
+    print("Response:", response)
 
     # Assert
     assert response["statusCode"] == 404

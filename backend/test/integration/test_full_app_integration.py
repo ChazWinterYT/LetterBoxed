@@ -97,8 +97,8 @@ def setup_aws_resources(setup_environment, aws_clients):
     yield
     
     # # Cleanup after tests (Comment out if you want to see the DB items in AWS)
-    # cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
-    # assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    cleanup_dynamodb_tables(dynamodb, DYNAMO_DB_TABLE_NAMES)
+    assert_tables_empty(dynamodb, DYNAMO_DB_TABLE_NAMES)
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"
@@ -204,12 +204,20 @@ def cleanup_dynamodb_tables(dynamodb, table_names):
             key_schema = table.key_schema
             key_names = [key["AttributeName"] for key in key_schema]
 
+            # Paginate through all items in the table
             response = table.scan()
-            with table.batch_writer() as batch:
-                for item in response.get("Items", []):
-                    # Dynamically build the key dictionary
-                    key = {key_name: item[key_name] for key_name in key_names}
-                    batch.delete_item(Key=key)
+            while "Items" in response and response["Items"]:
+                with table.batch_writer() as batch:
+                    for item in response["Items"]:
+                        # Dynamically build the key dictionary
+                        key = {key_name: item[key_name] for key_name in key_names}
+                        batch.delete_item(Key=key)
+
+                # Check for more pages
+                if "LastEvaluatedKey" in response:
+                    response = table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
+                else:
+                    break
         except dynamodb.meta.client.exceptions.ResourceNotFoundException:
             print(f"Table {current_table} does not exist. Skipping cleanup.")
         except Exception as e:

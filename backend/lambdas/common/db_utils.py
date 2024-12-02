@@ -5,34 +5,10 @@ import boto3
 import decimal
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
+from lambdas.common.validation_utils import convert_decimal, validate_game_schema
 
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
-
-def convert_decimal(obj):
-    """
-    Recursively converts DynamoDB Decimal types to JSON-compatible types.
-    
-    Args:
-        obj: The object to be converted (can be dict, list, or other types).
-    
-    Returns:
-        A JSON-compatible version of the object.
-    """
-    if isinstance(obj, dict):
-        return {k: convert_decimal(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [convert_decimal(i) for i in obj]
-    elif isinstance(obj, tuple):
-        return tuple(convert_decimal(i) for i in obj)  # Ensure tuple compatibility
-    elif isinstance(obj, set):
-        return {convert_decimal(i) for i in obj}  # Ensure set compatibility
-    elif isinstance(obj, decimal.Decimal):
-        # Convert to int if it's a whole number, otherwise convert to float
-        return int(obj) if obj % 1 == 0 else float(obj)
-    else:
-        # Return the object as is if no conversion is needed
-        return obj
 
 
 # ====================== Games Table Functions ======================
@@ -81,8 +57,8 @@ def fetch_game_by_id(game_id: str) -> Optional[Dict[str, Any]]:
         response = table.get_item(Key={"gameId": game_id})
         item = response.get("Item")
         
-        # Convert decimal items before returning the item
-        return convert_decimal(item) if item else None
+        validated_item = validate_game_schema(item)
+        return validated_item
     except ClientError as e:
         print(f"Error fetching game by gameId: {e}")
         return None
