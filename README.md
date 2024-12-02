@@ -57,12 +57,24 @@ cd LetterBoxed
 
   ```plaintext
   DICTIONARY_SOURCE=local
-  S3_BUCKET_NAME=your-s3-bucket-name
-  DICTIONARY_BASE_PATH=LetterBoxed/Dictionaries/
+  S3_BUCKET_NAME=chazwinter.com
+  DICTIONARY_BASE_S3_PATH=LetterBoxed/Dictionaries/
   DEFAULT_LANGUAGE=en
+  LOCAL_DICTIONARY_PATH=./dictionaries/{language}/dictionary.txt
+  PYTHONPATH=.
+  GAMES_TABLE=LetterBoxedGames
+  VALID_WORDS_TABLE=LetterBoxedValidWords1
+  SESSION_STATES_TABLE=LetterBoxedSessionStates
+  ARCHIVE_TABLE=LetterBoxedArchive
+  METADATA_TABLE=LetterBoxedMetadataTable
+  RANDOM_GAMES_TABLE_EN=LetterBoxedRandomGames_en
+  RANDOM_GAMES_TABLE_ES=LetterBoxedRandomGames_es
+  RANDOM_GAMES_TABLE_IT=LetterBoxedRandomGames_it
+  RANDOM_GAMES_TABLE_PL=LetterBoxedRandomGames_pl
+  RANDOM_GAMES_TABLE_RU=LetterBoxedRandomGames_ru
   ```
 
-  Replace `your-s3-bucket-name` with the name of your S3 bucket.
+  Replace `S3_BUCKET_NAME` with the name of your S3 bucket, unless you want to just use the same name in your own account.
 
 #### 3. Install Dependencies
 
