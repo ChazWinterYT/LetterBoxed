@@ -235,7 +235,20 @@
   border: 2px solid;
   background-color: #84888a;
   margin: 5px; /* Space between marker and letter */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   z-index: 500;
+}
+
+/* Marker for letters in found words (purple) */
+.marker.found-marker {
+  background-color: #9c27b0;
+}
+
+/* Active marker for current word formation (orange) */
+.marker.active-marker {
+  background-color: #ed8515;
+  animation: pulse 0.5s ease-in-out;
 }
 
 .marker.active {

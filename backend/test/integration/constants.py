@@ -706,7 +706,7 @@ VALIDATE_WORD_CHAINING_RULE_VIOLATION_PAYLOAD = lambda game_id: {
 VALIDATE_WORD_CHAINING_SUCCESS_PAYLOAD = lambda game_id: {
     "body": json.dumps({
         "gameId": game_id,
-        "word": "ELEMENT",
+        "word": "ELM",
         "sessionId": "test-session-id"
     }),
     "headers": {"Content-Type": "application/json"}

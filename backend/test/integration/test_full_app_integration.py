@@ -102,7 +102,7 @@ def setup_aws_resources(setup_environment, aws_clients):
 
 # Function intentionally misspelled "est" to prevent integration tests from running when not needed
 # When ready to test, change "est_full_app_integration" to "test_full_app_integration"
-def est_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
+def test_full_app_integration(setup_environment, aws_clients, setup_aws_resources):
     dynamodb = aws_clients["dynamodb"]
     s3 = aws_clients["s3"]
     lambda_client = aws_clients["lambda_client"]
@@ -140,7 +140,6 @@ def est_full_app_integration(setup_environment, aws_clients, setup_aws_resources
     f.fetch_random_no_random_games_available(aws_clients)
 
     # Now we'll handle tests that result in writes to the database
-
     # Create a custom game, and fetch a game by game ID
     print("Testing create_custom and fetch_game lambdas...")
     game_id = f.create_custom_english_game(aws_clients)

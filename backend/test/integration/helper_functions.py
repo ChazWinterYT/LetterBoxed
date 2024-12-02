@@ -1662,6 +1662,7 @@ def setup_game_and_state(aws_clients):
     Create a known valid game and save its state for testing.
     Returns gameId and sessionId for further tests.
     """
+    print("Setting up new game and state for the Valid Word Tests")
     from lambdas.create_custom.handler import handler as create_handler
     from lambdas.save_user_state.handler import handler as save_handler
 
@@ -1698,12 +1699,14 @@ def validate_word_successful(aws_clients):
     game_id, session_id = setup_game_and_state(aws_clients)
 
     # Step 1: Validate a known good word
+    print("Validate a known good word.")
     response = validate_handler(c.VALIDATE_WORD_SUCCESSFUL_PAYLOAD(game_id), None)
+    print("Response:", response)
 
     assert response["statusCode"] == 200, f"Validation failed: {response}"
     response_body = json.loads(response["body"])
     assert response_body["valid"] is True, f"'valid' should be True, but was {response_body['valid']}"
-    assert response_body["message"] == "Word is valid.", f"Returned message was {response_body['message']}"
+    assert response_body["message"] == "Word accepted.", f"Returned message was {response_body['message']}"
     print("Successfully validated a correct word.")
 
     # Save the user state for the next tests
@@ -1808,7 +1811,7 @@ def validate_word_successful_chain(aws_clients, game_id):
     assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}."
     response_body = json.loads(response["body"])
     assert response_body["valid"] is True, f"'valid' should be True, but was {response_body['valid']}."
-    assert response_body["message"] == "Word is valid.", f"Unexpected message: {response_body['message']}."
+    assert response_body["message"] == "Word accepted.", f"Unexpected message: {response_body['message']}."
 
     print("Successfully validated a chained word.")
 
@@ -1848,7 +1851,7 @@ def validate_word_empty_words_list(aws_clients, game_id):
     assert response["statusCode"] == 200, f"Expected 200 status code, got {response['statusCode']}."
     response_body = json.loads(response["body"])
     assert response_body["valid"] is True, f"'valid' should be True, but was {response_body['valid']}."
-    assert response_body["message"] == "Word is valid.", f"Unexpected message: {response_body['message']}."
+    assert response_body["message"] == "Word accepted.", f"Unexpected message: {response_body['message']}."
 
     print("Successfully validated the first word.")
 

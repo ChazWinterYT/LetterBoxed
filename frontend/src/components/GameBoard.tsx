@@ -215,17 +215,25 @@ const GameBoard: React.FC<GameBoardProps> = ({
     const lettersArray = sideLetters.split('');
     return lettersArray.map((letter, index) => {
       const isDisabled = lastSide === sideName || (currentWord.length === 0 && lastLetterSide === sideName);
+      const isPartOfWordFormation = currentWord.some((item) => item.letter === letter);
+      const isFoundWord = foundWords.some((word) => word.includes(letter));
+
       const letterClass = `letter ${
-        foundWords.some((word) => word.includes(letter))
-          ? 'played-letter'
-          : 'unplayed-letter'
+        isFoundWord ? 'played-letter' : 'unplayed-letter'
       } ${isDisabled ? 'disabled-letter' : ''}`;
+  
+      const markerClass = `marker ${
+        isPartOfWordFormation
+          ? 'active-marker'
+          : isFoundWord
+          ? 'found-marker'
+          : ''
+      }`;
       return (
         <div className="letter-container" key={`${sideName}-${index}`}>
           <div
-            className={`marker ${
-              currentWord.some((item) => item.letter === letter) ? 'active' : ''
-            }`}
+            className={markerClass}
+            onClick={() => !isDisabled && handleLetterClick(letter, sideName)}
           />
           <div
             className={letterClass}
