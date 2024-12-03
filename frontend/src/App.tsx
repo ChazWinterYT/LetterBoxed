@@ -17,7 +17,6 @@ import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import Spinner from "./components/Spinner";
 import { useLanguage } from "./context/LanguageContext";
-import { gameLanguages } from "./languages/index";
 import {
   fetchTodaysGame,
   fetchGameById,
@@ -29,9 +28,11 @@ import {
 } from "./services/api";
 import { ValidationResult } from "./types/validation";
 import "./App.css";
+import LanguageSelector from "./components/LanguageSelector";
+import { Language } from "./languages/languages";
 
 const App = () => {
-  const { t } = useLanguage();
+  const { t, availableLanguages } = useLanguage();
   const navigate = useNavigate();
   const { gameId: urlGameId } = useParams<{ gameId: string }>();
   const [layout, setLayout] = useState<string[]>([]);
@@ -350,23 +351,30 @@ const App = () => {
     console.log("Opening random game modal.");
     setModalTitle(t("game.randomGameOptions"));
     setIsModalOpen(true);
+
+    // Get the list of playable languages
+    const playableLanguages = availableLanguages.filter((lang: Language) => lang.playable);
+  
     setModalContent(
       <div className="random-game-options">
         <h2>{t("game.selectGameLanguage")}</h2>
         <p>{t("game.selectGameLanguageDesc")}</p>
         <div className="button-menu">
-          {Object.keys(gameLanguages).map((langCode) => (
+          {playableLanguages.map((lang: Language) => (
             <button
-              key={langCode}
-              onClick={() => fetchRandomGameByLanguage(langCode)}
+              key={lang.code}
+              onClick={() => {
+                fetchRandomGameByLanguage(lang.code);
+                setIsModalOpen(false); // Close the modal after selection
+              }}
             >
-              {t(`language.${langCode}`)}
+              {lang.name}
             </button>
           ))}
         </div>
       </div>
     );
-  }, [t, fetchRandomGameByLanguage]);
+  }, [t, fetchRandomGameByLanguage, availableLanguages]);
 
   // Open Archive Modal
   const openArchiveModal = useCallback(

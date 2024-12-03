@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import languages, { Language } from "../languages/languages"; // Language metadata
 import translations from "../languages/index"; // Translations JSON object
-import languages from "../languages/languages"; // Language metadata
 
 type Translations = {
   [languageCode: string]: {
@@ -11,12 +11,12 @@ type Translations = {
 const typedTranslations: Translations = translations as Translations;
 
 interface LanguageContextProps {
-  language: string;
-  setLanguage: (lang: string) => void;
-  t: (key: string) => string;
-  getRandomPhrase: (key: string) => string;
+  language: string; // Current UI language
+  setLanguage: (lang: string) => void; // Function to set the language
+  t: (key: string) => string; // Translate a given key
+  getRandomPhrase: (key: string) => string; // Get a random phrase from translations
   availableLanguages: typeof languages;
-  isPlayable: (code: string) => boolean;
+  isPlayable: (code: string) => boolean; // Check if a language is playable
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(
@@ -36,11 +36,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem("language", language);
   }, [language]);
 
+  // Declare availableLanguages here
+  const availableLanguages = languages; // Import from languages.ts
+
   const t = (key: string): string => {
     const keys = key.split(".");
-
-    // Start with the root translation for the current language
-    let translation: any = typedTranslations[language]; 
+    let translation: any = typedTranslations[language]; // Use the current language for translations
 
     for (const k of keys) {
       if (translation && typeof translation === "object") {
@@ -50,16 +51,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     }
 
-    // Return the translation if it's a string, otherwise fallback to the key
-    return typeof translation === "string" ? translation : key; 
+    return typeof translation === "string" ? translation : key; // Return the translation if it's a string, otherwise fallback to the key
   };
 
   const getRandomPhrase = (key: string): string => {
     const keys = key.split(".");
+    let translation: any = typedTranslations[language];
 
-    // Start with the root translation for the current language
-    let translation: any = typedTranslations[language]; 
-  
     for (const k of keys) {
       if (translation && typeof translation === "object") {
         translation = translation[k];
@@ -67,19 +65,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
         break; // Exit loop if translation is not an object
       }
     }
-  
+
     if (Array.isArray(translation)) {
       const randomIndex = Math.floor(Math.random() * translation.length);
       return translation[randomIndex];
     }
-  
+
     console.warn(`Translation key "${key}" does not point to an array.`);
     return key; // Fallback to the key if it's not an array
   };
 
   const isPlayable = (code: string): boolean => {
-    const lang = languages.find((lang) => lang.code === code);
-    return lang?.playable || false;
+    const lang = availableLanguages.find((lang) => lang.code === code && lang.playable);
+    return !!lang;
   };
 
   return (
@@ -89,7 +87,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
         setLanguage,
         t,
         getRandomPhrase,
-        availableLanguages: languages,
+        availableLanguages,
         isPlayable,
       }}
     >
