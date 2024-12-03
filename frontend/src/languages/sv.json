@@ -4,24 +4,30 @@
             "menuTitle": "Huvudmeny",
             "playToday": "Spela dagens NYT-spel",
             "archive": "NYT-spelarkiv",
-            "customGame": "Skapa Eget spel",
-            "randomGame": "Spela Slumpmässigt Spel"
+            "customGame": "Skapa anpassat spel",
+            "randomGame": "Spela slumpmässigt spel"
         },
         "archive": {
             "noGames": "Inga spel tillgängliga",
-            "archiveLoading": "Arkivet laddas, vänligen vänta...",
-            "errorLoadingGame": "Ett fel inträffade vid laddning av spelet"
+            "loadingGames": "Arkivet laddas, vänligen vänta...",
+            "error": "Ett fel uppstod vid laddning av spelet",
+            "loadMore": "Ladda fler",
+            "previousPage": "Föregående",
+            "nextPage": "Nästa",
+            "older": "Äldre >>",
+            "newer": "<< Nyare",
+            "endOfArchiveMessage": "Du har nått slutet av arkivet."
         },
         "customGame": {
             "random": "Helt slumpmässigt spel",
             "seedWords": "Genererat spel (Fröord)",
             "fullCustom": "Helt anpassat spel",
-            "randomDescription": "Ett spel med slumpmässiga bokstäver genereras.",
+            "randomDescription": "Ett spel med slumpmässiga bokstäver skapas.",
             "seedWordsDescription": "Ange två fröord för att skapa ditt spel.",
             "fullCustomDescription": "Skapa ditt eget anpassade spel genom att välja alla bokstäver."
         },
-        "startGame": "Starta spelet",
-        "submitWord": "Skicka in ord",
+        "startGame": "Starta spel",
+        "submitWord": "Skicka ord",
         "playAgain": "Spela igen",
         "confirm": "Bekräfta",
         "cancel": "Avbryt",
@@ -43,111 +49,119 @@
         "invalidInput": "Ogiltig inmatning"
     },
     "game": {
-        "loading": "Laddar spelbräde, vänligen vänta...",
-        "playedWords": "Spelade Ord:",
-        "boardSize": "Brädans storlek",
+        "loading": "Spelplanen laddas, vänligen vänta...",
+        "playedWords": "Spelade ord:",
+        "boardSize": "Spelplanens storlek",
         "gameId": "Spel-ID",
         "tryToSolve": "Försök lösa med {words} ord",
         "complete": {
             "puzzleSolvedTitle": "DU VANN!",
             "puzzleSolvedMessage": "Du löste pusslet! Grattis!!!",
-            "officialSolution": "Detta pussel skapades med ordet/orden",
-            "numberOfOneWordSolutions": "Antal enordslösningar funna",
-            "numberOfTwoWordSolutions": "Antal tvåordslösningar funna",
-            "someOneWordSolutions": "Några möjliga enordslösningar",
-            "someTwoWordSolutions": "Några möjliga tvåordslösningar",
-            "playAnotherButton": "Spela en till?"
-        },
-        "randomGame": {
-            "randomGameTitle": "Spela ett Slumpmässigt Spel",
-            "randomGameOptions": "Alternativ för Slumpmässigt Spel",
-            "selectGameLanguage": "Välj ett Spelspråk",
-            "selectGameLanguageDesc": "Detta påverkar inte webbplatsens visningsspråk."
+            "officialSolution": "Detta pussel skapades med hjälp av ordet/orden",
+            "numberOfOneWordSolutions": "Antal lösningar med ett ord",
+            "numberOfTwoWordSolutions": "Antal lösningar med två ord",
+            "someOneWordSolutions": "Några möjliga lösningar med ett ord",
+            "someTwoWordSolutions": "Några möjliga lösningar med två ord",
+            "playAnotherButton": "Spela ett till?"
         },
         "twoWordSolutions": "Tvåords-lösningar",
         "threeWordSolutions": "Treords-lösningar",
-        "enterGameLayout": "Ange spelbrädeslayout",
+        "enterGameLayout": "Ange spelplanens layout",
         "customGame": {
-            "customGameTitle": "Skapa ett Anpassat Spel",
+            "customGameTitle": "Skapa ett anpassat spel",
+            "customGameOptions": "Alternativ för anpassat spel",
             "customGameChoice": "Hur vill du skapa ditt anpassade spel?",
-            "enterLetters": "Genom att Ange Bokstäver",
+            "enterLetters": "Genom att ange bokstäver",
             "enterLettersDesc": "Skapa ett anpassat spel genom att ange bokstäver runt spelplanen",
-            "chooseWords": "Genom att Välja Ord",
+            "chooseWords": "Genom att välja ord",
             "chooseWordsDesc": "Välj 1 eller 2 ord, så skapar jag en spelplan åt dig!"
         },
-        "selectBoardSize": "Välj en Brädsstorlek",
+        "randomGame": {
+            "randomGameTitle": "Spela ett slumpmässigt spel",
+            "randomGameOptions": "Alternativ för slumpmässigt spel",
+            "selectGameLanguage": "Välj ett spelspråk",
+            "selectGameLanguageDesc": "Detta påverkar inte webbplatsens visningsspråk."
+        },
+        "selectBoardSize": "Välj spelplanens storlek",
         "restartGame": "Starta om spelet",
-        "deleteLetter": "Radera bokstav",
-        "removeLastWord": "Ta bort sista ordet",
-        "submitWord": "Skicka in ord",
+        "deleteLetter": "Ta bort bokstav",
+        "removeLastWord": "Ta bort senaste ordet",
+        "submitWord": "Skicka ord",
         "showHint": "Visa ledtråd",
-        "noHintAvailable": "Ingen ledtråd är tillgänglig för det här spelet.",
-        "hintError": "Fel vid hämtning av ledtråd. Försök igen senare.",
+        "noHintAvailable": "Ingen ledtråd är tillgänglig för detta spel.",
+        "hintError": "Ett fel uppstod när ledtråden hämtades. Försök igen senare.",
         "shareGame": "Dela detta spel:",
-        "restartConfirmationTitle": "Är du säker på att du vill starta om det här spelet?",
-        "restartConfirmationMessage": "Genom att klicka på \"Bekräfta\" tas dina framsteg bort och spelet startas om.",
+        "restartConfirmationTitle": "Är du säker på att du vill starta om spelet?",
+        "restartConfirmationMessage": "Genom att klicka på \"Bekräfta\" kommer din framsteg att tas bort och spelet startas om.",
         "validateWord": {
             "valid": [
                 "Bra jobbat!",
                 "Väl gjort!",
                 "Utmärkt!",
-                "Du satte den!",
-                "Snyggt gjort!",
+                "Du klarade det!",
+                "Snyggt jobbat!",
                 "Perfekt!",
                 "Fantastiskt!",
-                "Du är glödhet!"
+                "Du är på topp!"
             ],
             "invalid": [
-                "Hoppsan, det där är inte ett giltigt ord.",
+                "Oj, det är inte ett giltigt ord.",
                 "Försök igen, det ordet fungerar inte.",
                 "Inte riktigt rätt.",
-                "Det finns inte i ordlistan.",
+                "Det ordet finns inte i ordboken.",
                 "Nej, det räknas inte.",
-                "Nära, men ändå så långt borta."
+                "Nästan, men inte tillräckligt."
             ],
-            "error": "Ett fel uppstod vid valideringen av ordet."
+            "error": "Ett fel uppstod vid validering av ordet."
         }
     },
     "customGameForm": {
-        "boardSize": "Brädstorlek",
+        "boardSize": "Spelplanens storlek",
         "boardSizes": {
-          "2x2": "2x2",
-          "3x3": "3x3",
-          "4x4": "4x4"
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "Ett Fröord",
-          "two": "Två Fröord"
+            "one": "Ett ord",
+            "two": "Två ord"
         },
         "seedWords": "Fröord",
-        "clearWord": "Rensa Ord",
-        "longTimeWarning": "VARNING: Det kan ta upp till 60 sekunder att skapa ett spel. Uppdatera inte eller lämna sidan, annars får du inte länken till ditt spel.",
-        "generateGame": "Skapa Spel",
+        "clearWord": "Rensa ord",
+        "hint": "Ledtråd",
+        "authorName": "Författarens namn",
+        "longTimeWarning": "VARNING: Det kan ta upp till 60 sekunder att generera ett spel. Uppdatera eller lämna inte sidan, annars får du inte din spel-länk.",
+        "generateGame": "Generera spel",
+        "submitting": "Skickar, vänligen vänta...",
         "cancel": "Avbryt",
         "instructions": {
+            "authorName": "Ange ditt namn!",
             "enterLetters": "Ange en bokstav i varje ruta runt spelplanen.",
             "enterSeedWord": "Ange ett fröord",
-            "seedWordChoice": "För små brädor kan du använda ett eller två fröord.",
-            "boardSize": "Välj en storlek för spelbrädan"
+            "seedWordChoice": "För små spelplaner kan du använda ett eller två fröord.",
+            "boardSize": "Välj en storlek för spelplanen",
+            "hint": "Ange en ledtråd för att hjälpa andra att lösa ditt pussel."
         },
         "success": {
-            "gameCreationSuccess": "Spelet skapades framgångsrikt!",
+            "gameCreationSuccess": "Spelet har genererats!",
             "gameLink": "Dela detta spel med dina vänner!",
+            "copyLink": "Kopiera till urklipp",
+            "copied": "Kopierat!",
             "goToGame": "Spela ditt spel nu!",
             "createAnotherGame": "Skapa ett till?"
         },
         "error": {
-            "spacesOnBoard": "Vänligen placera en bokstav i varje ruta på spelplanen.",
-            "repeatLettersOnBoard": "Varje bokstav på spelplanen måste vara unik. Inga upprepningar är tillåtna.",
-            "wordsNotConnected": "Den sista bokstaven i Ord 1 måste vara samma som den första bokstaven i Ord 2.",
-            "notEnoughLetters": "Det finns inte tillräckligt med unika bokstäver för denna brädstorlek.",
-            "tooManyLetters": "Det finns för många unika bokstäver för denna brädstorlek.",
-            "lettersRequired": "bokstäver krävs",
-            "lettersUsed": "bokstäver använda",
-            "_context1": "Som i, '12 bokstäver krävs. 7 bokstäver använda.'",
+            "spacesOnBoard": "Fyll i varje ruta på spelplanen med en bokstav.",
+            "repeatLettersOnBoard": "Varje bokstav på spelplanen måste vara unik. Inga upprepningar.",
+            "wordsNotConnected": "Den sista bokstaven i Ord 1 måste vara densamma som den första bokstaven i Ord 2.",
+            "notEnoughLetters": "Det finns inte tillräckligt många unika bokstäver för denna storlek på spelplanen.",
+            "tooManyLetters": "Det finns för många unika bokstäver för denna storlek på spelplanen.",
+            "lettersRequired": "Nödvändiga bokstäver",
+            "lettersUsed": "Använda bokstäver",
+            "_context1": "Exempelvis: 'Nödvändiga bokstäver: 12. Använda bokstäver: 7.'",
             "doubleLetters": "Du kan inte ha samma bokstav bredvid sig själv.",
-            "notInDictionary": "Ett (eller båda) av de angivna orden finns inte i ordlistan.",
-            "genericError": "Ett fel inträffade vid skapandet av spelet."
+            "notInDictionary": "Ett (eller båda) av orden du angav finns inte i ordboken.",
+            "genericError": "Ett fel uppstod vid skapandet av spelet."
         }
     },
     "instructions": {
@@ -160,7 +174,7 @@
         "subtitle": "LetterBoxed-spel"
     },
     "footer": {
-        "cookieWarning": "Den här sidan använder strikt nödvändiga cookies för att spara ditt spelprogress. Ingen personlig information lagras. Genom att fortsätta godkänner du denna användning."
+        "cookieWarning": "Denna webbplats använder strikt nödvändiga cookies för att spara dina framsteg i spelet. Ingen personlig information lagras. Genom att fortsätta accepterar du denna användning."
     },
     "language": {
         "currentLanguage": "Svenska",

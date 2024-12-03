@@ -4,24 +4,30 @@
             "menuTitle": "Menu Principale",
             "playToday": "Gioca al gioco NYT di oggi",
             "archive": "Archivio dei giochi NYT",
-            "customGame": "Crea un gioco personalizzato",
-            "randomGame": "Crea un gioco casuale"
+            "customGame": "Crea gioco personalizzato",
+            "randomGame": "Gioca a un gioco casuale"
         },
         "archive": {
             "noGames": "Nessun gioco disponibile",
-            "archiveLoading": "L'archivio si sta caricando, attendere prego...",
-            "errorLoadingGame": "Si è verificato un errore durante il caricamento del gioco"
+            "loadingGames": "L'archivio è in caricamento, attendere prego...",
+            "error": "Si è verificato un errore durante il caricamento del gioco",
+            "loadMore": "Carica altri",
+            "previousPage": "Precedente",
+            "nextPage": "Successivo",
+            "older": "Più vecchi >>",
+            "newer": "<< Più recenti",
+            "endOfArchiveMessage": "Hai raggiunto la fine dell'archivio."
         },
         "customGame": {
             "random": "Gioco completamente casuale",
-            "seedWords": "Gioco generato (Parole chiave)",
+            "seedWords": "Gioco generato (Parole iniziali)",
             "fullCustom": "Gioco completamente personalizzato",
-            "randomDescription": "Si sta generando un gioco con lettere casuali.",
-            "seedWordsDescription": "Inserisci due parole chiave per generare il tuo gioco.",
+            "randomDescription": "Un gioco con lettere casuali è in fase di generazione.",
+            "seedWordsDescription": "Inserisci due parole iniziali per creare il tuo gioco.",
             "fullCustomDescription": "Crea il tuo gioco personalizzato selezionando tutte le lettere."
         },
         "startGame": "Inizia il gioco",
-        "submitWord": "Invia la parola",
+        "submitWord": "Invia parola",
         "playAgain": "Gioca di nuovo",
         "confirm": "Conferma",
         "cancel": "Annulla",
@@ -31,7 +37,7 @@
     },
     "messages": {
         "invalidWord": "Parola non valida",
-        "wordAlreadyUsed": "Parola già utilizzata",
+        "wordAlreadyUsed": "Parola già usata",
         "gameNotFound": "Gioco non trovato",
         "gameCreated": "Gioco creato",
         "gameFetched": "Gioco recuperato",
@@ -43,110 +49,118 @@
         "invalidInput": "Input non valido"
     },
     "game": {
-        "loading": "Caricamento del tabellone, attendere prego...",
-        "playedWords": "Parole Giocate:",
-        "boardSize": "Dimensione della griglia",
-        "gameId": "ID del gioco",
+        "loading": "Caricamento del tabellone di gioco, attendere prego...",
+        "playedWords": "Parole giocate:",
+        "boardSize": "Dimensione del tabellone",
+        "gameId": "ID Gioco",
         "tryToSolve": "Prova a risolverlo in {words} parole",
         "complete": {
             "puzzleSolvedTitle": "HAI VINTO!",
-            "puzzleSolvedMessage": "Hai risolto il puzzle! Congratulazioni!!!",
-            "officialSolution": "Questo puzzle è stato generato usando la/le parola/e",
+            "puzzleSolvedMessage": "Hai risolto l'enigma! Congratulazioni!!!",
+            "officialSolution": "Questo enigma è stato generato usando la/e parola/e",
             "numberOfOneWordSolutions": "Numero di soluzioni con una parola trovate",
             "numberOfTwoWordSolutions": "Numero di soluzioni con due parole trovate",
             "someOneWordSolutions": "Alcune possibili soluzioni con una parola",
             "someTwoWordSolutions": "Alcune possibili soluzioni con due parole",
-            "playAnotherButton": "Giocane un altro?"
+            "playAnotherButton": "Gioca un altro?"
         },
-        "twoWordSolutions": "Soluzioni in due parole",
-        "threeWordSolutions": "Soluzioni in tre parole",
+        "twoWordSolutions": "Soluzioni a due parole",
+        "threeWordSolutions": "Soluzioni a tre parole",
         "enterGameLayout": "Inserisci la disposizione del gioco",
         "customGame": {
-            "customGameTitle": "Crea un Gioco Personalizzato",
-            "customGameChoice": "Come vuoi generare il tuo gioco personalizzato?",
-            "enterLetters": "Inserendo Lettere",
-            "enterLettersDesc": "Crea un gioco personalizzato inserendo lettere intorno al tabellone di gioco",
-            "chooseWords": "Scegliendo Parole",
-            "chooseWordsDesc": "Scegli 1 o 2 parole e genererò un tabellone per te!"
+            "customGameTitle": "Crea un gioco personalizzato",
+            "customGameOptions": "Opzioni del gioco personalizzato",
+            "customGameChoice": "Come desideri generare il tuo gioco personalizzato?",
+            "enterLetters": "Inserendo lettere",
+            "enterLettersDesc": "Crea un gioco personalizzato inserendo lettere intorno al tabellone",
+            "chooseWords": "Scegliendo parole",
+            "chooseWordsDesc": "Scegli 1 o 2 parole e creerò un tabellone per te!"
         },
         "randomGame": {
-            "randomGameTitle": "Gioca a un Gioco Casuale",
-            "randomGameOptions": "Opzioni per Gioco Casuale",
-            "selectGameLanguage": "Seleziona la Lingua del Gioco",
-            "selectGameLanguageDesc": "Questo non influisce sulla lingua di visualizzazione del sito web."
+            "randomGameTitle": "Gioca a un gioco casuale",
+            "randomGameOptions": "Opzioni per il gioco casuale",
+            "selectGameLanguage": "Seleziona una lingua per il gioco",
+            "selectGameLanguageDesc": "Questo non influisce sulla lingua visualizzata del sito web."
         },
-        "selectBoardSize": "Seleziona una Dimensione della Griglia",
+        "selectBoardSize": "Seleziona una dimensione del tabellone",
         "restartGame": "Riavvia il gioco",
-        "deleteLetter": "Elimina la lettera",
+        "deleteLetter": "Elimina lettera",
         "removeLastWord": "Rimuovi l'ultima parola",
-        "submitWord": "Invia la parola",
+        "submitWord": "Invia parola",
         "showHint": "Mostra suggerimento",
         "noHintAvailable": "Nessun suggerimento disponibile per questo gioco.",
-        "hintError": "Errore durante il recupero del suggerimento. Per favore riprova più tardi.",
+        "hintError": "Errore durante il recupero del suggerimento. Riprova più tardi.",
         "shareGame": "Condividi questo gioco:",
-        "restartConfirmationTitle": "Sei sicuro di voler riavviare questa partita?",
-        "restartConfirmationMessage": "Facendo clic su \"Conferma\", il tuo progresso sarà rimosso e il gioco ricomincerà.",
+        "restartConfirmationTitle": "Sei sicuro di voler riavviare questo gioco?",
+        "restartConfirmationMessage": "Cliccando su \"Conferma\" i tuoi progressi verranno rimossi e il gioco sarà riavviato.",
         "validateWord": {
             "valid": [
-                "Bravissimo!",
+                "Ottimo lavoro!",
                 "Ben fatto!",
                 "Eccellente!",
-                "Ci sei riuscito!",
+                "L'hai centrato!",
                 "Bel lavoro!",
                 "Perfetto!",
-                "Grandioso!",
-                "Sei inarrestabile!"
+                "Fantastico!",
+                "Sei incredibile!"
             ],
             "invalid": [
-                "Ops, questa parola non è valida.",
+                "Ops, non è una parola valida.",
                 "Riprova, questa parola non funziona.",
-                "Non è proprio giusta.",
-                "Questa parola non è nel dizionario.",
+                "Non del tutto corretto.",
+                "Non è nel dizionario.",
                 "No, non conta.",
                 "Quasi, ma non abbastanza."
             ],
-            "error": "Si è verificato un errore durante la validazione della parola."
+            "error": "Si è verificato un errore durante la convalida della parola."
         }
     },
     "customGameForm": {
-        "boardSize": "Dimensione del Tabellone",
+        "boardSize": "Dimensione del tabellone",
         "boardSizes": {
-          "2x2": "2x2",
-          "3x3": "3x3",
-          "4x4": "4x4"
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "Una Parola Chiave",
-          "two": "Due Parole Chiave"
+            "one": "Una parola",
+            "two": "Due parole"
         },
-        "seedWords": "Parole Chiave",
-        "clearWord": "Cancella Parola",
-        "longTimeWarning": "ATTENZIONE: La generazione del gioco potrebbe richiedere fino a 60 secondi. Non aggiornare o uscire dalla pagina, altrimenti non riceverai il link al tuo gioco.",
-        "generateGame": "Genera Gioco",
+        "seedWords": "Parole iniziali",
+        "clearWord": "Cancella parola",
+        "hint": "Suggerimento",
+        "authorName": "Nome dell'autore",
+        "longTimeWarning": "ATTENZIONE: La generazione di un gioco può richiedere fino a 60 secondi. Non aggiornare o lasciare la pagina, altrimenti non riceverai il link del tuo gioco.",
+        "generateGame": "Genera gioco",
+        "submitting": "Invio in corso, attendere prego...",
         "cancel": "Annulla",
         "instructions": {
-            "enterLetters": "Inserisci una lettera in ogni spazio intorno al tabellone di gioco.",
-            "enterSeedWord": "Inserisci una parola chiave",
-            "seedWordChoice": "Per tabelloni piccoli, puoi utilizzare una o due parole chiave.",
-            "boardSize": "Seleziona una dimensione per il tabellone"
+            "authorName": "Inserisci il tuo nome!",
+            "enterLetters": "Inserisci una lettera in ogni spazio intorno al tabellone.",
+            "enterSeedWord": "Inserisci una parola iniziale",
+            "seedWordChoice": "Per tabelloni piccoli, puoi usare una o due parole iniziali.",
+            "boardSize": "Seleziona una dimensione per il tabellone",
+            "hint": "Inserisci un suggerimento per aiutare gli altri a risolvere il tuo enigma."
         },
         "success": {
             "gameCreationSuccess": "Gioco generato con successo!",
             "gameLink": "Condividi questo gioco con i tuoi amici!",
+            "copyLink": "Copia negli appunti",
+            "copied": "Copiato!",
             "goToGame": "Gioca ora al tuo gioco!",
             "createAnotherGame": "Crearne un altro?"
         },
         "error": {
-            "spacesOnBoard": "Per favore, inserisci una lettera in ogni spazio sul tabellone.",
-            "repeatLettersOnBoard": "Ogni lettera sul tabellone deve essere unica. Nessuna lettera ripetuta.",
+            "spacesOnBoard": "Inserisci una lettera in ogni spazio del tabellone.",
+            "repeatLettersOnBoard": "Ogni lettera sul tabellone deve essere unica. Nessuna ripetizione.",
             "wordsNotConnected": "L'ultima lettera della Parola 1 deve essere la stessa della prima lettera della Parola 2.",
             "notEnoughLetters": "Non ci sono abbastanza lettere uniche per questa dimensione del tabellone.",
             "tooManyLetters": "Ci sono troppe lettere uniche per questa dimensione del tabellone.",
             "lettersRequired": "Lettere richieste",
             "lettersUsed": "Lettere usate",
-            "_context1": "Ad esempio, '12 lettere richieste. 7 lettere usate.'",
+            "_context1": "Ad esempio: 'Lettere richieste: 12. Lettere usate: 7.'",
             "doubleLetters": "Non puoi avere la stessa lettera accanto a se stessa.",
-            "notInDictionary": "Una (o entrambe) le parole inserite non sono nel dizionario.",
+            "notInDictionary": "Una (o entrambe) le parole che hai inserito non sono nel dizionario.",
             "genericError": "Si è verificato un errore durante la creazione del gioco."
         }
     },
@@ -157,10 +171,10 @@
     },
     "header": {
         "title": "Parolami",
-        "subtitle": "Gioco LetterBoxed"
+        "subtitle": "Un gioco LetterBoxed"
     },
     "footer": {
-        "cookieWarning": "Questo sito utilizza cookie strettamente necessari per salvare i tuoi progressi di gioco. Nessuna informazione personale viene memorizzata. Continuando, accetti questo utilizzo."
+        "cookieWarning": "Questo sito utilizza cookie strettamente necessari per salvare i tuoi progressi nel gioco. Nessuna informazione personale viene memorizzata. Continuando, accetti questo utilizzo."
     },
     "language": {
         "currentLanguage": "Italiano",

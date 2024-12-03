@@ -5,23 +5,29 @@
             "playToday": "今日のNYTゲームをプレイ",
             "archive": "NYTゲームアーカイブ",
             "customGame": "カスタムゲームを作成",
-            "randomGame": "ランダムゲームを作成"
+            "randomGame": "ランダムゲームをプレイ"
         },
         "archive": {
             "noGames": "利用可能なゲームはありません",
-            "archiveLoading": "アーカイブを読み込んでいます。お待ちください...",
-            "errorLoadingGame": "ゲームの読み込み中にエラーが発生しました"
+            "loadingGames": "アーカイブを読み込んでいます、お待ちください...",
+            "error": "ゲームを読み込む際にエラーが発生しました",
+            "loadMore": "さらに読み込む",
+            "previousPage": "前へ",
+            "nextPage": "次へ",
+            "older": "古い >>",
+            "newer": "<< 新しい",
+            "endOfArchiveMessage": "アーカイブの終わりに到達しました。"
         },
         "customGame": {
-            "random": "完全にランダムなゲーム",
+            "random": "完全ランダムゲーム",
             "seedWords": "生成されたゲーム（シードワード）",
             "fullCustom": "完全カスタムゲーム",
             "randomDescription": "ランダムな文字でゲームを生成しています。",
-            "seedWordsDescription": "シードワードを2つ入力してゲームを生成します。",
-            "fullCustomDescription": "すべての文字を選択して独自のカスタムゲームを作成します。"
+            "seedWordsDescription": "ゲームを作成するには、2つのシードワードを入力してください。",
+            "fullCustomDescription": "すべての文字を選択して、自分だけのカスタムゲームを作成してください。"
         },
-        "startGame": "ゲーム開始",
-        "submitWord": "単語を提出",
+        "startGame": "ゲームを開始",
+        "submitWord": "単語を送信",
         "playAgain": "もう一度プレイ",
         "confirm": "確認",
         "cancel": "キャンセル",
@@ -30,128 +36,136 @@
         "languageSelector": "言語"
     },
     "messages": {
-        "invalidWord": "無効な単語です",
-        "wordAlreadyUsed": "単語は既に使用されています",
+        "invalidWord": "無効な単語",
+        "wordAlreadyUsed": "この単語は既に使用されています",
         "gameNotFound": "ゲームが見つかりません",
         "gameCreated": "ゲームが作成されました",
-        "gameFetched": "ゲームを取得しました",
+        "gameFetched": "ゲームが取得されました",
         "congratulations": "おめでとうございます！",
         "youWin": "あなたの勝ちです！",
         "tryAgain": "もう一度試してください",
         "loading": "読み込み中...",
         "error": "エラー",
-        "invalidInput": "無効な入力です"
+        "invalidInput": "無効な入力"
     },
     "game": {
-        "loading": "ゲームボードを読み込んでいます。お待ちください...",
-        "playedWords": "使用した単語:",
+        "loading": "ゲームボードを読み込んでいます、お待ちください...",
+        "playedWords": "使用された単語：",
         "boardSize": "ボードサイズ",
         "gameId": "ゲームID",
-        "tryToSolve": "{words}語で解決を試みてください",
+        "tryToSolve": "{words}語で解決することに挑戦してください",
         "complete": {
-            "puzzleSolvedTitle": "勝ちました！",
-            "puzzleSolvedMessage": "パズルを解きました！おめでとうございます!!!",
-            "officialSolution": "このパズルは、次の単語を使用して生成されました",
-            "numberOfOneWordSolutions": "見つかった1単語の解答の数",
-            "numberOfTwoWordSolutions": "見つかった2単語の解答の数",
-            "someOneWordSolutions": "可能な1単語の解答例",
-            "someTwoWordSolutions": "可能な2単語の解答例",
-            "playAnotherButton": "もう一度プレイしますか？"
+            "puzzleSolvedTitle": "勝利！",
+            "puzzleSolvedMessage": "パズルを解きました！おめでとうございます！！！",
+            "officialSolution": "このパズルは次の単語を使用して生成されました",
+            "numberOfOneWordSolutions": "1語の解答数",
+            "numberOfTwoWordSolutions": "2語の解答数",
+            "someOneWordSolutions": "可能な1語の解答例",
+            "someTwoWordSolutions": "可能な2語の解答例",
+            "playAnotherButton": "もう一度遊びますか？"
         },
         "twoWordSolutions": "2語の解答",
         "threeWordSolutions": "3語の解答",
         "enterGameLayout": "ゲームレイアウトを入力",
         "customGame": {
             "customGameTitle": "カスタムゲームを作成",
-            "customGameChoice": "カスタムゲームをどのように作成しますか？",
-            "enterLetters": "文字を入力して",
-            "enterLettersDesc": "ゲームボードの周りに文字を入力してカスタムゲームを作成します",
-            "chooseWords": "単語を選択して",
-            "chooseWordsDesc": "1つまたは2つの単語を選択すると、ゲームボードを作成します！"
+            "customGameOptions": "カスタムゲームオプション",
+            "customGameChoice": "カスタムゲームをどのように生成しますか？",
+            "enterLetters": "文字を入力",
+            "enterLettersDesc": "ボード上に文字を入力してカスタムゲームを作成",
+            "chooseWords": "単語を選択",
+            "chooseWordsDesc": "1つまたは2つの単語を選択し、ボードを生成します！"
         },
         "randomGame": {
             "randomGameTitle": "ランダムゲームをプレイ",
-            "randomGameOptions": "ランダムゲームオプション",
+            "randomGameOptions": "ランダムゲームのオプション",
             "selectGameLanguage": "ゲームの言語を選択",
             "selectGameLanguageDesc": "これはウェブサイトの表示言語には影響しません。"
         },
         "selectBoardSize": "ボードサイズを選択",
-        "restartGame": "ゲームを再開",
+        "restartGame": "ゲームを再起動",
         "deleteLetter": "文字を削除",
         "removeLastWord": "最後の単語を削除",
-        "submitWord": "単語を提出",
+        "submitWord": "単語を送信",
         "showHint": "ヒントを表示",
         "noHintAvailable": "このゲームにはヒントがありません。",
         "hintError": "ヒントの取得中にエラーが発生しました。後でもう一度お試しください。",
-        "shareGame": "このゲームを共有する:",
-        "restartConfirmationTitle": "このゲームを再開しますか？",
-        "restartConfirmationMessage": "\"確認\"をクリックすると、進行状況が削除され、ゲームが再開されます。",
+        "shareGame": "このゲームを共有：",
+        "restartConfirmationTitle": "このゲームを再起動してもよろしいですか？",
+        "restartConfirmationMessage": "「確認」をクリックすると進行状況が削除され、ゲームが再起動されます。",
         "validateWord": {
             "valid": [
-                "よくできました！",
-                "素晴らしい！",
-                "完璧です！",
-                "やりましたね！",
-                "いい感じ！",
-                "最高です！",
+                "素晴らしい仕事！",
+                "よくやった！",
                 "すごい！",
+                "見事です！",
+                "よくできました！",
+                "完璧！",
+                "最高！",
                 "絶好調！"
             ],
             "invalid": [
-                "あれ、それは有効な単語ではありません。",
-                "もう一度試してください。その単語は使えません。",
-                "ちょっと違います。",
-                "その単語は辞書にありません。",
+                "おっと、それは有効な単語ではありません。",
+                "もう一度お試しください。この単語は使えません。",
+                "少し違います。",
+                "辞書にはありません。",
                 "いいえ、それはカウントされません。",
-                "惜しいけど違います。"
+                "惜しいですが、違います。"
             ],
-            "error": "単語の確認中にエラーが発生しました。"
+            "error": "単語を検証中にエラーが発生しました。"
         }
     },
     "customGameForm": {
         "boardSize": "ボードサイズ",
         "boardSizes": {
-          "2x2": "2x2",
-          "3x3": "3x3",
-          "4x4": "4x4"
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "シードワード1つ",
-          "two": "シードワード2つ"
+            "one": "1つの単語",
+            "two": "2つの単語"
         },
         "seedWords": "シードワード",
-        "clearWord": "ワードをクリア",
-        "longTimeWarning": "警告: ゲームの生成には最大で60秒かかる場合があります。ページを更新したり離れたりすると、ゲームリンクを受け取れません。",
+        "clearWord": "単語をクリア",
+        "hint": "ヒント",
+        "authorName": "作成者名",
+        "longTimeWarning": "警告: ゲームの生成には最大60秒かかる場合があります。ページを更新したり離れたりしないでください。そうしないとゲームリンクを受け取れません。",
         "generateGame": "ゲームを生成",
+        "submitting": "送信中、お待ちください...",
         "cancel": "キャンセル",
         "instructions": {
-            "enterLetters": "ゲームボードの周りの各スペースに文字を入力してください。",
+            "authorName": "名前を入力してください！",
+            "enterLetters": "ボードの各スペースに文字を入力してください。",
             "enterSeedWord": "シードワードを入力してください",
-            "seedWordChoice": "小さいボードの場合、1つまたは2つのシードワードを使用できます。",
-            "boardSize": "ゲームボードのサイズを選択してください"
+            "seedWordChoice": "小さなボードの場合、1つまたは2つのシードワードを使用できます。",
+            "boardSize": "ボードのサイズを選択してください",
+            "hint": "他の人がパズルを解くのを助けるためのヒントを入力してください。"
         },
         "success": {
             "gameCreationSuccess": "ゲームが正常に生成されました！",
-            "gameLink": "このゲームを友達と共有しましょう！",
+            "gameLink": "このゲームを友達と共有してください！",
+            "copyLink": "クリップボードにコピー",
+            "copied": "コピーされました！",
             "goToGame": "今すぐゲームをプレイ！",
-            "createAnotherGame": "別のゲームを作成しますか？"
+            "createAnotherGame": "もう一度作成しますか？"
         },
         "error": {
-            "spacesOnBoard": "ボードの各スペースに文字を入力してください。",
-            "repeatLettersOnBoard": "ボード上の各文字はユニークでなければなりません。同じ文字の繰り返しはできません。",
+            "spacesOnBoard": "ボードの各スペースに文字を配置してください。",
+            "repeatLettersOnBoard": "ボード上の各文字は一意でなければなりません。同じ文字を繰り返すことはできません。",
             "wordsNotConnected": "単語1の最後の文字は、単語2の最初の文字と同じでなければなりません。",
-            "notEnoughLetters": "このボードサイズには十分な一意の文字がありません。",
+            "notEnoughLetters": "このボードサイズに十分な一意の文字がありません。",
             "tooManyLetters": "このボードサイズには一意の文字が多すぎます。",
             "lettersRequired": "必要な文字",
             "lettersUsed": "使用された文字",
-            "_context1": "例えば、「必要な文字:12。使用された文字:7。」",
-            "doubleLetters": "同じ文字を隣り合わせにすることはできません。",
-            "notInDictionary": "入力した単語の1つ (または両方) は辞書にありません。",
-            "genericError": "ゲームの作成中にエラーが発生しました。"
+            "_context1": "例: '必要な文字: 12. 使用された文字: 7.'",
+            "doubleLetters": "同じ文字を隣接させることはできません。",
+            "notInDictionary": "入力した単語の1つ（または両方）が辞書にありません。",
+            "genericError": "ゲームを作成中にエラーが発生しました。"
         }
     },
     "instructions": {
-        "howToPlay": "プレイ方法",
+        "howToPlay": "遊び方",
         "rules": "ルール",
         "instructions": "説明"
     },
@@ -160,7 +174,7 @@
         "subtitle": "レターボックスゲーム"
     },
     "footer": {
-        "cookieWarning": "このサイトは、ゲームの進行状況を保存するために必要不可欠なクッキーを使用しています。個人情報は保存されません。続行することで、この使用に同意したことになります。"
+        "cookieWarning": "このサイトは、ゲーム進行状況を保存するために必要最小限のクッキーを使用します。個人情報は保存されません。続行することで、この利用に同意したことになります。"
     },
     "language": {
         "currentLanguage": "日本語",
@@ -171,8 +185,8 @@
         "fr": "フランス語",
         "hi": "ヒンディー語",
         "id": "インドネシア語",
-        "ja": "日本語",
         "it": "イタリア語",
+        "ja": "日本語",
         "pl": "ポーランド語",
         "pt": "ポルトガル語",
         "ru": "ロシア語",

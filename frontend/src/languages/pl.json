@@ -4,43 +4,43 @@
             "menuTitle": "Główne Menu",
             "playToday": "Zagraj w dzisiejszą grę NYT",
             "archive": "Archiwum gier NYT",
-            "customGame": "Utwórz własną grę",
-            "randomGame": "Utwórz losową grę"
+            "customGame": "Utwórz grę niestandardową",
+            "randomGame": "Zagraj w losową grę"
         },
         "archive": {
             "noGames": "Brak dostępnych gier",
-            "archiveLoading": "Archiwum jest ładowane, proszę czekać...",
-            "errorLoadingGame": "Wystąpił błąd podczas ładowania gry"
+            "loadingGames": "Archiwum jest ładowane, proszę czekać...",
+            "error": "Wystąpił błąd podczas ładowania gry",
+            "loadMore": "Załaduj więcej",
+            "previousPage": "Poprzednia",
+            "nextPage": "Następna",
+            "older": "Starsze >>",
+            "newer": "<< Nowsze",
+            "endOfArchiveMessage": "Dotarłeś do końca archiwum."
         },
         "customGame": {
             "random": "Całkowicie losowa gra",
-            "seedWords": "Wygenerowana gra (Słowa początkowe)",
+            "seedWords": "Gra generowana (Słowa początkowe)",
             "fullCustom": "Całkowicie niestandardowa gra",
-            "randomDescription": "Tworzy się gra z losowymi literami.",
-            "seedWordsDescription": "Wprowadź dwa słowa początkowe, aby wygenerować swoją grę.",
-            "fullCustomDescription": "Stwórz własną niestandardową grę, wybierając wszystkie litery."
-        },
-        "randomGame": {
-            "randomGameTitle": "Zagraj w Losową Grę",
-            "randomGameOptions": "Opcje Losowej Gry",
-            "selectGameLanguage": "Wybierz Język Gry",
-            "selectGameLanguageDesc": "To nie wpływa na język wyświetlania strony internetowej."
+            "randomDescription": "Tworzona jest gra z losowymi literami.",
+            "seedWordsDescription": "Wpisz dwa słowa początkowe, aby stworzyć swoją grę.",
+            "fullCustomDescription": "Utwórz swoją własną grę niestandardową, wybierając wszystkie litery."
         },
         "startGame": "Rozpocznij grę",
-        "submitWord": "Zatwierdź słowo",
+        "submitWord": "Prześlij słowo",
         "playAgain": "Zagraj ponownie",
         "confirm": "Potwierdź",
         "cancel": "Anuluj",
         "chooseLanguage": "Wybierz język",
-        "backToHome": "Wróć do chazwinter.com",
+        "backToHome": "Powrót do chazwinter.com",
         "languageSelector": "Język"
     },
     "messages": {
         "invalidWord": "Nieprawidłowe słowo",
-        "wordAlreadyUsed": "Słowo już użyte",
-        "gameNotFound": "Nie znaleziono gry",
+        "wordAlreadyUsed": "Słowo już zostało użyte",
+        "gameNotFound": "Gra nie została znaleziona",
         "gameCreated": "Gra została utworzona",
-        "gameFetched": "Gra została załadowana",
+        "gameFetched": "Gra została pobrana",
         "congratulations": "Gratulacje!",
         "youWin": "Wygrałeś!",
         "tryAgain": "Spróbuj ponownie",
@@ -49,105 +49,119 @@
         "invalidInput": "Nieprawidłowe dane wejściowe"
     },
     "game": {
-        "loading": "Ładowanie planszy do gry, proszę czekać...",
-        "playedWords": "Zagrane Słowa:",
+        "loading": "Ładowanie planszy gry, proszę czekać...",
+        "playedWords": "Zagrane słowa:",
         "boardSize": "Rozmiar planszy",
         "gameId": "ID gry",
         "tryToSolve": "Spróbuj rozwiązać w {words} słowach",
         "complete": {
-            "puzzleSolvedTitle": "WYGRYWASZ!",
+            "puzzleSolvedTitle": "WYGRAŁEŚ!",
             "puzzleSolvedMessage": "Rozwiązałeś zagadkę! Gratulacje!!!",
-            "officialSolution": "Ta zagadka została wygenerowana za pomocą słów",
-            "numberOfOneWordSolutions": "Liczba znalezionych rozwiązań jedno-słowowych",
-            "numberOfTwoWordSolutions": "Liczba znalezionych rozwiązań dwu-słowowych",
-            "someOneWordSolutions": "Niektóre możliwe rozwiązania jedno-słowowe",
-            "someTwoWordSolutions": "Niektóre możliwe rozwiązania dwu-słowowe",
-            "playAnotherButton": "Zagraj ponownie?"
+            "officialSolution": "Ta zagadka została wygenerowana przy użyciu słów",
+            "numberOfOneWordSolutions": "Liczba znalezionych rozwiązań jedno-słownych",
+            "numberOfTwoWordSolutions": "Liczba znalezionych rozwiązań dwu-słownych",
+            "someOneWordSolutions": "Niektóre możliwe jedno-słowne rozwiązania",
+            "someTwoWordSolutions": "Niektóre możliwe dwu-słowne rozwiązania",
+            "playAnotherButton": "Zagraj jeszcze raz?"
         },
-        "twoWordSolutions": "Rozwiązania dwuwyrazowe",
-        "threeWordSolutions": "Rozwiązania trzywyrazowe",
+        "twoWordSolutions": "Rozwiązania dwu-słowne",
+        "threeWordSolutions": "Rozwiązania trzy-słowne",
         "enterGameLayout": "Wprowadź układ gry",
         "customGame": {
-            "customGameTitle": "Stwórz Grę Niestandardową",
-            "customGameChoice": "Jak chcesz stworzyć swoją niestandardową grę?",
-            "enterLetters": "Wpisując Litery",
-            "enterLettersDesc": "Stwórz niestandardową grę, wpisując litery wokół planszy",
-            "chooseWords": "Wybierając Słowa",
-            "chooseWordsDesc": "Wybierz 1 lub 2 słowa, a ja wygeneruję planszę do gry dla Ciebie!"
+            "customGameTitle": "Utwórz grę niestandardową",
+            "customGameOptions": "Opcje gry niestandardowej",
+            "customGameChoice": "Jak chciałbyś wygenerować swoją grę niestandardową?",
+            "enterLetters": "Wpisując litery",
+            "enterLettersDesc": "Utwórz grę niestandardową, wpisując litery wokół planszy",
+            "chooseWords": "Wybierając słowa",
+            "chooseWordsDesc": "Wybierz 1 lub 2 słowa, a ja stworzę dla ciebie planszę!"
         },
-        "selectBoardSize": "Wybierz Rozmiar Planszy",
-        "restartGame": "Zrestartuj grę",
+        "randomGame": {
+            "randomGameTitle": "Zagraj w losową grę",
+            "randomGameOptions": "Opcje gry losowej",
+            "selectGameLanguage": "Wybierz język gry",
+            "selectGameLanguageDesc": "Nie wpływa to na język wyświetlania strony internetowej."
+        },
+        "selectBoardSize": "Wybierz rozmiar planszy",
+        "restartGame": "Uruchom grę ponownie",
         "deleteLetter": "Usuń literę",
-        "submitWord": "Zatwierdź słowo",
         "removeLastWord": "Usuń ostatnie słowo",
-        "showHint": "Pokaż podpowiedź",
-        "noHintAvailable": "Brak podpowiedzi dla tej gry.",
-        "hintError": "Błąd podczas pobierania podpowiedzi. Spróbuj ponownie później.",
+        "submitWord": "Prześlij słowo",
+        "showHint": "Pokaż wskazówkę",
+        "noHintAvailable": "Brak dostępnej wskazówki dla tej gry.",
+        "hintError": "Błąd podczas pobierania wskazówki. Spróbuj ponownie później.",
         "shareGame": "Udostępnij tę grę:",
-        "restartConfirmationTitle": "Czy na pewno chcesz zrestartować tę grę?",
-        "restartConfirmationMessage": "Kliknięcie \"Potwierdź\" spowoduje usunięcie postępu i rozpoczęcie gry od nowa.",
+        "restartConfirmationTitle": "Czy na pewno chcesz ponownie uruchomić tę grę?",
+        "restartConfirmationMessage": "Kliknięcie „Potwierdź” spowoduje usunięcie twojego postępu i ponowne uruchomienie gry.",
         "validateWord": {
             "valid": [
-                "Świetna robota!",
-                "Brawo!",
-                "Doskonałe!",
+                "Dobra robota!",
+                "Świetnie zrobione!",
+                "Doskonale!",
                 "Udało się!",
                 "Dobra robota!",
-                "Perfekcyjnie!",
-                "Rewelacyjnie!",
-                "Jesteś w formie!"
+                "Idealnie!",
+                "Super!",
+                "Jesteś niesamowity!"
             ],
             "invalid": [
-                "Ups, to nie jest poprawne słowo.",
+                "Ups, to nie jest prawidłowe słowo.",
                 "Spróbuj ponownie, to słowo nie działa.",
-                "Nie do końca dobrze.",
-                "Tego słowa nie ma w słowniku.",
+                "Nie do końca poprawne.",
+                "To słowo nie znajduje się w słowniku.",
                 "Nie, to się nie liczy.",
-                "Blisko, ale jednak nie."
+                "Blisko, ale nie do końca."
             ],
-            "error": "Wystąpił błąd podczas sprawdzania słowa."
+            "error": "Wystąpił błąd podczas weryfikacji słowa."
         }
     },
     "customGameForm": {
-        "boardSize": "Rozmiar Planszy",
+        "boardSize": "Rozmiar planszy",
         "boardSizes": {
-          "2x2": "2x2",
-          "3x3": "3x3",
-          "4x4": "4x4"
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "Jedno Słowo Kluczowe",
-          "two": "Dwa Słowa Kluczowe"
+            "one": "Jedno słowo",
+            "two": "Dwa słowa"
         },
-        "seedWords": "Słowa Kluczowe",
-        "clearWord": "Wyczyść Słowo",
-        "longTimeWarning": "UWAGA: Generowanie gry może zająć do 60 sekund. Nie odświeżaj ani nie opuszczaj strony, inaczej nie otrzymasz linku do gry.",
-        "generateGame": "Wygeneruj Grę",
+        "seedWords": "Słowa początkowe",
+        "clearWord": "Wyczyść słowo",
+        "hint": "Wskazówka",
+        "authorName": "Nazwa autora",
+        "longTimeWarning": "OSTRZEŻENIE: Generowanie gry może potrwać do 60 sekund. Nie odświeżaj ani nie opuszczaj strony, aby otrzymać link do swojej gry.",
+        "generateGame": "Wygeneruj grę",
+        "submitting": "Przesyłanie, proszę czekać...",
         "cancel": "Anuluj",
         "instructions": {
-            "enterLetters": "Wpisz literę w każde pole wokół planszy.",
-            "enterSeedWord": "Wprowadź słowo kluczowe",
-            "seedWordChoice": "Dla małych plansz możesz użyć jednego lub dwóch słów kluczowych.",
-            "boardSize": "Wybierz rozmiar planszy do gry"
+            "authorName": "Wpisz swoje imię!",
+            "enterLetters": "Wprowadź literę w każdym polu wokół planszy.",
+            "enterSeedWord": "Wpisz słowo początkowe",
+            "seedWordChoice": "Dla małych plansz możesz użyć jednego lub dwóch słów początkowych.",
+            "boardSize": "Wybierz rozmiar planszy do gry",
+            "hint": "Wpisz wskazówkę, aby pomóc innym rozwiązać twoją zagadkę."
         },
         "success": {
             "gameCreationSuccess": "Gra została pomyślnie wygenerowana!",
             "gameLink": "Udostępnij tę grę znajomym!",
+            "copyLink": "Kopiuj do schowka",
+            "copied": "Skopiowano!",
             "goToGame": "Zagraj teraz w swoją grę!",
-            "createAnotherGame": "Utworzyć kolejną?"
+            "createAnotherGame": "Utwórz kolejną?"
         },
         "error": {
-            "spacesOnBoard": "Proszę wpisać literę w każde pole na planszy.",
-            "repeatLettersOnBoard": "Każda litera na planszy musi być unikalna. Nie może być powtórzeń.",
+            "spacesOnBoard": "Umieść literę w każdym polu na planszy.",
+            "repeatLettersOnBoard": "Każda litera na planszy musi być unikalna. Nie powtarzaj liter.",
             "wordsNotConnected": "Ostatnia litera Słowa 1 musi być taka sama jak pierwsza litera Słowa 2.",
-            "notEnoughLetters": "Za mało unikalnych liter dla tego rozmiaru planszy.",
-            "tooManyLetters": "Zbyt wiele unikalnych liter dla tego rozmiaru planszy.",
-            "lettersRequired": "wymaganych liter",
-            "lettersUsed": "użytych liter",
-            "_context1": "Na przykład: '12 wymaganych liter. 7 użytych liter.'",
-            "doubleLetters": "Nie możesz mieć dwóch takich samych liter obok siebie.",
-            "notInDictionary": "Jedno (lub oba) wprowadzone słowa nie znajdują się w słowniku.",
-            "genericError": "Wystąpił błąd podczas tworzenia gry."
+            "notEnoughLetters": "Brakuje unikalnych liter dla tego rozmiaru planszy.",
+            "tooManyLetters": "Za dużo unikalnych liter dla tego rozmiaru planszy.",
+            "lettersRequired": "Wymagane litery",
+            "lettersUsed": "Użyte litery",
+            "_context1": "Na przykład: 'Wymagane litery: 12. Użyte litery: 7.'",
+            "doubleLetters": "Nie możesz umieścić tej samej litery obok siebie.",
+            "notInDictionary": "Jedno (lub oba) z podanych słów nie znajduje się w słowniku.",
+            "genericError": "Wystąpił błąd podczas tworzenia twojej gry."
         }
     },
     "instructions": {
@@ -160,7 +174,7 @@
         "subtitle": "Gra LetterBoxed"
     },
     "footer": {
-        "cookieWarning": "Ta strona używa ściśle niezbędnych plików cookie do zapisywania postępów w grze. Nie są przechowywane żadne dane osobowe. Kontynuując, wyrażasz zgodę na takie użycie."
+        "cookieWarning": "Ta strona używa ciasteczek niezbędnych do zapisania twoich postępów w grze. Żadne dane osobowe nie są przechowywane. Kontynuując, akceptujesz to użycie."
     },
     "language": {
         "currentLanguage": "Polski",

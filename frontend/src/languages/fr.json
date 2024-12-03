@@ -3,17 +3,23 @@
         "menu": {
             "menuTitle": "Menu Principal",
             "playToday": "Jouer au jeu NYT d'aujourd'hui",
-            "archive": "Archive des jeux NYT",
+            "archive": "Archives des jeux NYT",
             "customGame": "Créer un jeu personnalisé",
-            "randomGame": "Créer un jeu aléatoire"
+            "randomGame": "Jouer un jeu aléatoire"
         },
         "archive": {
             "noGames": "Aucun jeu disponible",
-            "archiveLoading": "L'archive est en cours de chargement, veuillez patienter...",
-            "errorLoadingGame": "Une erreur s'est produite lors du chargement du jeu"
+            "loadingGames": "Chargement des archives, veuillez patienter...",
+            "error": "Une erreur est survenue lors du chargement du jeu",
+            "loadMore": "Charger plus",
+            "previousPage": "Précédent",
+            "nextPage": "Suivant",
+            "older": "Plus anciens >>",
+            "newer": "<< Plus récents",
+            "endOfArchiveMessage": "Vous avez atteint la fin des archives."
         },
         "customGame": {
-            "random": "Jeu entièrement aléatoire",
+            "random": "Jeu totalement aléatoire",
             "seedWords": "Jeu généré (Mots de départ)",
             "fullCustom": "Jeu totalement personnalisé",
             "randomDescription": "Un jeu avec des lettres aléatoires est en cours de génération.",
@@ -21,11 +27,11 @@
             "fullCustomDescription": "Créez votre propre jeu personnalisé en sélectionnant toutes les lettres."
         },
         "startGame": "Commencer le jeu",
-        "submitWord": "Soumettre le mot",
+        "submitWord": "Soumettre un mot",
         "playAgain": "Rejouer",
         "confirm": "Confirmer",
         "cancel": "Annuler",
-        "chooseLanguage": "Choisir la langue",
+        "chooseLanguage": "Choisir une langue",
         "backToHome": "Retour à chazwinter.com",
         "languageSelector": "Langue"
     },
@@ -44,66 +50,67 @@
     },
     "game": {
         "loading": "Chargement du plateau de jeu, veuillez patienter...",
-        "playedWords": "Mots Joués:",
+        "playedWords": "Mots joués :",
         "boardSize": "Taille du plateau",
         "gameId": "ID du jeu",
         "tryToSolve": "Essayez de résoudre en {words} mots",
         "complete": {
-            "puzzleSolvedTitle": "VOUS GAGNEZ!",
+            "puzzleSolvedTitle": "VOUS AVEZ GAGNÉ !",
             "puzzleSolvedMessage": "Vous avez résolu l'énigme ! Félicitations !!!",
-            "officialSolution": "Ce puzzle a été généré à partir du ou des mots",
-            "numberOfOneWordSolutions": "Nombre de solutions en un mot trouvées",
-            "numberOfTwoWordSolutions": "Nombre de solutions en deux mots trouvées",
-            "someOneWordSolutions": "Quelques solutions possibles en un mot",
-            "someTwoWordSolutions": "Quelques solutions possibles en deux mots",
-            "playAnotherButton": "En jouer un autre?"
+            "officialSolution": "Cette énigme a été générée à partir du/des mot(s)",
+            "numberOfOneWordSolutions": "Nombre de solutions d'un mot trouvées",
+            "numberOfTwoWordSolutions": "Nombre de solutions de deux mots trouvées",
+            "someOneWordSolutions": "Quelques solutions d'un mot possibles",
+            "someTwoWordSolutions": "Quelques solutions de deux mots possibles",
+            "playAnotherButton": "Jouer un autre ?"
         },
-        "twoWordSolutions": "Solutions en deux mots",
-        "threeWordSolutions": "Solutions en trois mots",
+        "twoWordSolutions": "Solutions de deux mots",
+        "threeWordSolutions": "Solutions de trois mots",
         "enterGameLayout": "Entrer la disposition du jeu",
         "customGame": {
-            "customGameTitle": "Créer un Jeu Personnalisé",
+            "customGameTitle": "Créer un jeu personnalisé",
+            "customGameOptions": "Options de jeu personnalisé",
             "customGameChoice": "Comment souhaitez-vous générer votre jeu personnalisé ?",
-            "enterLetters": "En Entrant des Lettres",
-            "enterLettersDesc": "Créez un jeu personnalisé en entrant des lettres autour du plateau de jeu",
-            "chooseWords": "En Choisissant des Mots",
-            "chooseWordsDesc": "Choisissez 1 ou 2 mots, et je créerai un plateau de jeu pour vous !"
+            "enterLetters": "En entrant des lettres",
+            "enterLettersDesc": "Créez un jeu personnalisé en entrant des lettres autour du plateau",
+            "chooseWords": "En choisissant des mots",
+            "chooseWordsDesc": "Choisissez 1 ou 2 mots, et je générerai un plateau pour vous !"
         },
         "randomGame": {
-            "randomGameTitle": "Jouer un Jeu Aléatoire",
-            "randomGameOptions": "Options de Jeu Aléatoire",
-            "selectGameLanguage": "Sélectionnez une Langue pour le Jeu",
+            "randomGameTitle": "Jouer un jeu aléatoire",
+            "randomGameOptions": "Options de jeu aléatoire",
+            "selectGameLanguage": "Choisir une langue pour le jeu",
             "selectGameLanguageDesc": "Cela n'affecte pas la langue d'affichage du site web."
         },
         "selectBoardSize": "Choisir une taille de plateau",
         "restartGame": "Redémarrer le jeu",
-        "deleteLetter": "Supprimer la lettre",
+        "deleteLetter": "Supprimer une lettre",
         "removeLastWord": "Supprimer le dernier mot",
-        "submitWord": "Soumettre le mot",
-        "showHint": "Afficher un indice",
-        "noHintAvailable": "Aucun indice n'est disponible pour ce jeu.",
+        "submitWord": "Soumettre un mot",
+        "showHint": "Montrer un indice",
+        "noHintAvailable": "Aucun indice disponible pour ce jeu.",
         "hintError": "Erreur lors de la récupération de l'indice. Veuillez réessayer plus tard.",
-        "shareGame": "Partagez ce jeu:",
-        "restartConfirmationTitle": "Êtes-vous sûr de vouloir redémarrer cette partie ?",
-        "restartConfirmationMessage": "En cliquant sur \"Confirmer\", votre progression sera supprimée et la partie recommencera.",
+        "shareGame": "Partager ce jeu :",
+        "restartConfirmationTitle": "Êtes-vous sûr de vouloir redémarrer ce jeu ?",
+        "restartConfirmationMessage": "En cliquant sur « Confirmer », vos progrès seront supprimés et le jeu recommencera.",
         "validateWord": {
             "valid": [
+                "Bon travail !",
                 "Bien joué !",
-                "Excellent travail !",
-                "Magnifique !",
-                "Tu l'as eu !",
-                "Bravo !",
+                "Excellent !",
+                "Vous avez réussi !",
+                "Beau travail !",
                 "Parfait !",
                 "Génial !",
-                "Tu es en feu !"
+                "Vous êtes incroyable !"
             ],
             "invalid": [
-                "Oups, ce mot n'est pas valide.",
-                "Essaye encore, ce mot ne fonctionne pas.",
-                "Pas tout à fait.",
+                "Oups, ce n'est pas un mot valide.",
+                "Réessayez, ce mot ne fonctionne pas.",
+                "Pas tout à fait correct.",
                 "Ce mot n'est pas dans le dictionnaire.",
                 "Non, ça ne compte pas.",
-                "Presque, mais ce n'est pas ça."
+                "Presque, mais pas encore."
             ],
             "error": "Une erreur s'est produite lors de la validation du mot."
         }
@@ -111,42 +118,49 @@
     "customGameForm": {
         "boardSize": "Taille du plateau",
         "boardSizes": {
-          "2x2": "2x2",
-          "3x3": "3x3",
-          "4x4": "4x4"
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "Un mot de départ",
-          "two": "Deux mots de départ"
+            "one": "Un mot",
+            "two": "Deux mots"
         },
         "seedWords": "Mots de départ",
         "clearWord": "Effacer le mot",
-        "longTimeWarning": "ATTENTION : La génération d'un jeu peut prendre jusqu'à 60 secondes. Veuillez ne pas actualiser ou quitter la page, sinon vous ne recevrez pas le lien de votre jeu.",
-        "generateGame": "Générer le jeu",
+        "hint": "Indice",
+        "authorName": "Nom de l'auteur",
+        "longTimeWarning": "AVERTISSEMENT : La génération d'un jeu peut prendre jusqu'à 60 secondes. Veuillez ne pas actualiser ni quitter la page, sinon vous ne recevrez pas le lien vers votre jeu.",
+        "generateGame": "Générer un jeu",
+        "submitting": "Envoi en cours, veuillez patienter...",
         "cancel": "Annuler",
         "instructions": {
-            "enterLetters": "Entrez une lettre dans chaque espace autour du plateau de jeu.",
+            "authorName": "Entrez votre nom !",
+            "enterLetters": "Entrez une lettre dans chaque espace autour du plateau.",
             "enterSeedWord": "Entrez un mot de départ",
             "seedWordChoice": "Pour les petits plateaux, vous pouvez utiliser un ou deux mots de départ.",
-            "boardSize": "Sélectionnez une taille pour le plateau"
+            "boardSize": "Choisissez une taille pour le plateau",
+            "hint": "Entrez un indice pour aider les autres à résoudre votre énigme."
         },
         "success": {
             "gameCreationSuccess": "Jeu généré avec succès !",
             "gameLink": "Partagez ce jeu avec vos amis !",
-            "goToGame": "Jouez à votre jeu maintenant !",
-            "createAnotherGame": "En créer un autre ?"
+            "copyLink": "Copier dans le presse-papiers",
+            "copied": "Copié !",
+            "goToGame": "Jouez votre jeu maintenant !",
+            "createAnotherGame": "Créer un autre ?"
         },
         "error": {
-            "spacesOnBoard": "Veuillez placer une lettre dans chaque espace sur le plateau.",
-            "repeatLettersOnBoard": "Chaque lettre sur le plateau doit être unique. Pas de lettres répétées.",
-            "wordsNotConnected": "La dernière lettre du Mot 1 doit être identique à la première lettre du Mot 2.",
+            "spacesOnBoard": "Veuillez mettre une lettre dans chaque espace sur le plateau.",
+            "repeatLettersOnBoard": "Chaque lettre sur le plateau doit être unique. Pas de répétitions.",
+            "wordsNotConnected": "La dernière lettre du mot 1 doit être la même que la première lettre du mot 2.",
             "notEnoughLetters": "Il n'y a pas assez de lettres uniques pour cette taille de plateau.",
             "tooManyLetters": "Il y a trop de lettres uniques pour cette taille de plateau.",
-            "lettersRequired": "lettres nécessaires",
-            "lettersUsed": "lettres utilisées",
-            "_context1": "Par exemple : '12 lettres nécessaires. 7 lettres utilisées.'",
+            "lettersRequired": "Lettres requises",
+            "lettersUsed": "Lettres utilisées",
+            "_context1": "Par exemple, 'Lettres requises : 12. Lettres utilisées : 7.'",
             "doubleLetters": "Vous ne pouvez pas avoir la même lettre côte à côte.",
-            "notInDictionary": "Un (ou les deux) des mots saisis n'est pas dans le dictionnaire.",
+            "notInDictionary": "Un (ou les deux) mots que vous avez entrés ne sont pas dans le dictionnaire.",
             "genericError": "Une erreur s'est produite lors de la création de votre jeu."
         }
     },
@@ -157,10 +171,10 @@
     },
     "header": {
         "title": "Motissage",
-        "subtitle": "Jeu LetterBoxed"
+        "subtitle": "Un jeu LetterBoxed"
     },
     "footer": {
-        "cookieWarning": "Ce site utilise des cookies strictement nécessaires pour enregistrer votre progression dans le jeu. Aucune information personnelle n'est stockée. En continuant, vous acceptez cette utilisation."
+        "cookieWarning": "Ce site utilise des cookies strictement nécessaires pour sauvegarder vos progrès dans le jeu. Aucune information personnelle n'est stockée. En continuant, vous acceptez cette utilisation."
     },
     "language": {
         "currentLanguage": "Français",

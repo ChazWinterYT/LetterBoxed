@@ -5,24 +5,30 @@
             "playToday": "Mainkan Game NYT Hari Ini",
             "archive": "Arsip Game NYT",
             "customGame": "Buat Game Kustom",
-            "randomGame": "Buat Game Acak"
+            "randomGame": "Mainkan Game Acak"
         },
         "archive": {
-            "noGames": "Tidak ada permainan tersedia",
-            "archiveLoading": "Arsip sedang dimuat, harap tunggu...",
-            "errorLoadingGame": "Terjadi kesalahan saat memuat permainan"
+            "noGames": "Tidak ada game tersedia",
+            "loadingGames": "Arsip sedang dimuat, harap tunggu...",
+            "error": "Terjadi kesalahan saat memuat game",
+            "loadMore": "Muat Lebih Banyak",
+            "previousPage": "Sebelumnya",
+            "nextPage": "Berikutnya",
+            "older": "Lebih Lama >>",
+            "newer": "<< Lebih Baru",
+            "endOfArchiveMessage": "Anda telah mencapai akhir arsip."
         },
         "customGame": {
-            "random": "Permainan Acak Sepenuhnya",
-            "seedWords": "Permainan yang Dihasilkan (Kata Benih)",
-            "fullCustom": "Permainan Sepenuhnya Kustom",
-            "randomDescription": "Sebuah permainan dengan huruf acak sedang dibuat.",
-            "seedWordsDescription": "Masukkan dua kata benih untuk membuat permainan Anda.",
-            "fullCustomDescription": "Buat permainan kustom Anda sendiri dengan memilih semua huruf."
+            "random": "Game Acak Sepenuhnya",
+            "seedWords": "Game yang Dihasilkan (Kata Awal)",
+            "fullCustom": "Game Kustom Sepenuhnya",
+            "randomDescription": "Game dengan huruf acak sedang dibuat.",
+            "seedWordsDescription": "Masukkan dua kata awal untuk membuat game Anda.",
+            "fullCustomDescription": "Buat game kustom Anda sendiri dengan memilih semua huruf."
         },
-        "startGame": "Mulai Permainan",
+        "startGame": "Mulai Game",
         "submitWord": "Kirim Kata",
-        "playAgain": "Main Lagi",
+        "playAgain": "Mainkan Lagi",
         "confirm": "Konfirmasi",
         "cancel": "Batalkan",
         "chooseLanguage": "Pilih Bahasa",
@@ -33,25 +39,25 @@
         "invalidWord": "Kata tidak valid",
         "wordAlreadyUsed": "Kata sudah digunakan",
         "gameNotFound": "Game tidak ditemukan",
-        "gameCreated": "Game berhasil dibuat",
-        "gameFetched": "Game berhasil diambil",
+        "gameCreated": "Game Dibuat",
+        "gameFetched": "Game Diambil",
         "congratulations": "Selamat!",
-        "youWin": "Kamu menang!",
+        "youWin": "Anda menang!",
         "tryAgain": "Coba Lagi",
         "loading": "Memuat...",
         "error": "Kesalahan",
         "invalidInput": "Input tidak valid"
     },
     "game": {
-        "loading": "Memuat papan permainan, harap tunggu...",
+        "loading": "Memuat papan game, harap tunggu...",
         "playedWords": "Kata yang Dimainkan:",
         "boardSize": "Ukuran Papan",
         "gameId": "ID Game",
-        "tryToSolve": "Coba selesaikan dengan {words} kata",
+        "tryToSolve": "Coba selesaikan dalam {words} kata",
         "complete": {
-            "puzzleSolvedTitle": "KAMU MENANG!",
-            "puzzleSolvedMessage": "Kamu menyelesaikan teka-teki! Selamat!!!",
-            "officialSolution": "Teka-teki ini dibuat menggunakan kata-kata",
+            "puzzleSolvedTitle": "ANDA MENANG!",
+            "puzzleSolvedMessage": "Anda telah menyelesaikan teka-teki ini! Selamat!!!",
+            "officialSolution": "Teka-teki ini dibuat menggunakan kata",
             "numberOfOneWordSolutions": "Jumlah solusi satu kata yang ditemukan",
             "numberOfTwoWordSolutions": "Jumlah solusi dua kata yang ditemukan",
             "someOneWordSolutions": "Beberapa solusi satu kata yang mungkin",
@@ -63,16 +69,17 @@
         "enterGameLayout": "Masukkan Tata Letak Game",
         "customGame": {
             "customGameTitle": "Buat Game Kustom",
+            "customGameOptions": "Opsi Game Kustom",
             "customGameChoice": "Bagaimana Anda ingin membuat game kustom Anda?",
             "enterLetters": "Dengan Memasukkan Huruf",
-            "enterLettersDesc": "Buat game kustom dengan memasukkan huruf di sekitar papan permainan",
+            "enterLettersDesc": "Buat game kustom dengan memasukkan huruf di sekitar papan game",
             "chooseWords": "Dengan Memilih Kata",
-            "chooseWordsDesc": "Pilih 1 atau 2 kata, dan saya akan membuat papan permainan untuk Anda!"
+            "chooseWordsDesc": "Pilih 1 atau 2 kata, dan saya akan membuat papan game untuk Anda!"
         },
         "randomGame": {
-            "randomGameTitle": "Mainkan Permainan Acak",
-            "randomGameOptions": "Opsi Permainan Acak",
-            "selectGameLanguage": "Pilih Bahasa Permainan",
+            "randomGameTitle": "Mainkan Game Acak",
+            "randomGameOptions": "Opsi Game Acak",
+            "selectGameLanguage": "Pilih Bahasa Game",
             "selectGameLanguageDesc": "Ini tidak memengaruhi bahasa tampilan situs web."
         },
         "selectBoardSize": "Pilih Ukuran Papan",
@@ -82,28 +89,28 @@
         "submitWord": "Kirim Kata",
         "showHint": "Tampilkan Petunjuk",
         "noHintAvailable": "Tidak ada petunjuk yang tersedia untuk game ini.",
-        "hintError": "Terjadi kesalahan saat mengambil petunjuk. Silakan coba lagi nanti.",
-        "shareGame": "Bagikan permainan ini:",
-        "restartConfirmationTitle": "Apakah Anda yakin ingin memulai ulang permainan ini?",
-        "restartConfirmationMessage": "Mengklik \"Konfirmasi\" akan menghapus kemajuan Anda dan memulai ulang permainan.",
+        "hintError": "Kesalahan saat mengambil petunjuk. Silakan coba lagi nanti.",
+        "shareGame": "Bagikan game ini:",
+        "restartConfirmationTitle": "Apakah Anda yakin ingin memulai ulang game ini?",
+        "restartConfirmationMessage": "Mengklik \"Konfirmasi\" akan menghapus progres Anda dan memulai ulang game.",
         "validateWord": {
             "valid": [
                 "Kerja bagus!",
-                "Bagus sekali!",
+                "Hebat!",
                 "Luar biasa!",
-                "Kamu berhasil!",
-                "Pekerjaan yang hebat!",
+                "Anda berhasil!",
+                "Kerja bagus!",
                 "Sempurna!",
-                "Mantap!",
-                "Kamu luar biasa!"
+                "Keren!",
+                "Anda luar biasa!"
             ],
             "invalid": [
-                "Ups, kata itu tidak valid.",
-                "Coba lagi, kata itu tidak cocok.",
+                "Ups, itu bukan kata yang valid.",
+                "Coba lagi, kata itu tidak berfungsi.",
                 "Belum benar.",
-                "Kata itu tidak ada di kamus.",
-                "Maaf, itu tidak dihitung.",
-                "Hampir, tapi belum cukup."
+                "Itu tidak ada di kamus.",
+                "Tidak, itu tidak dihitung.",
+                "Hampir saja, tapi tidak cukup."
             ],
             "error": "Terjadi kesalahan saat memvalidasi kata."
         }
@@ -111,56 +118,63 @@
     "customGameForm": {
         "boardSize": "Ukuran Papan",
         "boardSizes": {
-          "2x2": "2x2",
-          "3x3": "3x3",
-          "4x4": "4x4"
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "Satu Kata Benih",
-          "two": "Dua Kata Benih"
+            "one": "Satu Kata",
+            "two": "Dua Kata"
         },
-        "seedWords": "Kata Benih",
+        "seedWords": "Kata Awal",
         "clearWord": "Hapus Kata",
-        "longTimeWarning": "PERINGATAN: Membuat permainan dapat memakan waktu hingga 60 detik. Jangan segarkan atau keluar dari halaman, atau Anda tidak akan menerima tautan permainan Anda.",
-        "generateGame": "Buat Permainan",
-        "cancel": "Batal",
+        "hint": "Petunjuk",
+        "authorName": "Nama Penulis",
+        "longTimeWarning": "PERINGATAN: Membuat game dapat memakan waktu hingga 60 detik. Jangan menyegarkan atau meninggalkan halaman, atau Anda tidak akan menerima tautan game Anda.",
+        "generateGame": "Buat Game",
+        "submitting": "Mengirim, harap tunggu...",
+        "cancel": "Batalkan",
         "instructions": {
-            "enterLetters": "Masukkan satu huruf di setiap ruang di sekitar papan permainan.",
-            "enterSeedWord": "Masukkan kata benih",
-            "seedWordChoice": "Untuk papan kecil, Anda dapat menggunakan satu atau dua kata benih.",
-            "boardSize": "Pilih ukuran untuk papan permainan"
+            "authorName": "Masukkan nama Anda!",
+            "enterLetters": "Masukkan huruf di setiap ruang di sekitar papan game.",
+            "enterSeedWord": "Masukkan kata awal",
+            "seedWordChoice": "Untuk papan game kecil, Anda dapat menggunakan satu atau dua kata awal.",
+            "boardSize": "Pilih ukuran papan game",
+            "hint": "Masukkan petunjuk untuk membantu orang lain menyelesaikan teka-teki Anda."
         },
         "success": {
-            "gameCreationSuccess": "Permainan berhasil dibuat!",
-            "gameLink": "Bagikan permainan ini dengan teman-teman Anda!",
-            "goToGame": "Mainkan permainan Anda sekarang!",
-            "createAnotherGame": "Buat yang lain?"
+            "gameCreationSuccess": "Game berhasil dibuat!",
+            "gameLink": "Bagikan game ini dengan teman-teman Anda!",
+            "copyLink": "Salin ke clipboard",
+            "copied": "Disalin!",
+            "goToGame": "Mainkan game Anda sekarang!",
+            "createAnotherGame": "Buat lagi?"
         },
         "error": {
-            "spacesOnBoard": "Harap masukkan satu huruf di setiap ruang di papan.",
+            "spacesOnBoard": "Silakan letakkan satu huruf di setiap ruang di papan.",
             "repeatLettersOnBoard": "Setiap huruf di papan harus unik. Tidak boleh ada pengulangan.",
-            "wordsNotConnected": "Huruf terakhir dari Kata 1 harus sama dengan huruf pertama dari Kata 2.",
+            "wordsNotConnected": "Huruf terakhir Kata 1 harus sama dengan huruf pertama Kata 2.",
             "notEnoughLetters": "Tidak cukup huruf unik untuk ukuran papan ini.",
             "tooManyLetters": "Terlalu banyak huruf unik untuk ukuran papan ini.",
-            "lettersRequired": "huruf diperlukan",
-            "lettersUsed": "huruf digunakan",
-            "_context1": "Seperti, '12 huruf diperlukan. 7 huruf digunakan.'",
-            "doubleLetters": "Anda tidak dapat memiliki huruf yang sama bersebelahan.",
+            "lettersRequired": "Huruf yang Diperlukan",
+            "lettersUsed": "Huruf yang Digunakan",
+            "_context1": "Seperti dalam, 'Huruf yang Diperlukan: 12. Huruf yang Digunakan: 7.'",
+            "doubleLetters": "Anda tidak dapat memiliki huruf yang sama di sebelahnya.",
             "notInDictionary": "Satu (atau kedua) kata yang Anda masukkan tidak ada di kamus.",
-            "genericError": "Terjadi kesalahan saat membuat permainan Anda."
+            "genericError": "Terjadi kesalahan saat membuat game Anda."
         }
     },
     "instructions": {
         "howToPlay": "Cara Bermain",
         "rules": "Aturan",
-        "instructions": "Petunjuk"
+        "instructions": "Instruksi"
     },
     "header": {
         "title": "Jalinan Kata",
         "subtitle": "Permainan LetterBoxed"
     },
     "footer": {
-        "cookieWarning": "Situs ini menggunakan cookie yang sangat diperlukan untuk menyimpan progres permainan Anda. Tidak ada informasi pribadi yang disimpan. Dengan melanjutkan, Anda menyetujui penggunaan ini."
+        "cookieWarning": "Situs ini menggunakan cookie yang benar-benar diperlukan untuk menyimpan progres game Anda. Tidak ada informasi pribadi yang disimpan. Dengan melanjutkan, Anda menyetujui penggunaan ini."
     },
     "language": {
         "currentLanguage": "Bahasa Indonesia",
@@ -173,7 +187,7 @@
         "id": "Indonesia",
         "it": "Italia",
         "ja": "Jepang",
-        "pl": "Polski",
+        "pl": "Polandia",
         "pt": "Portugis",
         "ru": "Rusia",
         "sv": "Swedia"

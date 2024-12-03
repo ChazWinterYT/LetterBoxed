@@ -2,30 +2,36 @@
     "ui": {
         "menu": {
             "menuTitle": "Hauptmenü",
-            "playToday": "Spiele das heutige NYT-Spiel",
-            "archive": "NYT-Spiele-Archiv",
+            "playToday": "Heutiges NYT-Spiel spielen",
+            "archive": "NYT-Spielearchiv",
             "customGame": "Eigenes Spiel erstellen",
-            "randomGame": "Zufälliges Spiel erstellen"
+            "randomGame": "Zufälliges Spiel spielen"
         },
         "archive": {
             "noGames": "Keine Spiele verfügbar",
-            "archiveLoading": "Das Archiv wird geladen, bitte warten...",
-            "errorLoadingGame": "Beim Laden des Spiels ist ein Fehler aufgetreten"
+            "loadingGames": "Archiv wird geladen, bitte warten...",
+            "error": "Beim Laden des Spiels ist ein Fehler aufgetreten",
+            "loadMore": "Mehr laden",
+            "previousPage": "Vorherige",
+            "nextPage": "Nächste",
+            "older": "Älter >>",
+            "newer": "<< Neuer",
+            "endOfArchiveMessage": "Sie haben das Ende des Archivs erreicht."
         },
         "customGame": {
             "random": "Vollständig zufälliges Spiel",
-            "seedWords": "Generiertes Spiel (Saatwörter)",
-            "fullCustom": "Vollständig benutzerdefiniertes Spiel",
+            "seedWords": "Generiertes Spiel (Startwörter)",
+            "fullCustom": "Vollständig angepasstes Spiel",
             "randomDescription": "Ein Spiel mit zufälligen Buchstaben wird generiert.",
-            "seedWordsDescription": "Geben Sie zwei Saatwörter ein, um Ihr Spiel zu generieren.",
-            "fullCustomDescription": "Erstellen Sie Ihr eigenes benutzerdefiniertes Spiel, indem Sie alle Buchstaben auswählen."
+            "seedWordsDescription": "Geben Sie zwei Startwörter ein, um Ihr Spiel zu erstellen.",
+            "fullCustomDescription": "Erstellen Sie Ihr eigenes Spiel, indem Sie alle Buchstaben auswählen."
         },
         "startGame": "Spiel starten",
         "submitWord": "Wort einreichen",
-        "playAgain": "Nochmal spielen",
+        "playAgain": "Noch einmal spielen",
         "confirm": "Bestätigen",
         "cancel": "Abbrechen",
-        "chooseLanguage": "Sprache wählen",
+        "chooseLanguage": "Sprache auswählen",
         "backToHome": "Zurück zu chazwinter.com",
         "languageSelector": "Sprache"
     },
@@ -36,74 +42,75 @@
         "gameCreated": "Spiel erstellt",
         "gameFetched": "Spiel abgerufen",
         "congratulations": "Herzlichen Glückwunsch!",
-        "youWin": "Du hast gewonnen!",
-        "tryAgain": "Nochmals versuchen",
-        "loading": "Laden...",
+        "youWin": "Sie haben gewonnen!",
+        "tryAgain": "Versuchen Sie es erneut",
+        "loading": "Lädt...",
         "error": "Fehler",
         "invalidInput": "Ungültige Eingabe"
     },
     "game": {
         "loading": "Spielbrett wird geladen, bitte warten...",
-        "playedWords": "Gespielte Wörter:",
+        "playedWords": "Gespeicherte Wörter:",
         "boardSize": "Brettgröße",
         "gameId": "Spiel-ID",
-        "tryToSolve": "Versuche, in {words} Wörtern zu lösen",
+        "tryToSolve": "Versuchen Sie, in {words} Wörtern zu lösen",
         "complete": {
-            "puzzleSolvedTitle": "DU GEWINNST!",
-            "puzzleSolvedMessage": "Du hast das Rätsel gelöst! Herzlichen Glückwunsch!!!",
-            "officialSolution": "Dieses Rätsel wurde mit den Wörtern erstellt",
+            "puzzleSolvedTitle": "SIE HABEN GEWONNEN!",
+            "puzzleSolvedMessage": "Sie haben das Rätsel gelöst! Herzlichen Glückwunsch!!!",
+            "officialSolution": "Dieses Rätsel wurde mit folgendem/n Wort/Wörtern generiert",
             "numberOfOneWordSolutions": "Anzahl der gefundenen Ein-Wort-Lösungen",
             "numberOfTwoWordSolutions": "Anzahl der gefundenen Zwei-Wort-Lösungen",
             "someOneWordSolutions": "Einige mögliche Ein-Wort-Lösungen",
             "someTwoWordSolutions": "Einige mögliche Zwei-Wort-Lösungen",
-            "playAnotherButton": "Noch eins spielen?"
+            "playAnotherButton": "Noch ein Spiel?"
         },
-        "twoWordSolutions": "Lösungen mit zwei Wörtern",
-        "threeWordSolutions": "Lösungen mit drei Wörtern",
-        "enterGameLayout": "Spielaufbau eingeben",
+        "twoWordSolutions": "Zwei-Wort-Lösungen",
+        "threeWordSolutions": "Drei-Wort-Lösungen",
+        "enterGameLayout": "Spiel-Layout eingeben",
         "customGame": {
-            "customGameTitle": "Erstellen Sie ein eigenes Spiel",
-            "customGameChoice": "Wie möchten Sie Ihr benutzerdefiniertes Spiel erstellen?",
-            "enterLetters": "Indem Sie Buchstaben eingeben",
-            "enterLettersDesc": "Erstellen Sie ein eigenes Spiel, indem Sie Buchstaben um das Spielfeld eingeben",
-            "chooseWords": "Indem Sie Wörter auswählen",
-            "chooseWordsDesc": "Wählen Sie 1 oder 2 Wörter aus, und ich generiere ein Spielfeld für Sie!"
+            "customGameTitle": "Ein eigenes Spiel erstellen",
+            "customGameOptions": "Optionen für eigenes Spiel",
+            "customGameChoice": "Wie möchten Sie Ihr eigenes Spiel generieren?",
+            "enterLetters": "Buchstaben eingeben",
+            "enterLettersDesc": "Erstellen Sie ein eigenes Spiel, indem Sie Buchstaben auf dem Spielbrett platzieren",
+            "chooseWords": "Wörter auswählen",
+            "chooseWordsDesc": "Wählen Sie 1 oder 2 Wörter aus, und ich generiere ein Spielbrett für Sie!"
         },
         "randomGame": {
-            "randomGameTitle": "Spiele ein Zufälliges Spiel",
-            "randomGameOptions": "Optionen für Zufälliges Spiel",
-            "selectGameLanguage": "Wähle eine Spielsprache",
+            "randomGameTitle": "Ein zufälliges Spiel spielen",
+            "randomGameOptions": "Optionen für zufälliges Spiel",
+            "selectGameLanguage": "Spielsprache auswählen",
             "selectGameLanguageDesc": "Dies beeinflusst nicht die Anzeigesprache der Website."
         },
-        "selectBoardSize": "Wähle eine Brettgröße",
+        "selectBoardSize": "Brettgröße auswählen",
         "restartGame": "Spiel neu starten",
-        "deleteLetter": "Buchstabe löschen",
+        "deleteLetter": "Buchstaben löschen",
         "removeLastWord": "Letztes Wort entfernen",
         "submitWord": "Wort einreichen",
-        "showHint": "Tipp anzeigen",
-        "noHintAvailable": "Für dieses Spiel ist kein Tipp verfügbar.",
-        "hintError": "Fehler beim Abrufen des Tipps. Bitte später erneut versuchen.",
-        "shareGame": "Teile dieses Spiel:",
-        "restartConfirmationTitle": "Sind Sie sicher, dass Sie dieses Spiel neu starten möchten?",
-        "restartConfirmationMessage": "Wenn Sie auf \"Bestätigen\" klicken, wird Ihr Fortschritt entfernt und das Spiel neu gestartet.",
+        "showHint": "Hinweis anzeigen",
+        "noHintAvailable": "Kein Hinweis für dieses Spiel verfügbar.",
+        "hintError": "Fehler beim Abrufen des Hinweises. Bitte versuchen Sie es später erneut.",
+        "shareGame": "Dieses Spiel teilen:",
+        "restartConfirmationTitle": "Möchten Sie dieses Spiel wirklich neu starten?",
+        "restartConfirmationMessage": "Durch Klicken auf „Bestätigen“ wird Ihr Fortschritt gelöscht und das Spiel neu gestartet.",
         "validateWord": {
             "valid": [
+                "Gute Arbeit!",
                 "Gut gemacht!",
-                "Hervorragend!",
                 "Ausgezeichnet!",
-                "Das hast du geschafft!",
-                "Tolle Arbeit!",
+                "Volltreffer!",
+                "Schön gemacht!",
                 "Perfekt!",
-                "Fantastisch!",
-                "Du bist auf Erfolgskurs!"
+                "Großartig!",
+                "Du bist super!"
             ],
             "invalid": [
                 "Ups, das ist kein gültiges Wort.",
-                "Versuch es noch einmal, dieses Wort funktioniert nicht.",
+                "Versuchen Sie es noch einmal, das Wort funktioniert nicht.",
                 "Nicht ganz richtig.",
-                "Dieses Wort steht nicht im Wörterbuch.",
+                "Das steht nicht im Wörterbuch.",
                 "Nein, das zählt nicht.",
-                "Knapp daneben ist auch vorbei."
+                "Knapp daneben."
             ],
             "error": "Beim Überprüfen des Wortes ist ein Fehler aufgetreten."
         }
@@ -111,56 +118,63 @@
     "customGameForm": {
         "boardSize": "Brettgröße",
         "boardSizes": {
-          "2x2": "2x2",
-          "3x3": "3x3",
-          "4x4": "4x4"
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "Ein Ausgangswort",
-          "two": "Zwei Ausgangswörter"
+            "one": "Ein Wort",
+            "two": "Zwei Wörter"
         },
-        "seedWords": "Ausgangswörter",
+        "seedWords": "Startwörter",
         "clearWord": "Wort löschen",
-        "longTimeWarning": "WARNUNG: Das Generieren eines Spiels kann bis zu 60 Sekunden dauern. Bitte aktualisieren oder verlassen Sie die Seite nicht, sonst erhalten Sie keinen Spiel-Link.",
+        "hint": "Hinweis",
+        "authorName": "Autorname",
+        "longTimeWarning": "WARNUNG: Die Erstellung eines Spiels kann bis zu 60 Sekunden dauern. Bitte aktualisieren oder verlassen Sie die Seite nicht, sonst erhalten Sie keinen Spiel-Link.",
         "generateGame": "Spiel generieren",
+        "submitting": "Wird gesendet, bitte warten...",
         "cancel": "Abbrechen",
         "instructions": {
-            "enterLetters": "Geben Sie einen Buchstaben in jeden Platz um das Spielfeld ein.",
-            "enterSeedWord": "Geben Sie ein Ausgangswort ein",
-            "seedWordChoice": "Für kleine Bretter können Sie ein oder zwei Ausgangswörter verwenden.",
-            "boardSize": "Wählen Sie eine Brettgröße aus"
+            "authorName": "Geben Sie Ihren Namen ein!",
+            "enterLetters": "Geben Sie einen Buchstaben in jedes Feld auf dem Spielbrett ein.",
+            "enterSeedWord": "Geben Sie ein Startwort ein",
+            "seedWordChoice": "Für kleine Spielbretter können Sie ein oder zwei Startwörter verwenden.",
+            "boardSize": "Wählen Sie eine Größe für das Spielbrett",
+            "hint": "Geben Sie einen Hinweis ein, um anderen zu helfen, Ihr Rätsel zu lösen."
         },
         "success": {
             "gameCreationSuccess": "Spiel erfolgreich generiert!",
             "gameLink": "Teilen Sie dieses Spiel mit Ihren Freunden!",
+            "copyLink": "In die Zwischenablage kopieren",
+            "copied": "Kopiert!",
             "goToGame": "Jetzt spielen!",
-            "createAnotherGame": "Noch eins erstellen?"
+            "createAnotherGame": "Noch ein Spiel erstellen?"
         },
         "error": {
-            "spacesOnBoard": "Bitte setzen Sie einen Buchstaben in jeden Platz auf dem Spielfeld.",
-            "repeatLettersOnBoard": "Jeder Buchstabe auf dem Spielfeld muss einzigartig sein. Keine Wiederholungen.",
-            "wordsNotConnected": "Der letzte Buchstabe von Wort 1 muss mit dem ersten Buchstaben von Wort 2 übereinstimmen.",
-            "notEnoughLetters": "Es gibt nicht genug einzigartige Buchstaben für diese Brettgröße.",
+            "spacesOnBoard": "Bitte geben Sie in jedes Feld auf dem Spielbrett einen Buchstaben ein.",
+            "repeatLettersOnBoard": "Jeder Buchstabe auf dem Spielbrett muss einzigartig sein. Keine Wiederholungen.",
+            "wordsNotConnected": "Der letzte Buchstabe von Wort 1 muss derselbe wie der erste Buchstabe von Wort 2 sein.",
+            "notEnoughLetters": "Es gibt nicht genügend einzigartige Buchstaben für diese Brettgröße.",
             "tooManyLetters": "Es gibt zu viele einzigartige Buchstaben für diese Brettgröße.",
-            "lettersRequired": "Buchstaben erforderlich",
-            "lettersUsed": "Buchstaben verwendet",
-            "_context1": "Zum Beispiel: '12 Buchstaben erforderlich. 7 Buchstaben verwendet.'",
-            "doubleLetters": "Sie können denselben Buchstaben nicht nebeneinander haben.",
-            "notInDictionary": "Eines (oder beide) der eingegebenen Wörter ist nicht im Wörterbuch.",
+            "lettersRequired": "Erforderliche Buchstaben",
+            "lettersUsed": "Verwendete Buchstaben",
+            "_context1": "Wie in: 'Erforderliche Buchstaben: 12. Verwendete Buchstaben: 7.'",
+            "doubleLetters": "Sie können denselben Buchstaben nicht direkt nebeneinander setzen.",
+            "notInDictionary": "Eines (oder beide) Wörter, die Sie eingegeben haben, sind nicht im Wörterbuch.",
             "genericError": "Beim Erstellen Ihres Spiels ist ein Fehler aufgetreten."
         }
     },
     "instructions": {
         "howToPlay": "Spielanleitung",
         "rules": "Regeln",
-        "instructions": "Anweisungen"
+        "instructions": "Anleitung"
     },
     "header": {
         "title": "Wortfäden",
-        "subtitle": "LetterBoxed-Spiel"
+        "subtitle": "Ein LetterBoxed-Spiel"
     },
     "footer": {
-        "cookieWarning": "Diese Seite verwendet unbedingt notwendige Cookies, um Ihren Spielfortschritt zu speichern. Es werden keine persönlichen Daten gespeichert. Durch die weitere Nutzung stimmen Sie dieser Verwendung zu."
+        "cookieWarning": "Diese Seite verwendet unbedingt notwendige Cookies, um Ihren Spielfortschritt zu speichern. Es werden keine persönlichen Daten gespeichert. Durch die Nutzung dieser Seite stimmen Sie dem zu."
     },
     "language": {
         "currentLanguage": "Deutsch",

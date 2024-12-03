@@ -9,9 +9,14 @@
         },
         "archive": {
             "noGames": "No games available",
-            "archiveLoading": "Archive is loading, please wait...",
+            "loadingGames": "Archive is loading, please wait...",
             "error": "There was an error when loading the game",
-            "loadMore": "Load More"
+            "loadMore": "Load More",
+            "previousPage": "Previous",
+            "nextPage": "Next",
+            "older": "Older >>",
+            "newer": "<< Newer",
+            "endOfArchiveMessage": "You have reached the end of the archive."
         },
         "customGame": {
             "random": "Fully Random Game",
