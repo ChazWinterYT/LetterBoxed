@@ -61,11 +61,20 @@
         "twoWordSolutions": "दो-शब्द समाधान",
         "threeWordSolutions": "तीन-शब्द समाधान",
         "enterGameLayout": "गेम लेआउट दर्ज करें",
-        "customGame": "एक कस्टम गेम बनाएँ",
-        "randomGame": "एक रैंडम गेम खेलें",
-        "randomGameOptions": "रैंडम गेम विकल्प",
-        "selectGameLanguage": "गेम भाषा चुनें",
-        "selectGameLanguageDesc": "यह वेबसाइट की प्रदर्शन भाषा को प्रभावित नहीं करता।",
+        "customGame": {
+            "customGameTitle": "कस्टम गेम बनाएँ",
+            "customGameChoice": "आप अपना कस्टम गेम कैसे बनाना चाहेंगे?",
+            "enterLetters": "अक्षर दर्ज करके",
+            "enterLettersDesc": "खेल बोर्ड के चारों ओर अक्षर दर्ज करके एक कस्टम गेम बनाएँ",
+            "chooseWords": "शब्दों का चयन करके",
+            "chooseWordsDesc": "1 या 2 शब्द चुनें, और मैं आपके लिए एक गेम बोर्ड तैयार कर दूँगा!"
+        },
+        "randomGame": {
+            "randomGameTitle": "एक रैंडम गेम खेलें",
+            "randomGameOptions": "रैंडम गेम विकल्प",
+            "selectGameLanguage": "गेम की भाषा चुनें",
+            "selectGameLanguageDesc": "यह वेबसाइट की प्रदर्शन भाषा को प्रभावित नहीं करता।"
+        },
         "selectBoardSize": "बोर्ड आकार चुनें",
         "restartGame": "गेम पुनः प्रारंभ करें",
         "deleteLetter": "अक्षर हटाएं",
@@ -116,9 +125,10 @@
         "generateGame": "खेल बनाएं",
         "cancel": "रद्द करें",
         "instructions": {
-          "enterSeedWord": "एक बीज शब्द दर्ज करें",
-          "seedWordChoice": "छोटे बोर्ड के लिए, आप एक या दो बीज शब्द का उपयोग कर सकते हैं।",
-          "boardSize": "खेल बोर्ड के लिए आकार चुनें"
+            "enterLetters": "खेल बोर्ड के चारों ओर प्रत्येक स्थान में एक अक्षर दर्ज करें।",
+            "enterSeedWord": "एक बीज शब्द दर्ज करें",
+            "seedWordChoice": "छोटे बोर्ड के लिए, आप एक या दो बीज शब्द का उपयोग कर सकते हैं।",
+            "boardSize": "खेल बोर्ड के लिए आकार चुनें"
         },
         "success": {
             "gameCreationSuccess": "खेल सफलतापूर्वक बनाया गया!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "एक और बनाएं?"
         },
         "error": {
+            "spacesOnBoard": "कृपया बोर्ड पर प्रत्येक स्थान में एक अक्षर डालें।",
+            "repeatLettersOnBoard": "बोर्ड पर प्रत्येक अक्षर अद्वितीय होना चाहिए। कोई अक्षर दोहराए नहीं।",
             "wordsNotConnected": "शब्द 1 का अंतिम अक्षर और शब्द 2 का पहला अक्षर समान होना चाहिए।",
             "notEnoughLetters": "इस बोर्ड के आकार के लिए पर्याप्त अद्वितीय अक्षर नहीं हैं।",
             "tooManyLetters": "इस बोर्ड के आकार के लिए बहुत अधिक अद्वितीय अक्षर हैं।",

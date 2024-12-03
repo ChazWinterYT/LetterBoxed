@@ -61,11 +61,20 @@
         "twoWordSolutions": "Soluções de Duas Palavras",
         "threeWordSolutions": "Soluções de Três Palavras",
         "enterGameLayout": "Inserir Layout do Jogo",
-        "customGame": "Criar um Jogo Personalizado",
-        "randomGame": "Jogar um Jogo Aleatório",
-        "randomGameOptions": "Opções de Jogo Aleatório",
-        "selectGameLanguage": "Selecionar um Idioma de Jogo",
-        "selectGameLanguageDesc": "Isso não afeta o idioma de exibição do site.",
+        "customGame": {
+            "customGameTitle": "Criar um Jogo Personalizado",
+            "customGameChoice": "Como você gostaria de criar seu jogo personalizado?",
+            "enterLetters": "Inserindo Letras",
+            "enterLettersDesc": "Crie um jogo personalizado inserindo letras ao redor do tabuleiro do jogo",
+            "chooseWords": "Escolhendo Palavras",
+            "chooseWordsDesc": "Escolha 1 ou 2 palavras, e eu gerarei um tabuleiro para você!"
+        },
+        "randomGame": {
+            "randomGameTitle": "Jogar um Jogo Aleatório",
+            "randomGameOptions": "Opções de Jogo Aleatório",
+            "selectGameLanguage": "Selecionar um Idioma para o Jogo",
+            "selectGameLanguageDesc": "Isso não afeta o idioma de exibição do site."
+        },
         "selectBoardSize": "Selecionar o Tamanho do Tabuleiro",
         "restartGame": "Reiniciar Jogo",
         "deleteLetter": "Apagar Letra",
@@ -116,9 +125,10 @@
         "generateGame": "Gerar Jogo",
         "cancel": "Cancelar",
         "instructions": {
-          "enterSeedWord": "Insira uma palavra semente",
-          "seedWordChoice": "Para tabuleiros pequenos, você pode usar uma ou duas palavras semente.",
-          "boardSize": "Selecione um tamanho para o tabuleiro do jogo"
+            "enterLetters": "Insira uma letra em cada espaço ao redor do tabuleiro do jogo.",
+            "enterSeedWord": "Insira uma palavra semente",
+            "seedWordChoice": "Para tabuleiros pequenos, você pode usar uma ou duas palavras semente.",
+            "boardSize": "Selecione um tamanho para o tabuleiro do jogo"
         },
         "success": {
             "gameCreationSuccess": "Jogo gerado com sucesso!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "Criar outro?"
         },
         "error": {
+            "spacesOnBoard": "Por favor, insira uma letra em cada espaço no tabuleiro.",
+            "repeatLettersOnBoard": "Cada letra no tabuleiro deve ser única. Não pode haver repetições.",
             "wordsNotConnected": "A última letra da Palavra 1 deve ser a mesma da primeira letra da Palavra 2.",
             "notEnoughLetters": "Não há letras únicas suficientes para este tamanho de tabuleiro.",
             "tooManyLetters": "Há letras únicas demais para este tamanho de tabuleiro.",

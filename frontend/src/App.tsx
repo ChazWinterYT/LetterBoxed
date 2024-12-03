@@ -349,7 +349,7 @@ const App = () => {
   // Function to open the random game modal
   const openRandomGameModal = useCallback(() => {
     console.log("Opening random game modal.");
-    setModalTitle(t("game.randomGameOptions"));
+    setModalTitle(t("game.randomGame.randomGameTitle"));
     setIsModalOpen(true);
 
     // Get the list of playable languages
@@ -357,8 +357,8 @@ const App = () => {
   
     setModalContent(
       <div className="random-game-options">
-        <h2>{t("game.selectGameLanguage")}</h2>
-        <p>{t("game.selectGameLanguageDesc")}</p>
+        <h2>{t("game.randomGame.selectGameLanguage")}</h2>
+        <p>{t("game.randomGame.selectGameLanguageDesc")}</p>
         <div className="button-menu">
           {playableLanguages.map((lang: Language) => (
             <button

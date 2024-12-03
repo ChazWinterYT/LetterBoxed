@@ -61,11 +61,20 @@
         "twoWordSolutions": "2語の解答",
         "threeWordSolutions": "3語の解答",
         "enterGameLayout": "ゲームレイアウトを入力",
-        "customGame": "カスタムゲームを作成",
-        "randomGame": "ランダムゲームをプレイ",
-        "randomGameOptions": "ランダムゲームのオプション",
-        "selectGameLanguage": "ゲーム言語を選択",
-        "selectGameLanguageDesc": "これはウェブサイトの表示言語には影響しません。",
+        "customGame": {
+            "customGameTitle": "カスタムゲームを作成",
+            "customGameChoice": "カスタムゲームをどのように作成しますか？",
+            "enterLetters": "文字を入力して",
+            "enterLettersDesc": "ゲームボードの周りに文字を入力してカスタムゲームを作成します",
+            "chooseWords": "単語を選択して",
+            "chooseWordsDesc": "1つまたは2つの単語を選択すると、ゲームボードを作成します！"
+        },
+        "randomGame": {
+            "randomGameTitle": "ランダムゲームをプレイ",
+            "randomGameOptions": "ランダムゲームオプション",
+            "selectGameLanguage": "ゲームの言語を選択",
+            "selectGameLanguageDesc": "これはウェブサイトの表示言語には影響しません。"
+        },
         "selectBoardSize": "ボードサイズを選択",
         "restartGame": "ゲームを再開",
         "deleteLetter": "文字を削除",
@@ -116,9 +125,10 @@
         "generateGame": "ゲームを生成",
         "cancel": "キャンセル",
         "instructions": {
-          "enterSeedWord": "シードワードを入力してください",
-          "seedWordChoice": "小さいボードの場合、1つまたは2つのシードワードを使用できます。",
-          "boardSize": "ゲームボードのサイズを選択してください"
+            "enterLetters": "ゲームボードの周りの各スペースに文字を入力してください。",
+            "enterSeedWord": "シードワードを入力してください",
+            "seedWordChoice": "小さいボードの場合、1つまたは2つのシードワードを使用できます。",
+            "boardSize": "ゲームボードのサイズを選択してください"
         },
         "success": {
             "gameCreationSuccess": "ゲームが正常に生成されました！",
@@ -127,6 +137,8 @@
             "createAnotherGame": "別のゲームを作成しますか？"
         },
         "error": {
+            "spacesOnBoard": "ボードの各スペースに文字を入力してください。",
+            "repeatLettersOnBoard": "ボード上の各文字はユニークでなければなりません。同じ文字の繰り返しはできません。",
             "wordsNotConnected": "単語1の最後の文字は、単語2の最初の文字と同じでなければなりません。",
             "notEnoughLetters": "このボードサイズには十分な一意の文字がありません。",
             "tooManyLetters": "このボードサイズには一意の文字が多すぎます。",

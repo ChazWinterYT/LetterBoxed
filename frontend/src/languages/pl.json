@@ -20,6 +20,12 @@
             "seedWordsDescription": "Wprowadź dwa słowa początkowe, aby wygenerować swoją grę.",
             "fullCustomDescription": "Stwórz własną niestandardową grę, wybierając wszystkie litery."
         },
+        "randomGame": {
+            "randomGameTitle": "Zagraj w Losową Grę",
+            "randomGameOptions": "Opcje Losowej Gry",
+            "selectGameLanguage": "Wybierz Język Gry",
+            "selectGameLanguageDesc": "To nie wpływa na język wyświetlania strony internetowej."
+        },
         "startGame": "Rozpocznij grę",
         "submitWord": "Zatwierdź słowo",
         "playAgain": "Zagraj ponownie",
@@ -61,11 +67,14 @@
         "twoWordSolutions": "Rozwiązania dwuwyrazowe",
         "threeWordSolutions": "Rozwiązania trzywyrazowe",
         "enterGameLayout": "Wprowadź układ gry",
-        "customGame": "Utwórz Własną Grę",
-        "randomGame": "Zagraj w Losową Grę",
-        "randomGameOptions": "Opcje Losowej Gry",
-        "selectGameLanguage": "Wybierz Język Gry",
-        "selectGameLanguageDesc": "To nie wpływa na język wyświetlania strony internetowej.",
+        "customGame": {
+            "customGameTitle": "Stwórz Grę Niestandardową",
+            "customGameChoice": "Jak chcesz stworzyć swoją niestandardową grę?",
+            "enterLetters": "Wpisując Litery",
+            "enterLettersDesc": "Stwórz niestandardową grę, wpisując litery wokół planszy",
+            "chooseWords": "Wybierając Słowa",
+            "chooseWordsDesc": "Wybierz 1 lub 2 słowa, a ja wygeneruję planszę do gry dla Ciebie!"
+        },
         "selectBoardSize": "Wybierz Rozmiar Planszy",
         "restartGame": "Zrestartuj grę",
         "deleteLetter": "Usuń literę",
@@ -116,9 +125,10 @@
         "generateGame": "Wygeneruj Grę",
         "cancel": "Anuluj",
         "instructions": {
-          "enterSeedWord": "Wprowadź słowo kluczowe",
-          "seedWordChoice": "Dla małych plansz możesz użyć jednego lub dwóch słów kluczowych.",
-          "boardSize": "Wybierz rozmiar planszy do gry"
+            "enterLetters": "Wpisz literę w każde pole wokół planszy.",
+            "enterSeedWord": "Wprowadź słowo kluczowe",
+            "seedWordChoice": "Dla małych plansz możesz użyć jednego lub dwóch słów kluczowych.",
+            "boardSize": "Wybierz rozmiar planszy do gry"
         },
         "success": {
             "gameCreationSuccess": "Gra została pomyślnie wygenerowana!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "Utworzyć kolejną?"
         },
         "error": {
+            "spacesOnBoard": "Proszę wpisać literę w każde pole na planszy.",
+            "repeatLettersOnBoard": "Każda litera na planszy musi być unikalna. Nie może być powtórzeń.",
             "wordsNotConnected": "Ostatnia litera Słowa 1 musi być taka sama jak pierwsza litera Słowa 2.",
             "notEnoughLetters": "Za mało unikalnych liter dla tego rozmiaru planszy.",
             "tooManyLetters": "Zbyt wiele unikalnych liter dla tego rozmiaru planszy.",

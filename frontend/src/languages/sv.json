@@ -4,8 +4,8 @@
             "menuTitle": "Huvudmeny",
             "playToday": "Spela dagens NYT-spel",
             "archive": "NYT-spelarkiv",
-            "customGame": "Skapa eget spel",
-            "randomGame": "Skapa slumpmässigt spel"
+            "customGame": "Skapa Eget spel",
+            "randomGame": "Spela Slumpmässigt Spel"
         },
         "archive": {
             "noGames": "Inga spel tillgängliga",
@@ -58,14 +58,23 @@
             "someTwoWordSolutions": "Några möjliga tvåordslösningar",
             "playAnotherButton": "Spela en till?"
         },
+        "randomGame": {
+            "randomGameTitle": "Spela ett Slumpmässigt Spel",
+            "randomGameOptions": "Alternativ för Slumpmässigt Spel",
+            "selectGameLanguage": "Välj ett Spelspråk",
+            "selectGameLanguageDesc": "Detta påverkar inte webbplatsens visningsspråk."
+        },
         "twoWordSolutions": "Tvåords-lösningar",
         "threeWordSolutions": "Treords-lösningar",
         "enterGameLayout": "Ange spelbrädeslayout",
-        "customGame": "Skapa ett Anpassat Spel",
-        "randomGame": "Spela ett Slumpmässigt Spel",
-        "randomGameOptions": "Alternativ för Slumpmässigt Spel",
-        "selectGameLanguage": "Välj ett Spelspråk",
-        "selectGameLanguageDesc": "Detta påverkar inte webbplatsens visningsspråk.",
+        "customGame": {
+            "customGameTitle": "Skapa ett Anpassat Spel",
+            "customGameChoice": "Hur vill du skapa ditt anpassade spel?",
+            "enterLetters": "Genom att Ange Bokstäver",
+            "enterLettersDesc": "Skapa ett anpassat spel genom att ange bokstäver runt spelplanen",
+            "chooseWords": "Genom att Välja Ord",
+            "chooseWordsDesc": "Välj 1 eller 2 ord, så skapar jag en spelplan åt dig!"
+        },
         "selectBoardSize": "Välj en Brädsstorlek",
         "restartGame": "Starta om spelet",
         "deleteLetter": "Radera bokstav",
@@ -116,9 +125,10 @@
         "generateGame": "Skapa Spel",
         "cancel": "Avbryt",
         "instructions": {
-          "enterSeedWord": "Ange ett fröord",
-          "seedWordChoice": "För små brädor kan du använda ett eller två fröord.",
-          "boardSize": "Välj en storlek för spelbrädan"
+            "enterLetters": "Ange en bokstav i varje ruta runt spelplanen.",
+            "enterSeedWord": "Ange ett fröord",
+            "seedWordChoice": "För små brädor kan du använda ett eller två fröord.",
+            "boardSize": "Välj en storlek för spelbrädan"
         },
         "success": {
             "gameCreationSuccess": "Spelet skapades framgångsrikt!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "Skapa ett till?"
         },
         "error": {
+            "spacesOnBoard": "Vänligen placera en bokstav i varje ruta på spelplanen.",
+            "repeatLettersOnBoard": "Varje bokstav på spelplanen måste vara unik. Inga upprepningar är tillåtna.",
             "wordsNotConnected": "Den sista bokstaven i Ord 1 måste vara samma som den första bokstaven i Ord 2.",
             "notEnoughLetters": "Det finns inte tillräckligt med unika bokstäver för denna brädstorlek.",
             "tooManyLetters": "Det finns för många unika bokstäver för denna brädstorlek.",

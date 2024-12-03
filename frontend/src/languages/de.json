@@ -61,11 +61,20 @@
         "twoWordSolutions": "Lösungen mit zwei Wörtern",
         "threeWordSolutions": "Lösungen mit drei Wörtern",
         "enterGameLayout": "Spielaufbau eingeben",
-        "customGame": "Erstelle ein eigenes Spiel",
-        "randomGame": "Spiele ein zufälliges Spiel",
-        "randomGameOptions": "Optionen für zufälliges Spiel",
-        "selectGameLanguage": "Wähle eine Spielsprache",
-        "selectGameLanguageDesc": "Dies beeinflusst nicht die Anzeigesprache der Website.",
+        "customGame": {
+            "customGameTitle": "Erstellen Sie ein eigenes Spiel",
+            "customGameChoice": "Wie möchten Sie Ihr benutzerdefiniertes Spiel erstellen?",
+            "enterLetters": "Indem Sie Buchstaben eingeben",
+            "enterLettersDesc": "Erstellen Sie ein eigenes Spiel, indem Sie Buchstaben um das Spielfeld eingeben",
+            "chooseWords": "Indem Sie Wörter auswählen",
+            "chooseWordsDesc": "Wählen Sie 1 oder 2 Wörter aus, und ich generiere ein Spielfeld für Sie!"
+        },
+        "randomGame": {
+            "randomGameTitle": "Spiele ein Zufälliges Spiel",
+            "randomGameOptions": "Optionen für Zufälliges Spiel",
+            "selectGameLanguage": "Wähle eine Spielsprache",
+            "selectGameLanguageDesc": "Dies beeinflusst nicht die Anzeigesprache der Website."
+        },
         "selectBoardSize": "Wähle eine Brettgröße",
         "restartGame": "Spiel neu starten",
         "deleteLetter": "Buchstabe löschen",
@@ -116,9 +125,10 @@
         "generateGame": "Spiel generieren",
         "cancel": "Abbrechen",
         "instructions": {
-          "enterSeedWord": "Geben Sie ein Ausgangswort ein",
-          "seedWordChoice": "Für kleine Bretter können Sie ein oder zwei Ausgangswörter verwenden.",
-          "boardSize": "Wählen Sie eine Brettgröße aus"
+            "enterLetters": "Geben Sie einen Buchstaben in jeden Platz um das Spielfeld ein.",
+            "enterSeedWord": "Geben Sie ein Ausgangswort ein",
+            "seedWordChoice": "Für kleine Bretter können Sie ein oder zwei Ausgangswörter verwenden.",
+            "boardSize": "Wählen Sie eine Brettgröße aus"
         },
         "success": {
             "gameCreationSuccess": "Spiel erfolgreich generiert!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "Noch eins erstellen?"
         },
         "error": {
+            "spacesOnBoard": "Bitte setzen Sie einen Buchstaben in jeden Platz auf dem Spielfeld.",
+            "repeatLettersOnBoard": "Jeder Buchstabe auf dem Spielfeld muss einzigartig sein. Keine Wiederholungen.",
             "wordsNotConnected": "Der letzte Buchstabe von Wort 1 muss mit dem ersten Buchstaben von Wort 2 übereinstimmen.",
             "notEnoughLetters": "Es gibt nicht genug einzigartige Buchstaben für diese Brettgröße.",
             "tooManyLetters": "Es gibt zu viele einzigartige Buchstaben für diese Brettgröße.",

@@ -5,7 +5,7 @@
             "playToday": "Play Today's NYT Game",
             "archive": "NYT Games Archive",
             "customGame": "Create Custom Game",
-            "randomGame": "Create Random Game"
+            "randomGame": "Play Random Game"
         },
         "archive": {
             "noGames": "No games available",
@@ -61,11 +61,20 @@
         "twoWordSolutions": "Two-Word Solutions",
         "threeWordSolutions": "Three-Word Solutions",
         "enterGameLayout": "Enter Game Layout",
-        "customGame": "Create a Custom Game",
-        "randomGame": "Play a Random Game",
-        "randomGameOptions": "Random Game Options",
-        "selectGameLanguage": "Select a Game Language",
-        "selectGameLanguageDesc": "This does not affect the display language of the website.",
+        "customGame": {
+            "customGameTitle": "Create a Custom Game",
+            "customGameChoice": "How would you like to generate your custom game?",
+            "enterLetters": "By Enering Letters",
+            "enterLettersDesc": "Create a custom game by entering letters around the game board",
+            "chooseWords": "By Choosing Words",
+            "chooseWordsDesc": "Choose 1 or 2 words, and I will generate a game board for you!"
+        },
+        "randomGame": {
+            "randomGameTitle": "Play a Random Game",
+            "randomGameOptions": "Random Game Options",
+            "selectGameLanguage": "Select a Game Language",
+            "selectGameLanguageDesc": "This does not affect the display language of the website."
+        },  
         "selectBoardSize": "Select a Board Size",
         "restartGame": "Restart Game",
         "deleteLetter": "Delete Letter",
@@ -99,7 +108,7 @@
             "error": "An error occurred while validating the word."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Board Size",
         "boardSizes": {
           "2x2": "2x2",
@@ -116,9 +125,10 @@
         "generateGame": "Generate Game",
         "cancel": "Cancel",
         "instructions": {
-          "enterSeedWord": "Enter a seed word",
-          "seedWordChoice": "For small game boards, you can use one or two seed words.",
-          "boardSize": "Select a size for the game board"
+            "enterLetters": "Enter a letter in each space around the game board.",
+            "enterSeedWord": "Enter a seed word",
+            "seedWordChoice": "For small game boards, you can use one or two seed words.",
+            "boardSize": "Select a size for the game board"
         },
         "success": {
             "gameCreationSuccess": "Game generated successfully!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "Create another?"
         },
         "error": {
+            "spacesOnBoard": "Please put a letter in each space on the board.",
+            "repeatLettersOnBoard": "Each letter on the board must be unique. No repeat letters.",
             "wordsNotConnected": "The last letter of Word 1 must be the same as the first letter of Word 2.",
             "notEnoughLetters": "There are not enough unique letters for this board size.",
             "tooManyLetters": "There are too many unique letters for this board size.",

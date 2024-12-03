@@ -61,11 +61,20 @@
         "twoWordSolutions": "Solutions en deux mots",
         "threeWordSolutions": "Solutions en trois mots",
         "enterGameLayout": "Entrer la disposition du jeu",
-        "customGame": "Créer une partie personnalisée",
-        "randomGame": "Jouer une partie aléatoire",
-        "randomGameOptions": "Options de jeu aléatoire",
-        "selectGameLanguage": "Choisir une langue de jeu",
-        "selectGameLanguageDesc": "Cela n'affecte pas la langue d'affichage du site web.",
+        "customGame": {
+            "customGameTitle": "Créer un Jeu Personnalisé",
+            "customGameChoice": "Comment souhaitez-vous générer votre jeu personnalisé ?",
+            "enterLetters": "En Entrant des Lettres",
+            "enterLettersDesc": "Créez un jeu personnalisé en entrant des lettres autour du plateau de jeu",
+            "chooseWords": "En Choisissant des Mots",
+            "chooseWordsDesc": "Choisissez 1 ou 2 mots, et je créerai un plateau de jeu pour vous !"
+        },
+        "randomGame": {
+            "randomGameTitle": "Jouer un Jeu Aléatoire",
+            "randomGameOptions": "Options de Jeu Aléatoire",
+            "selectGameLanguage": "Sélectionnez une Langue pour le Jeu",
+            "selectGameLanguageDesc": "Cela n'affecte pas la langue d'affichage du site web."
+        },
         "selectBoardSize": "Choisir une taille de plateau",
         "restartGame": "Redémarrer le jeu",
         "deleteLetter": "Supprimer la lettre",
@@ -116,9 +125,10 @@
         "generateGame": "Générer le jeu",
         "cancel": "Annuler",
         "instructions": {
-          "enterSeedWord": "Entrez un mot de départ",
-          "seedWordChoice": "Pour les petits plateaux, vous pouvez utiliser un ou deux mots de départ.",
-          "boardSize": "Sélectionnez une taille pour le plateau"
+            "enterLetters": "Entrez une lettre dans chaque espace autour du plateau de jeu.",
+            "enterSeedWord": "Entrez un mot de départ",
+            "seedWordChoice": "Pour les petits plateaux, vous pouvez utiliser un ou deux mots de départ.",
+            "boardSize": "Sélectionnez une taille pour le plateau"
         },
         "success": {
             "gameCreationSuccess": "Jeu généré avec succès !",
@@ -127,6 +137,8 @@
             "createAnotherGame": "En créer un autre ?"
         },
         "error": {
+            "spacesOnBoard": "Veuillez placer une lettre dans chaque espace sur le plateau.",
+            "repeatLettersOnBoard": "Chaque lettre sur le plateau doit être unique. Pas de lettres répétées.",
             "wordsNotConnected": "La dernière lettre du Mot 1 doit être identique à la première lettre du Mot 2.",
             "notEnoughLetters": "Il n'y a pas assez de lettres uniques pour cette taille de plateau.",
             "tooManyLetters": "Il y a trop de lettres uniques pour cette taille de plateau.",

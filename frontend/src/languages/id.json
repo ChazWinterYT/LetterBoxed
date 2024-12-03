@@ -61,11 +61,20 @@
         "twoWordSolutions": "Solusi Dua Kata",
         "threeWordSolutions": "Solusi Tiga Kata",
         "enterGameLayout": "Masukkan Tata Letak Game",
-        "customGame": "Buat Permainan Kustom",
-        "randomGame": "Mainkan Permainan Acak",
-        "randomGameOptions": "Opsi Permainan Acak",
-        "selectGameLanguage": "Pilih Bahasa Permainan",
-        "selectGameLanguageDesc": "Ini tidak memengaruhi bahasa tampilan situs web.",
+        "customGame": {
+            "customGameTitle": "Buat Game Kustom",
+            "customGameChoice": "Bagaimana Anda ingin membuat game kustom Anda?",
+            "enterLetters": "Dengan Memasukkan Huruf",
+            "enterLettersDesc": "Buat game kustom dengan memasukkan huruf di sekitar papan permainan",
+            "chooseWords": "Dengan Memilih Kata",
+            "chooseWordsDesc": "Pilih 1 atau 2 kata, dan saya akan membuat papan permainan untuk Anda!"
+        },
+        "randomGame": {
+            "randomGameTitle": "Mainkan Permainan Acak",
+            "randomGameOptions": "Opsi Permainan Acak",
+            "selectGameLanguage": "Pilih Bahasa Permainan",
+            "selectGameLanguageDesc": "Ini tidak memengaruhi bahasa tampilan situs web."
+        },
         "selectBoardSize": "Pilih Ukuran Papan",
         "restartGame": "Mulai Ulang Game",
         "deleteLetter": "Hapus Huruf",
@@ -116,9 +125,10 @@
         "generateGame": "Buat Permainan",
         "cancel": "Batal",
         "instructions": {
-          "enterSeedWord": "Masukkan kata benih",
-          "seedWordChoice": "Untuk papan kecil, Anda dapat menggunakan satu atau dua kata benih.",
-          "boardSize": "Pilih ukuran untuk papan permainan"
+            "enterLetters": "Masukkan satu huruf di setiap ruang di sekitar papan permainan.",
+            "enterSeedWord": "Masukkan kata benih",
+            "seedWordChoice": "Untuk papan kecil, Anda dapat menggunakan satu atau dua kata benih.",
+            "boardSize": "Pilih ukuran untuk papan permainan"
         },
         "success": {
             "gameCreationSuccess": "Permainan berhasil dibuat!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "Buat yang lain?"
         },
         "error": {
+            "spacesOnBoard": "Harap masukkan satu huruf di setiap ruang di papan.",
+            "repeatLettersOnBoard": "Setiap huruf di papan harus unik. Tidak boleh ada pengulangan.",
             "wordsNotConnected": "Huruf terakhir dari Kata 1 harus sama dengan huruf pertama dari Kata 2.",
             "notEnoughLetters": "Tidak cukup huruf unik untuk ukuran papan ini.",
             "tooManyLetters": "Terlalu banyak huruf unik untuk ukuran papan ini.",

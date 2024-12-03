@@ -31,7 +31,7 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
       </button>
       <button onClick={onOpenArchive}>{t("ui.menu.archive")}</button>
       <button onClick={onOpenCustomGame}>{t("ui.menu.customGame")}</button>
-      <button onClick={onPlayRandomGame}>{t("game.randomGame")}</button>
+      <button onClick={onPlayRandomGame}>{t("ui.menu.randomGame")}</button>
     </div>
   );
 };

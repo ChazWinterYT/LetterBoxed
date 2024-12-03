@@ -61,11 +61,20 @@
         "twoWordSolutions": "Soluzioni in due parole",
         "threeWordSolutions": "Soluzioni in tre parole",
         "enterGameLayout": "Inserisci la disposizione del gioco",
-        "customGame": "Crea un Gioco Personalizzato",
-        "randomGame": "Gioca un Gioco Casuale",
-        "randomGameOptions": "Opzioni Gioco Casuale",
-        "selectGameLanguage": "Seleziona una Lingua di Gioco",
-        "selectGameLanguageDesc": "Questo non influisce sulla lingua di visualizzazione del sito web.",
+        "customGame": {
+            "customGameTitle": "Crea un Gioco Personalizzato",
+            "customGameChoice": "Come vuoi generare il tuo gioco personalizzato?",
+            "enterLetters": "Inserendo Lettere",
+            "enterLettersDesc": "Crea un gioco personalizzato inserendo lettere intorno al tabellone di gioco",
+            "chooseWords": "Scegliendo Parole",
+            "chooseWordsDesc": "Scegli 1 o 2 parole e genererò un tabellone per te!"
+        },
+        "randomGame": {
+            "randomGameTitle": "Gioca a un Gioco Casuale",
+            "randomGameOptions": "Opzioni per Gioco Casuale",
+            "selectGameLanguage": "Seleziona la Lingua del Gioco",
+            "selectGameLanguageDesc": "Questo non influisce sulla lingua di visualizzazione del sito web."
+        },
         "selectBoardSize": "Seleziona una Dimensione della Griglia",
         "restartGame": "Riavvia il gioco",
         "deleteLetter": "Elimina la lettera",
@@ -116,9 +125,10 @@
         "generateGame": "Genera Gioco",
         "cancel": "Annulla",
         "instructions": {
-          "enterSeedWord": "Inserisci una parola chiave",
-          "seedWordChoice": "Per tabelloni piccoli, puoi utilizzare una o due parole chiave.",
-          "boardSize": "Seleziona una dimensione per il tabellone"
+            "enterLetters": "Inserisci una lettera in ogni spazio intorno al tabellone di gioco.",
+            "enterSeedWord": "Inserisci una parola chiave",
+            "seedWordChoice": "Per tabelloni piccoli, puoi utilizzare una o due parole chiave.",
+            "boardSize": "Seleziona una dimensione per il tabellone"
         },
         "success": {
             "gameCreationSuccess": "Gioco generato con successo!",
@@ -127,6 +137,8 @@
             "createAnotherGame": "Crearne un altro?"
         },
         "error": {
+            "spacesOnBoard": "Per favore, inserisci una lettera in ogni spazio sul tabellone.",
+            "repeatLettersOnBoard": "Ogni lettera sul tabellone deve essere unica. Nessuna lettera ripetuta.",
             "wordsNotConnected": "L'ultima lettera della Parola 1 deve essere la stessa della prima lettera della Parola 2.",
             "notEnoughLetters": "Non ci sono abbastanza lettere uniche per questa dimensione del tabellone.",
             "tooManyLetters": "Ci sono troppe lettere uniche per questa dimensione del tabellone.",
