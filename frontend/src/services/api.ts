@@ -21,7 +21,7 @@ export const fetchTodaysGame = async () => {
 };
 
 // Fetch archive, with pagination
-export const fetchGameArchive = async (lastKey: string | null = null, limit: number = 20) => {
+export const fetchGameArchive = async (lastKey: string | null = null, limit: number = 12) => {
   const params = new URLSearchParams();
   params.append("limit", limit.toString());
   if (lastKey) params.append("lastKey", lastKey);
