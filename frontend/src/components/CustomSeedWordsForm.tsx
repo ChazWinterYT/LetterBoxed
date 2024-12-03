@@ -103,11 +103,13 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
 
       // Navigate or display success message
       if (response.gameId) {
+        setValidationError(null);
+        onCancel();
         navigate(`/games/${response.gameId}`); // Navigate to the generated game
       }
     } catch (error) {
       console.error("Error creating game:", error);
-      setValidationError("It didn't work. Maybe these aren't dictionary words?"); // Show API error message
+      setValidationError(`${t("customGameForm.error.genericError")}: ${error}`);
     } finally {
       setIsSubmitting(false);
     }

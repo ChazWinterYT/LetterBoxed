@@ -134,7 +134,7 @@
   
   /* Validation Messages */
   .custom-seed-words-form .validation-message-space {
-    height: 1.5rem; /* Reserve consistent space for validation message */
+    height: 2rem; /* Reserve consistent space for validation message */
     display: flex;
     align-items: center;
     justify-content: center;

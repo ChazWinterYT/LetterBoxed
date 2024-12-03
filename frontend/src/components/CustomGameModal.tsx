@@ -4,9 +4,15 @@ import CustomSeedWordsForm from "./CustomSeedWordsForm";
 
 interface CustomGameModalProps {
   onClose: () => void;
+  onOpenSeedWordsForm: () => void;
+  onOpenEnterLettersForm: () => void;
 }
 
-const CustomGameModal: React.FC<CustomGameModalProps> = ({ onClose }) => {
+const CustomGameModal: React.FC<CustomGameModalProps> = ({ 
+  onClose,
+  onOpenSeedWordsForm,
+  onOpenEnterLettersForm,
+}) => {
   const { t } = useLanguage();
   const [currentView, setCurrentView] = useState<"main" | "seedWords">("main");
 
@@ -36,13 +42,25 @@ const CustomGameModal: React.FC<CustomGameModalProps> = ({ onClose }) => {
               <h3>{t("game.customGame.customGameChoice")}</h3>
               <div className="button-group">
                 <div className="button-option">
-                  <button className="modal-button" onClick={handleChooseWords}>
+                  <button
+                    className="modal-button"
+                    onClick={() => {
+                      onClose(); // Close this modal
+                      onOpenSeedWordsForm(); // Open the Seed Words form modal
+                    }}
+                  >
                     {t("game.customGame.chooseWords")}
                   </button>
                   <p>{t("game.customGame.chooseWordsDesc")}</p>
                 </div>
                 <div className="button-option">
-                  <button className="modal-button" onClick={handleEnterLetters}>
+                  <button
+                    className="modal-button"
+                    onClick={() => {
+                      onClose(); // Close this modal
+                      onOpenEnterLettersForm(); // Open the Enter Letters form modal
+                    }}
+                  >
                     {t("game.customGame.enterLetters")}
                   </button>
                   <p>{t("game.customGame.enterLettersDesc")}</p>
