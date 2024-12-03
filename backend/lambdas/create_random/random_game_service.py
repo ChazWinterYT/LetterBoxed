@@ -18,7 +18,8 @@ def create_random_game(
     board_size: str = "3x3", 
     seed_words: Optional[tuple[str, str]] = None,
     clue: Optional[str] = "",
-    created_by: Optional[str] = None
+    created_by: Optional[str] = None,
+    from_lambda_console: bool = False
 ) -> Dict[str, Any]:
     """
     Create a random game by selecting two words from the dictionary and generating a layout.
@@ -30,6 +31,7 @@ def create_random_game(
             If not provided, the function will select two compatible words at random.
         clue (str): A clue for finding the solution based on the seed words.
         created_by (str): The author of the puzzle, if provided.
+        from_lambda_console (bool): True if the game creation request came from Lambda, or false it came from the web UI.
 
     Returns:
         Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout.
@@ -84,7 +86,7 @@ def create_random_game(
 
     game_data = create_game_schema(
         game_layout=game_layout,
-        game_type="random",
+        game_type="random" if from_lambda_console else "custom",
         language=language,
         board_size=board_size,
         random_seed_words=[word1, word2],
@@ -98,11 +100,12 @@ def create_random_game(
     db_time = time.time() - db_start
     print(f"[INFO] Database operations completed in {db_time:.2f} seconds")
 
-    # Add the game to the random games table and track the count
-    atomic_start = time.time()
-    atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)
-    atomic_time = time.time() - atomic_start
-    print(f"[INFO] Atomic number tracking completed in {atomic_time:.2f} seconds")
+    if from_lambda_console:
+    # Add the game to the random games table and track the count (if created via Lambda console)
+        atomic_start = time.time()
+        atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)
+        atomic_time = time.time() - atomic_start
+        print(f"[INFO] Atomic number tracking completed in {atomic_time:.2f} seconds")
 
     total_time = time.time() - start_time
     print(f"[INFO] Random game creation completed in {total_time:.2f} seconds\n")
@@ -115,7 +118,8 @@ def create_random_small_board_game(
     board_size: str, 
     seed_word: Optional[str] = None,
     clue: Optional[str] = "",
-    created_by: Optional[str] = None
+    created_by: Optional[str] = None,
+    from_lambda_console: bool = False,
 ) -> Dict[str, Any]:
     """
     Create a random game by selecting a single word from the dictionary and generating a layout.
@@ -126,6 +130,7 @@ def create_random_small_board_game(
         seed_word (Optional[str], optional): The seed word to use for puzzle generation, if provided. Defaults to None.
         clue (Optional[str], optional): A clue for finding the solution based on the seed words, if provided.
         created_by (str): The author of the puzzle, if provided.
+        from_lambda_console (bool): True if the game creation request came from Lambda, or false it came from the web UI.
 
     Returns:
         Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout.
@@ -170,7 +175,7 @@ def create_random_small_board_game(
     
     game_data = create_game_schema(
         game_layout=game_layout,
-        game_type="random",
+        game_type="random" if from_lambda_console else "custom",
         language=language,
         random_seed_word=seed_word,
         board_size=board_size,
@@ -184,11 +189,12 @@ def create_random_small_board_game(
     db_time = time.time() - db_start
     print(f"[INFO] Database operations completed in {db_time:.2f} seconds")
 
-    # Add the game to the random games table and track the count
-    atomic_start = time.time()
-    atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)
-    atomic_time = time.time() - atomic_start
-    print(f"[INFO] Atomic number tracking completed in {atomic_time:.2f} seconds")
+    # Add the game to the random games table and track the count, if game was created from lambda console
+    if from_lambda_console:
+        atomic_start = time.time()
+        atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)
+        atomic_time = time.time() - atomic_start
+        print(f"[INFO] Atomic number tracking completed in {atomic_time:.2f} seconds")
 
     total_time = time.time() - crsb_start_time
     print(f"[INFO] Random game creation completed in {total_time:.2f} seconds\n")

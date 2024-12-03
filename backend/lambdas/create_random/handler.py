@@ -26,6 +26,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         clue = body.get("clue", "")
         created_by = body.get("createdBy", None)
         single_word = body.get("fromSingleWord", False)
+        from_lambda_console = body.get("fromLambdaConsole", False)
         
         
         # Validate language and board size
@@ -48,10 +49,24 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         # Special handling for small boards
         if board_size in small_boards and single_word:
-            random_game_data = create_random_small_board_game(language, board_size, seed_words, clue, created_by)
+            random_game_data = create_random_small_board_game(
+                language, 
+                board_size, 
+                seed_words, 
+                clue, 
+                created_by, 
+                from_lambda_console
+            )
         else:
             # Use existing service for all other boards
-            random_game_data = retry_random_game_creation(language, board_size, seed_words, clue, created_by)
+            random_game_data = create_random_game(
+                language, 
+                board_size, 
+                seed_words, 
+                clue, 
+                created_by, 
+                from_lambda_console
+            )
 
         # Return the game details
         return {
@@ -63,6 +78,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             },
             "body": json.dumps({
                 "message": "Random game created successfully.",
+                "gameType": random_game_data["gameType"],
                 "gameId": random_game_data["gameId"],
                 "gameLayout": random_game_data["gameLayout"],
                 "createdBy": random_game_data["createdBy"],
@@ -77,22 +93,4 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     except Exception as e:
         print(f"Handler failed: {e}")
         return error_response(f"There was a problem creating the game: {e}", 500)
-
-
-def retry_random_game_creation(
-    language: str, 
-    board_size: str, 
-    seed_words: Optional[tuple[str, str]],
-    clue: str,
-    created_by: Optional[str]
-) -> Dict[str, Any]:
-    retries = 0
-    while retries < MAX_RETRIES:
-        try:
-            # Create a random game
-            return create_random_game(language, board_size, seed_words, clue, created_by)
-        except ValueError as e:
-            retries += 1
-            print(f"Retrying ({retries}/{MAX_RETRIES}) due to error generating game: {e}")
-    raise ValueError("Failed to create a random game after multiple retries.")
     

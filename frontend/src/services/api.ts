@@ -70,6 +70,7 @@ export const createRandomGame = async (data: {
   clue?: string;
   fromSingleWord?: boolean;
   createdBy?: string;
+  fromLambdaConsole?: boolean;
 }) => {
   const response = await fetch(`${API_URL}/random-game`, {
     method: "POST",

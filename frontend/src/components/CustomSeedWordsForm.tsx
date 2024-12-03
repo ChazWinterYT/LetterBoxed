@@ -26,6 +26,10 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
   const [createdBy, setCreatedBy] = useState<string>("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [gameId, setGameId] = useState<string | null>(null);
+  const [copied, setCopied] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const getPlayableLanguages = (): Language[] =>
     availableLanguages.filter((lang: Language) => lang.playable);
@@ -78,8 +82,6 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word1, word2, boardSize]);
 
-  const navigate = useNavigate();
-
   const handleGenerate = async () => {
     if (isSubmitting || !validateInput()) return; // Prevent duplicate calls
     setIsSubmitting(true);
@@ -94,18 +96,19 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
       clue: hint.trim(), // Add the optional hint
       createdBy: createdBy.trim() || "Anonymous",
       fromSingleWord: seedWordChoice === "one", // Determine single-word flag
+      fromLambdaConsole: false,
     };
 
     try {
       console.log("Sending payload:", payload);
-      const response = await createRandomGame(payload); // Call the API
+      const response = await createRandomGame(payload);
       console.log("Game created successfully:", response);
 
       // Navigate or display success message
       if (response.gameId) {
         setValidationError(null);
-        onCancel();
-        navigate(`/games/${response.gameId}`); // Navigate to the generated game
+        setGameId(response.gameId);
+        setIsSuccess(true);
       }
     } catch (error) {
       console.error("Error creating game:", error);
@@ -115,10 +118,64 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
     }
   };
 
+  const handleCopyToClipboard = () => {
+    if (gameId) {
+      navigator.clipboard.writeText(`${window.location.origin}/games/${gameId}`)
+      setCopied(true);
+
+      // Reset the button after a delay
+      setTimeout(() => setCopied(false), 5000)
+    }
+  };
+
+  const handleCreateAnother = () => {
+    setIsSuccess(false);
+    setGameId(null);
+    setValidationError(null);
+    setWord1("");
+    setWord2("");
+    setHint("");
+  };
+
+  if (isSuccess) {
+    return (
+      <div className="custom-seed-words-form">
+        <h2 className="modal-title">{t("customGameForm.success.gameCreationSuccess")}</h2>
+        <div className="modal-body">
+          <p>{t("customGameForm.success.gameLink")}</p>
+          <div className="game-link">
+            <input
+              type="text"
+              value={`${window.location.origin}/LetterBoxed/frontend/games/${gameId}`}
+              readOnly
+              className="modal-input"
+              onFocus={(e) => e.target.select()}
+            />
+            <button className={`button ${copied ? "copied" : ""}`} onClick={handleCopyToClipboard}>
+              {copied ? t("customGameForm.success.copied") : t("customGameForm.success.copyLink")}
+            </button>
+          </div>
+          <div className="button-group">
+            <button
+              className="modal-button"
+              onClick={() => {
+                window.location.href = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
+              }}
+            >
+              {t("customGameForm.success.goToGame")}
+            </button>
+            <button className="modal-button" onClick={handleCreateAnother}>
+              {t("customGameForm.success.createAnotherGame")}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
     <div className="custom-seed-words-form">
-      <h2 className="modal-title">{t("game.customGame.customGameTitle")}</h2>
       <div className="modal-body">
         {/* Language Selector */}
         <div className="form-section">
@@ -141,6 +198,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
         {/* Board Size */}
         <div className="form-section">
           <label className="modal-label">{t("customGameForm.boardSize")}</label>
+          <p className="warning-message">{t("customGameForm.instructions.boardSize")}</p>
           <div className="toggle-group">
             {["2x2", "3x3", "4x4"].map((size) => (
               <button
@@ -152,7 +210,6 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
               </button>
             ))}
           </div>
-          <p className="warning-message">{t("customGameForm.instructions.boardSize")}</p>
         </div>
   
         {/* Seed Word Choice */}

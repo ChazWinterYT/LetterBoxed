@@ -110,7 +110,6 @@
         }
     },
     "customGameForm": {
-        "authorName": "Author Name",
         "boardSize": "Board Size",
         "boardSizes": {
           "2x2": "2x2",
@@ -118,12 +117,13 @@
           "4x4": "4x4"
         },
         "numSeedWords": {
-          "one": "One Seed Word",
-          "two": "Two Seed Words"
+          "one": "One Word",
+          "two": "Two Words"
         },
         "seedWords": "Seed Words",
         "clearWord": "Clear Word",
         "hint": "Hint",
+        "authorName": "Author Name",
         "longTimeWarning": "WARNING: Generating a game can take up to 60 seconds. Please do not refresh or exit the page, or you will not receive your game link.",
         "generateGame": "Generate Game",
         "submitting": "Submitting, please wait...",
@@ -139,6 +139,8 @@
         "success": {
             "gameCreationSuccess": "Game generated successfully!",
             "gameLink": "Share this game with your friends!",
+            "copyLink": "Copy to clipboard",
+            "copied": "Copied!",
             "goToGame": "Play your game now!",
             "createAnotherGame": "Create another?"
         },
@@ -148,9 +150,9 @@
             "wordsNotConnected": "The last letter of Word 1 must be the same as the first letter of Word 2.",
             "notEnoughLetters": "There are not enough unique letters for this board size.",
             "tooManyLetters": "There are too many unique letters for this board size.",
-            "lettersRequired": "letters required",
-            "lettersUsed": "letters used",
-            "_context1": "As in, '12 letters required. 7 letters used.'",
+            "lettersRequired": "Letters required",
+            "lettersUsed": "Letters used",
+            "_context1": "As in, 'Letters required: 12. Letters Used: 7.'",
             "doubleLetters": "You cannot have the same letter next to itself.",
             "notInDictionary": "One (or both) words you entered are not in the dictionary.",
             "genericError": "An error occurred while creating your game."

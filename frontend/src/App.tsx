@@ -396,7 +396,7 @@ const App = () => {
       <CustomGameModal
       onClose={() => setIsModalOpen(false)}
       onOpenSeedWordsForm={() => {
-        setModalTitle(t("customGameForm.title"));
+        setModalTitle(t("game.customGame.customGameTitle"));
         setModalContent(
           <CustomSeedWordsForm
             onGenerate={(data) => {
