@@ -149,7 +149,7 @@ class LetterBoxedStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             removal_policy=RemovalPolicy.RETAIN
         )
-        test_table_resources.append(self.prod_archive_table)
+        prod_table_resources.append(self.prod_archive_table)
 
         # Test DynamoDB Archived Games table
         self.test_archive_table = dynamodb.Table(

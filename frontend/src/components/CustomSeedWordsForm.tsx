@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { Language } from "../languages/languages";
 import { createRandomGame } from "../services/api";
@@ -29,7 +28,6 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [gameId, setGameId] = useState<string | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const getPlayableLanguages = (): Language[] =>
     availableLanguages.filter((lang: Language) => lang.playable);

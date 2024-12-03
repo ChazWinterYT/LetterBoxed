@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -31,7 +31,6 @@ import {
 import { ValidationResult } from "./types/validation";
 import "./App.css";
 import { Language } from "./languages/languages";
-import { isNullOrUndefined } from "util";
 
 const App = () => {
   const { t, availableLanguages } = useLanguage();
@@ -43,7 +42,7 @@ const App = () => {
   const [userSessionId, setUserSessionId] = useState<string | null>(null);
   const [archiveGames, setArchiveGames] = useState<any[]>([]);
   const [isArchiveLoading, setIsArchiveLoading] = useState(false);
-  const [lastKey, setLastKey] = useState<{ NYTGame: string; gameId: string } | null>(null);
+  const lastKeyRef = useRef(null);
   const [hasMore, setHasMore] = useState(true);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [originalWordsUsed, setOriginalWordsUsed] = useState<string[]>([]);
@@ -279,13 +278,19 @@ const App = () => {
           );
         }
 
-        console.log("Fetching game archive with lastKey:", lastKey);
-        const data = await fetchGameArchive(lastKey, 12);
+        console.log("Fetching game archive with lastKey:", lastKeyRef.current);
+        const data = await fetchGameArchive(lastKeyRef.current, 12);
         console.log("Fetched archive data:", data);
 
+        if (data.lastKey) {
+          lastKeyRef.current = JSON.parse(data.lastKey);
+          console.log("Last Key updated to", lastKeyRef.current)
+        } else {
+          setHasMore(false); // No more items to fetch
+        }
+
         setArchiveGames((prevGames) => [...prevGames, ...(data.nytGames || [])]);
-        setLastKey(data.lastKey || null);
-        setHasMore(!!data.lastKey);
+
         setModalContent(
           <ArchiveList
             games={[...archiveGames, ...(data.nytGames || [])]}
@@ -294,8 +299,8 @@ const App = () => {
               setIsModalOpen(false); // Close modal
               loadGame(gameId, true, true); // Load game and update URL, force reload
             }}
-            onLoadMore={loadGameArchive}
             hasMore={!!data.lastKey}
+            onLoadMore={loadGameArchive}
           />
         );
       } catch (error) {
@@ -309,13 +314,11 @@ const App = () => {
       archiveGames,
       hasMore,
       isArchiveLoading,
-      lastKey,
       loadGame,
       t,
       setIsArchiveLoading,
       setModalContent,
       setArchiveGames,
-      setLastKey,
       setHasMore,
       setIsModalOpen,
     ]
