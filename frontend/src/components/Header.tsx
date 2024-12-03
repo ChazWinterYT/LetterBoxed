@@ -1,6 +1,5 @@
 import React from "react";
 import { useLanguage } from "../context/LanguageContext";
-import LanguageSelector from "./LanguageSelector";
 import "./css/Header.css";
 
 const Header = () => {

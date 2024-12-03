@@ -29,7 +29,6 @@ import {
 } from "./services/api";
 import { ValidationResult } from "./types/validation";
 import "./App.css";
-import LanguageSelector from "./components/LanguageSelector";
 import { Language } from "./languages/languages";
 
 const App = () => {
