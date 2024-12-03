@@ -15,6 +15,7 @@ import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/ArchiveList";
 import Footer from "./components/Footer";
 import Modal from "./components/Modal";
+import CustomGameModal from "./components/CustomGameModal";
 import Spinner from "./components/Spinner";
 import { useLanguage } from "./context/LanguageContext";
 import {
@@ -390,21 +391,21 @@ const App = () => {
   // Open Custom Game Modal
   const openCustomGameModal = useCallback(() => {
     console.log("Opening custom game modal.");
-    setModalTitle(t("ui.menu.customGame"));
-    setIsModalOpen(true);
+    setModalTitle(t("customGameModal.title"));
     setModalContent(
-      <div className="custom-game-options">
-        <button onClick={() => console.log("Random Game")}>
-          {t("ui.customGame.random")}
-        </button>
-        <button onClick={() => console.log("Seed Words")}>
-          {t("ui.customGame.seedWords")}
-        </button>
-        <button onClick={() => console.log("Full Custom")}>
-          {t("ui.customGame.fullCustom")}
-        </button>
-      </div>
+      <CustomGameModal
+        onClose={() => setIsModalOpen(false)}
+        onEnterLetters={() => {
+          console.log("Navigate to Enter Letters modal");
+          // Set the modal content for Enter Letters
+        }}
+        onChooseWords={() => {
+          console.log("Navigate to Choose Words modal");
+          // Set the modal content for Choose Words
+        }}
+      />
     );
+    setIsModalOpen(true);
   }, [t]);
 
   // Handle Restart Game action

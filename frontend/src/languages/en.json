@@ -64,7 +64,7 @@
         "customGame": {
             "customGameTitle": "Create a Custom Game",
             "customGameChoice": "How would you like to generate your custom game?",
-            "enterLetters": "By Enering Letters",
+            "enterLetters": "By Entering Letters",
             "enterLettersDesc": "Create a custom game by entering letters around the game board",
             "chooseWords": "By Choosing Words",
             "chooseWordsDesc": "Choose 1 or 2 words, and I will generate a game board for you!"

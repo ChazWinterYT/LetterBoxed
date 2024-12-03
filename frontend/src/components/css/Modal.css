@@ -38,6 +38,7 @@
 
 /* Modal Title */
 .modal-title {
+  color: #061f32;
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
@@ -45,9 +46,61 @@
 
 /* Modal Body */
 .modal-body {
+  color: #061f32;
   font-size: 1rem;
   text-align: left;
-  flex-grow: 1; 
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Increased space between groups for clarity */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Individual Button Option */
+.button-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem; /* Smaller space between button and description */
+  text-align: center;
+}
+
+/* Modal Button */
+.modal-button {
+  background-color: #1586dd; /* Matches the existing language button */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: solid;
+  border-radius: 40px;
+  border-color: #061f32;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 90%;
+  max-width: 300px;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-button:hover {
+  background-color: #4145b0; /* Darker blue on hover */
+  transform: scale(1.05); /* Subtle zoom effect */
+}
+
+.modal-button:active {
+  background-color: #3d8e41; /* Slightly darker for active state */
+}
+
+/* Description Text */
+.modal-description {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
 }
 
 /* Random game modal styles */
