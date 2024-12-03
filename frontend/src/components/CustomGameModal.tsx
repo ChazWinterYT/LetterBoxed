@@ -16,15 +16,6 @@ const CustomGameModal: React.FC<CustomGameModalProps> = ({
   const { t } = useLanguage();
   const [currentView, setCurrentView] = useState<"main" | "seedWords">("main");
 
-  const handleChooseWords = () => {
-    setCurrentView("seedWords");
-  };
-
-  const handleEnterLetters = () => {
-    console.log("Entering Letters is not implemented yet.");
-    // Set up logic for entering letters if needed
-  };
-
   const handleBackToMain = () => {
     setCurrentView("main");
   };
