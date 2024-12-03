@@ -10,7 +10,8 @@
         "archive": {
             "noGames": "No games available",
             "archiveLoading": "Archive is loading, please wait...",
-            "errorLoadingGame": "There was an error when loading the game"
+            "errorLoadingGame": "There was an error when loading the game",
+            "loadMore": "Load More"
         },
         "customGame": {
             "random": "Fully Random Game",
