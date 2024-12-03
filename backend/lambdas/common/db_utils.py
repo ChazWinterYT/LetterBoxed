@@ -393,6 +393,7 @@ def add_game_to_archive(game_id: str) -> bool:
     try:
         table = get_archive_table()
         table.put_item(Item={
+            "NYTGame": "NYTGame", # Hard coded primary key
             "gameId": game_id
         })
         return True
@@ -415,29 +416,28 @@ def fetch_archived_games(limit: int, last_key: Optional[Dict[str, Any]] = None) 
     try:
         table = get_archive_table()
 
-        # Build scan parameters
-        scan_params = {"Limit": limit}
+        # Query the DB table
+        query_params = {
+            "KeyConditionExpression": Key("NYTGame").eq("NYTGame"),
+            "Limit": limit,
+            "ScanIndexForward": False, # Descending order
+        }
+        
         if last_key:
-            scan_params["ExclusiveStartKey"] = last_key
+            query_params["ExclusiveStartKey"] = last_key
 
-        print(f"Scanning DynamoDB with params: {scan_params}")
-        response = table.scan(**scan_params)
-
-        # Debug response
-        print(f"DynamoDB Response: {response}")
-
-        # Extract items and pagination key
-        items = response.get("Items", [])
+        print(f"Querying Game Archive table with params: {query_params}")
+        response = table.query(**query_params)
+        print(f"DynamoDB Response:", response)
+        
+        # Extract items and get pagination key
+        items= response.get("Items", [])
         last_evaluated_key = response.get("LastEvaluatedKey")
-
-        # Ensure sorting in descending order by `gameId`
-        sorted_items = sorted(items, key=lambda x: x["gameId"], reverse=True)
-
+        
         return {
-            "items": sorted_items[:limit],  # Respect limit after sorting
+            "items": items,
             "lastKey": last_evaluated_key,
         }
-
     except Exception as e:
         print(f"Error fetching archived games: {e}")
         return {"items": [], "lastKey": None}
@@ -450,5 +450,5 @@ def get_archive_table() -> Any:
     Returns:
         boto3.Table: The DynamoDB Table object.
     """
-    table_name = os.environ.get("ARCHIVE_TABLE", "LetterBoxedArchive")
+    table_name = os.environ.get("ARCHIVE_TABLE", "LetterBoxedNYTArchives")
     return dynamodb.Table(table_name)

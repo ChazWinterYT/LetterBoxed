@@ -36,7 +36,7 @@ def setup_environment():
     os.environ["VALID_WORDS_TABLE"] = "LetterBoxedValidWords1Test"
     os.environ["SESSION_STATES_TABLE"] = "LetterBoxedSessionStatesTest"
     os.environ["METADATA_TABLE"] = "LetterBoxedMetadataTableTest"
-    os.environ["ARCHIVE_TABLE"] = "LetterBoxedArchiveTest"
+    os.environ["ARCHIVE_TABLE"] = "LetterBoxedNYTArchivesTest"
     os.environ["RANDOM_GAMES_TABLE_EN"] = "LetterBoxedRandomGames_enTest"
     os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
     os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"

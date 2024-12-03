@@ -27,7 +27,7 @@ class LetterBoxedStack(Stack):
         prod_VALID_WORDS_TABLE_NAME = "LetterBoxedValidWords1"
         prod_SESSION_STATES_TABLE_NAME = "LetterBoxedSessionStates"
         prod_METADATA_TABLE_NAME = "LetterBoxedMetadataTable"
-        prod_ARCHIVE_TABLE_NAME = "LetterBoxedArchive"
+        prod_ARCHIVE_TABLE_NAME = "LetterBoxedNYTArchives"
         prod_RANDOM_GAMES_TABLE_NAME_EN = "LetterBoxedRandomGames_en"
         prod_RANDOM_GAMES_TABLE_NAME_ES = "LetterBoxedRandomGames_es"
         prod_RANDOM_GAMES_TABLE_NAME_IT = "LetterBoxedRandomGames_it"
@@ -38,7 +38,7 @@ class LetterBoxedStack(Stack):
         test_VALID_WORDS_TABLE_NAME = "LetterBoxedValidWords1Test"
         test_SESSION_STATES_TABLE_NAME = "LetterBoxedSessionStatesTest"
         test_METADATA_TABLE_NAME = "LetterBoxedMetadataTableTest"
-        test_ARCHIVE_TABLE_NAME = "LetterBoxedArchiveTest"
+        test_ARCHIVE_TABLE_NAME = "LetterBoxedNYTArchivesTest"
         test_RANDOM_GAMES_TABLE_NAME_EN = "LetterBoxedRandomGames_enTest"
         test_RANDOM_GAMES_TABLE_NAME_ES = "LetterBoxedRandomGames_esTest"
         test_RANDOM_GAMES_TABLE_NAME_IT = "LetterBoxedRandomGames_itTest"
@@ -135,17 +135,31 @@ class LetterBoxedStack(Stack):
         test_table_resources.append(self.test_metadata_table)
         
         # Production DynamoDB Archived Games table
-        self.prod_archive_table = dynamodb.Table.from_table_name(
-            self, "LetterBoxedArchiveTable",
-            table_name=prod_ARCHIVE_TABLE_NAME
+        self.prod_archive_table = dynamodb.Table(
+            self, "LetterBoxedNYTArchivesTable",
+            table_name=prod_ARCHIVE_TABLE_NAME,
+            partition_key=dynamodb.Attribute(
+                name="NYTGame",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="gameId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
         )
-        prod_table_resources.append(self.prod_archive_table)
+        test_table_resources.append(self.prod_archive_table)
 
         # Test DynamoDB Archived Games table
         self.test_archive_table = dynamodb.Table(
-            self, "LetterBoxedArchiveTestTable",
+            self, "LetterBoxedNYTArchivesTestTable",
             table_name=test_ARCHIVE_TABLE_NAME,
             partition_key=dynamodb.Attribute(
+                name="NYTGame",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
                 name="gameId",
                 type=dynamodb.AttributeType.STRING
             ),

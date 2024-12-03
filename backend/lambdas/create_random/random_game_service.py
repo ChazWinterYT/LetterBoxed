@@ -96,11 +96,11 @@ def create_random_game(
 
     # Store the game in the games DB
     db_start = time.time()
-    add_game_to_db(game_data)
+    success = add_game_to_db(game_data)
     db_time = time.time() - db_start
     print(f"[INFO] Database operations completed in {db_time:.2f} seconds")
 
-    if from_lambda_console:
+    if success and from_lambda_console:
     # Add the game to the random games table and track the count (if created via Lambda console)
         atomic_start = time.time()
         atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)
@@ -185,12 +185,12 @@ def create_random_small_board_game(
     
     # Store the game in the games DB
     db_start = time.time()
-    add_game_to_db(game_data)
+    success = add_game_to_db(game_data)
     db_time = time.time() - db_start
     print(f"[INFO] Database operations completed in {db_time:.2f} seconds")
 
     # Add the game to the random games table and track the count, if game was created from lambda console
-    if from_lambda_console:
+    if success and from_lambda_console:
         atomic_start = time.time()
         atomic_number = add_game_id_to_random_games_db(game_data["gameId"], language)
         atomic_time = time.time() - atomic_start

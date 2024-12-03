@@ -31,6 +31,7 @@ import {
 import { ValidationResult } from "./types/validation";
 import "./App.css";
 import { Language } from "./languages/languages";
+import { isNullOrUndefined } from "util";
 
 const App = () => {
   const { t, availableLanguages } = useLanguage();
@@ -42,7 +43,7 @@ const App = () => {
   const [userSessionId, setUserSessionId] = useState<string | null>(null);
   const [archiveGames, setArchiveGames] = useState<any[]>([]);
   const [isArchiveLoading, setIsArchiveLoading] = useState(false);
-  const [lastKey, setLastKey] = useState<string | null>(null);
+  const [lastKey, setLastKey] = useState<{ NYTGame: string; gameId: string } | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [originalWordsUsed, setOriginalWordsUsed] = useState<string[]>([]);

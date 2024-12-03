@@ -49,8 +49,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         )
 
         # Add today's game to the games and archives DB tables
-        add_game_to_db(game_data)
-        add_game_to_archive(game_id)
+        success = add_game_to_db(game_data)
+        if success:
+            add_game_to_archive(game_id)
 
         return {
             "statusCode": 201,
