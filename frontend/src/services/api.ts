@@ -63,10 +63,20 @@ export const fetchRandomGame = async (language: string) => {
 };
 
 // Create random game
-export const createRandomGame = async () => {
+export const createRandomGame = async (data: {
+  language: string;
+  boardSize: string;
+  seedWords?: [string] | [string, string];
+  clue?: string;
+  fromSingleWord?: boolean;
+  createdBy?: string;
+}) => {
   const response = await fetch(`${API_URL}/random-game`, {
     method: "POST",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   });
   return handleErrorOrReturnResponse(response);
 };

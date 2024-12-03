@@ -108,7 +108,7 @@
             "error": "Wystąpił błąd podczas sprawdzania słowa."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Rozmiar Planszy",
         "boardSizes": {
           "2x2": "2x2",

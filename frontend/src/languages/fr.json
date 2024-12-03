@@ -108,7 +108,7 @@
             "error": "Une erreur s'est produite lors de la validation du mot."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Taille du plateau",
         "boardSizes": {
           "2x2": "2x2",

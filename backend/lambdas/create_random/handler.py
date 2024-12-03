@@ -11,18 +11,22 @@ MAX_RETRIES = 5  # Maximum number of retries for ValueError exceptions
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
+        print("Received event:", event)
+        
         # Check if the body is None before parsing
         if event.get("body") is None:
             return error_response("Missing body in JSON event.", 400)
             
         # Parse parameters for the event
         body = json.loads(event.get("body", {}))
+        print("Parsed body:", body) 
 
         language = body.get("language", "en")  # Default to English
         board_size = body.get("boardSize", "3x3")  # Default to 3x3
         clue = body.get("clue", "")
         created_by = body.get("createdBy", None)
         single_word = body.get("fromSingleWord", False)
+        
         
         # Validate language and board size
         if not validate_board_size(board_size):
@@ -35,6 +39,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         if not seed_words:
             clue = "" # Don't allow a clue if it's not based on seed words
+        
+        print(f"Language: {language}, Board Size: {board_size}, Clue: {clue}, Seed Words: {seed_words}, Single Word: {single_word}")
         
         small_boards = ["1x1", "2x2"]
         if board_size not in small_boards and isinstance(seed_words, str):
@@ -67,7 +73,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         return error_response("JSON decoding error.", 400)
     except ValueError as e:
         print(f"Handler failed due to ValueError: {e}")
-        return error_response("Could not create a random game from the given seed words.", 400)
+        return error_response(f"Could not create a random game from the given seed words: {str(e)}", 400)
     except Exception as e:
         print(f"Handler failed: {e}")
         return error_response(f"There was a problem creating the game: {e}", 500)

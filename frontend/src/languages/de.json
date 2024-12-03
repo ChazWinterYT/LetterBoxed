@@ -108,7 +108,7 @@
             "error": "Beim Überprüfen des Wortes ist ein Fehler aufgetreten."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Brettgröße",
         "boardSizes": {
           "2x2": "2x2",

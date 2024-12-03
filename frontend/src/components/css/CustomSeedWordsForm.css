@@ -1,0 +1,194 @@
+/* Base styles for CustomSeedWordsForm */
+.custom-seed-words-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px; /* Space between components */
+  }
+  
+  /* Form Section */
+  .custom-seed-words-form .form-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* Form Labels */
+  .custom-seed-words-form .modal-label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #061f32;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  /* Label for Board Size */
+  .board-size-label {
+    margin-top: 0.5rem; /* Add small space above the label */
+    margin-bottom: -0.5rem; /* Move the label closer to the buttons */
+    font-size: 1rem; /* Ensure label is readable but not too large */
+    text-align: center;
+    color: #061f32;
+  }
+
+  
+  /* Inputs */
+  .custom-seed-words-form .modal-input {
+    width: 100%;
+    max-width: 250px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 2px solid #1586dd;
+    border-radius: 5px;
+  }
+  
+  /* Toggle Groups */
+  .custom-seed-words-form .toggle-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Space between toggle buttons */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    margin-bottom: 10px;
+  }
+  
+  /* Toggle Groups */
+  .custom-seed-words-form .toggle-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.1rem; /* Space between toggle buttons */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    margin-bottom: 10px;
+  }
+  
+  /* Toggle Buttons */
+  .custom-seed-words-form .toggle-button {
+    background-color: #e3f2fd;
+    border: 2px solid #1586dd;
+    border-radius: 20px;
+    padding: 10px 20px;
+    min-width: 76px;
+    font-size: 1rem;
+    color: #1586dd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-seed-words-form .toggle-button:hover {
+    transform: scale(1.03); /* Subtle scale on hover */
+    background-color: #d1e7fb; /* Slightly darker blue for hover */
+  }
+  
+  .custom-seed-words-form .toggle-button.active {
+    background-color: #1586dd;
+    color: #fff;
+    transform: scale(1.1); /* Slightly larger when active */
+    border: 2px solid #dddddd;
+  }
+
+  /* Modal Input */
+  .modal-input {
+    width: 90%;
+    max-width: 300px;
+    padding: 8px 12px;
+    border: 2px solid #1586dd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #061f32;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .modal-input:focus {
+    border-color: #1586dd;
+    box-shadow: 0 0 5px rgba(21, 134, 221, 0.5);
+  }
+  
+  /* Validation Error Input Style */
+  .modal-input.error {
+    border-color: red;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+  }
+
+  .hint-input {
+    margin: 1rem 0;
+    text-align: center;
+  }
+
+  .hint-textarea {
+    width: 100%;
+    min-height: 60px;
+    border: 2px solid #0a58ca;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 1rem;
+    resize: vertical;
+  }
+
+  .hint-textarea:focus {
+    border-color: #1586dd;
+    box-shadow: 0 0 5px rgba(21, 134, 221, 0.5);
+    border: 2px solid;
+  }
+  
+  /* Validation Messages */
+  .custom-seed-words-form .validation-message-space {
+    height: 1.5rem; /* Reserve consistent space for validation message */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: red;
+    text-align: center;
+  }
+  
+  .custom-seed-words-form .warning-message {
+    font-size: 0.9rem;
+    color: #d236c5;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 8px;
+  }
+  
+  /* Generate and Cancel Buttons */
+  .custom-seed-words-form .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .custom-seed-words-form .modal-button {
+    background-color: #1586dd;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+  }
+  
+  .custom-seed-words-form .modal-button:hover {
+    background-color: #0d6efd;
+  }
+  
+  .custom-seed-words-form .modal-button:active {
+    background-color: #0a58ca;
+  }
+
+  /* Disabled Modal Button */
+  .modal-button:disabled {
+    background-color: #a7a7a7; /* Light gray background */
+    color: #626262; /* Darker gray text */
+    border-color: #aeaeae; /* Light gray border */
+    cursor: not-allowed; /* Change cursor to indicate it’s not clickable */
+    transform: none; /* Disable hover effects */
+  }
+  
+  .modal-button:disabled:hover {
+    background-color: #a7a7a7; /* Keep the same background on hover */
+    color: #626262;
+    border-color: #aaaaaa;
+  }
+  

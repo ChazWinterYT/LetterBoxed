@@ -108,7 +108,7 @@
             "error": "単語の確認中にエラーが発生しました。"
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "ボードサイズ",
         "boardSizes": {
           "2x2": "2x2",

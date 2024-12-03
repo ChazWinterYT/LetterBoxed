@@ -393,15 +393,7 @@ const App = () => {
     setModalTitle(t("customGameModal.title"));
     setModalContent(
       <CustomGameModal
-        onClose={() => setIsModalOpen(false)}
-        onEnterLetters={() => {
-          console.log("Navigate to Enter Letters modal");
-          // Set the modal content for Enter Letters
-        }}
-        onChooseWords={() => {
-          console.log("Navigate to Choose Words modal");
-          // Set the modal content for Choose Words
-        }}
+        onClose={() => setIsModalOpen(false)} // Close the modal when finished
       />
     );
     setIsModalOpen(true);

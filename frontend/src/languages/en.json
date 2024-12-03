@@ -63,6 +63,7 @@
         "enterGameLayout": "Enter Game Layout",
         "customGame": {
             "customGameTitle": "Create a Custom Game",
+            "customGameOptions": "Custom Game Options",
             "customGameChoice": "How would you like to generate your custom game?",
             "enterLetters": "By Entering Letters",
             "enterLettersDesc": "Create a custom game by entering letters around the game board",
@@ -109,6 +110,7 @@
         }
     },
     "customGameForm": {
+        "authorName": "Author Name",
         "boardSize": "Board Size",
         "boardSizes": {
           "2x2": "2x2",
@@ -121,14 +123,17 @@
         },
         "seedWords": "Seed Words",
         "clearWord": "Clear Word",
+        "hint": "Hint",
         "longTimeWarning": "WARNING: Generating a game can take up to 60 seconds. Please do not refresh or exit the page, or you will not receive your game link.",
         "generateGame": "Generate Game",
         "cancel": "Cancel",
         "instructions": {
+            "authorName": "Enter your name!",
             "enterLetters": "Enter a letter in each space around the game board.",
             "enterSeedWord": "Enter a seed word",
             "seedWordChoice": "For small game boards, you can use one or two seed words.",
-            "boardSize": "Select a size for the game board"
+            "boardSize": "Select a size for the game board",
+            "hint": "Enter a hint to help others figure out your puzzle."
         },
         "success": {
             "gameCreationSuccess": "Game generated successfully!",

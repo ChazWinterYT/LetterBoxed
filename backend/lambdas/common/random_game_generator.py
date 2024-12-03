@@ -24,7 +24,7 @@ def main() -> Any:
     else:
         create_random_game(
             "en",
-            "5x5",
+            "3x3",
         )
 
 # def main() -> Any:

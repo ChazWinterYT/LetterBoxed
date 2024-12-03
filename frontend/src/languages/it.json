@@ -108,7 +108,7 @@
             "error": "Si è verificato un errore durante la validazione della parola."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Dimensione del Tabellone",
         "boardSizes": {
           "2x2": "2x2",

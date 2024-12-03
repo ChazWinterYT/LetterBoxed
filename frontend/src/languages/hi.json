@@ -108,7 +108,7 @@
             "error": "शब्द की जाँच के दौरान त्रुटि हुई।"
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "बोर्ड का आकार",
         "boardSizes": {
           "2x2": "2x2",

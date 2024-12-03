@@ -108,7 +108,7 @@
             "error": "Ocurrió un error al validar la palabra."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Tamaño del tablero",
         "boardSizes": {
           "2x2": "2x2",

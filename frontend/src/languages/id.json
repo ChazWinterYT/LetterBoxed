@@ -108,7 +108,7 @@
             "error": "Terjadi kesalahan saat memvalidasi kata."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Ukuran Papan",
         "boardSizes": {
           "2x2": "2x2",

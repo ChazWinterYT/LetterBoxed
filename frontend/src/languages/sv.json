@@ -108,7 +108,7 @@
             "error": "Ett fel uppstod vid valideringen av ordet."
         }
     },
-    "form": {
+    "customGameForm": {
         "boardSize": "Brädstorlek",
         "boardSizes": {
           "2x2": "2x2",

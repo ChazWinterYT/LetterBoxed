@@ -49,7 +49,7 @@
   color: #061f32;
   font-size: 1rem;
   text-align: left;
-  flex-grow: 1;
+  flex-grow: 1; 
   text-align: center;
 }
 
@@ -57,7 +57,7 @@
 .button-group {
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* Increased space between groups for clarity */
+  gap: 1.1rem; /* Space between options */
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -67,7 +67,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem; /* Smaller space between button and description */
+  gap: 0px; /* Space between button and description */
   text-align: center;
 }
 
@@ -79,7 +79,7 @@
   border: solid;
   border-radius: 40px;
   border-color: #061f32;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
   width: 90%;
   max-width: 300px;
