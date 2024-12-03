@@ -84,8 +84,8 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
     if (isSubmitting || !validateInput()) return; // Prevent duplicate calls
     setIsSubmitting(true);
 
-    const seedWords: [string] | [string, string] =
-      seedWordChoice === "two" ? [word1, word2] : [word1];
+    const seedWords: string | [string, string] =
+      seedWordChoice === "two" ? [word1, word2] : word1;
 
     const payload = {
       language,

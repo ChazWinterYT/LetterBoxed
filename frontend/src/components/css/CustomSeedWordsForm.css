@@ -126,6 +126,7 @@
   }
 
   .hint-textarea:focus {
+    outline: none;
     border-color: #1586dd;
     box-shadow: 0 0 5px rgba(21, 134, 221, 0.5);
     border: 2px solid;

@@ -66,7 +66,7 @@ export const fetchRandomGame = async (language: string) => {
 export const createRandomGame = async (data: {
   language: string;
   boardSize: string;
-  seedWords?: [string] | [string, string];
+  seedWords?: string | [string, string];
   clue?: string;
   fromSingleWord?: boolean;
   createdBy?: string;
