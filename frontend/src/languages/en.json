@@ -161,7 +161,7 @@
             "lettersRequired": "Letters required",
             "lettersUsed": "Letters used",
             "_context1": "As in, 'Letters required: 12. Letters Used: 7.'",
-            "doubleLetters": "You cannot have the same letter next to itself.",
+            "doubleLetters": "You cannot have the same letter next to itself",
             "notInDictionary": "One (or both) words you entered are not in the dictionary.",
             "genericError": "An error occurred while creating your game."
         }

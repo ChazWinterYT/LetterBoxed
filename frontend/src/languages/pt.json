@@ -161,7 +161,7 @@
             "lettersRequired": "Letras Necessárias",
             "lettersUsed": "Letras Usadas",
             "_context1": "Como em, 'Letras Necessárias: 12. Letras Usadas: 7.'",
-            "doubleLetters": "Você não pode ter a mesma letra ao lado de si mesma.",
+            "doubleLetters": "Você não pode ter a mesma letra ao lado de si mesma",
             "notInDictionary": "Uma (ou ambas) palavras que você digitou não estão no dicionário.",
             "genericError": "Ocorreu um erro ao criar seu jogo."
         }

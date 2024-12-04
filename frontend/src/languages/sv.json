@@ -161,7 +161,7 @@
             "lettersRequired": "Nödvändiga bokstäver",
             "lettersUsed": "Använda bokstäver",
             "_context1": "Exempelvis: 'Nödvändiga bokstäver: 12. Använda bokstäver: 7.'",
-            "doubleLetters": "Du kan inte ha samma bokstav bredvid sig själv.",
+            "doubleLetters": "Du kan inte ha samma bokstav bredvid sig själv",
             "notInDictionary": "Ett (eller båda) av orden du angav finns inte i ordboken.",
             "genericError": "Ett fel uppstod vid skapandet av spelet."
         }

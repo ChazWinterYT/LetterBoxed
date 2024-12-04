@@ -41,6 +41,30 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
   }, [boardSize]);
 
   const validateInput = (): boolean => {
+    // A word cannot have the same letter next to itself
+    const hasAdjacentDuplicate = (word: string): boolean => {
+      for (let i = 0; i < word.length - 1; i++) {
+        if (word[i] === word[i + 1]) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (hasAdjacentDuplicate(word1)) {
+      setValidationError(
+        `${t("customGameForm.error.doubleLetters")}: ${word1}`
+      )
+      return false;
+    } 
+    if (hasAdjacentDuplicate(word2)) {
+      setValidationError(
+        `${t("customGameForm.error.doubleLetters")}: ${word2}`
+      )
+      return false;
+    }
+    
+    // If playing with two words, the last letter of word1 must == the first letter of word2
     if (seedWordChoice === "two" && word2 && word1[word1.length - 1] !== word2[0]) {
       setValidationError(t("customGameForm.error.wordsNotConnected"));
       return false;
@@ -264,6 +288,11 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
           )}
         </div>
 
+        {/* Validation Message Space */}
+        <div className="validation-message-space">
+          {validationError && <span>{validationError}</span>}
+        </div>
+
         {/* Casual flag checkbox */}
         <div className="form-section">
           <label className="modal-label">
@@ -274,14 +303,9 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
             />
             {t("customGameForm.casualGame")}
           </label>
-          <p className="hint-text">{t("customGameForm.instructions.casualGame")}</p>
+          <p className="warning-message">{t("customGameForm.instructions.casualGame")}</p>
         </div>
   
-        {/* Validation Message Space */}
-        <div className="validation-message-space">
-          {validationError && <span>{validationError}</span>}
-        </div>
-
         {/* Hint Input */}
         <div className="hint-input">
           <label className="modal-label">

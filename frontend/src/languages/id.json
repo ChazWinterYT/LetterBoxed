@@ -161,7 +161,7 @@
             "lettersRequired": "Huruf yang Diperlukan",
             "lettersUsed": "Huruf yang Digunakan",
             "_context1": "Seperti dalam, 'Huruf yang Diperlukan: 12. Huruf yang Digunakan: 7.'",
-            "doubleLetters": "Anda tidak dapat memiliki huruf yang sama di sebelahnya.",
+            "doubleLetters": "Anda tidak dapat memiliki huruf yang sama di sebelahnya",
             "notInDictionary": "Satu (atau kedua) kata yang Anda masukkan tidak ada di kamus.",
             "genericError": "Terjadi kesalahan saat membuat game Anda."
         }

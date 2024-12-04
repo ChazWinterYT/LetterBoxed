@@ -161,7 +161,7 @@
             "lettersRequired": "Lettres requises",
             "lettersUsed": "Lettres utilisées",
             "_context1": "Par exemple, 'Lettres requises : 12. Lettres utilisées : 7.'",
-            "doubleLetters": "Vous ne pouvez pas avoir la même lettre côte à côte.",
+            "doubleLetters": "Vous ne pouvez pas avoir la même lettre côte à côte",
             "notInDictionary": "Un (ou les deux) mots que vous avez entrés ne sont pas dans le dictionnaire.",
             "genericError": "Une erreur s'est produite lors de la création de votre jeu."
         }

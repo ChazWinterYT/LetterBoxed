@@ -161,7 +161,7 @@
             "lettersRequired": "Wymagane litery",
             "lettersUsed": "Użyte litery",
             "_context1": "Na przykład: 'Wymagane litery: 12. Użyte litery: 7.'",
-            "doubleLetters": "Nie możesz umieścić tej samej litery obok siebie.",
+            "doubleLetters": "Nie możesz umieścić tej samej litery obok siebie",
             "notInDictionary": "Jedno (lub oba) z podanych słów nie znajduje się w słowniku.",
             "genericError": "Wystąpił błąd podczas tworzenia twojej gry."
         }

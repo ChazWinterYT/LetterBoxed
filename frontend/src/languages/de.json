@@ -161,7 +161,7 @@
             "lettersRequired": "Erforderliche Buchstaben",
             "lettersUsed": "Verwendete Buchstaben",
             "_context1": "Wie in: 'Erforderliche Buchstaben: 12. Verwendete Buchstaben: 7.'",
-            "doubleLetters": "Sie können denselben Buchstaben nicht direkt nebeneinander setzen.",
+            "doubleLetters": "Sie können denselben Buchstaben nicht direkt nebeneinander setzen",
             "notInDictionary": "Eines (oder beide) Wörter, die Sie eingegeben haben, sind nicht im Wörterbuch.",
             "genericError": "Beim Erstellen Ihres Spiels ist ein Fehler aufgetreten."
         }

@@ -161,7 +161,7 @@
             "lettersRequired": "Letras requeridas",
             "lettersUsed": "Letras utilizadas",
             "_context1": "Por ejemplo, 'Letras requeridas: 12. Letras utilizadas: 7.'",
-            "doubleLetters": "No puede tener la misma letra junto a sí misma.",
+            "doubleLetters": "No puede tener la misma letra junto a sí misma",
             "notInDictionary": "Una (o ambas) de las palabras que ingresó no está en el diccionario.",
             "genericError": "Se produjo un error al crear su juego."
         }
