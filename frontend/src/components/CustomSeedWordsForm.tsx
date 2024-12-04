@@ -118,7 +118,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
 
   const handleCopyToClipboard = () => {
     if (gameId) {
-      navigator.clipboard.writeText(`${window.location.origin}/games/${gameId}`)
+      navigator.clipboard.writeText(`${window.location.origin}/LetterBoxed/frontend/games/${gameId}`)
       setCopied(true);
 
       // Reset the button after a delay
