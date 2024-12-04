@@ -129,6 +129,7 @@
         "seedWords": "Fröord",
         "clearWord": "Rensa ord",
         "hint": "Ledtråd",
+        "casualGame": "Avslappnat Läge",
         "authorName": "Författarens namn",
         "longTimeWarning": "VARNING: Det kan ta upp till 60 sekunder att generera ett spel. Uppdatera eller lämna inte sidan, annars får du inte din spel-länk.",
         "generateGame": "Generera spel",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Ange ett fröord",
             "seedWordChoice": "För små spelplaner kan du använda ett eller två fröord.",
             "boardSize": "Välj en storlek för spelplanen",
-            "hint": "Ange en ledtråd för att hjälpa andra att lösa ditt pussel."
+            "hint": "Ange en ledtråd för att hjälpa andra att lösa ditt pussel.",
+            "casualGame": "Om den här rutan är markerad behöver startord inte finnas i ordboken."
         },
         "success": {
             "gameCreationSuccess": "Spelet har genererats!",

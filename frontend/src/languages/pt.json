@@ -129,6 +129,7 @@
         "seedWords": "Palavras Iniciais",
         "clearWord": "Limpar Palavra",
         "hint": "Dica",
+        "casualGame": "Modo Casual",
         "authorName": "Nome do Autor",
         "longTimeWarning": "AVISO: A geração de um jogo pode levar até 60 segundos. Não atualize ou saia da página, ou você não receberá o link do seu jogo.",
         "generateGame": "Gerar Jogo",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Digite uma palavra inicial",
             "seedWordChoice": "Para tabuleiros pequenos, você pode usar uma ou duas palavras iniciais.",
             "boardSize": "Selecione um tamanho para o tabuleiro do jogo",
-            "hint": "Digite uma dica para ajudar outros a resolverem seu quebra-cabeça."
+            "hint": "Digite uma dica para ajudar outros a resolverem seu quebra-cabeça.",
+            "casualGame": "Se esta caixa estiver marcada, as palavras iniciais não precisam estar no dicionário."
         },
         "success": {
             "gameCreationSuccess": "Jogo gerado com sucesso!",

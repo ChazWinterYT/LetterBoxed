@@ -22,6 +22,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
   const [word1, setWord1] = useState("");
   const [word2, setWord2] = useState("");
   const [hint, setHint] = useState("");
+  const [isCasual, setIsCasual] = useState(false);
   const [createdBy, setCreatedBy] = useState<string>("");
   const [validationError, setValidationError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -95,6 +96,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
       createdBy: createdBy.trim() || "Anonymous",
       fromSingleWord: seedWordChoice === "one", // Determine single-word flag
       fromLambdaConsole: false,
+      isCasual,
     };
 
     try {
@@ -260,6 +262,19 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
               />
             </label>
           )}
+        </div>
+
+        {/* Casual flag checkbox */}
+        <div className="form-section">
+          <label className="modal-label">
+            <input
+              type="checkbox"
+              checked={isCasual}
+              onChange={(e) => setIsCasual(e.target.checked)}
+            />
+            {t("customGameForm.casualGame")}
+          </label>
+          <p className="hint-text">{t("customGameForm.instructions.casualGame")}</p>
         </div>
   
         {/* Validation Message Space */}

@@ -129,6 +129,7 @@
         "seedWords": "Startwörter",
         "clearWord": "Wort löschen",
         "hint": "Hinweis",
+        "casualGame": "Freier Modus",
         "authorName": "Autorname",
         "longTimeWarning": "WARNUNG: Die Erstellung eines Spiels kann bis zu 60 Sekunden dauern. Bitte aktualisieren oder verlassen Sie die Seite nicht, sonst erhalten Sie keinen Spiel-Link.",
         "generateGame": "Spiel generieren",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Geben Sie ein Startwort ein",
             "seedWordChoice": "Für kleine Spielbretter können Sie ein oder zwei Startwörter verwenden.",
             "boardSize": "Wählen Sie eine Größe für das Spielbrett",
-            "hint": "Geben Sie einen Hinweis ein, um anderen zu helfen, Ihr Rätsel zu lösen."
+            "hint": "Geben Sie einen Hinweis ein, um anderen zu helfen, Ihr Rätsel zu lösen.",
+            "casualGame": "Wenn dieses Kästchen aktiviert ist, müssen Startwörter nicht im Wörterbuch stehen."
         },
         "success": {
             "gameCreationSuccess": "Spiel erfolgreich generiert!",

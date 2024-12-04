@@ -129,6 +129,7 @@
         "seedWords": "Mots de départ",
         "clearWord": "Effacer le mot",
         "hint": "Indice",
+        "casualGame": "Mode Décontracté",
         "authorName": "Nom de l'auteur",
         "longTimeWarning": "AVERTISSEMENT : La génération d'un jeu peut prendre jusqu'à 60 secondes. Veuillez ne pas actualiser ni quitter la page, sinon vous ne recevrez pas le lien vers votre jeu.",
         "generateGame": "Générer un jeu",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Entrez un mot de départ",
             "seedWordChoice": "Pour les petits plateaux, vous pouvez utiliser un ou deux mots de départ.",
             "boardSize": "Choisissez une taille pour le plateau",
-            "hint": "Entrez un indice pour aider les autres à résoudre votre énigme."
+            "hint": "Entrez un indice pour aider les autres à résoudre votre énigme.",
+            "casualGame": "Si cette case est cochée, les mots de départ n'ont pas besoin d'être dans le dictionnaire."
         },
         "success": {
             "gameCreationSuccess": "Jeu généré avec succès !",

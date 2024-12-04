@@ -19,7 +19,8 @@ def create_random_game(
     seed_words: Optional[tuple[str, str]] = None,
     clue: Optional[str] = "",
     created_by: Optional[str] = None,
-    from_lambda_console: bool = False
+    from_lambda_console: bool = False,
+    is_casual: bool = False,
 ) -> Dict[str, Any]:
     """
     Create a random game by selecting two words from the dictionary and generating a layout.
@@ -32,6 +33,7 @@ def create_random_game(
         clue (str): A clue for finding the solution based on the seed words.
         created_by (str): The author of the puzzle, if provided.
         from_lambda_console (bool): True if the game creation request came from Lambda, or false it came from the web UI.
+        is_casual: If true, seed words do not have to be in the dictionary.
 
     Returns:
         Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout.
@@ -73,8 +75,9 @@ def create_random_game(
     print(f"[INFO] Selected words: {word1}, {word2}")
 
     # Validate that the two provided words are actually in the dictionary
-    if word1 not in dictionary or word2 not in dictionary:
-        raise ValueError(f"One or both words ({word1}, {word2}) are not valid dictionary words.")
+    if not is_casual:
+        if word1 not in dictionary or word2 not in dictionary:
+            raise ValueError(f"One or both words ({word1}, {word2}) are not valid dictionary words.")
 
     # Generate the game layout
     layout_start = time.time()
@@ -84,15 +87,29 @@ def create_random_game(
         raise ValueError("[ERROR] Failed to generate a valid layout for the game.")
     print(f"[INFO] Layout generation completed in {layout_time:.2f} seconds")
 
+    game_type = "custom"
+    if is_casual:
+        game_type = "casual"
+    elif from_lambda_console:
+        game_type = "random"
+
     game_data = create_game_schema(
         game_layout=game_layout,
-        game_type="random" if from_lambda_console else "custom",
+        game_type=game_type,
         language=language,
         board_size=board_size,
         random_seed_words=[word1, word2],
         created_by=created_by or "",
         clue=clue or "",
     )
+
+    # Insert the two seed words into the valid words list for this game (for casual games)
+    if is_casual:
+        game_data["validWords"].append(word1)
+        game_data["validWords"].append(word2)
+        game_data["baseValidWords"].append(word1)
+        game_data["baseValidWords"].append(word2)
+        print(f"{word1} and {word2} added to valid words list for this casual game.")
 
     # Store the game in the games DB
     db_start = time.time()
@@ -120,6 +137,7 @@ def create_random_small_board_game(
     clue: Optional[str] = "",
     created_by: Optional[str] = None,
     from_lambda_console: bool = False,
+    is_casual: bool = False,
 ) -> Dict[str, Any]:
     """
     Create a random game by selecting a single word from the dictionary and generating a layout.
@@ -131,6 +149,7 @@ def create_random_small_board_game(
         clue (Optional[str], optional): A clue for finding the solution based on the seed words, if provided.
         created_by (str): The author of the puzzle, if provided.
         from_lambda_console (bool): True if the game creation request came from Lambda, or false it came from the web UI.
+        is_casual: If true, seed words do not have to be in the dictionary.
 
     Returns:
         Dict[str, Optional[List[str]]]: A dictionary containing the selected words and the game layout.
@@ -162,7 +181,7 @@ def create_random_small_board_game(
     select_word_time = time.time() - select_word_start
     print(f"[INFO] Word selection completed in {select_word_time:.2f} seconds")
     
-    if seed_word not in dictionary:
+    if not is_casual and seed_word not in dictionary:
         raise ValueError(f"Seed word '{seed_word}' is not a valid dictionary word.")
     
     # Generate the game layout
@@ -173,15 +192,27 @@ def create_random_small_board_game(
         raise ValueError("[ERROR] Failed to generate a valid layout for the game.")
     print(f"[INFO] Layout generation completed in {layout_time:.2f} seconds")
     
+    game_type = "custom"
+    if is_casual:
+        game_type = "casual"
+    elif from_lambda_console:
+        game_type = "random"
+
     game_data = create_game_schema(
         game_layout=game_layout,
-        game_type="random" if from_lambda_console else "custom",
+        game_type=game_type,
         language=language,
         random_seed_word=seed_word,
         board_size=board_size,
         created_by=created_by or "",
         clue=clue or "",
     )
+
+    # Insert the seed word into the valid words list for this game (for casual games)
+    if is_casual:
+        game_data["validWords"].append(seed_word)
+        game_data["baseValidWords"].append(seed_word)
+        print(f"{seed_word} added to valid words list for this casual game.")
     
     # Store the game in the games DB
     db_start = time.time()

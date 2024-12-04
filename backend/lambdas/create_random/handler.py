@@ -27,6 +27,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         created_by = body.get("createdBy", None)
         single_word = body.get("fromSingleWord", False)
         from_lambda_console = body.get("fromLambdaConsole", False)
+        is_casual = body.get("isCasual", False)
         
         
         # Validate language and board size
@@ -55,7 +56,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 seed_words, 
                 clue, 
                 created_by, 
-                from_lambda_console
+                from_lambda_console,
+                is_casual,
             )
         else:
             # Use existing service for all other boards
@@ -65,7 +67,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 seed_words, 
                 clue, 
                 created_by, 
-                from_lambda_console
+                from_lambda_console,
+                is_casual,
             )
 
         # Return the game details

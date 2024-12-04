@@ -129,6 +129,7 @@
         "seedWords": "Palabras semilla",
         "clearWord": "Borrar palabra",
         "hint": "Pista",
+        "casualGame": "Modo Casual",
         "authorName": "Nombre del autor",
         "longTimeWarning": "ADVERTENCIA: Generar un juego puede tardar hasta 60 segundos. Por favor, no actualice ni salga de la página, o no recibirá el enlace de su juego.",
         "generateGame": "Generar juego",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Ingrese una palabra semilla",
             "seedWordChoice": "Para tableros pequeños, puede usar una o dos palabras semilla.",
             "boardSize": "Seleccione un tamaño para el tablero",
-            "hint": "Ingrese una pista para ayudar a otros a resolver su rompecabezas."
+            "hint": "Ingrese una pista para ayudar a otros a resolver su rompecabezas.",
+            "casualGame": "Si esta casilla está marcada, las palabras iniciales no tienen que estar en el diccionario."
         },
         "success": {
             "gameCreationSuccess": "¡Juego generado con éxito!",

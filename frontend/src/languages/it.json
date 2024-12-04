@@ -129,6 +129,7 @@
         "seedWords": "Parole iniziali",
         "clearWord": "Cancella parola",
         "hint": "Suggerimento",
+        "casualGame": "Modalità Casual",
         "authorName": "Nome dell'autore",
         "longTimeWarning": "ATTENZIONE: La generazione di un gioco può richiedere fino a 60 secondi. Non aggiornare o lasciare la pagina, altrimenti non riceverai il link del tuo gioco.",
         "generateGame": "Genera gioco",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Inserisci una parola iniziale",
             "seedWordChoice": "Per tabelloni piccoli, puoi usare una o due parole iniziali.",
             "boardSize": "Seleziona una dimensione per il tabellone",
-            "hint": "Inserisci un suggerimento per aiutare gli altri a risolvere il tuo enigma."
+            "hint": "Inserisci un suggerimento per aiutare gli altri a risolvere il tuo enigma.",
+            "casualGame": "Se questa casella è selezionata, le parole iniziali non devono essere nel dizionario."
         },
         "success": {
             "gameCreationSuccess": "Gioco generato con successo!",

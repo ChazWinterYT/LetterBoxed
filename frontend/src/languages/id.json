@@ -129,6 +129,7 @@
         "seedWords": "Kata Awal",
         "clearWord": "Hapus Kata",
         "hint": "Petunjuk",
+        "casualGame": "Mode Santai",
         "authorName": "Nama Penulis",
         "longTimeWarning": "PERINGATAN: Membuat game dapat memakan waktu hingga 60 detik. Jangan menyegarkan atau meninggalkan halaman, atau Anda tidak akan menerima tautan game Anda.",
         "generateGame": "Buat Game",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Masukkan kata awal",
             "seedWordChoice": "Untuk papan game kecil, Anda dapat menggunakan satu atau dua kata awal.",
             "boardSize": "Pilih ukuran papan game",
-            "hint": "Masukkan petunjuk untuk membantu orang lain menyelesaikan teka-teki Anda."
+            "hint": "Masukkan petunjuk untuk membantu orang lain menyelesaikan teka-teki Anda.",
+            "casualGame": "Jika kotak ini dicentang, kata awal tidak harus ada di kamus."
         },
         "success": {
             "gameCreationSuccess": "Game berhasil dibuat!",

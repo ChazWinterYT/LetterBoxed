@@ -128,6 +128,7 @@
         },
         "seedWords": "Seed Words",
         "clearWord": "Clear Word",
+        "casualGame": "Casual Mode",
         "hint": "Hint",
         "authorName": "Author Name",
         "longTimeWarning": "WARNING: Generating a game can take up to 60 seconds. Please do not refresh or exit the page, or you will not receive your game link.",
@@ -140,6 +141,7 @@
             "enterSeedWord": "Enter a seed word",
             "seedWordChoice": "For small game boards, you can use one or two seed words.",
             "boardSize": "Select a size for the game board",
+            "casualGame": "If this box is checked, seed words do not have to be in the dictionary.",
             "hint": "Enter a hint to help others figure out your puzzle."
         },
         "success": {

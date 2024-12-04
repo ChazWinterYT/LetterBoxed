@@ -129,6 +129,7 @@
         "seedWords": "Słowa początkowe",
         "clearWord": "Wyczyść słowo",
         "hint": "Wskazówka",
+        "casualGame": "Tryb Swobodny",
         "authorName": "Nazwa autora",
         "longTimeWarning": "OSTRZEŻENIE: Generowanie gry może potrwać do 60 sekund. Nie odświeżaj ani nie opuszczaj strony, aby otrzymać link do swojej gry.",
         "generateGame": "Wygeneruj grę",
@@ -140,7 +141,8 @@
             "enterSeedWord": "Wpisz słowo początkowe",
             "seedWordChoice": "Dla małych plansz możesz użyć jednego lub dwóch słów początkowych.",
             "boardSize": "Wybierz rozmiar planszy do gry",
-            "hint": "Wpisz wskazówkę, aby pomóc innym rozwiązać twoją zagadkę."
+            "hint": "Wpisz wskazówkę, aby pomóc innym rozwiązać twoją zagadkę.",
+            "casualGame": "Jeśli to pole jest zaznaczone, słowa startowe nie muszą być w słowniku."
         },
         "success": {
             "gameCreationSuccess": "Gra została pomyślnie wygenerowana!",
