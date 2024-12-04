@@ -51,6 +51,7 @@ const CustomGameModal: React.FC<CustomGameModalProps> = ({
                       onClose(); // Close this modal
                       onOpenEnterLettersForm(); // Open the Enter Letters form modal
                     }}
+                    disabled
                   >
                     {t("game.customGame.enterLetters")}
                   </button>
