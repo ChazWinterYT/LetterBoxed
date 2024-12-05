@@ -25,7 +25,7 @@ const languages: Language[] = [
     uiAvailable: true, playable: false 
   },
   { code: "it", name: "Italiano", 
-    uiAvailable: true, playable: false 
+    uiAvailable: true, playable: true   // Games are supported
   },
   { code: "ja", name: "日本語", 
     uiAvailable: true, playable: false 

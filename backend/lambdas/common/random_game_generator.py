@@ -23,7 +23,7 @@ def main() -> Any:
         )
     else:
         create_random_game(
-            "pl",
+            "it",
             "3x3",
         )
 
