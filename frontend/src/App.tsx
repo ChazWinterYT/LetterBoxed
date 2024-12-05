@@ -578,6 +578,7 @@ const App = () => {
           <GameBoard
             layout={layout}
             foundWords={foundWords}
+            originalWordsUsed={originalWordsUsed}
             gameId={currentGameId}
             sessionId={userSessionId}
             onWordSubmit={handleWordSubmit} // Pass the word submission handler

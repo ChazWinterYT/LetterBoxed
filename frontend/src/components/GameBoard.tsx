@@ -9,6 +9,7 @@ import { ValidationResult } from '../types/validation';
 export interface GameBoardProps {
   layout: string[];
   foundWords: string[];
+  originalWordsUsed: string[];
   gameId: string | null;
   sessionId: string | null;
   onWordSubmit?: (word: string) => void;
@@ -23,6 +24,7 @@ export interface GameBoardProps {
 const GameBoard: React.FC<GameBoardProps> = ({
   layout,
   foundWords,
+  originalWordsUsed,
   gameId,
   sessionId,
   onWordSubmit,
@@ -302,7 +304,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       <div className="played-words-section">
         <h3>{t('game.playedWords')}</h3>
         <div className="played-words">
-          {foundWords.map((word, index) => (
+          {originalWordsUsed.map((word, index) => (
             <span key={index} className="played-word">
               {index > 0 ? ` - ${word}` : word}
             </span>
