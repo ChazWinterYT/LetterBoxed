@@ -57,7 +57,7 @@
         "complete": {
             "puzzleSolvedTitle": "HAI VINTO!",
             "puzzleSolvedMessage": "Hai risolto l'enigma! Congratulazioni!!!",
-            "officialSolution": "Questo enigma è stato generato usando la/e parola/e",
+            "officialSolution": "Questo enigma è stato generato usando le parole",
             "numberOfOneWordSolutions": "Numero di soluzioni con una parola trovate",
             "numberOfTwoWordSolutions": "Numero di soluzioni con due parole trovate",
             "someOneWordSolutions": "Alcune possibili soluzioni con una parola",

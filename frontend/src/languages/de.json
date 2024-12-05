@@ -57,7 +57,7 @@
         "complete": {
             "puzzleSolvedTitle": "SIE HABEN GEWONNEN!",
             "puzzleSolvedMessage": "Sie haben das Rätsel gelöst! Herzlichen Glückwunsch!!!",
-            "officialSolution": "Dieses Rätsel wurde mit folgendem/n Wort/Wörtern generiert",
+            "officialSolution": "Dieses Rätsel wurde mit folgenden Wörtern generiert",
             "numberOfOneWordSolutions": "Anzahl der gefundenen Ein-Wort-Lösungen",
             "numberOfTwoWordSolutions": "Anzahl der gefundenen Zwei-Wort-Lösungen",
             "someOneWordSolutions": "Einige mögliche Ein-Wort-Lösungen",
