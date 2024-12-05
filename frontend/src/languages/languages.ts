@@ -42,6 +42,9 @@ const languages: Language[] = [
   { code: "sv", name: "Svenska", 
     uiAvailable: true, playable: false 
   },
+  { code: "th", name: "ภาษาไทย", 
+    uiAvailable: true, playable: false 
+  },
 ];
 
 export default languages;
