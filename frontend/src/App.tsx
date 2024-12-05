@@ -478,6 +478,7 @@ const App = () => {
   
     // Update the local state
     setFoundWords(updatedWords);
+    setOriginalWordsUsed(originalWordsUsed.slice(0, updatedWords.length))
   
     // Save the updated game state
     saveGameState(updatedWords, originalWordsUsed.slice(0, updatedWords.length));
