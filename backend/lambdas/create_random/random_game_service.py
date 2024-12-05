@@ -455,15 +455,20 @@ def select_two_words(dictionary: List[str], board_size: str, max_attempts: int =
     num_unique_letters_required = (2 * rows) + (2 * cols)
     print(f"Searching for two words with {num_unique_letters_required} unique letters.")
 
+    # Don't allow the two words to share too many common letters, for better puzzle variety
+    MAX_SHARED_LETTERS = 1
+
     for attempt in range(max_attempts):
         word1 = random.choice(dictionary)
         base_word1 = normalize_to_base(word1)
         
         for word2 in dictionary:
             base_word2 = normalize_to_base(word2)
+            shared_letters = set(base_word1).intersection(base_word2)
             if (
                 base_word1[-1] == base_word2[0]
                 and len(set(base_word1 + base_word2)) == num_unique_letters_required
+                and len(shared_letters) <= MAX_SHARED_LETTERS
             ):
                 print(f"[INFO] Word selection succeeded after {attempt + 1} attempts")
                 return word1, word2
