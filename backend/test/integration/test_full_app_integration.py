@@ -38,6 +38,7 @@ def setup_environment():
     os.environ["METADATA_TABLE"] = "LetterBoxedMetadataTableTest"
     os.environ["ARCHIVE_TABLE"] = "LetterBoxedNYTArchivesTest"
     os.environ["RANDOM_GAMES_TABLE_EN"] = "LetterBoxedRandomGames_enTest"
+    os.environ["RANDOM_GAMES_TABLE_DE"] = "LetterBoxedRandomGames_deTest"
     os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
     os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"
     os.environ["RANDOM_GAMES_TABLE_PL"] = "LetterBoxedRandomGames_plTest"
@@ -51,6 +52,7 @@ def setup_environment():
         os.environ["METADATA_TABLE"],
         os.environ["ARCHIVE_TABLE"],
         os.environ["RANDOM_GAMES_TABLE_EN"],
+        os.environ["RANDOM_GAMES_TABLE_DE"],
         os.environ["RANDOM_GAMES_TABLE_ES"],
         os.environ["RANDOM_GAMES_TABLE_IT"],
         os.environ["RANDOM_GAMES_TABLE_PL"],
@@ -71,9 +73,11 @@ def setup_environment():
     os.environ.pop("METADATA_TABLE", None)
     os.environ.pop("ARCHIVE_TABLE", None)
     os.environ.pop("RANDOM_GAMES_TABLE_EN", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_DE", None)
     os.environ.pop("RANDOM_GAMES_TABLE_ES", None)
     os.environ.pop("RANDOM_GAMES_TABLE_IT", None)
     os.environ.pop("RANDOM_GAMES_TABLE_PL", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_RU", None)
 
 @pytest.fixture(scope="module")
 def aws_clients():
