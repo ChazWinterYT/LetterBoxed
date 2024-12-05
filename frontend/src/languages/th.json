@@ -1,40 +1,40 @@
 {
     "ui": {
-    "menu": {
-        "menuTitle": "เมนูหลัก",
-        "playToday": "เล่นเกม NYT วันนี้",
-        "archive": "คลังเกม NYT",
-        "customGame": "สร้างเกมแบบกำหนดเอง",
-        "randomGame": "เล่นเกมแบบสุ่ม"
-    },
-    "archive": {
-        "noGames": "ไม่มีเกมที่พร้อมใช้งาน",
-        "loadingGames": "กำลังโหลดคลังเกม โปรดรอ...",
-        "error": "เกิดข้อผิดพลาดในการโหลดเกม",
-        "loadMore": "โหลดเพิ่มเติม",
-        "previousPage": "ก่อนหน้า",
-        "nextPage": "ถัดไป",
-        "older": "เก่ากว่า >>",
-        "newer": "<< ใหม่กว่า",
-        "endOfArchiveMessage": "คุณได้ถึงจุดสิ้นสุดของคลังเกมแล้ว"
-    },
-    "customGame": {
-        "random": "เกมสุ่มเต็มรูปแบบ",
-        "seedWords": "เกมที่สร้างจากคำเริ่มต้น",
-        "fullCustom": "เกมกำหนดเองเต็มรูปแบบ",
-        "randomDescription": "กำลังสร้างเกมที่มีตัวอักษรสุ่ม",
-        "seedWordsDescription": "ป้อนคำเริ่มต้นสองคำเพื่อสร้างเกมของคุณ",
-        "fullCustomDescription": "สร้างเกมกำหนดเองโดยการเลือกตัวอักษรทั้งหมด"
-    },
-    "startGame": "เริ่มเกม",
-    "submitWord": "ส่งคำ",
-    "playAgain": "เล่นอีกครั้ง",
-    "confirm": "ยืนยัน",
-    "cancel": "ยกเลิก",
-    "chooseLanguage": "เลือกภาษา",
-    "backToHome": "กลับไปที่ chazwinter.com",
-    "languageSelector": "ภาษา"
-    },
+        "menu": {
+            "menuTitle": "เมนูหลัก",
+            "playToday": "เล่นเกม NYT วันนี้",
+            "archive": "คลังเกม NYT",
+            "customGame": "สร้างเกมแบบกำหนดเอง",
+            "randomGame": "เล่นเกมแบบสุ่ม"
+        },
+        "archive": {
+            "noGames": "ไม่มีเกมที่พร้อมใช้งาน",
+            "loadingGames": "กำลังโหลดคลังเกม โปรดรอ...",
+            "error": "เกิดข้อผิดพลาดในการโหลดเกม",
+            "loadMore": "โหลดเพิ่มเติม",
+            "previousPage": "ก่อนหน้า",
+            "nextPage": "ถัดไป",
+            "older": "เก่ากว่า >>",
+            "newer": "<< ใหม่กว่า",
+            "endOfArchiveMessage": "คุณได้ถึงจุดสิ้นสุดของคลังเกมแล้ว"
+        },
+        "customGame": {
+            "random": "เกมสุ่มเต็มรูปแบบ",
+            "seedWords": "เกมที่สร้างจากคำเริ่มต้น",
+            "fullCustom": "เกมกำหนดเองเต็มรูปแบบ",
+            "randomDescription": "กำลังสร้างเกมที่มีตัวอักษรสุ่ม",
+            "seedWordsDescription": "ป้อนคำเริ่มต้นสองคำเพื่อสร้างเกมของคุณ",
+            "fullCustomDescription": "สร้างเกมกำหนดเองโดยการเลือกตัวอักษรทั้งหมด"
+        },
+        "startGame": "เริ่มเกม",
+        "submitWord": "ส่งคำ",
+        "playAgain": "เล่นอีกครั้ง",
+        "confirm": "ยืนยัน",
+        "cancel": "ยกเลิก",
+        "chooseLanguage": "เลือกภาษา",
+        "backToHome": "กลับไปที่ chazwinter.com",
+        "languageSelector": "ภาษา"
+        },
     "messages": {
         "invalidWord": "คำไม่ถูกต้อง",
         "wordAlreadyUsed": "คำนี้ถูกใช้แล้ว",

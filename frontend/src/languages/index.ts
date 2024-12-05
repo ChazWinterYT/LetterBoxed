@@ -10,6 +10,7 @@ import pl from "./pl.json";
 import pt from "./pt.json";
 import ru from "./ru.json";
 import sv from "./sv.json";
+import th from "./th.json";
 
 
 const translations = {
@@ -25,6 +26,7 @@ const translations = {
   pt,
   ru,
   sv,
+  th,
 };
 
 export const gameLanguages = {
