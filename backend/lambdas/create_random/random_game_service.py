@@ -385,7 +385,11 @@ def generate_layout_from_single_word(word: str, board_size: str) -> Optional[Lis
     return None
 
 
-def select_one_word(dictionary: List[str], board_size: str, max_attempts: int = 10000) -> Optional[str]:
+def select_one_word(
+    dictionary: List[str], 
+    board_size: str, 
+    max_attempts: int = 10000,
+) -> Optional[str]:
     """
     Select one word that contains enough unique letters to fill the board.
 
@@ -434,7 +438,13 @@ def load_dictionary(file_path: str) -> List[str]:
         return [line.strip().upper() for line in file if line.strip().isalpha()]
 
 
-def select_two_words(dictionary: List[str], board_size: str, max_attempts: int = 10000) -> Optional[Tuple[str, str]]:
+def select_two_words(
+    dictionary: List[str], 
+    board_size: str, 
+    max_attempts: int = 10000,
+    max_word_length: int = 99,
+    max_shared_letters: int = 3
+) -> Optional[Tuple[str, str]]:
     """
     Select two words that together contain enough unique letters to fill the board, and where
     the first base letter of one word matches the last base letter of the other.
@@ -443,6 +453,10 @@ def select_two_words(dictionary: List[str], board_size: str, max_attempts: int =
         dictionary (List[str]): List of words from the dictionary.
         board_size (str): The size of the board that the words must fit on.
         max_attempts (int): Maximum number of attempts to find a valid pair.
+        max_word_length (int): Maximum length of a word, to allow each word to 
+            contribute more equally to the puzzle.
+        max_shared_letters (int): Maximum shared letters between the two words, to 
+            allow each word to contribute more equally to the puzzle
 
     Returns:
         Optional[Tuple[str, str]]: A tuple of two words or None if no pair is found.
@@ -455,20 +469,27 @@ def select_two_words(dictionary: List[str], board_size: str, max_attempts: int =
     num_unique_letters_required = (2 * rows) + (2 * cols)
     print(f"Searching for two words with {num_unique_letters_required} unique letters.")
 
-    # Don't allow the two words to share too many common letters, for better puzzle variety
-    MAX_SHARED_LETTERS = 1
-
+    # Block certain words that work a little "too" well for puzzles, so they show up a lot
+    BANNED_WORD_LIST = [
+        "DAINTILY",
+    ]
+    
     for attempt in range(max_attempts):
         word1 = random.choice(dictionary)
+        if word1 in BANNED_WORD_LIST or len(word1) > max_word_length:
+            continue
+        
         base_word1 = normalize_to_base(word1)
         
         for word2 in dictionary:
+            if word2 in BANNED_WORD_LIST or len(word2) > max_word_length:
+                continue
             base_word2 = normalize_to_base(word2)
             shared_letters = set(base_word1).intersection(base_word2)
             if (
                 base_word1[-1] == base_word2[0]
                 and len(set(base_word1 + base_word2)) == num_unique_letters_required
-                and len(shared_letters) <= MAX_SHARED_LETTERS
+                and len(shared_letters) <=  max_shared_letters
             ):
                 print(f"[INFO] Word selection succeeded after {attempt + 1} attempts")
                 return word1, word2
