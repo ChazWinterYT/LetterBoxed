@@ -30,8 +30,8 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
         {t("ui.menu.playToday")}
       </button>
       <button onClick={onOpenArchive}>{t("ui.menu.archive")}</button>
-      <button onClick={onOpenCustomGame}>{t("ui.menu.customGame")}</button>
       <button onClick={onPlayRandomGame}>{t("ui.menu.randomGame")}</button>
+      <button onClick={onOpenCustomGame}>{t("ui.menu.customGame")}</button>
       <button 
         onClick={() => window.location.href = "/LetterBoxed/frontend/get-word-pairs"}
       >
