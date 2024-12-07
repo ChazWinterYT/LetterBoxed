@@ -312,7 +312,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
               onChange={(e) => {
                 // Allow valid letters, numbers, and basic punctuation across scripts
                 const filteredValue = e.target.value.replace(
-                  /[^()!?.,a-zA-Z0-9\p{L}\p{N}\p{P} ]/gu,
+                  /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
                   ""
                 );
                 setHint(filteredValue);
@@ -334,7 +334,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
               onChange={(e) => {
                 // Allow valid Unicode letters, spaces, and a few special characters for names
                 const filteredValue = e.target.value.replace(
-                  /[^()!?a-zA-Z\p{L}.,'\-\s]/gu,
+                  /[^()!?a-zA-Z\p{L}.,’'\-\s]/gu,
                   ""
                 );
                 setCreatedBy(filteredValue);
