@@ -5,7 +5,8 @@
             "playToday": "Mainkan Game NYT Hari Ini",
             "archive": "Arsip Game NYT",
             "customGame": "Buat Game Kustom",
-            "randomGame": "Mainkan Game Acak"
+            "randomGame": "Mainkan Game Acak",
+            "randomGameGenerator": "Penghasil Game Acak"
         },
         "archive": {
             "noGames": "Tidak ada game tersedia",

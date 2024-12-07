@@ -5,7 +5,8 @@
             "playToday": "Gioca al gioco NYT di oggi",
             "archive": "Archivio dei giochi NYT",
             "customGame": "Crea gioco personalizzato",
-            "randomGame": "Gioca a un gioco casuale"
+            "randomGame": "Gioca a un gioco casuale",
+            "randomGameGenerator": "Generatore di Giochi Casuali"
         },
         "archive": {
             "noGames": "Nessun gioco disponibile",

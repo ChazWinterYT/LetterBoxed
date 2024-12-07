@@ -5,7 +5,8 @@
             "playToday": "Играть в сегодняшнюю игру NYT",
             "archive": "Архив игр NYT",
             "customGame": "Создать пользовательскую игру",
-            "randomGame": "Играть в случайную игру"
+            "randomGame": "Играть в случайную игру",
+            "randomGameGenerator": "Генератор Случайных Игр"
         },
         "archive": {
             "noGames": "Нет доступных игр",

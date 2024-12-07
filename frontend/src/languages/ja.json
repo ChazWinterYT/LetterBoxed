@@ -5,7 +5,8 @@
             "playToday": "今日のNYTゲームをプレイ",
             "archive": "NYTゲームアーカイブ",
             "customGame": "カスタムゲームを作成",
-            "randomGame": "ランダムゲームをプレイ"
+            "randomGame": "ランダムゲームをプレイ",
+            "randomGameGenerator": "ランダムゲームジェネレーター"
         },
         "archive": {
             "noGames": "利用可能なゲームはありません",

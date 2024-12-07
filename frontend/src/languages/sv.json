@@ -5,7 +5,8 @@
             "playToday": "Spela dagens NYT-spel",
             "archive": "NYT-spelarkiv",
             "customGame": "Skapa anpassat spel",
-            "randomGame": "Spela slumpmässigt spel"
+            "randomGame": "Spela slumpmässigt spel",
+            "randomGameGenerator": "Slumpmässig Spelgenerator"
         },
         "archive": {
             "noGames": "Inga spel tillgängliga",
