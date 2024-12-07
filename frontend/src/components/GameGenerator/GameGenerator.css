@@ -201,3 +201,13 @@
   border-color: #aaaaaa;
 }
 
+.generated-games-container {
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  font-size: 1.2rem;
+  color: #eef6ff;
+  background-color: #1d4f7e;
+  border-radius: 20px;
+  text-align: center; 
+}

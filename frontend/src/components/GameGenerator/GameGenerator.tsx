@@ -3,6 +3,7 @@ import Header from "../Header"
 import { useLanguage } from "../../context/LanguageContext";
 import { getPlayableLanguages } from "../../languages/languages";
 import { generateRandomGames } from "../../services/api";
+import RandomGameDisplay from "./RandomGameDisplay";
 import "./GameGenerator.css"
 import Footer from "../Footer";
 
@@ -20,7 +21,10 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
   const [basicDictionary, setBasicDictionary] = useState<boolean>(true);
   const [maxWordLength, setMaxWordLength] = useState<number>(99);
   const [maxSharedLetters, setMaxSharedLetters] = useState<number>(3);
-  // const [generatedGames, setGeneratedGames] = useState<any[]>([]);
+  const [generatedGames, setGeneratedGames] = useState<{ singleWords: string[]; wordPairs: [string, string][] }>({
+    singleWords: [],
+    wordPairs: [],
+  });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,6 +45,12 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
       const response = await generateRandomGames(payload);
       console.log("Generating games with payload:", payload);
       console.log("Response was:", response)
+
+      // Update state with generated games
+      setGeneratedGames({
+        singleWords: response.singleWords || [],
+        wordPairs: response.wordPairs || [],
+      });
     } catch (error: any) {
       console.error("Error generating games:", error);
       setError(error.message);
@@ -200,7 +210,17 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
           >
             {t("gameGenerator.generate")}
           </button>
-        </div>
+        </div>   
+      </div>
+
+      {/* Display Generated Games */}
+      <div className="generated-games-container">
+        {generatedGames.singleWords.map((word, index) => (
+          <RandomGameDisplay key={index} gameType="singleWord" content={word} />
+        ))}
+        {generatedGames.wordPairs.map((pair, index) => (
+          <RandomGameDisplay key={index} gameType="wordPair" content={pair} />
+        ))}
       </div>
       <Footer />
     </div>

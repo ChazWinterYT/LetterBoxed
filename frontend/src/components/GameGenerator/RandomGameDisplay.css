@@ -1,0 +1,9 @@
+.random-game-display {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #eef6ff;
+  text-align: center;
+  font-size: 16px;
+}
