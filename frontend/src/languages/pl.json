@@ -166,6 +166,32 @@
             "genericError": "Wystąpił błąd podczas tworzenia twojej gry."
         }
     },
+    "gameGenerator": {
+        "title": "Generator Losowych Gier",
+        "numTries": "Liczba gier do wygenerowania",
+        "board": {
+            "numWords": "Generuj zagadki z",
+            "singleWord": "Jednego Słowa",
+            "twoWords": "Dwóch Słów",
+            "instructions1": "\"Jedno Słowo\" wygeneruje planszę 2x2.",
+            "instructions2": "\"Dwa Słowa\" wygenerują planszę 3x3."
+        },      
+        "dictionary": {
+            "dictionaryType": "Typ Słownika",
+            "basic": "Podstawowy",
+            "full": "Pełny",
+            "instructions1": "Wybór \"Pełny\" może wygenerować bardziej skomplikowane i rzadkie słowa początkowe.",
+            "instructions2": "Wygenerowana gra może zawierać inne rozwiązania poza słowami początkowymi."
+        },
+        "wordProperties": {
+            "maxWordLength": "Maksymalna Długość Słowa",
+            "maxWordLengthInstructions": "Słowa początkowe nie będą dłuższe niż ta wartość.",
+            "maxSharedLetters": "Maksymalna Liczba Wspólnych Liter",
+            "maxSharedLettersInstructions": "Niższe wartości pozwalają każdemu słowu początkowemu równomiernie przyczyniać się do rozwiązania, co ułatwia grę."
+        },
+        "generate": "Generuj Gry",
+        "error": "Wystąpił błąd podczas generowania gry"
+    },
     "instructions": {
         "howToPlay": "Jak grać",
         "rules": "Zasady",

@@ -77,9 +77,23 @@ export const createRandomGame = async (data: {
 }) => {
   const response = await fetch(`${API_URL}/random-game`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
+    body: JSON.stringify(data),
+  });
+  return handleErrorOrReturnResponse(response);
+};
+
+export const generateRandomGames = async (data: {
+  language: string;
+  numTries: number;
+  singleWord: boolean;
+  basicDictionary: boolean;
+  maxWordLength: number;
+  maxSharedLetters: number;
+}) => {
+  const response = await fetch(`${API_URL}/get-word-pairs`, {
+    method: "POST",
+    headers,
     body: JSON.stringify(data),
   });
   return handleErrorOrReturnResponse(response);

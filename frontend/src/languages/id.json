@@ -166,6 +166,32 @@
             "genericError": "Terjadi kesalahan saat membuat game Anda."
         }
     },
+    "gameGenerator": {
+        "title": "Generator Game Acak",
+        "numTries": "Jumlah game untuk dibuat",
+        "board": {
+            "numWords": "Buat Teka-teki dari",
+            "singleWord": "Satu Kata",
+            "twoWords": "Dua Kata",
+            "instructions1": "\"Satu Kata\" akan menghasilkan papan permainan 2x2.",
+            "instructions2": "\"Dua Kata\" akan menghasilkan papan permainan 3x3."
+        },      
+        "dictionary": {
+            "dictionaryType": "Jenis Kamus",
+            "basic": "Dasar",
+            "full": "Lengkap",
+            "instructions1": "Memilih \"Lengkap\" dapat menghasilkan kata-kata awal yang lebih sulit dan jarang.",
+            "instructions2": "Game yang dihasilkan mungkin memiliki solusi lain selain kata awal."
+        },
+        "wordProperties": {
+            "maxWordLength": "Panjang Kata Maksimum",
+            "maxWordLengthInstructions": "Kata awal tidak akan lebih panjang dari nilai ini.",
+            "maxSharedLetters": "Huruf Berbagi Maksimum",
+            "maxSharedLettersInstructions": "Nilai yang lebih rendah memungkinkan setiap kata awal memberikan kontribusi yang sama ke solusi, menghasilkan game yang lebih mudah."
+        },
+        "generate": "Buat Game",
+        "error": "Terjadi kesalahan saat membuat game"
+    },
     "instructions": {
         "howToPlay": "Cara Bermain",
         "rules": "Aturan",

@@ -166,6 +166,32 @@
             "genericError": "Si è verificato un errore durante la creazione del gioco."
         }
     },
+    "gameGenerator": {
+        "title": "Generatore di Giochi Casuali",
+        "numTries": "Numero di giochi da generare",
+        "board": {
+            "numWords": "Genera enigmi da",
+            "singleWord": "Singola Parola",
+            "twoWords": "Due Parole",
+            "instructions1": "\"Singola Parola\" genererà una griglia 2x2.",
+            "instructions2": "\"Due Parole\" genererà una griglia 3x3."
+        },      
+        "dictionary": {
+            "dictionaryType": "Tipo di Dizionario",
+            "basic": "Base",
+            "full": "Completo",
+            "instructions1": "Scegliere \"Completo\" potrebbe generare parole iniziali più rare e difficili.",
+            "instructions2": "Il gioco generato potrebbe avere altre soluzioni oltre alle parole iniziali."
+        },
+        "wordProperties": {
+            "maxWordLength": "Lunghezza Massima delle Parole",
+            "maxWordLengthInstructions": "Le parole iniziali non saranno più lunghe di questo valore.",
+            "maxSharedLetters": "Lettere Condivise Massime",
+            "maxSharedLettersInstructions": "Valori più bassi consentono a ogni parola iniziale di contribuire equamente alla soluzione, rendendo il gioco più facile."
+        },
+        "generate": "Genera Giochi",
+        "error": "Si è verificato un errore durante la generazione del gioco"
+    },
     "instructions": {
         "howToPlay": "Come giocare",
         "rules": "Regole",

@@ -166,6 +166,32 @@
             "genericError": "An error occurred while creating your game."
         }
     },
+    "gameGenerator": {
+        "title": "Random Game Generator",
+        "numTries": "Number of games to generate",
+        "board": {
+            "numWords": "Generate Puzzles from",
+            "singleWord": "Single Word",
+            "twoWords": "Two Words",
+            "instructions1": "\"Single Word\" will generate a 2x2 game board.",
+            "instructions2": "\"Two Words\" will generate a 3x3 game board."
+        },      
+        "dictionary": {
+            "dictionaryType": "Dictionary Type",
+            "basic": "Basic",
+            "full": "Full",
+            "instructions1": "Choosing \"Full\" may generate more obscure, difficult seed words.",
+            "instructions2": "The generated game may have other solutions in addition to the seed words."
+        },
+        "wordProperties": {
+            "maxWordLength": "Maximum Word Length",
+            "maxWordLengthInstructions": "The seed words will not be longer than this value.",
+            "maxSharedLetters": "Maximum Shared Letters",
+            "maxSharedLettersInstructions": "Lower values allow each seed word to contribute equally to the solution, resulting in an easier game."
+        },
+        "generate": "Generate Games",
+        "error": "There was an error when generating the game"
+    },
     "instructions": {
         "howToPlay": "How to Play",
         "rules": "Rules",

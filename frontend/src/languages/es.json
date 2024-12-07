@@ -166,6 +166,32 @@
             "genericError": "Se produjo un error al crear su juego."
         }
     },
+    "gameGenerator": {
+        "title": "Generador de Juegos Aleatorios",
+        "numTries": "Número de juegos a generar",
+        "board": {
+            "numWords": "Generar rompecabezas de",
+            "singleWord": "Palabra Única",
+            "twoWords": "Dos Palabras",
+            "instructions1": "\"Palabra Única\" generará un tablero de juego de 2x2.",
+            "instructions2": "\"Dos Palabras\" generará un tablero de juego de 3x3."
+        },      
+        "dictionary": {
+            "dictionaryType": "Tipo de Diccionario",
+            "basic": "Básico",
+            "full": "Completo",
+            "instructions1": "Elegir \"Completo\" puede generar palabras semilla más difíciles y oscuras.",
+            "instructions2": "El juego generado puede tener otras soluciones además de las palabras semilla."
+        },
+        "wordProperties": {
+            "maxWordLength": "Longitud Máxima de la Palabra",
+            "maxWordLengthInstructions": "Las palabras semilla no serán más largas que este valor.",
+            "maxSharedLetters": "Máximo de Letras Compartidas",
+            "maxSharedLettersInstructions": "Valores más bajos permiten que cada palabra semilla contribuya igualmente a la solución, lo que resulta en un juego más fácil."
+        },
+        "generate": "Generar Juegos",
+        "error": "Hubo un error al generar el juego"
+    },
     "instructions": {
         "howToPlay": "Cómo jugar",
         "rules": "Reglas",

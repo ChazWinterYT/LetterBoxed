@@ -166,6 +166,32 @@
             "genericError": "Une erreur s'est produite lors de la création de votre jeu."
         }
     },
+    "gameGenerator": {
+        "title": "Générateur de Jeux Aléatoires",
+        "numTries": "Nombre de jeux à générer",
+        "board": {
+            "numWords": "Générer des puzzles à partir de",
+            "singleWord": "Un Mot",
+            "twoWords": "Deux Mots",
+            "instructions1": "\"Un Mot\" génèrera une grille de jeu 2x2.",
+            "instructions2": "\"Deux Mots\" génèrera une grille de jeu 3x3."
+        },      
+        "dictionary": {
+            "dictionaryType": "Type de Dictionnaire",
+            "basic": "Basique",
+            "full": "Complet",
+            "instructions1": "Choisir \"Complet\" peut générer des mots de départ plus rares et difficiles.",
+            "instructions2": "Le jeu généré peut avoir d'autres solutions en plus des mots de départ."
+        },
+        "wordProperties": {
+            "maxWordLength": "Longueur Maximale des Mots",
+            "maxWordLengthInstructions": "Les mots de départ ne dépasseront pas cette valeur.",
+            "maxSharedLetters": "Nombre Maximal de Lettres Partagées",
+            "maxSharedLettersInstructions": "Des valeurs plus basses permettent à chaque mot de départ de contribuer également à la solution, rendant le jeu plus facile."
+        },
+        "generate": "Générer des Jeux",
+        "error": "Une erreur s'est produite lors de la génération du jeu"
+    },
     "instructions": {
         "howToPlay": "Comment jouer",
         "rules": "Règles",

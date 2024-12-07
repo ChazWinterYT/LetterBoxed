@@ -166,6 +166,32 @@
             "genericError": "ゲームを作成中にエラーが発生しました。"
         }
     },
+    "gameGenerator": {
+        "title": "ランダムゲームジェネレーター",
+        "numTries": "生成するゲームの数",
+        "board": {
+            "numWords": "からパズルを生成",
+            "singleWord": "単語",
+            "twoWords": "二語",
+            "instructions1": "「単語」は2x2のゲームボードを生成します。",
+            "instructions2": "「二語」は3x3のゲームボードを生成します。"
+        },      
+        "dictionary": {
+            "dictionaryType": "辞書タイプ",
+            "basic": "基本",
+            "full": "完全",
+            "instructions1": "「完全」を選択すると、より難しい、または珍しいシード単語が生成される可能性があります。",
+            "instructions2": "生成されたゲームには、シード単語以外の解決策も含まれる場合があります。"
+        },
+        "wordProperties": {
+            "maxWordLength": "単語の最大長",
+            "maxWordLengthInstructions": "シード単語はこの値を超えません。",
+            "maxSharedLetters": "最大共有文字数",
+            "maxSharedLettersInstructions": "低い値は、各シード単語が均等に解決策に寄与することを可能にし、ゲームを簡単にします。"
+        },
+        "generate": "ゲームを生成",
+        "error": "ゲーム生成中にエラーが発生しました"
+    },
     "instructions": {
         "howToPlay": "遊び方",
         "rules": "ルール",

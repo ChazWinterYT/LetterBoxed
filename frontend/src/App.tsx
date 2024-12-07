@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import CustomGameModal from "./components/CustomGameModal";
 import CustomSeedWordsForm from "./components/CustomSeedWordsForm";
+import GameGenerator from "./components/GameGenerator";
 import Spinner from "./components/Spinner";
 import { useLanguage } from "./context/LanguageContext";
 import {
@@ -628,6 +629,11 @@ const AppRouter = () => (
       <Route path="/" element={<App />} />
       {/* Route for accessing a specific game */}
       <Route path="/games/:gameId" element={<App />} />
+      {/* Route for the Game Generator */}
+      <Route path="/get-word-pairs" element={<GameGenerator 
+        defaultLanguage="en"
+        />} 
+      />
     </Routes>
   </BrowserRouter>
 );

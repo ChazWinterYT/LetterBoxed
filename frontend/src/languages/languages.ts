@@ -5,6 +5,9 @@ export interface Language {
   playable: boolean;
 }
 
+export const getPlayableLanguages = (): Language[] =>
+  languages.filter((lang: Language) => lang.playable);
+
 const languages: Language[] = [
   { code: "en", name: "English", 
     uiAvailable: true, playable: true   // Games are supported

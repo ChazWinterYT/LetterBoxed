@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { Language } from "../languages/languages";
+import { Language, getPlayableLanguages } from "../languages/languages";
 import { createRandomGame } from "../services/api";
 import "./css/CustomSeedWordsForm.css";
 
@@ -15,7 +15,7 @@ interface CustomSeedWordsFormProps {
 }
 
 const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, onCancel }) => {
-  const { t, availableLanguages } = useLanguage();
+  const { t } = useLanguage();
   const [language, setLanguage] = useState("en");
   const [boardSize, setBoardSize] = useState("3x3");
   const [seedWordChoice, setSeedWordChoice] = useState<"one" | "two">("two");
@@ -29,9 +29,6 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [gameId, setGameId] = useState<string | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
-
-  const getPlayableLanguages = (): Language[] =>
-    availableLanguages.filter((lang: Language) => lang.playable);
 
   // Dynamically update the seed word choice based on board size
   useEffect(() => {

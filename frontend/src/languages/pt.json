@@ -166,6 +166,32 @@
             "genericError": "Ocorreu um erro ao criar seu jogo."
         }
     },
+    "gameGenerator": {
+        "title": "Gerador de Jogos Aleatórios",
+        "numTries": "Número de jogos a serem gerados",
+        "board": {
+            "numWords": "Gerar Quebra-Cabeças de",
+            "singleWord": "Uma Palavra",
+            "twoWords": "Duas Palavras",
+            "instructions1": "\"Uma Palavra\" gerará um tabuleiro de 2x2.",
+            "instructions2": "\"Duas Palavras\" gerará um tabuleiro de 3x3."
+        },      
+        "dictionary": {
+            "dictionaryType": "Tipo de Dicionário",
+            "basic": "Básico",
+            "full": "Completo",
+            "instructions1": "Escolher \"Completo\" pode gerar palavras iniciais mais difíceis e raras.",
+            "instructions2": "O jogo gerado pode ter outras soluções além das palavras iniciais."
+        },
+        "wordProperties": {
+            "maxWordLength": "Comprimento Máximo da Palavra",
+            "maxWordLengthInstructions": "As palavras iniciais não serão maiores do que este valor.",
+            "maxSharedLetters": "Número Máximo de Letras Compartilhadas",
+            "maxSharedLettersInstructions": "Valores mais baixos permitem que cada palavra inicial contribua igualmente para a solução, resultando em um jogo mais fácil."
+        },
+        "generate": "Gerar Jogos",
+        "error": "Ocorreu um erro ao gerar o jogo"
+    },
     "instructions": {
         "howToPlay": "Como Jogar",
         "rules": "Regras",

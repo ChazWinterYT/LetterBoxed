@@ -166,6 +166,32 @@
             "genericError": "Beim Erstellen Ihres Spiels ist ein Fehler aufgetreten."
         }
     },
+    "gameGenerator": {
+        "title": "Zufälliger Spielgenerator",
+        "numTries": "Anzahl der zu generierenden Spiele",
+        "board": {
+            "numWords": "Rätsel generieren aus",
+            "singleWord": "Einzelnes Wort",
+            "twoWords": "Zwei Wörter",
+            "instructions1": "\"Einzelnes Wort\" erzeugt ein 2x2-Spielbrett.",
+            "instructions2": "\"Zwei Wörter\" erzeugt ein 3x3-Spielbrett."
+        },      
+        "dictionary": {
+            "dictionaryType": "Wörterbuchtyp",
+            "basic": "Einfach",
+            "full": "Vollständig",
+            "instructions1": "Die Auswahl von \"Vollständig\" kann zu schwierigeren, unbekannteren Wörtern führen.",
+            "instructions2": "Das generierte Spiel kann andere Lösungen zusätzlich zu den Ausgangswörtern enthalten."
+        },
+        "wordProperties": {
+            "maxWordLength": "Maximale Wortlänge",
+            "maxWordLengthInstructions": "Die Ausgangswörter sind nicht länger als dieser Wert.",
+            "maxSharedLetters": "Maximale geteilte Buchstaben",
+            "maxSharedLettersInstructions": "Niedrigere Werte erlauben, dass jedes Ausgangswort gleichmäßig zur Lösung beiträgt, was zu einem einfacheren Spiel führt."
+        },
+        "generate": "Spiele generieren",
+        "error": "Es gab einen Fehler bei der Spielgenerierung"
+    },
     "instructions": {
         "howToPlay": "Spielanleitung",
         "rules": "Regeln",

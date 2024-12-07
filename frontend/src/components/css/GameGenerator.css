@@ -1,0 +1,185 @@
+/* General Container for Form */
+.game-generator-container {
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #1d4f7e;
+  border-radius: 20px;
+  text-align: center; 
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.form-label {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  margin-bottom: 3px;
+  color: #eef6ff
+}
+
+/* Instructions */
+.form-instructions {
+  font-size: 0.9rem;
+  color: #ef75e5;
+  margin-top: 2px;
+  margin-bottom: 12px;
+}
+
+/* Inputs */
+.form-input {
+  width: 100%;
+  max-width: 100px;
+  padding: 8px;
+  font-size: 1rem;
+  border: 2px solid #595959;
+  border-radius: 4px;
+}
+
+/* Toggle Buttons */
+.toggle-group {
+  display: inline-flex; /* Center toggle buttons as inline elements */
+  justify-content: center; /* Center them horizontally */
+  gap: 10px; /* Space between buttons */
+}
+
+.toggle-button {
+  font-size: 1rem;
+  padding: 8px 12px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  text-align: center;
+}
+
+.toggle-button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.toggle-button.active:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.toggle-button:hover {
+  background-color: #d5e8fc;
+  color: #2f2f2f;
+  transform: scale(1.05);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* General Slider Styles */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 50%;
+  max-width: 200px;
+  height: 10px;
+  background: #1d4f7e; /* Background color */
+  border: 2px solid #ed5b12; 
+  border-radius: 8px; /* Rounded edges */
+  margin: 8px;
+  outline: none;
+  position: relative;
+}
+
+/* Slider Ticks */
+.slider::before {
+  content: '';
+  position: absolute;
+  top: -8px; /* Adjust position to align with slider */
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(
+    to right,
+    transparent 0%,
+    transparent calc(100% / 8 - 1px), /* Creates 8 ticks */
+    pink calc(100% / 8 - 1px),
+    pink calc(100% / 8)
+  );
+  z-index: -1; /* Place ticks behind the slider */
+}
+
+/* Chrome/Safari Thumb */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 24px;
+  background: #ed5b12; /* Thumb */
+  cursor: pointer;
+  border: 1px solid #64225f;
+  border-radius: 4px; /* Rounded thumb edges */
+  transition: transform 0.2s ease; /* Smooth scaling effect */
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2); /* Enlarge thumb on hover */
+}
+
+/* Firefox Thumb */
+.slider::-moz-range-thumb {
+  width: 8px;
+  height: 24px;
+  background: #ed5b12; /* Thumb */
+  cursor: pointer;
+  border: 1px solid #64225f;
+  border-radius: 4px; /* Rounded thumb edges */
+  transition: transform 0.2s ease; /* Smooth scaling effect */
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.2); /* Enlarge thumb on hover */
+}
+
+/* Slider Value Display */
+.slider-value {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #eef6ff; /* Text color */
+  text-align: center;
+}
+
+/* Error Messages */
+.error-message {
+  color: #dc3545; /* Red color for errors */
+  background-color: #ebe3e6;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 2px;
+  border: 2px solid #df4d5b;
+  border-radius: 4px;
+  text-align: left;
+}
+
+/* Generate Button */
+.generate-button {
+  padding: 10px 15px;
+  background-color: #1586dd;
+  color: white;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.generate-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.generate-button:disabled:hover {
+  background-color: #a7a7a7; /* Keep the same background on hover */
+  color: #626262;
+  border-color: #aaaaaa;
+}
+

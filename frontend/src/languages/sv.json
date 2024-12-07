@@ -166,6 +166,32 @@
             "genericError": "Ett fel uppstod vid skapandet av spelet."
         }
     },
+    "gameGenerator": {
+        "title": "Slumpmässig Spelgenerator",
+        "numTries": "Antal spel att generera",
+        "board": {
+            "numWords": "Generera Pussel från",
+            "singleWord": "Ett Ord",
+            "twoWords": "Två Ord",
+            "instructions1": "\"Ett Ord\" kommer att generera ett 2x2 spelbräde.",
+            "instructions2": "\"Två Ord\" kommer att generera ett 3x3 spelbräde."
+        },      
+        "dictionary": {
+            "dictionaryType": "Ordbokstyp",
+            "basic": "Grundläggande",
+            "full": "Fullständig",
+            "instructions1": "Att välja \"Fullständig\" kan generera mer ovanliga och svåra fröord.",
+            "instructions2": "Det genererade spelet kan ha andra lösningar utöver fröorden."
+        },
+        "wordProperties": {
+            "maxWordLength": "Maximal Ord Längd",
+            "maxWordLengthInstructions": "Fröorden kommer inte att vara längre än detta värde.",
+            "maxSharedLetters": "Maximalt Delade Bokstäver",
+            "maxSharedLettersInstructions": "Lägre värden tillåter varje fröord att bidra lika mycket till lösningen, vilket gör spelet enklare."
+        },
+        "generate": "Generera Spel",
+        "error": "Ett fel inträffade vid generering av spelet"
+    },
     "instructions": {
         "howToPlay": "Hur man spelar",
         "rules": "Regler",
