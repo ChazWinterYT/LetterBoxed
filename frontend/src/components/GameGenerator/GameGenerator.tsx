@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Header from "../Header";
-import { useNavigate } from "react-router-dom";
+import Header from "../Header"
 import { useLanguage } from "../../context/LanguageContext";
 import { getPlayableLanguages } from "../../languages/languages";
 import { generateRandomGames } from "../../services/api";
@@ -14,7 +13,6 @@ export interface GameGeneratorProps {
 
 const GameGenerator: React.FC<GameGeneratorProps> = () => {
   const { t } = useLanguage();
-  const navigate = useNavigate();
 
   const [language, setLanguage] = useState<string>("en");
   const [numTries, setNumTries] = useState<number>(10);
