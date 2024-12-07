@@ -310,8 +310,11 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
             <textarea
               value={hint}
               onChange={(e) => {
-                // Allow only valid characters
-                const filteredValue = e.target.value.replace(/[^a-zA-Z0-9.,!?'" ]/g, ""); // Allow safe characters
+                // Allow valid letters, numbers, and basic punctuation across scripts
+                const filteredValue = e.target.value.replace(
+                  /[^()!?.,a-zA-Z0-9\p{L}\p{N}\p{P} ]/gu,
+                  ""
+                );
                 setHint(filteredValue);
               }}
               maxLength={70} // Limit to 70 characters
@@ -328,7 +331,14 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
             <input 
               type="text"
               value={createdBy}
-              onChange={(e) => setCreatedBy(e.target.value)}
+              onChange={(e) => {
+                // Allow valid Unicode letters, spaces, and a few special characters for names
+                const filteredValue = e.target.value.replace(
+                  /[^()!?a-zA-Z\p{L}.,'\-\s]/gu,
+                  ""
+                );
+                setCreatedBy(filteredValue);
+              }}
               className="modal-input"
               placeholder={t("customGameForm.instructions.authorName")}
               maxLength={30}

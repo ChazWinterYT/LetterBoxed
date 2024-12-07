@@ -191,7 +191,10 @@
             "maxSharedLettersInstructions": "Valori più bassi consentono a ogni parola iniziale di contribuire equamente alla soluzione, rendendo il gioco più facile."
         },
         "generate": "Genera Giochi",
-        "error": "Si è verificato un errore durante la generazione del gioco"
+        "error": {
+            "error": "Si è verificato un errore durante la generazione del gioco",
+            "maxWordLength4x4": "I tabelloni 4x4 richiedono una parola di almeno 9 lettere."
+        }
     },
     "instructions": {
         "howToPlay": "Come giocare",

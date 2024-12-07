@@ -191,7 +191,10 @@
             "maxSharedLettersInstructions": "Niższe wartości pozwalają każdemu słowu początkowemu równomiernie przyczyniać się do rozwiązania, co ułatwia grę."
         },
         "generate": "Generuj Gry",
-        "error": "Wystąpił błąd podczas generowania gry"
+        "error": {
+            "error": "Wystąpił błąd podczas generowania gry",
+            "maxWordLength4x4": "Plansze 4x4 wymagają, aby jedno słowo miało co najmniej 9 liter."
+        }
     },
     "instructions": {
         "howToPlay": "Jak grać",

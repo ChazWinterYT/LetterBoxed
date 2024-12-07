@@ -1,10 +1,11 @@
 import json
 from typing import Dict, Any, Optional
+import time
 import random
 from lambdas.common.response_utils import error_response
 from lambdas.create_random.random_game_service import select_two_words, select_one_word
 from lambdas.common.dictionary_utils import get_dictionary, get_basic_dictionary
-from lambdas.common.validation_utils import validate_language
+from lambdas.common.validation_utils import validate_language, validate_board_size
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -19,6 +20,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             return error_response("Invalid or missing JSON body.", 400) 
         
         language = body.get("language", "en")
+        board_size = body.get("boardSize", "3x3")
         num_tries = body.get("numTries", 10)
         single_word = body.get("singleWord", False)
         basic_dictionary = body.get("basicDictionary", True)
@@ -28,6 +30,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Validate parameters
         if not validate_language(language):
             return error_response("Language is not supported for game creation.", 400)
+        if not validate_board_size(board_size):
+            return error_response("Board size is not supported for game creation.", 400)
         if num_tries < 1 or num_tries > 10:
             return error_response("Number of tries must be between 1 and 10.", 400)
         if not single_word:
@@ -48,8 +52,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 seed_word = select_one_word(dictionary, "2x2")
                 if seed_word:
                     words.append(seed_word)
-            else:
+            elif board_size == "3x3":
                 seed_words = select_two_words(dictionary, "3x3", 10000, max_word_length, max_shared_letters)
+                if seed_words:
+                    word_pairs.append(seed_words)
+            elif board_size == "4x4":
+                seed_words = select_two_words(dictionary, "4x4", 10000, max_word_length, max_shared_letters)
                 if seed_words:
                     word_pairs.append(seed_words)
         

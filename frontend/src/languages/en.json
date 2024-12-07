@@ -175,8 +175,8 @@
             "numWords": "Generate Puzzles from",
             "singleWord": "Single Word",
             "twoWords": "Two Words",
-            "instructions1": "\"Single Word\" will generate a 2x2 game board.",
-            "instructions2": "\"Two Words\" will generate a 3x3 game board."
+            "instructions1": "If you select \"4x4\", it is highly recommended to reduce the number of games to generate!",
+            "instructions2": "You should also increase the Maximum Word Length."
         },      
         "dictionary": {
             "dictionaryType": "Dictionary Type",
@@ -192,7 +192,10 @@
             "maxSharedLettersInstructions": "Lower values allow each seed word to contribute equally to the solution, resulting in an easier game."
         },
         "generate": "Generate Games",
-        "error": "There was an error when generating the game"
+        "error": {
+            "error": "There was an error when generating the game",
+            "maxWordLength4x4": "4x4 boards require one word to be at least 9 letters long."
+        }
     },
     "instructions": {
         "howToPlay": "How to Play",

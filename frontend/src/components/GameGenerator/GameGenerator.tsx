@@ -18,6 +18,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
   const [language, setLanguage] = useState<string>("en");
   const [numTries, setNumTries] = useState<number>(10);
   const [singleWord, setSingleWord] = useState<boolean>(false);
+  const [boardSize, setBoardSize] = useState<string>("3x3");
   const [basicDictionary, setBasicDictionary] = useState<boolean>(true);
   const [maxWordLength, setMaxWordLength] = useState<number>(99);
   const [maxSharedLetters, setMaxSharedLetters] = useState<number>(3);
@@ -35,6 +36,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
     try {
       const payload = {
         language,
+        boardSize,
         numTries,
         singleWord,
         basicDictionary,
@@ -53,7 +55,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
       });
     } catch (error: any) {
       console.error("Error generating games:", error);
-      setError(error.message);
+      setError(`500 Server Error: ${error.message}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -110,27 +112,35 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
           {t("gameGenerator.numTries.instructions")}
         </div> */}
 
-        {/* Single Word or Two Words */}
+        {/* Board Size */}
         <div className="form-section">
-          <label className="form-label">{t("gameGenerator.board.numWords")}:</label>
+          <label className="form-label">{t("customGameForm.boardSize")}:</label>
           <div className="toggle-group">
-            <button
-              className={`toggle-button ${singleWord ? "active" : ""}`}
-              onClick={() => setSingleWord(true)}
-            >
-              {t("gameGenerator.board.singleWord")}
-            </button>
-            <button
-              className={`toggle-button ${!singleWord ? "active" : ""}`}
-              onClick={() => setSingleWord(false)}
-            >
-              {t("gameGenerator.board.twoWords")}
-            </button>
+            {["2x2", "3x3", "4x4"].map((size) => (
+              <button
+                key={size}
+                className={`toggle-button ${boardSize === size ? "active" : ""}`}
+                onClick={() => {
+                  setBoardSize(size);
+                  setSingleWord(size === "2x2"); // Automatically adjust singleWord based on boardSize
+                  if (size === "4x4" && maxWordLength < 9) {
+                    setError(t("gameGenerator.error.maxWordLength4x4"));
+                  } else {
+                    setError(null);
+                  }
+                }}
+              >
+                {t(`customGameForm.boardSizes.${size}`)}
+              </button>
+            ))}
           </div>
+          {boardSize === "4x4" && 
           <div className="form-instructions">
             <span>{t("gameGenerator.board.instructions1")}</span><br></br>
             <span>{t("gameGenerator.board.instructions2")}</span>
           </div>
+          }
+          
         </div>
 
         {/* Dictionary Type */}
@@ -171,6 +181,11 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
               onChange={(e) => {
                 const value = parseInt(e.target.value);
                 setMaxWordLength(value === 15 ? 99 : value); // Map 15 to 99 internally
+                if (boardSize === "4x4" && value < 9) {
+                  setError(t("gameGenerator.error.maxWordLength4x4"));
+                } else {
+                  setError(null);
+                }
               }}
             />
             <div className="form-instructions">
@@ -199,14 +214,14 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
         )}
 
         {/* Error (conditionally displayed) */}
-        {error && <div className="error-message">{`${t("gameGenerator.error")}: ${error}`}</div>}
+        {error && <div className="error-message">{error}</div>}
 
         {/* Generate Button */}
         <div className="form-section">
           <button 
             className="generate-button" 
             onClick={handleGenerate}
-            disabled={isSubmitting}
+            disabled={isSubmitting || error !== null}
           >
             {t("gameGenerator.generate")}
           </button>
@@ -216,12 +231,35 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
       {/* Display Generated Games */}
       <div className="generated-games-container">
         {generatedGames.singleWords.map((word, index) => (
-          <RandomGameDisplay key={index} gameType="singleWord" content={word} />
+          <React.Fragment key={index}>
+            <RandomGameDisplay
+              gameType="singleWord"
+              content={word}
+              language={language}
+              boardSize={boardSize}
+              singleWord={true}
+            />
+            {index < generatedGames.singleWords.length - 1 && (
+              <div className="random-game-separator"></div>
+            )}
+          </React.Fragment>
         ))}
         {generatedGames.wordPairs.map((pair, index) => (
-          <RandomGameDisplay key={index} gameType="wordPair" content={pair} />
+          <React.Fragment key={index}>
+            <RandomGameDisplay
+              gameType="wordPair"
+              content={pair}
+              language={language}
+              boardSize={boardSize}
+              singleWord={false}
+            />
+            {index < generatedGames.wordPairs.length - 1 && (
+              <div className="random-game-separator"></div>
+            )}
+          </React.Fragment>
         ))}
       </div>
+
       <Footer />
     </div>
   );

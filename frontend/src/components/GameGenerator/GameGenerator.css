@@ -195,10 +195,18 @@
   transform: scale(1.05);
 }
 
+.generate-button:disabled {
+  background-color: #a7a7a7; /* Keep the same background on hover */
+  color: #626262;
+  border-color: #aaaaaa;
+}
+
 .generate-button:disabled:hover {
   background-color: #a7a7a7; /* Keep the same background on hover */
   color: #626262;
   border-color: #aaaaaa;
+  transform: none;
+  cursor: not-allowed
 }
 
 .generated-games-container {
@@ -210,4 +218,14 @@
   background-color: #1d4f7e;
   border-radius: 20px;
   text-align: center; 
+}
+
+/* Separator Between RandomGameDisplays */
+.random-game-separator {
+  height: 2px;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  background-color: #ccc; /* Neutral gray color */
+  border-radius: 1px; /* Smooth edges */
 }

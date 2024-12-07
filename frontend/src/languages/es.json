@@ -191,7 +191,10 @@
             "maxSharedLettersInstructions": "Valores más bajos permiten que cada palabra semilla contribuya igualmente a la solución, lo que resulta en un juego más fácil."
         },
         "generate": "Generar Juegos",
-        "error": "Hubo un error al generar el juego"
+        "error": {
+            "error": "Hubo un error al generar el juego",
+            "maxWordLength4x4": "Los tableros de 4x4 requieren que una palabra tenga al menos 9 letras."
+        }
     },
     "instructions": {
         "howToPlay": "Cómo jugar",

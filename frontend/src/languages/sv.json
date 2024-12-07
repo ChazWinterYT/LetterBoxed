@@ -191,7 +191,10 @@
             "maxSharedLettersInstructions": "Lägre värden tillåter varje fröord att bidra lika mycket till lösningen, vilket gör spelet enklare."
         },
         "generate": "Generera Spel",
-        "error": "Ett fel inträffade vid generering av spelet"
+        "error": {
+            "error": "Ett fel inträffade vid generering av spelet",
+            "maxWordLength4x4": "4x4-bräden kräver att ett ord är minst 9 bokstäver långt."
+        }
     },
     "instructions": {
         "howToPlay": "Hur man spelar",

@@ -191,7 +191,10 @@
             "maxSharedLettersInstructions": "Niedrigere Werte erlauben, dass jedes Ausgangswort gleichmäßig zur Lösung beiträgt, was zu einem einfacheren Spiel führt."
         },
         "generate": "Spiele generieren",
-        "error": "Es gab einen Fehler bei der Spielgenerierung"
+        "error": {
+            "error": "Es gab einen Fehler bei der Spielgenerierung",
+            "maxWordLength4x4": "4x4-Bretter erfordern, dass ein Wort mindestens 9 Buchstaben lang ist."
+        }
     },
     "instructions": {
         "howToPlay": "Spielanleitung",

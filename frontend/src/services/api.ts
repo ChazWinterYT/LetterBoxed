@@ -85,6 +85,7 @@ export const createRandomGame = async (data: {
 
 export const generateRandomGames = async (data: {
   language: string;
+  boardSize: string;
   numTries: number;
   singleWord: boolean;
   basicDictionary: boolean;

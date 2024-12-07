@@ -191,7 +191,10 @@
             "maxSharedLettersInstructions": "低い値は、各シード単語が均等に解決策に寄与することを可能にし、ゲームを簡単にします。"
         },
         "generate": "ゲームを生成",
-        "error": "ゲーム生成中にエラーが発生しました"
+        "error": {
+            "error": "ゲーム生成中にエラーが発生しました",
+            "maxWordLength4x4": "4x4ボードでは、1つの単語が少なくとも9文字である必要があります。"
+        }
     },
     "instructions": {
         "howToPlay": "遊び方",

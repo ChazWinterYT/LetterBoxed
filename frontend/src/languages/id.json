@@ -191,7 +191,10 @@
             "maxSharedLettersInstructions": "Nilai yang lebih rendah memungkinkan setiap kata awal memberikan kontribusi yang sama ke solusi, menghasilkan game yang lebih mudah."
         },
         "generate": "Buat Game",
-        "error": "Terjadi kesalahan saat membuat game"
+        "error": {
+            "error": "Terjadi kesalahan saat membuat game",
+            "maxWordLength4x4": "Papan 4x4 membutuhkan satu kata dengan setidaknya 9 huruf."
+        }
     },
     "instructions": {
         "howToPlay": "Cara Bermain",
