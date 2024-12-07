@@ -49,6 +49,7 @@ const RandomGameDisplay: React.FC<RandomGameDisplayProps> = ({
 
       setStatusMessage("Game created successfully!");
       setIsSuccess(true);
+      setGameId(response.gameId);
     } catch (error: any) {
       console.error("Error creating game:", error);
       setStatusMessage(`${error}`);
