@@ -32,11 +32,11 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
       <button onClick={onOpenArchive}>{t("ui.menu.archive")}</button>
       <button onClick={onOpenCustomGame}>{t("ui.menu.customGame")}</button>
       <button onClick={onPlayRandomGame}>{t("ui.menu.randomGame")}</button>
-      {/* <button 
+      <button 
         onClick={() => window.location.href = "/LetterBoxed/frontend/get-word-pairs"}
       >
         {t("ui.menu.randomGameGenerator")}
-      </button> */}
+      </button>
     </div>
   );
 };
