@@ -22,6 +22,7 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
   return (
     <div className="button-menu">
       <button
+        className="menu-button play-today"
         onClick={() => {
           navigate("/"); // Reset the URL to "/"
           onPlayToday(); // Explicitly reload today's game
@@ -29,11 +30,18 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
       >
         {t("ui.menu.playToday")}
       </button>
-      <button onClick={onOpenArchive}>{t("ui.menu.archive")}</button>
-      <button onClick={onPlayRandomGame}>{t("ui.menu.randomGame")}</button>
-      <button onClick={onOpenCustomGame}>{t("ui.menu.customGame")}</button>
-      <button 
-        onClick={() => window.location.href = "/LetterBoxed/frontend/get-word-pairs"}
+      <button className="menu-button archive" onClick={onOpenArchive}>
+        {t("ui.menu.archive")}
+      </button>
+      <button className="menu-button random-game" onClick={onPlayRandomGame}>
+        {t("ui.menu.randomGame")}
+      </button>
+      <button className="menu-button custom-game" onClick={onOpenCustomGame}>
+        {t("ui.menu.customGame")}
+      </button>
+      <button
+        className="menu-button random-game-generator"
+        onClick={() => (window.location.href = "/LetterBoxed/frontend/get-word-pairs")}
       >
         {t("ui.menu.randomGameGenerator")}
       </button>
