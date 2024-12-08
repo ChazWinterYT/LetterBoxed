@@ -60,8 +60,11 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
     }
 
     const handleKeyDown = (
-      e: React.KeyboardEvent<HTMLInputElement>, letterIndex: number
+      e: React.KeyboardEvent<HTMLInputElement>,
+      letterIndex: number
     ) => {
+      const isLetter = /^\p{L}$/u.test(e.key); // Check if the pressed key is a unicode letter
+    
       if (e.key === "Backspace" && !sideArray[letterIndex]) {
         // Move to the previous input if Backspace is pressed on an empty input
         const prevInput = document.querySelector(
@@ -71,9 +74,42 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
           prevInput.focus();
           e.preventDefault(); // Prevent default backspace behavior
         }
+        return;
+      }
+    
+      if (isLetter && sideArray[letterIndex]) {
+        // Current input is already filled, and user typed another letter.
+        // Move that letter to the next input.
+    
+        // We need to insert this letter into the next slot
+        const newSide = [...sideArray];
+        const nextIndex = letterIndex + 1;
+    
+        if (nextIndex < lettersPerSide) {
+          const typedLetter = e.key.toUpperCase();
+          newSide[nextIndex] = typedLetter;
+    
+          // Update the game layout
+          const updatedLayout = [...gameLayout];
+          updatedLayout[sideIndex] = newSide.join("");
+          setGameLayout(updatedLayout);
+    
+          // Move focus to the next input
+          const nextInput = document.querySelector(
+            `.side-${sideIndex}-input-${nextIndex}`
+          ) as HTMLInputElement;
+          if (nextInput) {
+            nextInput.focus();
+          }
+    
+          e.preventDefault(); // Prevent the letter from appearing in the current input
+        } else {
+          // If there's no next input, just prevent default so the letter doesn't overwrite current input
+          e.preventDefault();
+        }
       }
     };
-
+    
     const handleInputChange = (
       e: React.ChangeEvent<HTMLInputElement>,
       letterIndex: number
@@ -83,45 +119,34 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
       // Sanitize input: Allow only letters
       const filteredValue = inputValue.toUpperCase().replace(/[^\p{L}]/gu, "").slice(0, 1);
     
-      if (!filteredValue && !inputValue) {
-        // Handle deletion (Backspace or clearing input when empty)
-        const newSide = [...sideArray];
-        newSide[letterIndex] = ""; // Clear the current input
+      const newSide = [...sideArray];
     
+      if (filteredValue) {
+        // If a valid letter was typed into an empty input, place it here and move on
+        newSide[letterIndex] = filteredValue;
+    
+        // Update the game layout
         const updatedLayout = [...gameLayout];
         updatedLayout[sideIndex] = newSide.join("");
         setGameLayout(updatedLayout);
     
-        // Move to the previous input only if the current input is already empty
-        const prevInput = document.querySelector(
-          `.side-${sideIndex}-input-${letterIndex - 1}`
+        // Move to the next input
+        const nextInput = document.querySelector(
+          `.side-${sideIndex}-input-${letterIndex + 1}`
         ) as HTMLInputElement;
-        if (prevInput && !sideArray[letterIndex]) { // Check if the current input is empty
-          prevInput.focus();
+        if (nextInput) {
+          nextInput.focus();
         }
-        return;
-      }
     
-      if (!filteredValue) {
-        return; // Ignore invalid input
-      }
-    
-      const newSide = [...sideArray];
-      newSide[letterIndex] = filteredValue;
-    
-      // Update the game layout
-      const updatedLayout = [...gameLayout];
-      updatedLayout[sideIndex] = newSide.join("");
-      setGameLayout(updatedLayout);
-    
-      // Move to the next input if valid input was entered
-      const nextInput = document.querySelector(
-        `.side-${sideIndex}-input-${letterIndex + 1}`
-      ) as HTMLInputElement;
-      if (nextInput) {
-        nextInput.focus();
+      } else {
+        // Input cleared: remove the letter but keep focus here
+        newSide[letterIndex] = "";
+        const updatedLayout = [...gameLayout];
+        updatedLayout[sideIndex] = newSide.join("");
+        setGameLayout(updatedLayout);
       }
     };
+    
 
     return (
       <div className="letter-container">
