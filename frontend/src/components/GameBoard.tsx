@@ -6,6 +6,8 @@ import Spinner from './Spinner';
 import ControlButtons from './ControlButtons';
 import { ValidationResult } from '../types/validation';
 
+
+const sideNames = ['top', 'right', 'bottom', 'left'];
 export interface GameBoardProps {
   layout: string[];
   foundWords: string[];
@@ -46,8 +48,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [lastSide, setLastSide] = useState<string | null>(null);
   const [lastLetter, setLastLetter] = useState<string | null>(null);
   const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
+  const [shuffledLayout, setShuffledLayout] = useState<string[]>([]);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
+  
+
+  useEffect(() => {
+    if (layout.length === 4) {
+      // Initialize shuffledLayout with the original layout when component mounts or layout changes
+      setShuffledLayout(layout);
+    }
+  }, [layout]);
 
   useEffect(() => {
     if (!gameCompleted && foundWords.length > 0) {
@@ -55,14 +66,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
       const lastWord = foundWords[foundWords.length - 1];
       const lastLetterOfLastWord = lastWord[lastWord.length - 1];
 
-      // Determine the side of he last letter
+      // Determine the side of the last letter
       const sideIndex = layout.findIndex((side) => side.includes(lastLetterOfLastWord));
       if (sideIndex === -1) {
         console.error("Could not determine side for last letter.");
         return;
       }
 
-      const sideNames = ['top', 'right', 'bottom', 'left'];
       const sideName = sideNames[sideIndex];
 
       // Update the state
@@ -144,7 +154,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }
   
       // Map index to side name
-      const sideNames = ['top', 'right', 'bottom', 'left'];
       const sideOfLastLetter = sideNames[sideOfLastLetterIndex];
   
       setLastLetter(lastLetterOfPreviousWord);
@@ -232,13 +241,32 @@ const GameBoard: React.FC<GameBoardProps> = ({
     setLastLetterSide(null);
   };
 
-  // Display loading spinner and message while layout is not ready
-  if (!Array.isArray(layout) || layout.length !== 4) {
-    return (
-      <div className="loading-container">
-        <Spinner message={t('game.loading')} />
-      </div>
-    );
+  // Shuffle logic
+  const handleShuffle = () => {
+    // Copy current shuffledLayout
+    let newLayout = [...shuffledLayout];
+
+    // Shuffle the sides array
+    newLayout = shuffleArray(newLayout);
+
+    // Shuffle letters in each side
+    newLayout = newLayout.map((side) => {
+      const letters = side.split('');
+      const shuffledLetters = shuffleArray(letters);
+      return shuffledLetters.join('');
+    });
+
+    setShuffledLayout(newLayout);
+  };
+
+  // Utility: Fisher-Yates shuffle
+  function shuffleArray<T>(array: T[]): T[] {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
   }
 
   // Function to render a side of the board
@@ -276,6 +304,15 @@ const GameBoard: React.FC<GameBoardProps> = ({
       );
     });
   };
+
+  // Display loading spinner and message while layout is not ready
+  if (!Array.isArray(layout) || layout.length !== 4 || shuffledLayout.length !== 4) {
+    return (
+      <div className="loading-container">
+        <Spinner message={t('game.loading')} />
+      </div>
+    );
+  }
 
   return (
     <div className="game-board-container">
@@ -318,16 +355,16 @@ const GameBoard: React.FC<GameBoardProps> = ({
       {/* Game Board */}
       <div className="board">
         {/* Top Side */}
-        <div className="top-side">{renderSide(layout[0], 'top')}</div>
+        <div className="top-side">{renderSide(shuffledLayout[0], 'top')}</div>
 
         {/* Left Side */}
-        <div className="left-side">{renderSide(layout[3], 'left')}</div>
+        <div className="left-side">{renderSide(shuffledLayout[3], 'left')}</div>
 
         {/* Right Side */}
-        <div className="right-side">{renderSide(layout[1], 'right')}</div>
+        <div className="right-side">{renderSide(shuffledLayout[1], 'right')}</div>
 
         {/* Bottom Side */}
-        <div className="bottom-side">{renderSide(layout[2], 'bottom')}</div>
+        <div className="bottom-side">{renderSide(shuffledLayout[2], 'bottom')}</div>
       </div>
 
       {/* Controls */}
@@ -337,6 +374,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         onRestart={handleRestart}
         onSubmit={handleSubmit}
         onShowHint={() => setIsHintVisible(true)}
+        onShuffle={handleShuffle}
         gameCompleted={gameCompleted}
       />
 

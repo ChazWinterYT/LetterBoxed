@@ -88,6 +88,7 @@
         "deleteLetter": "Eliminar letra",
         "removeLastWord": "Eliminar última palabra",
         "submitWord": "Enviar palabra",
+        "shuffle": "Mezclar letras",
         "showHint": "Mostrar pista",
         "noHintAvailable": "No hay pistas disponibles para este juego.",
         "hintError": "Error al obtener la pista. Por favor, inténtelo de nuevo más tarde.",

@@ -88,6 +88,7 @@
         "deleteLetter": "Supprimer une lettre",
         "removeLastWord": "Supprimer le dernier mot",
         "submitWord": "Soumettre un mot",
+        "shuffle": "Mélanger les lettres",
         "showHint": "Montrer un indice",
         "noHintAvailable": "Aucun indice disponible pour ce jeu.",
         "hintError": "Erreur lors de la récupération de l'indice. Veuillez réessayer plus tard.",

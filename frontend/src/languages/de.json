@@ -88,6 +88,7 @@
         "deleteLetter": "Buchstaben löschen",
         "removeLastWord": "Letztes Wort entfernen",
         "submitWord": "Wort einreichen",
+        "shuffle": "Buchstaben mischen",
         "showHint": "Hinweis anzeigen",
         "noHintAvailable": "Kein Hinweis für dieses Spiel verfügbar.",
         "hintError": "Fehler beim Abrufen des Hinweises. Bitte versuchen Sie es später erneut.",

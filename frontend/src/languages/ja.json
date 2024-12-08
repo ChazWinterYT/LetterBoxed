@@ -88,6 +88,7 @@
         "deleteLetter": "文字を削除",
         "removeLastWord": "最後の単語を削除",
         "submitWord": "単語を送信",
+        "shuffle": "文字をシャッフル",
         "showHint": "ヒントを表示",
         "noHintAvailable": "このゲームにはヒントがありません。",
         "hintError": "ヒントの取得中にエラーが発生しました。後でもう一度お試しください。",

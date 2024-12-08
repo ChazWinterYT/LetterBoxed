@@ -89,6 +89,7 @@
         "deleteLetter": "Delete Letter",
         "removeLastWord": "Remove Last Word",
         "submitWord": "Submit Word",
+        "shuffle": "Shuffle Letters",
         "showHint": "Show Hint",
         "noHintAvailable": "No hint is available for this game.",
         "hintError": "Error fetching the hint. Please try again later.",

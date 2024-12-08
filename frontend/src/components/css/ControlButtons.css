@@ -6,25 +6,49 @@
   align-items: center; /* Center buttons horizontally */
 }
 
-  .control-row {
-    display: flex;
-    justify-content: center; /* Center buttons within each row */
-    gap: 0.5rem; /* Space between buttons */
-  }
+.control-row {
+  display: flex;
+  justify-content: center; /* Center buttons within each row */
+  gap: 0.5rem; /* Space between buttons */
+}
+
+.control-row .delete-button {
+  border: 3px solid rgb(255, 0, 0);
+}
+
+.control-row .remove-last-button {
+  border: 3px solid rgb(255, 0, 0);
+}
+
+.control-row .submit-button {
+  border: 3px solid rgb(8, 181, 8);
+}
+
+.control-row .restart-button {
+  border: 3px solid blue;
+}
+
+.control-row .shuffle-button {
+  border: 3px solid rgb(221, 102, 12);
+}
+
+.control-row .hint-button {
+  border: 3px solid rgb(0, 189, 189);
+}
   
-  .controls button {
-    padding: 10px 16px;
-    font-size: 0.96rem;
-    cursor: pointer;
-    background-color: #dae4ef; /* Default background color */
-    border: 3px solid black;
-    border-radius: 1.5rem;
-    min-width: 90px;
-    max-width: 150px;
-    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover transition */
-  }
-  
-  .controls button:hover {
-    background-color: #68a2d2; /* Hover background color */
-    color: white; /* Optional: Change text color on hover */
-  }
+.controls button {
+  padding: 10px 16px;
+  font-size: 0.96rem;
+  cursor: pointer;
+  background-color: #dae4ef; /* Default background color */
+  border: 3px solid black;
+  border-radius: 1.5rem;
+  min-width: 90px;
+  max-width: 150px;
+  transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover transition */
+}
+
+.controls button:hover {
+  background-color: #b0d2ee; /* Hover background color */
+  color: rgb(4, 52, 173); /* Optional: Change text color on hover */
+}

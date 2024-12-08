@@ -88,6 +88,7 @@
         "deleteLetter": "Ta bort bokstav",
         "removeLastWord": "Ta bort senaste ordet",
         "submitWord": "Skicka ord",
+        "shuffle": "Blanda bokstäver",
         "showHint": "Visa ledtråd",
         "noHintAvailable": "Ingen ledtråd är tillgänglig för detta spel.",
         "hintError": "Ett fel uppstod när ledtråden hämtades. Försök igen senare.",

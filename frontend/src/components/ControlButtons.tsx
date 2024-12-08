@@ -8,6 +8,7 @@ interface ControlButtonsProps {
   onRestart: () => void;
   onSubmit: () => void;
   onShowHint: () => void;
+  onShuffle: () => void;
   gameCompleted: boolean;
 }
 
@@ -17,6 +18,7 @@ const ControlButtons: React.FC<ControlButtonsProps> = ({
   onRestart,
   onSubmit,
   onShowHint,
+  onShuffle,
   gameCompleted,
 }) => {
   const { t } = useLanguage();
@@ -24,23 +26,26 @@ const ControlButtons: React.FC<ControlButtonsProps> = ({
   return (
     <div className="controls">
       <div className="control-row">
-          <button onClick={onDelete} disabled={gameCompleted}>
+        <button className="delete-button" onClick={onDelete} disabled={gameCompleted}>
           {t('game.deleteLetter')}
-          </button>
-          <button onClick={onRemoveLastWord} disabled={gameCompleted}>
-            {t("game.removeLastWord")}
-          </button>
-          <button onClick={onSubmit} disabled={gameCompleted}>
+        </button>
+        <button className="remove-last-button" onClick={onRemoveLastWord} disabled={gameCompleted}>
+          {t("game.removeLastWord")}
+        </button>
+        <button className="submit-button" onClick={onSubmit} disabled={gameCompleted}>
           {t('game.submitWord')}
-          </button>
+        </button>
       </div>
       <div className="control-row">
-          <button onClick={onRestart}>
+        <button className="restart-button" onClick={onRestart}>
           {t('game.restartGame')}
-          </button>
-          <button onClick={onShowHint}>
+        </button>
+        <button className="shuffle-button" onClick={onShuffle} disabled={gameCompleted}>
+          {t('game.shuffle')}
+        </button> 
+        <button className="hint-button" onClick={onShowHint}>
           {t('game.showHint')}
-          </button>
+        </button>
       </div>
     </div>
   );

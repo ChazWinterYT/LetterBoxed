@@ -88,6 +88,7 @@
         "deleteLetter": "Excluir Letra",
         "removeLastWord": "Remover Última Palavra",
         "submitWord": "Enviar Palavra",
+        "shuffle": "Embaralhar Letras",
         "showHint": "Mostrar Dica",
         "noHintAvailable": "Nenhuma dica disponível para este jogo.",
         "hintError": "Erro ao buscar a dica. Por favor, tente novamente mais tarde.",

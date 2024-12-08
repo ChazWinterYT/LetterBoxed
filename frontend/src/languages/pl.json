@@ -88,6 +88,7 @@
         "deleteLetter": "Usuń literę",
         "removeLastWord": "Usuń ostatnie słowo",
         "submitWord": "Prześlij słowo",
+        "shuffle": "Przetasuj litery",
         "showHint": "Pokaż wskazówkę",
         "noHintAvailable": "Brak dostępnej wskazówki dla tej gry.",
         "hintError": "Błąd podczas pobierania wskazówki. Spróbuj ponownie później.",

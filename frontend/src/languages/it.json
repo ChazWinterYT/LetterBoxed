@@ -88,6 +88,7 @@
         "deleteLetter": "Elimina lettera",
         "removeLastWord": "Rimuovi l'ultima parola",
         "submitWord": "Invia parola",
+        "shuffle": "Mescola Lettere",
         "showHint": "Mostra suggerimento",
         "noHintAvailable": "Nessun suggerimento disponibile per questo gioco.",
         "hintError": "Errore durante il recupero del suggerimento. Riprova più tardi.",
