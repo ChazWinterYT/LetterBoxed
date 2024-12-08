@@ -147,6 +147,10 @@
         },
         "success": {
             "gameCreationSuccess": "ゲームが正常に生成されました！",
+            "statsTitle": "カスタムゲームの統計情報",
+            "oneWordSolutions": "1語の解答の数",
+            "twoWordSolutions": "2語の解答の数",
+            "validWords": "パズル内の有効な単語数",
             "gameLink": "このゲームを友達と共有してください！",
             "copyLink": "クリップボードにコピー",
             "copied": "コピーされました！",

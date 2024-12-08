@@ -147,6 +147,10 @@
         },
         "success": {
             "gameCreationSuccess": "Game berhasil dibuat!",
+            "statsTitle": "Statistik pada permainan kustom Anda",
+            "oneWordSolutions": "Jumlah solusi satu kata",
+            "twoWordSolutions": "Jumlah solusi dua kata",
+            "validWords": "Jumlah kata valid dalam teka-teki Anda",
             "gameLink": "Bagikan game ini dengan teman-teman Anda!",
             "copyLink": "Salin ke clipboard",
             "copied": "Disalin!",

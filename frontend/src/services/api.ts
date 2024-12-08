@@ -101,11 +101,16 @@ export const generateRandomGames = async (data: {
 };
 
 // Create custom game
-export const createCustomGame = async (letters: string[]) => {
+export const createCustomGame = async (payload: {
+  gameLayout: string[];
+  createdBy: string;
+  language: string;
+  boardSize: string;
+}) => {
   const response = await fetch(`${API_URL}/games`, {
     method: "POST",
     headers,
-    body: JSON.stringify({ letters }),
+    body: JSON.stringify(payload),
   });
   return handleErrorOrReturnResponse(response);
 };

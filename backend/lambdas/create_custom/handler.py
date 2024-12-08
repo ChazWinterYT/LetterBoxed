@@ -50,6 +50,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         "body": json.dumps({
             "gameId": game_data["gameId"],
             "gameLayout": game_data["gameLayout"],
+            "oneWordSolutionCount": game_data["oneWordSolutionCount"],
+            "twoWordSolutionCount": game_data["twoWordSolutionCount"],
+            "validWordCount": game_data["validWordCount"],
             "message": "Game created successfully."
         })
     }

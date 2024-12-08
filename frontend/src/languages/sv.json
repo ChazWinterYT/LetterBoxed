@@ -147,6 +147,10 @@
         },
         "success": {
             "gameCreationSuccess": "Spelet har genererats!",
+            "statsTitle": "Statistik för ditt anpassade spel",
+            "oneWordSolutions": "Antal en-ord-lösningar",
+            "twoWordSolutions": "Antal två-ords-lösningar",
+            "validWords": "Antal giltiga ord i ditt spel",
             "gameLink": "Dela detta spel med dina vänner!",
             "copyLink": "Kopiera till urklipp",
             "copied": "Kopierat!",

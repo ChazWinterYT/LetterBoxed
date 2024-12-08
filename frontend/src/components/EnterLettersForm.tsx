@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { Language, getPlayableLanguages } from "../languages/languages";
+import { createCustomGame } from "../services/api";
 import "./css/EnterLettersForm.css";
 
 interface EnterLettersFormProps {
@@ -24,6 +25,18 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
   const [language, setLanguage] = useState<string>("en");
   const [validationMessage, setValidationMessage] = useState<string | null>(null);
   const [duplicates, setDuplicates] = useState<Set<string>>(new Set());
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [gameId, setGameId] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const [gameStats, setGameStats] = useState<{
+    oneWordSolutionCount?: number;
+    twoWordSolutionCount: number;
+    validWordCount: number;
+  } | null>(null);
 
   const lettersPerSide = boardSize === "2x2" ? 2 : boardSize === "3x3" ? 3 : 4;
 
@@ -168,15 +181,123 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
     );
   };
 
-  const handleGenerate = (e: React.FormEvent) => {
+  const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
-    onGenerate({
-      gameLayout,
-      createdBy,
-      language,
-      boardSize,
-    });
+    if (isSubmitting) return; // Prevent duplicate submissions
+  
+    setIsSubmitting(true);
+  
+    const payload = {
+      gameLayout: gameLayout,
+      createdBy: createdBy || "Anonymous",
+      language: language || "en",
+      boardSize: boardSize || "3x3",
+    };
+  
+    try {
+      const response = await createCustomGame(payload);
+      console.log("Game created successfully:", response);
+  
+      if (response.gameId) {
+        setValidationError(null);
+        setGameId(response.gameId);
+        setGameStats({
+          oneWordSolutionCount: response.oneWordSolutionCount,
+          twoWordSolutionCount: response.twoWordSolutionCount,
+          validWordCount: response.validWordCount,
+        });
+        setIsSuccess(true);
+      }
+    } catch (error: any) {
+      console.error("Error creating custom game:", error);
+      setValidationError(`Error: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const handleCopyToClipboard = () => {
+    if (gameId) {
+      navigator.clipboard.writeText(`${window.location.origin}/LetterBoxed/frontend/games/${gameId}`);
+      setCopied(true);
+  
+      // Reset the button state after a delay
+      setTimeout(() => setCopied(false), 5000);
+    }
+  };
+  
+  const handleCreateAnother = () => {
+    setIsSuccess(false);
+    setGameId(null);
+    setValidationError(null);
+    setGameLayout(["", "", "", ""]); // Reset the board
+    setCreatedBy("");
+    setLanguage("en");
+    setBoardSize("3x3");
+  };
+
+  if (isSuccess) {
+    return (
+      <div className="custom-seed-words-form">
+        <h2 className="modal-title">{t("customGameForm.success.gameCreationSuccess")}</h2>
+        <div className="modal-body">
+          <p>{t("customGameForm.success.gameLink")}</p>
+          <div className="game-link">
+            <input
+              type="text"
+              value={`${window.location.origin}/games/${gameId}`}
+              readOnly
+              className="modal-input"
+              onFocus={(e) => e.target.select()}
+            />
+            <button
+              className={`button ${copied ? "copied" : ""}`}
+              onClick={handleCopyToClipboard}
+            >
+              {copied
+                ? t("customGameForm.success.copied")
+                : t("customGameForm.success.copyLink")}
+            </button>
+          </div>
+
+          {/* Display game stats */}
+          <div className="game-stats">
+            <h3>{t("customGameForm.success.statsTitle")}</h3>
+            <ul>
+              {gameStats?.oneWordSolutionCount !== undefined && (
+                <li>
+                  {t("customGameForm.success.oneWordSolutions")}:{" "}
+                  {gameStats.oneWordSolutionCount}
+                </li>
+              )}
+              <li>
+                {t("customGameForm.success.twoWordSolutions")}:{" "}
+                {gameStats?.twoWordSolutionCount}
+              </li>
+              <li>
+                {t("customGameForm.success.validWords")}:{" "}
+                {gameStats?.validWordCount}
+              </li>
+            </ul>
+          </div>
+
+          <div className="button-group">
+            <button
+              className="modal-button"
+              onClick={() => {
+                window.location.href = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
+              }}
+            >
+              {t("customGameForm.success.goToGame")}
+            </button>
+            <button className="modal-button" onClick={handleCreateAnother}>
+              {t("customGameForm.success.createAnotherGame")}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleGenerate} className="enter-letters-form custom-seed-words-form">      

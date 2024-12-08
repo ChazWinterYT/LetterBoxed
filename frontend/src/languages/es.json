@@ -147,6 +147,10 @@
         },
         "success": {
             "gameCreationSuccess": "¡Juego generado con éxito!",
+            "statsTitle": "Estadísticas de tu juego personalizado",
+            "oneWordSolutions": "Número de soluciones de una palabra",
+            "twoWordSolutions": "Número de soluciones de dos palabras",
+            "validWords": "Número de palabras válidas en tu juego",
             "gameLink": "¡Comparte este juego con tus amigos!",
             "copyLink": "Copiar al portapapeles",
             "copied": "¡Copiado!",

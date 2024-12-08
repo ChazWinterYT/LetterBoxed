@@ -147,6 +147,10 @@
         },
         "success": {
             "gameCreationSuccess": "Gra została pomyślnie wygenerowana!",
+            "statsTitle": "Statystyki twojej niestandardowej gry",
+            "oneWordSolutions": "Liczba rozwiązań jednowyrazowych",
+            "twoWordSolutions": "Liczba rozwiązań dwuwyrazowych",
+            "validWords": "Liczba prawidłowych słów w twojej grę",
             "gameLink": "Udostępnij tę grę znajomym!",
             "copyLink": "Kopiuj do schowka",
             "copied": "Skopiowano!",

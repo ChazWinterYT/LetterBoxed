@@ -147,6 +147,10 @@
         },
         "success": {
             "gameCreationSuccess": "Spiel erfolgreich generiert!",
+            "statsTitle": "Statistiken zu Ihrem benutzerdefinierten Spiel",
+            "oneWordSolutions": "Anzahl der Ein-Wort-Lösungen",
+            "twoWordSolutions": "Anzahl der Zwei-Wort-Lösungen",
+            "validWords": "Anzahl der gültigen Wörter in Ihrem Puzzle",
             "gameLink": "Teilen Sie dieses Spiel mit Ihren Freunden!",
             "copyLink": "In die Zwischenablage kopieren",
             "copied": "Kopiert!",

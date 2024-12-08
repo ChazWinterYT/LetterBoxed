@@ -153,11 +153,20 @@
   border-color: #1586dd;
   outline: none;
   background-color: #cbe5f8;
+  transition: all 0.3s ease;
+  transform: scale(1.05);
 }
 
-.duplicate-letter {
-  border: 2px solid red; /* Highlight border */
-  background-color: #ffe6e6; /* Light red background for visibility */
+.enter-letters-form .duplicate-letter {
+  border: 3px solid red; /* Highlight border */
+  background-color: #e66565; /* Light red background for visibility */
+  color: black; /* Ensure text is readable */
+  transition: all 0.3s ease;
+}
+
+.enter-letters-form .duplicate-letter:focus {
+  border: 3px solid rgb(250, 224, 29); /* Highlight border */
+  background-color: #dd6a40; /* Light red background for visibility */
   color: black; /* Ensure text is readable */
 }
 
@@ -175,4 +184,59 @@
   gap: 5px; /* Reduce spacing between buttons */
   margin-top: 1rem; /* Ensure consistent spacing above the button group */
   min-width: 180px;
+}
+
+/* Game Link Section */
+.game-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+/* Game Link Input */
+.game-link input {
+  flex-grow: 1;
+  border: 2px solid #0a58ca;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Game Link Input on Focus */
+.game-link input:focus {
+  border-color: #1586dd;
+  box-shadow: 0 0 5px rgba(21, 134, 221, 0.5);
+  outline: none;
+}
+
+/* Copy to Clipboard Button */
+.game-link button {
+  background-color: #1586dd;
+  color: white;
+  border: 2px solid #103f62;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-height: 54px;
+  min-width: 106px;
+}
+
+/* Copy Button Hover and Active States */
+.game-link button:hover {
+  background-color: #135ea0;
+  transform: scale(1.05);
+}
+
+.game-link button:active {
+  transform: scale(0.95);
+}
+
+.game-link button.copied {
+  background-color: #28a745; /* Green for success */
+  color: white;
 }
