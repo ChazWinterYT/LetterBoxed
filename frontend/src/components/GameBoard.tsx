@@ -67,7 +67,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       const lastLetterOfLastWord = lastWord[lastWord.length - 1];
 
       // Determine the side of the last letter
-      const sideIndex = layout.findIndex((side) => side.includes(lastLetterOfLastWord));
+      const sideIndex = shuffledLayout.findIndex((side) => side.includes(lastLetterOfLastWord));
       if (sideIndex === -1) {
         console.error("Could not determine side for last letter.");
         return;
@@ -144,7 +144,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       const lastLetterOfPreviousWord = previousWord[previousWord.length - 1];
   
       // Determine the side name based on the layout index
-      const sideOfLastLetterIndex = layout.findIndex((side) =>
+      const sideOfLastLetterIndex = shuffledLayout.findIndex((side) =>
         side.includes(lastLetterOfPreviousWord)
       );
   
@@ -257,6 +257,15 @@ const GameBoard: React.FC<GameBoardProps> = ({
     });
 
     setShuffledLayout(newLayout);
+
+    if (lastLetter) {
+      const sideIndex = newLayout.findIndex((side) => side.includes(lastLetter));
+      if (sideIndex !== -1) {
+        const sideName = sideNames[sideIndex];
+        setLastLetterSide(sideName);
+        setLastSide(sideName);
+      }
+    }
   };
 
   // Utility: Fisher-Yates shuffle
