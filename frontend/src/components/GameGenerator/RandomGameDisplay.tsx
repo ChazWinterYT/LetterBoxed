@@ -9,6 +9,8 @@ interface RandomGameDisplayProps {
   language: string; 
   boardSize: string;
   singleWord: boolean; 
+  createdBy: string;
+  setCreatedBy: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const RandomGameDisplay: React.FC<RandomGameDisplayProps> = ({
@@ -17,11 +19,12 @@ const RandomGameDisplay: React.FC<RandomGameDisplayProps> = ({
   language,
   boardSize,
   singleWord,
+  createdBy,
+  setCreatedBy,
 }) => {
   const { t } = useLanguage();
 
   const [hint, setHint] = useState<string>("");
-  const [createdBy, setCreatedBy] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);

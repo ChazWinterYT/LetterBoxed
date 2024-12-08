@@ -26,6 +26,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
     singleWords: [],
     wordPairs: [],
   });
+  const [createdBy, setCreatedBy] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -238,6 +239,8 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
               language={language}
               boardSize={boardSize}
               singleWord={true}
+              createdBy={createdBy}
+              setCreatedBy={setCreatedBy}
             />
             {index < generatedGames.singleWords.length - 1 && (
               <div className="random-game-separator"></div>
@@ -252,6 +255,8 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
               language={language}
               boardSize={boardSize}
               singleWord={false}
+              createdBy={createdBy}
+              setCreatedBy={setCreatedBy}
             />
             {index < generatedGames.wordPairs.length - 1 && (
               <div className="random-game-separator"></div>
