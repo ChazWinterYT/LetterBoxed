@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import CustomSeedWordsForm from "./CustomSeedWordsForm";
+import "./css/CustomSeedWordsForm.css";
 
 interface CustomGameModalProps {
   onClose: () => void;
@@ -51,7 +52,6 @@ const CustomGameModal: React.FC<CustomGameModalProps> = ({
                       onClose(); // Close this modal
                       onOpenEnterLettersForm(); // Open the Enter Letters form modal
                     }}
-                    disabled
                   >
                     {t("game.customGame.enterLetters")}
                   </button>

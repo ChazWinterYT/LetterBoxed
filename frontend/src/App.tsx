@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import CustomGameModal from "./components/CustomGameModal";
 import CustomSeedWordsForm from "./components/CustomSeedWordsForm";
+import EnterLettersForm from "./components/EnterLettersForm";
 import GameGenerator from "./components/GameGenerator/GameGenerator";
 import Spinner from "./components/Spinner";
 import { useLanguage } from "./context/LanguageContext";
@@ -411,11 +412,20 @@ const App = () => {
             onCancel={() => setIsModalOpen(false)} // Close the modal
           />
         );
-        setIsModalOpen(true); // Ensure the new modal opens
+        setIsModalOpen(true);
       }}
       onOpenEnterLettersForm={() => {
-        console.log("Enter Letters feature not implemented yet.");
-        // Implement this at some point
+        setModalTitle(t("game.customGame.customGameTitle"));
+        setModalContent(
+          <EnterLettersForm 
+            onGenerate={(data) => {
+              console.log("Generated Custom Game from Enter Letters:", data);
+              setIsModalOpen(false);
+            }}
+            onCancel={() => setIsModalOpen(false)} // Close the modal
+          />
+        );
+        setIsModalOpen(true);
       }}
     />
     );

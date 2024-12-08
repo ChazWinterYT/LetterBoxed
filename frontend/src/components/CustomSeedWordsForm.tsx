@@ -285,7 +285,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
           )}
         </div>
 
-        {/* Validation Message Space */}
+        {/* Validation Message */}
         <div className="validation-message-space">
           {validationError && <span>{validationError}</span>}
         </div>
@@ -334,7 +334,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
               onChange={(e) => {
                 // Allow valid Unicode letters, spaces, and a few special characters for names
                 const filteredValue = e.target.value.replace(
-                  /[^()!?a-zA-Z\p{L}.,’'\-\s]/gu,
+                  /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
                   ""
                 );
                 setCreatedBy(filteredValue);

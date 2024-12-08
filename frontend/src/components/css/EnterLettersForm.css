@@ -1,0 +1,178 @@
+.enter-letters-form {
+  text-align: center;
+}
+
+.enter-letters-form h2 {
+  margin-bottom: 1rem; /* Reduce spacing below the header */
+}
+
+.enter-letters-form label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px; /* Reduce spacing between label and its input */
+}
+
+.enter-letters-form .form-section input[type="text"] {
+  padding: 0.3rem;
+  font-size: 1.1rem;
+  max-width: 200px;
+}
+
+.enter-letters-form button {
+  margin: 5px; /* Reduce margin between buttons */
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+}
+
+.language-selector {
+  width: 50%; /* Full width within its container */
+  max-width: 100px; /* Constrain maximum width */
+  padding: 8px; /* Add consistent padding */
+  font-size: 1rem; /* Match the input font size */
+  border: 2px solid #1586dd; /* Match other input styles */
+  border-radius: 5px; /* Rounded corners for consistency */
+  color: #061f32; /* Text color */
+  background-color: #e3f2fd; /* Background color */
+  text-align: center; /* Center the text */
+}
+
+/* Toggle Group */
+.enter-letters-form .toggle-group {
+  display: flex;
+  justify-content: center;
+  gap: 4px; /* Reduce spacing between toggle buttons */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  margin-top: -4px;
+  margin-bottom: -8px; /* Ensure consistent spacing below the group */
+}
+
+/* Toggle Buttons */
+.toggle-button {
+  background-color: #e3f2fd;
+  border: 2px solid #1586dd;
+  border-radius: 20px;
+  padding: 5px 10px; /* Adjust padding for a tighter fit */
+  min-width: 70px; /* Slightly narrower buttons */
+  font-size: 1rem;
+  color: #1586dd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-button:hover {
+  transform: scale(1.05); /* Subtle scale on hover */
+  background-color: #d1e7fb; /* Slightly darker blue for hover */
+}
+
+.toggle-button.active {
+  background-color: #1586dd;
+  color: #fff;
+  transform: scale(1.02); /* Slightly smaller scaling when active */
+  border: 2px solid #dddddd;
+}
+  
+/* Board container */
+.enter-letters-form .board {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  background: #dae4ef;
+  margin: 3.6rem auto;
+  border: 4px solid black;
+}
+
+/* Positioning sides */
+.enter-letters-form .top-side,
+.enter-letters-form .bottom-side {
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 18px;
+  width: 100%;
+}
+
+.enter-letters-form .top-side {
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-36%);
+}
+
+.enter-letters-form .bottom-side {
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(36%);
+}
+
+.enter-letters-form .left-side {
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  transform: translateY(-50%) translateX(-26%);
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-evenly;
+  height: 90%;
+}
+
+.enter-letters-form .right-side {
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  transform: translateY(-50%) translateX(8%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 90%;
+}
+
+/* Letter container */
+.enter-letters-form .letter-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.enter-letters-form .left-side .letter-container,
+.enter-letters-form .right-side .letter-container {
+  flex-direction: column;
+}
+
+/* Letter inputs */
+.enter-letters-form .letter-input {
+  width: 36px;
+  height: 48px;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: 3px solid black;
+  border-radius: 50%;
+  background-color: #e3f2fd;
+}
+
+.enter-letters-form .letter-input:focus {
+  border-color: #1586dd;
+  outline: none;
+  background-color: #cbe5f8;
+}
+
+.duplicate-letter {
+  border: 2px solid red; /* Highlight border */
+  background-color: #ffe6e6; /* Light red background for visibility */
+  color: black; /* Ensure text is readable */
+}
+
+.validation-warning {
+  color: red;
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Bottom Button Group */
+.enter-letters-form .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 5px; /* Reduce spacing between buttons */
+  margin-top: 1rem; /* Ensure consistent spacing above the button group */
+  min-width: 180px;
+}
