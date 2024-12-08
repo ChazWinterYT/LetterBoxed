@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "../Header"
+import { v4 as uuidv4 } from "uuid";
 import { useLanguage } from "../../context/LanguageContext";
 import { getPlayableLanguages } from "../../languages/languages";
 import { generateRandomGames } from "../../services/api";
@@ -27,6 +28,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
     wordPairs: [],
   });
   const [createdBy, setCreatedBy] = useState<string>("");
+  const [batchId, setBatchId] = useState<string>(uuidv4());
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,6 +46,9 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
         maxWordLength,
         maxSharedLetters,
       };
+
+      // Generate a batch ID so React creates new components every time you click Generate
+      setBatchId(uuidv4());
 
       const response = await generateRandomGames(payload);
       console.log("Generating games with payload:", payload);
@@ -232,7 +237,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
       {/* Display Generated Games */}
       <div className="generated-games-container">
         {generatedGames.singleWords.map((word, index) => (
-          <React.Fragment key={index}>
+          <React.Fragment key={`${batchId}-${index}`}>
             <RandomGameDisplay
               gameType="singleWord"
               content={word}
@@ -248,7 +253,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
           </React.Fragment>
         ))}
         {generatedGames.wordPairs.map((pair, index) => (
-          <React.Fragment key={index}>
+          <React.Fragment key={`${batchId}-${index}`}>
             <RandomGameDisplay
               gameType="wordPair"
               content={pair}
