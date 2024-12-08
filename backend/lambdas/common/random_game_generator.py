@@ -14,7 +14,7 @@ from lambdas.create_random.random_game_service import create_random_game, create
 
 
 def main() -> Any:
-    small_board = True
+    small_board = False
     
     if small_board:
         create_random_small_board_game(
@@ -23,59 +23,10 @@ def main() -> Any:
         )
     else:
         create_random_game(
-            "de",
+            "en",
             "3x3",
         )
 
-# def main() -> Any:
-#     language = "en"
-
-#     # Path to the directory
-#     script_dir = os.path.dirname(os.path.abspath(__file__))
-#     basic_dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", language, "basic.txt")
-#     basic_dictionary_path = os.path.abspath(basic_dictionary_path)
-#     dictionary_path = os.path.join(script_dir, "..", "..", "dictionaries", language, "dictionary.txt")
-#     dictionary_path = os.path.abspath(dictionary_path)
-
-#     # Load the dictionaries
-#     basic_dictionary = load_dictionary(basic_dictionary_path)
-#     dictionary = load_dictionary(dictionary_path)
-
-#     # Try to generate a random game
-#     word_pair = select_two_words(dictionary)
-
-#     if not word_pair:
-#         print("Failed to find a valid word pair after max attempts.")
-#         return None
-    
-#     word1, word2 = word_pair
-#     print(f"Found two candidate words: {word1}, {word2}")
-
-#     game_layout = generate_layout(word1, word2)
-
-#     if not game_layout:
-#         print("Failed to generate a valid layout.")
-#         return None
-    
-#     print(f"Layout found! {game_layout}")
-
-#     # Standardize the layout
-#     standardized_layout = standardize_board(game_layout)
-
-#     # Generate valid words for this puzzle
-#     valid_words = generate_valid_words(standardized_layout, language)
-
-#     # Calculate two word solutions
-#     solutions = calculate_two_word_solutions(standardized_layout, language, valid_words=valid_words)
-#     if not solutions:
-#         print("Generated layout is not a viable puzzle")
-#         return None
-
-#     print("Viable random puzzle generated!")
-
-#     return {
-#         "gameLayout": game_layout,
-#     }
 
 def benchmark(n: int) -> None:
     import time

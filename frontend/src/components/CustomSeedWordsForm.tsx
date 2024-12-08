@@ -317,7 +317,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
                 );
                 setHint(filteredValue);
               }}
-              maxLength={70} // Limit to 70 characters
+              maxLength={99} // Limit to 70 characters
               className="hint-textarea"
               placeholder={t("customGameForm.instructions.hint")}
             />

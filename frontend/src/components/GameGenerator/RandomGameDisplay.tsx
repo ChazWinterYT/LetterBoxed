@@ -113,7 +113,7 @@ const RandomGameDisplay: React.FC<RandomGameDisplayProps> = ({
             setHint(filteredValue);
           }}
           placeholder={t("customGameForm.instructions.hint")}
-          maxLength={70}
+          maxLength={99}
         />
       </div>
 

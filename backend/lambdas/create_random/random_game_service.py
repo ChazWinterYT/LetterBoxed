@@ -482,8 +482,6 @@ def select_two_words(
         base_word1 = normalize_to_base(word1)
         
         for word2 in dictionary:
-            if word2 in BANNED_WORD_LIST or len(word2) > max_word_length:
-                continue
             base_word2 = normalize_to_base(word2)
             shared_letters = set(base_word1).intersection(base_word2)
             if (
