@@ -76,6 +76,7 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
       e: React.KeyboardEvent<HTMLInputElement>,
       letterIndex: number
     ) => {
+      setValidationError(null);
       const isLetter = /^\p{L}$/u.test(e.key); // Check if the pressed key is a unicode letter
     
       if (e.key === "Backspace" && !sideArray[letterIndex]) {
@@ -236,6 +237,17 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
     setBoardSize("3x3");
   };
 
+  const isBoardComplete = (): boolean => {
+    if (validationMessage) return false;
+    
+    // Calculate total letters based on board size (e.g., 2x2 -> 8, 3x3 -> 12, 4x4 -> 16)
+    const expectedLetterCount = parseInt(boardSize[0], 10) * 4;
+    
+    // Flatten the `gameLayout` array and check if all spaces are filled
+    const allLetters = gameLayout.join("");
+    return allLetters.length === expectedLetterCount && !validationError;
+  };
+
   if (isSuccess) {
     return (
       <div className="custom-seed-words-form">
@@ -245,7 +257,7 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
           <div className="game-link">
             <input
               type="text"
-              value={`${window.location.origin}/games/${gameId}`}
+              value={`${window.location.origin}/LetterBoxed/frontend/games/${gameId}`}
               readOnly
               className="modal-input"
               onFocus={(e) => e.target.select()}
@@ -309,7 +321,10 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
               key={size}
               type="button"
               className={`toggle-button ${boardSize === size ? "active" : ""}`}
-              onClick={() => setBoardSize(size)}
+              onClick={() => {
+                setBoardSize(size);
+                setGameLayout(["", "", "", ""]);
+              }}
             >
               {size}
             </button>
@@ -368,8 +383,17 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
         />
       </div>
 
+      {/* Validation error */}
+      {validationError && (
+        <p className="validation-warning">{validationError}</p>
+      )}
+
       <div className="button-group">
-        <button type="submit" className="modal-button">
+        <button
+          type="submit"
+          className="modal-button"
+          disabled={!isBoardComplete()}
+        >
           {t('customGameForm.generateGame')}
         </button>
         <button type="button" className="modal-button" onClick={onCancel}>

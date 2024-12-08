@@ -33,7 +33,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             game_type="custom",
         )
     except ValueError as e:
-        return error_response("Custom game specs are invalid.", 400)
+        return error_response(f"{e}", 400)
     except Exception as e:
         return error_response(f"Failed to create game schema: {e}", 500)
 
