@@ -359,9 +359,9 @@
 }
 
 .hint-display {
-  margin-top: 0.1rem; /* Add minimal space above the hint section */
-  margin-bottom: 0.3rem; /* Reduce space below the hint section */
-  max-height: 60px;
+  margin-top: 0.5rem; /* Add minimal space above the hint section */
+  margin-bottom: -10px; /* Reduce space below the hint section */
+  max-height: 80px;
   display: flex;
   justify-content: center; /* Center-align text */
   align-items: center; /* Vertically align text */

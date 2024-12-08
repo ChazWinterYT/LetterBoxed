@@ -184,6 +184,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }
   
       try {
+        console.log("Trying word:", word);
         const validationResult = await validateWord(word, gameId, sessionId);
   
         if (validationResult.valid) {
