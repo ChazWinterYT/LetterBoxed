@@ -49,6 +49,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [lastLetter, setLastLetter] = useState<string | null>(null);
   const [lastLetterSide, setLastLetterSide] = useState<string | null>(null);
   const [shuffledLayout, setShuffledLayout] = useState<string[]>([]);
+  const [shuffleAnimation, setShuffleAnimation] = useState<boolean>(false);
 
   const shareableUrl = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
   
@@ -83,7 +84,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       // Add the last letter to the word formation area
       setCurrentWord([{ letter: lastLetterOfLastWord, side: sideName }]);
     }
-  }, [gameCompleted, foundWords, layout]);
+  }, [gameCompleted, foundWords, shuffledLayout]);
 
   const handleLetterClick = (letter: string, side: string) => {
     if (gameCompleted) {
@@ -243,29 +244,34 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Shuffle logic
   const handleShuffle = () => {
-    // Copy current shuffledLayout
-    let newLayout = [...shuffledLayout];
+    setShuffleAnimation(true); // Add shuffle animation to all letters
 
-    // Shuffle the sides array
-    newLayout = shuffleArray(newLayout);
+    // Delay updating the layout to allow the animation to take effect first
+    setTimeout(() => {
+      // Shuffle the layout
+      const shuffledSides = shuffleArray([...shuffledLayout]); // Shuffle sides
+      const shuffledLetters = shuffledSides.map((side) =>
+        shuffleArray(side.split('')).join('')
+      ); // Shuffle letters within each side
 
-    // Shuffle letters in each side
-    newLayout = newLayout.map((side) => {
-      const letters = side.split('');
-      const shuffledLetters = shuffleArray(letters);
-      return shuffledLetters.join('');
-    });
+      setShuffledLayout(shuffledLetters); // Update the layout state
 
-    setShuffledLayout(newLayout);
-
-    if (lastLetter) {
-      const sideIndex = newLayout.findIndex((side) => side.includes(lastLetter));
-      if (sideIndex !== -1) {
-        const sideName = sideNames[sideIndex];
-        setLastLetterSide(sideName);
-        setLastSide(sideName);
+      // Recalculate the disabled side for the last letter
+      if (lastLetter) {
+        const sideIndex = shuffledLetters.findIndex((side) =>
+          side.includes(lastLetter)
+        ); // Find the new side of the last letter
+        if (sideIndex !== -1) {
+          setLastLetterSide(sideNames[sideIndex]); // Update the side name
+          setLastSide(sideNames[sideIndex]); // Sync the last side
+        }
       }
-    }
+
+      // Remove the animation class after the shuffle completes
+      setTimeout(() => {
+        setShuffleAnimation(false);
+      }, 200); // Match the CSS animation duration
+    }, 200); // Delay layout change to allow animation blending
   };
 
   // Utility: Fisher-Yates shuffle
@@ -286,9 +292,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
       const isPartOfWordFormation = currentWord.some((item) => item.letter === letter);
       const isFoundWord = foundWords.some((word) => word.includes(letter));
 
-      const letterClass = `letter ${
-        isFoundWord ? 'played-letter' : 'unplayed-letter'
-      } ${isDisabled ? 'disabled-letter' : ''}`;
+      const letterClass = `
+        letter
+        ${isFoundWord ? 'played-letter' : 'unplayed-letter'}
+        ${isDisabled ? 'disabled-letter' : ''}
+        ${shuffleAnimation ? 'shuffle-animation' : ''}
+      `;
   
       const markerClass = `marker ${
         isPartOfWordFormation
@@ -297,6 +306,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           ? 'found-marker'
           : ''
       }`;
+
       return (
         <div className="letter-container" key={`${sideName}-${index}`}>
           <div

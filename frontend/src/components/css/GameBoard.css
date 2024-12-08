@@ -232,6 +232,36 @@
   cursor: not-allowed;
 }
 
+/* Letter Shuffle Animation */
+.letter.shuffle-animation {
+  transition: background-color 0.2s ease, color 0.2s ease;
+  background-color: #dae4ef; /* Match the board background */
+  color: #dae4ef; /* Match the board background */
+}
+
+/* Ensure all letters revert after shuffle */
+.letter.shuffle-animation:not(.disabled-letter) {
+  background-color: #1d4f7e; /* Default unplayed letter color */
+  color: #1d4f7e;
+}
+
+/* Add specific rules for unplayed letters */
+.letter.unplayed-letter.shuffle-animation {
+  background-color: #1d4f7e; /* Blend into the board */
+  color: #1d4f7e;
+}
+
+/* Add specific rules for played letters */
+.letter.played-letter.shuffle-animation {
+  background-color: #1d4f7e; /* Blend into the board */
+  color: #1d4f7e;
+}
+
+/* Override hover effects during shuffle */
+.letter:hover {
+  transition: none;
+}
+
 /* Markers */
 .marker {
   width: 18px;
