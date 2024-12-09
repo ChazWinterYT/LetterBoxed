@@ -31,6 +31,7 @@ def create_game_schema(
     one_word_solutions: Optional[List[str]] = None,
     two_word_solutions: Optional[List[Tuple[str, str]]] = None,
     three_word_solutions: Optional[List[Tuple[str, str, str]]] = None,
+    one_word_solution_count: Optional[int] = 0,
     two_word_solution_count: Optional[int] = 0,
     three_word_solution_count: Optional[int] = 0,
     nyt_solution: Optional[List[str]] = None,
