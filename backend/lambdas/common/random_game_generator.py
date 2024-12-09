@@ -72,6 +72,7 @@ if __name__ == "__main__":
     os.environ["METADATA_TABLE"] = "LetterBoxedMetadataTableTest"
     os.environ["ARCHIVE_TABLE"] = "LetterBoxedArchiveTest"
     os.environ["RANDOM_GAMES_TABLE_EN"] = "LetterBoxedRandomGames_enTest"
+    os.environ["RANDOM_GAMES_TABLE_DE"] = "LetterBoxedRandomGames_deTest"
     os.environ["RANDOM_GAMES_TABLE_ES"] = "LetterBoxedRandomGames_esTest"
     os.environ["RANDOM_GAMES_TABLE_IT"] = "LetterBoxedRandomGames_itTest"
     os.environ["RANDOM_GAMES_TABLE_PL"] = "LetterBoxedRandomGames_plTest"
@@ -93,6 +94,8 @@ if __name__ == "__main__":
     os.environ.pop("METADATA_TABLE", None)
     os.environ.pop("ARCHIVE_TABLE", None)
     os.environ.pop("RANDOM_GAMES_TABLE_EN", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_DE", None)
     os.environ.pop("RANDOM_GAMES_TABLE_ES", None)
     os.environ.pop("RANDOM_GAMES_TABLE_IT", None)
     os.environ.pop("RANDOM_GAMES_TABLE_PL", None)
+    os.environ.pop("RANDOM_GAMES_TABLE_RU", None)

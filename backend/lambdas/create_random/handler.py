@@ -29,8 +29,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         from_lambda_console = body.get("fromLambdaConsole", False)
         is_casual = body.get("isCasual", False)
         
+        ALLOWED_TO_CREATE_TO_RANDOM_POOL = ["Sara!", "Sara", "Chaz Winter", "Chaz"]
+        
         # Temporarily handle games created by Sara so they go to the correct game pool
-        if created_by == "Sara!" or created_by == "Sara":
+        if created_by in ALLOWED_TO_CREATE_TO_RANDOM_POOL:
             from_lambda_console = True
         
         
