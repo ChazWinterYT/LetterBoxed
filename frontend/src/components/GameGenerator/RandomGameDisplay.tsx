@@ -43,7 +43,7 @@ const RandomGameDisplay: React.FC<RandomGameDisplayProps> = ({
         clue: hint.trim(),
         createdBy: createdBy.trim() || "Anonymous",
         fromSingleWord: singleWord,
-        fromLambdaConsole: true, // Temporary hard-coded value
+        fromLambdaConsole: false, // Temporary hard-coded value
       };
 
       console.log("Creating game with payload:", payload)

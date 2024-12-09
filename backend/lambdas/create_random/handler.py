@@ -29,6 +29,10 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         from_lambda_console = body.get("fromLambdaConsole", False)
         is_casual = body.get("isCasual", False)
         
+        # Temporarily handle games created by Sara so they go to the correct game pool
+        if created_by == "Sara!" or created_by == "Sara":
+            from_lambda_console = True
+        
         
         # Validate language and board size
         if not validate_board_size(board_size):
