@@ -190,6 +190,8 @@
             "instructions2": "Game yang dihasilkan mungkin memiliki solusi lain selain kata awal."
         },
         "wordProperties": {
+            "minWordLength": "Panjang Kata Minimum",
+            "minWordLengthInstructions": "Kata dasar tidak akan lebih pendek dari nilai ini.",
             "maxWordLength": "Panjang Kata Maksimum",
             "maxWordLengthInstructions": "Kata awal tidak akan lebih panjang dari nilai ini.",
             "maxSharedLetters": "Huruf Berbagi Maksimum",
@@ -198,6 +200,7 @@
         "generate": "Buat Game",
         "error": {
             "error": "Terjadi kesalahan saat membuat game",
+            "minGreaterThanMax": "Panjang kata minimum tidak boleh lebih besar dari panjang kata maksimum.",
             "maxWordLength4x4": "Papan 4x4 membutuhkan satu kata dengan setidaknya 9 huruf."
         }
     },

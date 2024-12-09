@@ -190,6 +190,8 @@
             "instructions2": "O jogo gerado pode ter outras soluções além das palavras iniciais."
         },
         "wordProperties": {
+            "minWordLength": "Comprimento mínimo da palavra",
+            "minWordLengthInstructions": "As palavras geradoras não serão mais curtas que este valor.",
             "maxWordLength": "Comprimento Máximo da Palavra",
             "maxWordLengthInstructions": "As palavras iniciais não serão maiores do que este valor.",
             "maxSharedLetters": "Número Máximo de Letras Compartilhadas",
@@ -198,6 +200,7 @@
         "generate": "Gerar Jogos",
         "error": {
             "error": "Ocorreu um erro ao gerar o jogo",
+            "minGreaterThanMax": "O comprimento mínimo da palavra não pode ser maior que o comprimento máximo.",
             "maxWordLength4x4": "Tabuleiros 4x4 exigem que uma palavra tenha pelo menos 9 letras."
         }
     },

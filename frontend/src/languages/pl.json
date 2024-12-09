@@ -190,6 +190,8 @@
             "instructions2": "Wygenerowana gra może zawierać inne rozwiązania poza słowami początkowymi."
         },
         "wordProperties": {
+            "minWordLength": "Minimalna długość słowa",
+            "minWordLengthInstructions": "Słowa początkowe nie będą krótsze niż ta wartość.",
             "maxWordLength": "Maksymalna Długość Słowa",
             "maxWordLengthInstructions": "Słowa początkowe nie będą dłuższe niż ta wartość.",
             "maxSharedLetters": "Maksymalna Liczba Wspólnych Liter",
@@ -198,6 +200,7 @@
         "generate": "Generuj Gry",
         "error": {
             "error": "Wystąpił błąd podczas generowania gry",
+            "minGreaterThanMax": "Minimalna długość słowa nie może być większa niż maksymalna długość słowa.",
             "maxWordLength4x4": "Plansze 4x4 wymagają, aby jedno słowo miało co najmniej 9 liter."
         }
     },

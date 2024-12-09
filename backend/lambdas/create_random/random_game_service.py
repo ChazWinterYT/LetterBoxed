@@ -442,6 +442,7 @@ def select_two_words(
     dictionary: List[str], 
     board_size: str, 
     max_attempts: int = 10000,
+    min_word_length: int = 3,
     max_word_length: int = 99,
     max_shared_letters: int = 3
 ) -> Optional[Tuple[str, str]]:
@@ -453,6 +454,7 @@ def select_two_words(
         dictionary (List[str]): List of words from the dictionary.
         board_size (str): The size of the board that the words must fit on.
         max_attempts (int): Maximum number of attempts to find a valid pair.
+        min_word_length (int): Minimum length of a word.
         max_word_length (int): Maximum length of a word, to allow each word to 
             contribute more equally to the puzzle.
         max_shared_letters (int): Maximum shared letters between the two words, to 
@@ -476,12 +478,23 @@ def select_two_words(
     
     for attempt in range(max_attempts):
         word1 = random.choice(dictionary)
-        if word1 in BANNED_WORD_LIST or len(word1) > max_word_length:
+        if (
+            word1 in BANNED_WORD_LIST 
+            or len(word1) < min_word_length 
+            or len(word1) > max_word_length
+        ):
             continue
         
         base_word1 = normalize_to_base(word1)
         
         for word2 in dictionary:
+            if (
+                word2 in BANNED_WORD_LIST
+                or len(word2) < min_word_length 
+                or len(word2) > max_word_length
+            ):
+                continue
+            
             base_word2 = normalize_to_base(word2)
             shared_letters = set(base_word1).intersection(base_word2)
             if (

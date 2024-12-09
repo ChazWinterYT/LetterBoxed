@@ -190,6 +190,8 @@
             "instructions2": "Il gioco generato potrebbe avere altre soluzioni oltre alle parole iniziali."
         },
         "wordProperties": {
+            "minWordLength": "Lunghezza minima della parola",
+            "minWordLengthInstructions": "Le parole iniziali non saranno più corte di questo valore.",
             "maxWordLength": "Lunghezza Massima delle Parole",
             "maxWordLengthInstructions": "Le parole iniziali non saranno più lunghe di questo valore.",
             "maxSharedLetters": "Lettere Condivise Massime",
@@ -198,6 +200,7 @@
         "generate": "Genera Giochi",
         "error": {
             "error": "Si è verificato un errore durante la generazione del gioco",
+            "minGreaterThanMax": "La lunghezza minima della parola non può essere maggiore di quella massima.",
             "maxWordLength4x4": "I tabelloni 4x4 richiedono una parola di almeno 9 lettere."
         }
     },

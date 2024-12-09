@@ -24,6 +24,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         num_tries = body.get("numTries", 10)
         single_word = body.get("singleWord", False)
         basic_dictionary = body.get("basicDictionary", True)
+        min_word_length = body.get("minWordLength", 3)
         max_word_length = body.get("maxWordLength", 99)
         max_shared_letters = body.get("maxSharedLetters", 4)
         
@@ -53,11 +54,25 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 if seed_word:
                     words.append(seed_word)
             elif board_size == "3x3":
-                seed_words = select_two_words(dictionary, "3x3", 10000, max_word_length, max_shared_letters)
+                seed_words = select_two_words(
+                    dictionary, 
+                    "3x3", 
+                    10000, 
+                    min_word_length, 
+                    max_word_length, 
+                    max_shared_letters
+                )
                 if seed_words:
                     word_pairs.append(seed_words)
             elif board_size == "4x4":
-                seed_words = select_two_words(dictionary, "4x4", 10000, max_word_length, max_shared_letters)
+                seed_words = select_two_words(
+                    dictionary, 
+                    "4x4", 
+                    10000, 
+                    min_word_length, 
+                    max_word_length, 
+                    max_shared_letters
+                )
                 if seed_words:
                     word_pairs.append(seed_words)
         

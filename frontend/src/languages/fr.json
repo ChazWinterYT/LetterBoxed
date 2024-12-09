@@ -190,6 +190,8 @@
             "instructions2": "Le jeu généré peut avoir d'autres solutions en plus des mots de départ."
         },
         "wordProperties": {
+            "minWordLength": "Longueur minimale des mots",
+            "minWordLengthInstructions": "Les mots de départ ne seront pas plus courts que cette valeur.",
             "maxWordLength": "Longueur Maximale des Mots",
             "maxWordLengthInstructions": "Les mots de départ ne dépasseront pas cette valeur.",
             "maxSharedLetters": "Nombre Maximal de Lettres Partagées",
@@ -198,6 +200,7 @@
         "generate": "Générer des Jeux",
         "error": {
             "error": "Une erreur s'est produite lors de la génération du jeu",
+            "minGreaterThanMax": "La longueur minimale des mots ne peut pas être supérieure à la longueur maximale.",
             "maxWordLength4x4": "Les plateaux 4x4 nécessitent qu'un mot ait au moins 9 lettres."
         }
     },

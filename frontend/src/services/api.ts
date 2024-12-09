@@ -89,6 +89,7 @@ export const generateRandomGames = async (data: {
   numTries: number;
   singleWord: boolean;
   basicDictionary: boolean;
+  minWordLength: number;
   maxWordLength: number;
   maxSharedLetters: number;
 }) => {

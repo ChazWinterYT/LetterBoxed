@@ -190,6 +190,8 @@
             "instructions2": "Das generierte Spiel kann andere Lösungen zusätzlich zu den Ausgangswörtern enthalten."
         },
         "wordProperties": {
+            "minWordLength": "Minimale Wortlänge",
+            "minWordLengthInstructions": "Die Samenwörter sind nicht kürzer als dieser Wert.",
             "maxWordLength": "Maximale Wortlänge",
             "maxWordLengthInstructions": "Die Ausgangswörter sind nicht länger als dieser Wert.",
             "maxSharedLetters": "Maximale geteilte Buchstaben",
@@ -198,6 +200,7 @@
         "generate": "Spiele generieren",
         "error": {
             "error": "Es gab einen Fehler bei der Spielgenerierung",
+            "minGreaterThanMax": "Die Mindestwortlänge darf nicht größer als die maximale Wortlänge sein.",
             "maxWordLength4x4": "4x4-Bretter erfordern, dass ein Wort mindestens 9 Buchstaben lang ist."
         }
     },

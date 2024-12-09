@@ -190,7 +190,9 @@
             "instructions1": "Choosing \"Full\" may generate more obscure, difficult seed words.",
             "instructions2": "The generated game may have other solutions in addition to the seed words."
         },
-        "wordProperties": {
+        "wordProperties": {            
+            "minWordLength": "Minimum Word Length",
+            "minWordLengthInstructions": "The seed words will not be shorter than this value.",
             "maxWordLength": "Maximum Word Length",
             "maxWordLengthInstructions": "The seed words will not be longer than this value.",
             "maxSharedLetters": "Maximum Shared Letters",
@@ -199,6 +201,7 @@
         "generate": "Generate Games",
         "error": {
             "error": "There was an error when generating the game",
+            "minGreaterThanMax": "Minimum word length cannot be greater than maximum word length.",
             "maxWordLength4x4": "4x4 boards require one word to be at least 9 letters long."
         }
     },

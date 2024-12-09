@@ -21,6 +21,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
   const [singleWord, setSingleWord] = useState<boolean>(false);
   const [boardSize, setBoardSize] = useState<string>("3x3");
   const [basicDictionary, setBasicDictionary] = useState<boolean>(true);
+  const [minWordLength, setMinWordLength] = useState<number>(3);
   const [maxWordLength, setMaxWordLength] = useState<number>(99);
   const [maxSharedLetters, setMaxSharedLetters] = useState<number>(3);
   const [generatedGames, setGeneratedGames] = useState<{ singleWords: string[]; wordPairs: [string, string][] }>({
@@ -43,6 +44,7 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
         numTries,
         singleWord,
         basicDictionary,
+        minWordLength,
         maxWordLength,
         maxSharedLetters,
       };
@@ -172,6 +174,34 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
           </div> */}
         </div>
 
+        {/* Min Word Length */}
+        {!singleWord && (
+          <div className="form-section">
+            <label className="form-label">
+              {t("gameGenerator.wordProperties.minWordLength")} ({minWordLength})
+            </label>
+            <input
+              className="slider"
+              type="range"
+              min={3}
+              max={9}
+              value={minWordLength}
+              onChange={(e) => {
+                const value = parseInt(e.target.value);
+                setMinWordLength(value);
+                if (value > maxWordLength) {
+                  setError(t("gameGenerator.error.minGreaterThanMax"));
+                } else {
+                  setError(null);
+                }
+              }}
+            />
+            <div className="form-instructions">
+              {t("gameGenerator.wordProperties.minWordLengthInstructions")}
+            </div>
+          </div>
+        )}
+
         {/* Max Word Length */}
         {!singleWord && (
           <div className="form-section">
@@ -189,6 +219,8 @@ const GameGenerator: React.FC<GameGeneratorProps> = () => {
                 setMaxWordLength(value === 15 ? 99 : value); // Map 15 to 99 internally
                 if (boardSize === "4x4" && value < 9) {
                   setError(t("gameGenerator.error.maxWordLength4x4"));
+                } else if (value < minWordLength) {
+                  setError(t("gameGenerator.error.minGreaterThanMax"));
                 } else {
                   setError(null);
                 }

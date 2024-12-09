@@ -20,10 +20,12 @@
   max-width: 240px; /* Limit width on larger screens */
   text-align: center;
   margin: 8px;
+  transition: all 0.3s;
 }
 
 .button-menu button:hover {
-  background-color: #4145b0; 
+  background-color: #0c65a9; 
+  transform: scale(1.05);
 }
 
   /* Individual button styles */
@@ -32,7 +34,7 @@
 }
 
 .button-menu .play-today:hover {
-  background-color: #4145b0;
+  background-color: #0c65a9;
 }
 
 .button-menu .archive {
@@ -40,7 +42,7 @@
 }
 
 .button-menu .archive:hover {
-  background-color: #4145b0;
+  background-color: #0c65a9;
 }
 
 .button-menu .random-game {
@@ -48,21 +50,21 @@
 }
 
 .button-menu .random-game:hover {
-  background-color: #4145b0;
+  background-color: #0c65a9;
 }
 
 .button-menu .custom-game {
-  background-color: #6f42c1; 
+  background-color: #335ec2; 
 }
 
 .button-menu .custom-game:hover {
-  background-color: #4145b0;
+  background-color: #254aa1;
 }
 
 .button-menu .random-game-generator {
-  background-color: #6f42c1; 
+  background-color: #335ec2; 
 }
 
 .button-menu .random-game-generator:hover {
-  background-color: #4145b0;
+  background-color: #254aa1;
 }

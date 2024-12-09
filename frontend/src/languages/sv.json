@@ -190,6 +190,8 @@
             "instructions2": "Det genererade spelet kan ha andra lösningar utöver fröorden."
         },
         "wordProperties": {
+            "minWordLength": "Minsta ordlängd",
+            "minWordLengthInstructions": "Fröorden kommer inte att vara kortare än detta värde.",
             "maxWordLength": "Maximal Ord Längd",
             "maxWordLengthInstructions": "Fröorden kommer inte att vara längre än detta värde.",
             "maxSharedLetters": "Maximalt Delade Bokstäver",
@@ -198,6 +200,7 @@
         "generate": "Generera Spel",
         "error": {
             "error": "Ett fel inträffade vid generering av spelet",
+            "minGreaterThanMax": "Minsta ordlängd kan inte vara större än största ordlängd.",
             "maxWordLength4x4": "4x4-bräden kräver att ett ord är minst 9 bokstäver långt."
         }
     },

@@ -190,6 +190,8 @@
             "instructions2": "生成されたゲームには、シード単語以外の解決策も含まれる場合があります。"
         },
         "wordProperties": {
+            "minWordLength": "最小単語の長さ",
+            "minWordLengthInstructions": "種語はこの値より短くなりません。",
             "maxWordLength": "単語の最大長",
             "maxWordLengthInstructions": "シード単語はこの値を超えません。",
             "maxSharedLetters": "最大共有文字数",
@@ -198,6 +200,7 @@
         "generate": "ゲームを生成",
         "error": {
             "error": "ゲーム生成中にエラーが発生しました",
+            "minGreaterThanMax": "最小単語の長さは最大単語の長さを超えることはできません。",
             "maxWordLength4x4": "4x4ボードでは、1つの単語が少なくとも9文字である必要があります。"
         }
     },

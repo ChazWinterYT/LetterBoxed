@@ -190,6 +190,8 @@
             "instructions2": "El juego generado puede tener otras soluciones además de las palabras semilla."
         },
         "wordProperties": {
+            "minWordLength": "Longitud mínima de palabra",
+            "minWordLengthInstructions": "Las palabras base no serán más cortas que este valor.",
             "maxWordLength": "Longitud Máxima de la Palabra",
             "maxWordLengthInstructions": "Las palabras semilla no serán más largas que este valor.",
             "maxSharedLetters": "Máximo de Letras Compartidas",
@@ -198,6 +200,7 @@
         "generate": "Generar Juegos",
         "error": {
             "error": "Hubo un error al generar el juego",
+            "minGreaterThanMax": "La longitud mínima de la palabra no puede ser mayor que la longitud máxima.",
             "maxWordLength4x4": "Los tableros de 4x4 requieren que una palabra tenga al menos 9 letras."
         }
     },
