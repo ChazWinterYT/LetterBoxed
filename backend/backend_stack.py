@@ -597,6 +597,8 @@ class LetterBoxedStack(Stack):
         )
         add_cors(session_id_resource)
 
+        # 
+
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):
         lambda_function = _lambda.Function(

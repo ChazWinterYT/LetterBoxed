@@ -56,7 +56,7 @@ def test_create_random_game_success(
     mock_add_game_id_to_random_games_db.return_value = 1
 
     # Act
-    result = create_random_game(language="en", board_size="3x3")
+    result = create_random_game(language="en", board_size="3x3", from_lambda_console=True)
 
     # Assert
     assert result == mock_game_schema

@@ -550,7 +550,7 @@ def test_add_game_to_archive_success(mock_dynamodb_resource):
 
     # Assert
     assert result is True
-    mock_table.put_item.assert_called_once_with(Item={"gameId": game_id})
+    mock_table.put_item.assert_called_once_with(Item={"NYTGame": "NYTGame", "gameId": game_id})
 
 
 def test_add_game_to_archive_failure(mock_dynamodb_resource):
@@ -568,7 +568,7 @@ def test_add_game_to_archive_failure(mock_dynamodb_resource):
 
     # Assert
     assert result is False
-    mock_table.put_item.assert_called_once_with(Item={"gameId": game_id})
+    mock_table.put_item.assert_called_once_with(Item={"NYTGame": "NYTGame", "gameId": game_id})
 
 
 def test_fetch_archived_games_success(mock_dynamodb_resource):
@@ -576,8 +576,8 @@ def test_fetch_archived_games_success(mock_dynamodb_resource):
     mock_table = create_mock_table()
     mock_dynamodb_resource.Table.return_value = mock_table
 
-    # Mock the scan method
-    mock_table.scan.return_value = {
+    # Mock the query method
+    mock_table.query.return_value = {
         "Items": [
             {"gameId": "2024-11-22", "officialGame": True},
             {"gameId": "2024-11-21", "officialGame": True},
@@ -594,7 +594,11 @@ def test_fetch_archived_games_success(mock_dynamodb_resource):
         {"gameId": "2024-11-21", "officialGame": True},
     ]
     assert result["lastKey"] is None
-    mock_table.scan.assert_called_once_with(Limit=10)
+    mock_table.query.assert_called_once_with(
+        KeyConditionExpression=Key("NYTGame").eq("NYTGame"),
+        Limit=10,
+        ScanIndexForward=False,
+    )
 
 
 def test_fetch_archived_games_with_pagination(mock_dynamodb_resource):
@@ -602,8 +606,8 @@ def test_fetch_archived_games_with_pagination(mock_dynamodb_resource):
     mock_table = create_mock_table()
     mock_dynamodb_resource.Table.return_value = mock_table
 
-    # Properly mock the scan or query response
-    mock_table.scan.return_value = {
+    # Mock the query response
+    mock_table.query.return_value = {
         "Items": [
             {"gameId": "2024-11-20", "officialGame": True},
             {"gameId": "2024-11-19", "officialGame": True},
@@ -621,18 +625,20 @@ def test_fetch_archived_games_with_pagination(mock_dynamodb_resource):
     ]
     assert result["lastKey"] == {"gameId": "2024-11-19"}
 
-    # Verify the scan call was made with the correct parameters
-    mock_table.scan.assert_called_once_with(
+    # Verify the query call was made with the correct parameters
+    mock_table.query.assert_called_once_with(
+        KeyConditionExpression=Key("NYTGame").eq("NYTGame"),
         Limit=10,
         ExclusiveStartKey={"gameId": "2024-11-21"},
+        ScanIndexForward=False,
     )
 
 
 def test_fetch_archived_games_failure(mock_dynamodb_resource):
     # Arrange
     mock_table = create_mock_table()
-    # Mock scan to raise a ClientError
-    mock_table.scan.side_effect = ClientError(
+    # Mock query to raise a ClientError
+    mock_table.query.side_effect = ClientError(
         error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
         operation_name="Scan",
     )
@@ -645,6 +651,10 @@ def test_fetch_archived_games_failure(mock_dynamodb_resource):
     assert result["items"] == []  # Should return an empty list on failure
     assert result["lastKey"] is None  # Should return None for lastKey
 
-    # Verify that scan was attempted
-    mock_table.scan.assert_called_once_with(Limit=10)
+    # Verify that query was attempted
+    mock_table.query.assert_called_once_with(
+        KeyConditionExpression=Key("NYTGame").eq("NYTGame"),
+        Limit=10,
+        ScanIndexForward=False,
+    )
     

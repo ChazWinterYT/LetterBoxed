@@ -29,6 +29,9 @@ def test_valid_custom_game(
         "standardizedHash": "standardized-hash",
         "twoWordSolutions": [("WORD1", "WORD2")],
         "threeWordSolutions": [("WORD3", "WORD4", "WORD5")],
+        "validWordCount": 5,
+        "oneWordSolutionCount": 0,
+        "twoWordSolutionCount": 1,
         "validWords": ["WORD1", "WORD2", "WORD3", "WORD4", "WORD5"],
         "baseValidWords": ["WORD1", "WORD2", "WORD3", "WORD4", "WORD5"],
     }

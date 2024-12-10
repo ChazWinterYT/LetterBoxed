@@ -56,18 +56,20 @@ def test_convert_decimal_with_mixed_data():
 
 def test_validate_board_size_valid():
     assert validate_board_size("3x3") is True
-    assert validate_board_size("5x5") is True
+    assert validate_board_size("4x4") is True
     assert validate_board_size("2x2") is True
 
 
 def test_validate_board_size_invalid():
     assert validate_board_size("6x6") is False
+    assert validate_board_size("5x5") is False
+    assert validate_board_size("4x5") is False
     assert validate_board_size("abc") is False
 
 
 def test_validate_language_valid():
     assert validate_language("en") is True
-    assert validate_language("fr") is True
+    assert validate_language("de") is True
 
 
 def test_validate_language_invalid():
