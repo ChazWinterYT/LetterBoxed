@@ -176,21 +176,21 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   };
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = async (event: any) => {
+    event.preventDefault
     if (isSubmitting) {
-      console.warn("Word submission already in progress.");
+      console.warn("Word submission already in progress.")
       return; // Prevent duplicate submissions
     }
     setIsSubmitting(true);
-  
+    
     if (currentWord.length > 0) {
       const word = currentWord.map((item) => item.letter).join('');
       if (!gameId || !sessionId) {
         console.error("Missing gameId or sessionId for validation.");
-        setIsSubmitting(false);
         return;
       }
-  
+
       try {
         console.log("Trying word:", word);
         const validationResult = await validateWord(word, gameId, sessionId);
@@ -211,12 +211,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
           setLastLetter(lastItem.letter);
           setLastLetterSide(lastItem.side);
   
-          // Check if the game is complete
+          //Check if the game is complete
           if (validationResult.gameCompleted) {
             if (onGameCompleted) {
               onGameCompleted(validationResult);
             }
-            setCurrentWord([]); // Clear current word
+            setCurrentWord([]); // clear current word
           } else {
             // Start the new word with the last letter
             setCurrentWord([{ letter: lastItem.letter, side: lastItem.side }]);
@@ -241,16 +241,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         setValidationStatus(null);
       }, 2000);
     }
-  }, [
-    t,
-    isSubmitting, 
-    currentWord, 
-    gameId, 
-    sessionId,  
-    onWordSubmit, 
-    onGameCompleted, 
-    getRandomPhrase
-  ]);
+  };
 
   const handleRestart = () => {
     if (onRestartGame) {
