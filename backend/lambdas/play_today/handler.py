@@ -2,6 +2,7 @@ import json
 from typing import Dict, Any
 from datetime import date, timedelta
 from lambdas.common.db_utils import fetch_game_by_id
+from lambdas.common.response_utils import error_response, HEADERS
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     """
@@ -21,26 +22,15 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             todays_game = fetch_game_by_id(yesterday)
 
             if not todays_game:
-                return {
-                    "statusCode": 404,
-                    "headers": {
-                        "Access-Control-Allow-Origin": "*",  # Allow all origins
-                        "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                        "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-                    },
-                    "body": json.dumps({
-                        "message": f"{today}'s game is not yet available, and {yesterday}'s game isn't either. Please try again later."
-                    })
-                }
+                return error_response(
+                    f"{today}'s game is not yet available, and {yesterday}'s game isn't either. Please try again later.", 
+                    404
+                )
             else:
                 # Serve yesterday's game, including a message to indicate that it's yesterday's game
                 return {
                     "statusCode": 200,
-                    "headers": {
-                        "Access-Control-Allow-Origin": "*",  # Allow all origins
-                        "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                        "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-                    },
+                    "headers": HEADERS,
                     "body": json.dumps({
                         "gameId": todays_game["gameId"],
                         "gameLayout": todays_game["gameLayout"],
@@ -55,11 +45,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Return today's game
         return {
             "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
+            "headers": HEADERS,
             "body": json.dumps({
                 "gameId": todays_game["gameId"],
                 "gameLayout": todays_game["gameLayout"],
@@ -72,15 +58,4 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         }
     except Exception as e:
         print(str(e))
-        return {
-            "statusCode": 500,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
-            "body": json.dumps({
-                "message": f"An error occurred while fetching today's game.",
-                "error": str(e)
-            })
-        }
+        return error_response(f"An error occurred while fetching today's game: {str(e)}", 500)

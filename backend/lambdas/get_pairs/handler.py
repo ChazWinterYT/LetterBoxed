@@ -2,7 +2,7 @@ import json
 from typing import Dict, Any, Optional
 import time
 import random
-from lambdas.common.response_utils import error_response
+from lambdas.common.response_utils import error_response, HEADERS
 from lambdas.create_random.random_game_service import select_two_words, select_one_word
 from lambdas.common.dictionary_utils import get_dictionary, get_basic_dictionary
 from lambdas.common.validation_utils import validate_language, validate_board_size
@@ -78,11 +78,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         
         return {
             "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
+            "headers": HEADERS,
             "body": json.dumps({
                 "message": "Words generated successfully.",
                 "singleWords": words,

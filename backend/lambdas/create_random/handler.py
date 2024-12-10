@@ -4,7 +4,7 @@ from lambdas.common.db_utils import add_game_to_db, add_game_id_to_random_games_
 from lambdas.common.dictionary_utils import get_dictionary
 from lambdas.common.game_schema import create_game_schema, validate_board_size, validate_language
 from lambdas.create_random.random_game_service import create_random_game, create_random_small_board_game
-from lambdas.common.response_utils import error_response
+from lambdas.common.response_utils import error_response, HEADERS
 
 
 MAX_RETRIES = 5  # Maximum number of retries for ValueError exceptions
@@ -80,11 +80,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Return the game details
         return {
             "statusCode": 201,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
+            "headers": HEADERS,
             "body": json.dumps({
                 "message": "Random game created successfully.",
                 "gameType": random_game_data["gameType"],

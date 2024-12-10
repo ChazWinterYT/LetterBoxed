@@ -2,7 +2,7 @@ import json
 import logging
 from typing import Dict, Any
 from lambdas.common.db_utils import fetch_game_by_id
-from lambdas.common.response_utils import error_response
+from lambdas.common.response_utils import error_response, HEADERS
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -29,11 +29,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     # Return game details
     return {
         "statusCode": 200,
-        "headers": {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "OPTIONS,GET,POST",
-            "Access-Control-Allow-Headers": "Content-Type,Authorization",
-        },
+        "headers": HEADERS,
         "body": json.dumps({
             "gameId": game_id,
             "gameLayout": game_data.get("gameLayout"),

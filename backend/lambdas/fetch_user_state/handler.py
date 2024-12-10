@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any
 from lambdas.common.db_utils import get_user_game_state
-from lambdas.common.response_utils import error_response
+from lambdas.common.response_utils import error_response, HEADERS
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -44,11 +44,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Return the game state
         return {
             "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,GET",
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",
-            },
+            "headers": HEADERS,
             "body": json.dumps(game_state),
         }
     except Exception as e:

@@ -6,8 +6,7 @@ from lambdas.common.db_utils import (
     fetch_game_id_from_random_games_db,
     fetch_game_by_id
 )
-from lambdas.common.game_schema import validate_board_size, validate_language
-from lambdas.common.response_utils import error_response
+from lambdas.common.response_utils import error_response, HEADERS
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -52,11 +51,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Return the game details
         return {
             "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,GET",
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",
-            },
+            "headers": HEADERS,
             "body": json.dumps({
                 "message": "Random game fetched successfully.",
                 "gameId": game_id,

@@ -4,7 +4,7 @@ from typing import Dict, Any
 from lambdas.common.db_utils import add_game_to_db
 from lambdas.common.game_utils import generate_valid_words
 from lambdas.common.game_schema import create_game_schema, validate_board_matches_layout
-from lambdas.common.response_utils import error_response
+from lambdas.common.response_utils import error_response, HEADERS
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -42,11 +42,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     return {
         "statusCode": 201,
-        "headers": {
-            "Access-Control-Allow-Origin": "*",  # Allow all origins
-            "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-            "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-        },
+        "headers": HEADERS,
         "body": json.dumps({
             "gameId": game_data["gameId"],
             "gameLayout": game_data["gameLayout"],

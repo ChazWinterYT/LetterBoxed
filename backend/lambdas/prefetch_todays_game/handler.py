@@ -7,6 +7,7 @@ from lambdas.common.db_utils import (
     add_game_to_archive
 )
 from lambdas.common.game_schema import create_game_schema
+from lambdas.common.response_utils import error_response, HEADERS
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -22,11 +23,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if fetch_game_by_id(game_id):
             return {
                 "statusCode": 200,
-                "headers": {
-                    "Access-Control-Allow-Origin": "*",  # Allow all origins
-                    "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                    "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-                },
+                "headers": HEADERS,
                 "body": json.dumps({
                     "message": "Today's game is already cached.",
                     "gameId": game_id
@@ -55,11 +52,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
         return {
             "statusCode": 201,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
+            "headers": HEADERS,
             "body": json.dumps({
                 "message": "Today's game cached successfully.",
                 "gameId": game_id
@@ -68,12 +61,4 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
     except Exception as e:
         print(f"Error prefetching today's game: {e}")
-        return {
-            "statusCode": 500,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",  # Allow all origins
-                "Access-Control-Allow-Methods": "OPTIONS,GET,POST",  # Allowed methods
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",  # Allowed headers
-            },
-            "body": json.dumps({"error": str(e)})
-        }
+        return error_response(f"Error: {str(e)}", 500)

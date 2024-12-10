@@ -4,7 +4,7 @@ from typing import Dict, Any
 import time
 from lambdas.common.db_utils import save_user_session_state, get_user_game_state
 from lambdas.common.game_utils import check_game_completion
-from lambdas.common.response_utils import error_response
+from lambdas.common.response_utils import error_response, HEADERS
 
 
 _logger = logging.getLogger(__name__)
@@ -73,11 +73,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
 
         return {
             "statusCode": 200,
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,GET,PUT",
-                "Access-Control-Allow-Headers": "Content-Type,Authorization",
-            },
+            "headers": HEADERS,
             "body": json.dumps({
                 "message": message,
                 "gameId": game_id,
