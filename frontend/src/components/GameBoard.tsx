@@ -177,10 +177,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const handleSubmit = async () => {
+    console.log("handleSubmit triggered");
     if (isSubmitting) {
       console.warn("Word submission already in progress.")
       return; // Prevent duplicate submissions
     }
+    console.log("Starting submission");
     setIsSubmitting(true);
     
     if (currentWord.length > 0) {
