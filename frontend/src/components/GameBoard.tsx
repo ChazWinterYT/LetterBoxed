@@ -177,7 +177,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const handleSubmit = async (event: any) => {
-    event.preventDefault
+    event.preventDefault();
+    event.stopPropagation();
     if (isSubmitting) {
       console.warn("Word submission already in progress.")
       return; // Prevent duplicate submissions
