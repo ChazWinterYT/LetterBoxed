@@ -3,6 +3,7 @@ import time
 import uuid
 import hashlib
 from datetime import datetime, timezone
+from lambdas.common.db_utils import fetch_game_by_id
 from lambdas.common.game_utils import (
     standardize_board,
     calculate_one_word_solutions,
@@ -41,6 +42,11 @@ def create_game_schema(
     par: Optional[str] = None,
     board_size: str = "3x3",
     language: str = "en",
+    total_ratings: Optional[int] = 0,
+    total_stars: Optional[int] = 0,
+    total_completions: Optional[int] = 0,
+    total_words_used: Optional[int] = 0,
+    total_letters_used: Optional[int] = 0,
     created_at: Optional[str] = None,
     created_by: str = "",
     clue: str = "",
@@ -69,6 +75,11 @@ def create_game_schema(
         par: Expected minimum word count.
         board_size: Size of the board (e.g., "3x3").
         language: Language of the game (e.g., "en").
+        total_ratings: The number of times a game has been rated.
+        total_stars: The total number of stars a game has received in its ratings.
+        total_completions: The number of times a game has been completed.
+        total_words_used: The total number of words needed to complete this game.
+        total_letters_used: The total length of all words used to complete this game.
         created_at: ISO timestamp for when the game was created.
         created_by: Identifier for the user who created the game, if applicable.
         clue: Clue for the two-word solution to this puzzle.
@@ -132,6 +143,8 @@ def create_game_schema(
     nyt_solution = nyt_solution or []
     random_seed_words = random_seed_words or []
     par = par or "N/A"
+    total_ratings = total_ratings or 0
+    total_stars = total_stars or 0
     official_game = official_game if official_game is not None else (game_type == "nyt")
     created_time = datetime.now().isoformat()
 
@@ -160,10 +173,56 @@ def create_game_schema(
         "par": par,
         "boardSize": board_size,
         "language": language,
+        "totalRatings": total_ratings,
+        "totalStars": total_stars,
+        "totalCompletions": total_completions,
+        "totalWordsUsed": total_words_used,
+        "totalLettersUsed": total_letters_used,
         "createdAt": created_time,
         "createdBy": created_by,
         "clue": clue,
     }
+
+
+def update_game_schema(game_id: str, updates: dict) -> None:
+    """
+    Update specific attributes of a game in the DynamoDB table.
+
+    Args:
+        game_id (str): The ID of the game to update.
+        updates (dict): A dictionary of attributes to update. Only certain fields are allowed.
+    
+    Raises:
+        ValueError: If `game_id` is missing or updates contain disallowed fields.
+        Exception: If the update fails (e.g., game_id does not exist).
+    """
+    # Allowed fields for updates
+    allowed_fields = {
+        "totalRatings",
+        "totalStars",
+        "totalCompletions",
+        "totalWordsUsed",
+        "totalLettersUsed",
+        "clue",
+    }
+
+    invalid_fields = set(updates.keys()) - allowed_fields
+    if invalid_fields:
+        raise ValueError(f"The update contained invalid fields, or fields that are read-only.")
+
+    if not game_id:
+        raise ValueError("Game ID is required for updates.")
+
+    existing_game = fetch_game_by_id(game_id)
+    if not existing_game:
+        raise ValueError("Game with specified ID does not exist.")
+
+    # Update the fields in the game item
+    updated_game = {**existing_game}
+    for key, value in updates.items():
+        updated_game[key] = value
+
+    return updated_game
 
 
 def generate_standardized_hash(standardized_game_layout: List[str]) -> str:
