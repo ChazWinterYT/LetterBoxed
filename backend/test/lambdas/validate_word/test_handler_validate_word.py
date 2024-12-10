@@ -136,6 +136,11 @@ def test_game_completion_with_nyt_solution(mock_db_utils, mock_random_sample, mo
         "twoWordSolutions": [("BANANA", "CHERRY"), ("PEACH", "KIWI")],
         "oneWordSolutionCount": 2,
         "twoWordSolutionCount": 2,
+        "totalCompletions": 10,
+        "totalWordsUsed": 50,
+        "totalLettersUsed": 300,
+        "totalRatings": 5,
+        "totalStars": 25,
     }
 
     event = {
@@ -177,6 +182,11 @@ def test_game_completion_with_random_seed_word(mock_db_utils, mock_random_sample
         "oneWordSolutionCount": 1,
         "twoWordSolutions": [("BANANA", "CHERRY"), ("PEACH", "KIWI")],
         "twoWordSolutionCount": 2,
+        "totalCompletions": 10,
+        "totalWordsUsed": 50,
+        "totalLettersUsed": 300,
+        "totalRatings": 5,
+        "totalStars": 25,
     }
 
     event = {

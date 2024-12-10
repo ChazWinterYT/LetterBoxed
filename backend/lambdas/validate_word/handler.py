@@ -8,7 +8,10 @@ from lambdas.common.db_utils import (
     get_user_game_state,
     save_user_session_state,
 )
-from lambdas.validate_word.word_validator_service import find_valid_word_from_normalized
+from lambdas.validate_word.word_validator_service import (
+    find_valid_word_from_normalized,
+    handle_post_game_logic,
+)
 
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
@@ -23,7 +26,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     - dict: The response object with statusCode and body.
     """
     try: 
-        body = json.loads(event.get('body', {}))
+        body = json.loads(event.get('body', "{}"))
     except json.JSONDecodeError:
         return _error_response(
             "Invalid JSON in request.", 400
@@ -92,37 +95,17 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         official_solution = []
         some_one_word_solutions = []
         some_two_word_solutions = []
+        average_rating = 0.0
+        average_words_used = 0.0
+        average_word_length = 0.0
         if game_completed:
-            # Prioritize NYT solution if it exists
-            if "nytSolution" in game_data and game_data["nytSolution"]:
-                official_solution = game_data["nytSolution"]
-            # Otherwise, prefer a one word solution if it exists
-            elif "randomSeedWord" in game_data and game_data["randomSeedWord"]:
-                official_solution = [game_data["randomSeedWord"]]
-            # Otherwise, use the two word solution if it exists
-            elif "randomSeedWords" in game_data and game_data["randomSeedWords"]:
-                official_solution = game_data["randomSeedWords"]
-            
-            # Also provide a sample of one-word solutions if available
-            NUM_SAMPLE_SOLUTIONS = 5 # How many solutions to show
-            if "oneWordSolutions" in game_data and game_data["oneWordSolutions"]:
-                some_one_word_solutions = random.sample(
-                    game_data["oneWordSolutions"],
-                    min(
-                        len(game_data["oneWordSolutions"]), 
-                        NUM_SAMPLE_SOLUTIONS
-                    )
-                )
-                
-            # Also provide a sample of two-word solutions if available
-            if "twoWordSolutions" in game_data and game_data["twoWordSolutions"]:
-                some_two_word_solutions = random.sample(
-                    [tuple(solution) for solution in game_data["twoWordSolutions"]],
-                    min(
-                        len(game_data["twoWordSolutions"]), 
-                        NUM_SAMPLE_SOLUTIONS
-                    )
-                )
+            post_game_data = handle_post_game_logic(game_data, words_used)
+            official_solution = post_game_data["officialSolution"]
+            some_one_word_solutions = post_game_data["someOneWordSolutions"]
+            some_two_word_solutions = post_game_data["someTwoWordSolutions"]
+            average_rating = post_game_data["averageRating"]
+            average_words_used = post_game_data["averageWordsUsed"]
+            average_word_length = post_game_data["averageWordLength"]
             
         return {
             "statusCode": 200,
@@ -142,12 +125,15 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "numTwoWordSolutions": len(game_data["twoWordSolutions"]),
                 "someOneWordSolutions": some_one_word_solutions,
                 "someTwoWordSolutions": some_two_word_solutions,
+                "averageRating": average_rating,
+                "averageWordsUsed": average_words_used,
+                "averageWordLength": average_word_length,
             }),
         }
 
     except Exception as e:
-        print(f"Error during validation: {e.with_traceback}")
-        return _error_response(f"An unexpected error occurred: {e}", 500)
+        print(f"Error during validation: {str(e)}")
+        return _error_response(f"An unexpected error occurred: {str(e)}", 500)
     
 
 def _error_response(message: str, status_code: int) -> Dict[str, Any]:
