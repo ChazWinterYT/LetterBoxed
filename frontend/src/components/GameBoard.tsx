@@ -42,6 +42,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [isHintVisible, setIsHintVisible] = useState(false);
   const [validationMessage, setValidationMessage] = useState<string | null>(null); // Feedback state
   const [validationStatus, setValidationStatus] = useState<"valid" | "invalid" | null>(null); // Type: valid/invalid
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // State to track the current word as an array of letters with their sides
   const [currentWord, setCurrentWord] = useState<{ letter: string; side: string }[]>([]);
@@ -176,12 +177,16 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return; // Prevent duplicate submissions
+    
     if (currentWord.length > 0) {
       const word = currentWord.map((item) => item.letter).join('');
       if (!gameId || !sessionId) {
         console.error("Missing gameId or sessionId for validation.");
         return;
       }
+
+      setIsSubmitting(true);
   
       try {
         console.log("Trying word:", word);
@@ -224,6 +229,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
         const errorMessage = t('game.validateWord.error');
         setValidationMessage(errorMessage);
         setValidationStatus("invalid");
+      } finally {
+        setIsSubmitting(false);
       }
   
       setTimeout(() => {

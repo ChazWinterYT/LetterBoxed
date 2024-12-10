@@ -184,7 +184,7 @@ def create_game_schema(
     }
 
 
-def update_game_schema(game_id: str, updates: dict) -> None:
+def update_game_schema(game_id: str, updates: dict) -> Dict[str, Any]:
     """
     Update specific attributes of a game in the DynamoDB table.
 

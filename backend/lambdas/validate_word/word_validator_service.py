@@ -1,5 +1,6 @@
 from typing import List, Optional, Dict, Any, Tuple
 import random
+from lambdas.common.db_utils import update_game_in_db
 from lambdas.common.game_utils import normalize_to_base
 
 def find_valid_word_from_normalized(submitted_word: str, valid_words: List[str]) -> Optional[str]:
@@ -71,6 +72,18 @@ def handle_post_game_logic(game_data: Dict[str, Any], words_used: List[str]) -> 
     total_letters_used = game_data["totalLettersUsed"] + sum(len(word) for word in words_used)
     total_ratings = game_data["totalRatings"]
     total_stars = game_data["totalStars"]
+
+    print("Game data:", game_data)
+
+    # Update game data in the database
+    updated_game_data = {
+        "gameId": game_data["gameId"],
+        "totalCompletions": total_completions,
+        "totalWordsUsed": total_words_used,
+        "totalLettersUsed": total_letters_used,
+    }
+    if not update_game_in_db(updated_game_data):
+        print(f"[WARN] Failed to update game stats for gameId {game_data['gameId']}")
 
     average_rating = total_stars / total_ratings if total_ratings > 0 else 0.0
     average_words_used = total_words_used / total_completions

@@ -24,6 +24,7 @@ def test_find_valid_word_from_normalized(submitted_word: str, valid_words: List[
 def test_handle_post_game_logic():
     random.seed(0) # For consistent random logic
     game_data = {
+        "gameId": "test-game-id",
         "nytSolution": ["nyt1", "nyt2"],
         "randomSeedWord": "random_word",
         "randomSeedWords": ["seed1", "seed2"],

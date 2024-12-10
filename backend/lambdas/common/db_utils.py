@@ -42,6 +42,53 @@ def add_game_to_db(game_data: Dict[str, Any]) -> bool:
         return False
 
 
+def update_game_in_db(game_data: Dict[str, Any]) -> bool:
+    """
+    Updates a game entry in the DynamoDB table.
+
+    Args:
+        game_data (dict): A dictionary containing all game details to update.
+                          Must include the gameId as the primary key.
+
+    Returns:
+        bool: True if operation was successful, False otherwise.
+    """
+    try:
+        # Extract the gameId, which is the primary key
+        game_id = game_data.get("gameId")
+        if not game_id:
+            raise ValueError("gameId is required for updating a game in the DB.")
+        
+        # Build the update expression and attribute values
+        update_expression = []
+        expression_attribute_values = {}
+        for key, value in game_data.items():
+            if key != "gameId":  # Skip primary key
+                update_expression.append(f"{key} = :{key}")
+                expression_attribute_values[f":{key}"] = value
+        
+        if not update_expression:
+            raise ValueError("No fields provided to update.")
+        
+        # Combine update expression into a single string
+        update_expression_str = "SET " + ", ".join(update_expression)
+        
+        # Update the item in the table
+        table = get_games_table()
+        table.update_item(
+            Key={"gameId": game_id},
+            UpdateExpression=update_expression_str,
+            ExpressionAttributeValues=expression_attribute_values,
+        )
+        return True
+    except ClientError as e:
+        print(f"Error updating game in DB: {e}")
+        return False
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return False
+
+
 def fetch_game_by_id(game_id: str) -> Optional[Dict[str, Any]]:
     """
     Fetches a game entry by its gameId.

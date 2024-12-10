@@ -130,6 +130,7 @@ def test_game_completion_with_nyt_solution(mock_db_utils, mock_random_sample, mo
         return_value=(True, "Congratulations! Puzzle solved.")
     )
     mock_db_utils["fetch_game_by_id"].return_value = {
+        "gameId": "test-game",
         "gameLayout": ["ABC", "DEF", "GHI", "JKL"],
         "nytSolution": ["APPLE", "ORANGE", "ELEPHANT"],
         "oneWordSolutions": ["GRAPE", "PLUM"],
@@ -176,6 +177,7 @@ def test_game_completion_with_random_seed_word(mock_db_utils, mock_random_sample
         return_value=(True, "Congratulations! Puzzle solved.")
     )
     mock_db_utils["fetch_game_by_id"].return_value = {
+        "gameId": "test-game",
         "gameLayout": ["OMG", "WTF", "BLT", "SEX"],
         "randomSeedWord": "ORANGE",
         "oneWordSolutions": ["LIME"],

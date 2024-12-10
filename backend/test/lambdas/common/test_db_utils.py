@@ -85,6 +85,93 @@ def test_add_game_to_db_failure(mock_dynamodb_resource):
     })
 
 
+def test_update_game_in_db_success(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_data = {
+        "gameId": "test-game-id",
+        "clue": "Updated clue text",
+        "totalRatings": 15,
+        "totalStars": 75
+    }
+
+    # Act
+    result = db_utils.update_game_in_db(game_data)
+
+    # Assert
+    assert result is True
+
+    # Verify that update_item was called with the correct parameters
+    expected_update_expression = (
+        "SET clue = :clue, totalRatings = :totalRatings, totalStars = :totalStars"
+    )
+    expected_expression_attribute_values = {
+        ":clue": "Updated clue text",
+        ":totalRatings": 15,
+        ":totalStars": 75
+    }
+    mock_table.update_item.assert_called_once_with(
+        Key={"gameId": "test-game-id"},
+        UpdateExpression=expected_update_expression,
+        ExpressionAttributeValues=expected_expression_attribute_values
+    )
+
+
+def test_update_game_in_db_failure(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_table.update_item.side_effect = ClientError(
+        error_response={"Error": {"Code": "500", "Message": "Internal Server Error"}},
+        operation_name="UpdateItem",
+    )
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_data = {
+        "gameId": "test-game-id",
+        "clue": "Updated clue text"
+    }
+
+    # Act
+    result = db_utils.update_game_in_db(game_data)
+
+    # Assert
+    assert result is False
+
+    # Verify that update_item was attempted with the correct parameters
+    expected_update_expression = "SET clue = :clue"
+    expected_expression_attribute_values = {":clue": "Updated clue text"}
+    mock_table.update_item.assert_called_once_with(
+        Key={"gameId": "test-game-id"},
+        UpdateExpression=expected_update_expression,
+        ExpressionAttributeValues=expected_expression_attribute_values
+    )
+
+
+def test_update_game_in_db_partial_update(mock_dynamodb_resource):
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+    game_data = {
+        "gameId": "test-game-id",
+        "totalStars": 100
+    }
+
+    # Act
+    result = db_utils.update_game_in_db(game_data)
+
+    # Assert
+    assert result is True
+
+    # Verify that update_item was called with only the updated fields
+    expected_update_expression = "SET totalStars = :totalStars"
+    expected_expression_attribute_values = {":totalStars": 100}
+    mock_table.update_item.assert_called_once_with(
+        Key={"gameId": "test-game-id"},
+        UpdateExpression=expected_update_expression,
+        ExpressionAttributeValues=expected_expression_attribute_values
+    )
+
+
 def test_fetch_game_by_id_success(mock_dynamodb_resource):
     # Arrange
     mock_table = create_mock_table()
