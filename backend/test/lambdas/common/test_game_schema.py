@@ -106,20 +106,21 @@ def test_create_game_schema_invalid_language(mock_utils, default_game_layout):
 #=================================================
 
 @pytest.fixture
-def mock_fetch_game():
-    # Mock fetch_game_by_id
-    with patch("lambdas.common.game_schema.fetch_game_by_id") as mock_fetch:
-        mock_fetch.return_value = {
-            "gameId": "some-game-id",
-            "language": "en",
-            "boardSize": "3x3",
-            "totalRatings": 5,
-            "totalStars": 20,
-            "clue": "Old clue"
-        }
-        yield mock_fetch
+def mock_game():
+    """Fixture for a mock game object."""
+    return {
+        "gameId": "some-game-id",
+        "language": "en",
+        "boardSize": "3x3",
+        "totalRatings": 5,
+        "totalStars": 20,
+        "clue": "Old clue"
+    }
 
-def test_update_game_schema_success(mock_fetch_game):
+def test_update_game_schema_success(mock_game):
+    """
+    Test successful updates to a game schema.
+    """
     # Arrange
     updates = {
         "clue": "New clue",
@@ -128,32 +129,51 @@ def test_update_game_schema_success(mock_fetch_game):
     }
 
     # Act
-    updated_game = update_game_schema("some-game-id", updates)
+    updated_game = update_game_schema(mock_game, updates)
 
     # Assert
     assert updated_game["clue"] == "New clue"
     assert updated_game["totalRatings"] == 10
     assert updated_game["totalStars"] == 45
 
-    # Ensure fetch_game_by_id was called with the correct gameId
-    mock_fetch_game.assert_called_once_with("some-game-id")
-
-
-def test_update_game_schema_invalid_field(mock_fetch_game):
+def test_update_game_schema_invalid_field(mock_game):
+    """
+    Test that invalid fields raise a ValueError.
+    """
     updates = {"gameLayout": ["X", "Y", "Z"]}  # Not allowed
+
     with pytest.raises(ValueError, match="invalid fields"):
-        update_game_schema("some-game-id", updates)
+        update_game_schema(mock_game, updates)
 
+def test_update_game_schema_no_game():
+    """
+    Test that missing the game object raises a ValueError.
+    """
+    updates = {"clue": "Doesn't matter"}
 
-def test_update_game_schema_no_game_id():
-    # Missing game_id
-    with pytest.raises(ValueError, match="Game ID is required"):
-        update_game_schema("", {"clue": "No ID"})
+    with pytest.raises(ValueError, match="Game schema is required"):
+        update_game_schema(None, updates)
+        
+def test_update_game_schema_missing_game_id(mock_game):
+    """
+    Test that a missing gameId raises a ValueError.
+    """
+    del mock_game["gameId"]  # Remove gameId from the mock game
 
-def test_update_game_schema_game_not_exist():
-    with patch("lambdas.common.db_utils.fetch_game_by_id", return_value=None):
-        with pytest.raises(ValueError, match="Game with specified ID does not exist"):
-            update_game_schema("nonexistent-id", {"clue": "Doesn't matter"})
+    updates = {"clue": "New clue"}
+    with pytest.raises(ValueError, match="gameId is required"):
+        update_game_schema(mock_game, updates)
+
+def test_update_game_schema_empty_updates(mock_game):
+    """
+    Test that an empty updates dictionary does not modify the game.
+    """
+    updates = {}
+
+    updated_game = update_game_schema(mock_game, updates)
+
+    # Assert that the game remains unchanged
+    assert updated_game == mock_game
 
 
 #=================================================

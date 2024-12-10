@@ -184,17 +184,20 @@ def create_game_schema(
     }
 
 
-def update_game_schema(game_id: str, updates: dict) -> Dict[str, Any]:
+def update_game_schema(game: Dict[str, Any], updates: dict) -> Dict[str, Any]:
     """
-    Update specific attributes of a game in the DynamoDB table.
+    Update specific attributes of a game.
 
     Args:
-        game_id (str): The ID of the game to update.
+        game (Dict[str, Any]): The game schema that needs to be updated.
         updates (dict): A dictionary of attributes to update. Only certain fields are allowed.
+        
+    Returns:
+        Dict[str, Any]: The full game with its updated fields. 
     
     Raises:
-        ValueError: If `game_id` is missing or updates contain disallowed fields.
-        Exception: If the update fails (e.g., game_id does not exist).
+        ValueError: If `gameId` is missing or updates contain disallowed fields.
+        Exception: If the update fails for any other reason.
     """
     # Allowed fields for updates
     allowed_fields = {
@@ -210,15 +213,13 @@ def update_game_schema(game_id: str, updates: dict) -> Dict[str, Any]:
     if invalid_fields:
         raise ValueError(f"The update contained invalid fields, or fields that are read-only.")
 
-    if not game_id:
-        raise ValueError("Game ID is required for updates.")
-
-    existing_game = fetch_game_by_id(game_id)
-    if not existing_game:
-        raise ValueError("Game with specified ID does not exist.")
+    if not game:
+        raise ValueError("Game schema is required for updates.")
+    if "gameId" not in game or not game["gameId"]:
+        raise ValueError("gameId is required in the game schema.")
 
     # Update the fields in the game item
-    updated_game = {**existing_game}
+    updated_game = {**game}
     for key, value in updates.items():
         updated_game[key] = value
 
