@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "勝利！",
             "puzzleSolvedMessage": "パズルを解きました！おめでとうございます！！！",
+            "statisticsTitle": "このゲームに関する統計情報 (あなたのパフォーマンスを含む)",
+            "averageWordsUsed": "必要な単語の平均数",
+            "averageWordLength": "単語の平均長さ",
             "officialSolution": "このパズルは次の単語を使用して生成されました",
             "numberOfOneWordSolutions": "1語の解答数",
             "numberOfTwoWordSolutions": "2語の解答数",

@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "ANDA MENANG!",
             "puzzleSolvedMessage": "Anda telah menyelesaikan teka-teki ini! Selamat!!!",
+            "statisticsTitle": "Berikut beberapa statistik tentang permainan ini (termasuk kinerja Anda)",
+            "averageWordsUsed": "Rata-rata jumlah kata yang dibutuhkan",
+            "averageWordLength": "Rata-rata panjang kata",
             "officialSolution": "Teka-teki ini dibuat menggunakan kata",
             "numberOfOneWordSolutions": "Jumlah solusi satu kata yang ditemukan",
             "numberOfTwoWordSolutions": "Jumlah solusi dua kata yang ditemukan",

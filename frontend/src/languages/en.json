@@ -59,6 +59,9 @@
         "complete": {
             "puzzleSolvedTitle": "YOU WIN!",
             "puzzleSolvedMessage": "You solved the puzzle! Congratulations!!!",
+            "statisticsTitle": "Here are some statistics on this game (including your performance)",
+            "averageWordsUsed": "Average number of words needed",
+            "averageWordLength": "Average word length",
             "officialSolution": "This puzzle was generated using the word(s)",
             "numberOfOneWordSolutions": "Number of one-word solutions found",
             "numberOfTwoWordSolutions": "Number of two-word solutions found",

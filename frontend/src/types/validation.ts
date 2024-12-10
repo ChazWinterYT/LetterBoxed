@@ -9,4 +9,7 @@ export interface ValidationResult {
     someTwoWordSolutions: [string, string][]; // Array of tuples (string, string)
     numOneWordSolutions: number;
     numTwoWordSolutions: number;
+    averageWordsUsed: number;
+    averageWordLength: number;
+    //averageRating: number;
   }

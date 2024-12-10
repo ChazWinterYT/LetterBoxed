@@ -501,6 +501,9 @@ const App = () => {
         someTwoWordSolutions = [],
         numOneWordSolutions = 0,
         numTwoWordSolutions = 0,
+        averageWordsUsed = 0,
+        averageWordLength = 0,
+        //averageRating = 0.0,
       } = validationResult;
   
       setModalTitle(t("game.complete.puzzleSolvedTitle"));
@@ -515,6 +518,17 @@ const App = () => {
             </p>
           )}
       
+          {/* Display Average Words Used and Average Letters Per Word */}
+          <div className="statistics-section">
+            <p>{t("game.complete.statisticsTitle")}:</p>
+            <p>
+              <b>{t("game.complete.averageWordsUsed")}:</b> {averageWordsUsed.toFixed(1)}
+            </p>
+            <p>
+              <b>{t("game.complete.averageWordLength")}:</b> {averageWordLength.toFixed(1)}
+            </p>
+          </div>
+
           {someOneWordSolutions.length > 0 && (
             <div className="solution-section">
               <p>

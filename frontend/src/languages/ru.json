@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "ВЫ ПОБЕДИЛИ!",
             "puzzleSolvedMessage": "Вы решили головоломку! Поздравляем!!!",
+            "statisticsTitle": "Вот несколько статистических данных об этой игре (включая вашу производительность)",
+            "averageWordsUsed": "Среднее количество используемых слов",
+            "averageWordLength": "Средняя длина слов",
             "officialSolution": "Эта головоломка была создана с использованием слов",
             "numberOfOneWordSolutions": "Количество решений в одно слово",
             "numberOfTwoWordSolutions": "Количество решений в два слова",

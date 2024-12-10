@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "SIE HABEN GEWONNEN!",
             "puzzleSolvedMessage": "Sie haben das Rätsel gelöst! Herzlichen Glückwunsch!!!",
+            "statisticsTitle": "Hier sind einige Statistiken zu diesem Spiel (einschließlich Ihrer Leistung)",
+            "averageWordsUsed": "Durchschnittliche Anzahl benötigter Wörter",
+            "averageWordLength": "Durchschnittliche Wortlänge",
             "officialSolution": "Dieses Rätsel wurde mit folgenden Wörtern generiert",
             "numberOfOneWordSolutions": "Anzahl der gefundenen Ein-Wort-Lösungen",
             "numberOfTwoWordSolutions": "Anzahl der gefundenen Zwei-Wort-Lösungen",

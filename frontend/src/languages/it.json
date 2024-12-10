@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "HAI VINTO!",
             "puzzleSolvedMessage": "Hai risolto l'enigma! Congratulazioni!!!",
+            "statisticsTitle": "Ecco alcune statistiche su questo gioco (incluso il tuo rendimento)",
+            "averageWordsUsed": "Numero medio di parole necessarie",
+            "averageWordLength": "Lunghezza media delle parole",
             "officialSolution": "Questo enigma è stato generato usando le parole",
             "numberOfOneWordSolutions": "Numero di soluzioni con una parola trovate",
             "numberOfTwoWordSolutions": "Numero di soluzioni con due parole trovate",

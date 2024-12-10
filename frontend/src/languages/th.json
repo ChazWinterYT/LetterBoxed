@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "คุณชนะ!",
             "puzzleSolvedMessage": "คุณแก้ปริศนาได้แล้ว! ขอแสดงความยินดี!!!",
+            "statisticsTitle": "นี่คือสถิติบางอย่างเกี่ยวกับเกมนี้ (รวมถึงผลงานของคุณ)",
+            "averageWordsUsed": "จำนวนคำที่ใช้โดยเฉลี่ย",
+            "averageWordLength": "ความยาวคำเฉลี่ย",
             "officialSolution": "ปริศนานี้ถูกสร้างขึ้นจากคำ",
             "numberOfOneWordSolutions": "จำนวนคำตอบที่เป็นคำเดียว",
             "numberOfTwoWordSolutions": "จำนวนคำตอบที่เป็นสองคำ",

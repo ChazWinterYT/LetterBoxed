@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "VOCÊ VENCEU!",
             "puzzleSolvedMessage": "Você resolveu o quebra-cabeça! Parabéns!!!",
+            "statisticsTitle": "Aqui estão algumas estatísticas sobre este jogo (incluindo seu desempenho)",
+            "averageWordsUsed": "Número médio de palavras necessárias",
+            "averageWordLength": "Comprimento médio das palavras",
             "officialSolution": "Este quebra-cabeça foi gerado usando a(s) palavra(s)",
             "numberOfOneWordSolutions": "Número de soluções com uma palavra encontradas",
             "numberOfTwoWordSolutions": "Número de soluções com duas palavras encontradas",

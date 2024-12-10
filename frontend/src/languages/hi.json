@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "आप जीत गए!",
             "puzzleSolvedMessage": "आपने पहेली को हल कर लिया है! बधाई हो!!!",
+            "statisticsTitle": "यह खेल (सहित आपका प्रदर्शन) के बारे में कुछ आँकड़े हैं",
+            "averageWordsUsed": "औसत शब्दों की आवश्यकता",
+            "averageWordLength": "औसत शब्द लंबाई",
             "officialSolution": "यह पहेली इस/इन शब्दों का उपयोग करके बनाई गई थी",
             "numberOfOneWordSolutions": "एक-शब्द समाधान की संख्या",
             "numberOfTwoWordSolutions": "दो-शब्द समाधान की संख्या",

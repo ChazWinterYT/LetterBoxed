@@ -58,6 +58,9 @@
         "complete": {
             "puzzleSolvedTitle": "¡GANASTE!",
             "puzzleSolvedMessage": "¡Resolvió el rompecabezas! ¡Felicidades!!!",
+            "statisticsTitle": "Aquí hay algunas estadísticas de este juego (incluido tu rendimiento)",
+            "averageWordsUsed": "Número promedio de palabras necesarias",
+            "averageWordLength": "Longitud media de las palabras",
             "officialSolution": "Este rompecabezas se generó usando la(s) palabra(s)",
             "numberOfOneWordSolutions": "Número de soluciones de una palabra encontradas",
             "numberOfTwoWordSolutions": "Número de soluciones de dos palabras encontradas",
