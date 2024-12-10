@@ -246,8 +246,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     isSubmitting, 
     currentWord, 
     gameId, 
-    sessionId, 
-    validateWord, 
+    sessionId,  
     onWordSubmit, 
     onGameCompleted, 
     getRandomPhrase
