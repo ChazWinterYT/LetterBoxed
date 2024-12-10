@@ -27,7 +27,6 @@ import {
   fetchGameArchive,
   fetchUserSession,
   saveSessionState,
-  validateWord,
   fetchRandomGame,
 } from "./services/api";
 import { ValidationResult } from "./types/validation";
