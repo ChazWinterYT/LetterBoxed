@@ -514,7 +514,7 @@ const App = () => {
       
           {officialSolution.length > 0 && (
             <p>
-              {t("game.complete.officialSolution")}: {officialSolution.join(", ")}
+              {t("game.complete.officialSolution")}: <b>{officialSolution.join(", ")}</b>
             </p>
           )}
       
