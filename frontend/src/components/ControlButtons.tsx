@@ -32,7 +32,14 @@ const ControlButtons: React.FC<ControlButtonsProps> = ({
         <button className="remove-last-button" onClick={onRemoveLastWord} disabled={gameCompleted}>
           {t("game.removeLastWord")}
         </button>
-        <button className="submit-button" onClick={onSubmit} disabled={gameCompleted}>
+        <button 
+          className="submit-button" 
+          onClick={() => {
+            console.log("Submit button clicked");
+            onSubmit();
+          }}
+          disabled={gameCompleted}
+        >
           {t('game.submitWord')}
         </button>
       </div>
