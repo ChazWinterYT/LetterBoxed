@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { validateWord } from '../services/api';
 import './css/GameBoard.css';
@@ -176,17 +176,20 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   };
 
-  const handleSubmit = async () => {
-    if (isSubmitting) return; // Prevent duplicate submissions
-    
+  const handleSubmit = useCallback(async () => {
+    if (isSubmitting) {
+      console.warn("Word submission already in progress.");
+      return; // Prevent duplicate submissions
+    }
+    setIsSubmitting(true);
+  
     if (currentWord.length > 0) {
       const word = currentWord.map((item) => item.letter).join('');
       if (!gameId || !sessionId) {
         console.error("Missing gameId or sessionId for validation.");
+        setIsSubmitting(false);
         return;
       }
-
-      setIsSubmitting(true);
   
       try {
         console.log("Trying word:", word);
@@ -208,12 +211,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
           setLastLetter(lastItem.letter);
           setLastLetterSide(lastItem.side);
   
-          //Check if the game is complete
+          // Check if the game is complete
           if (validationResult.gameCompleted) {
             if (onGameCompleted) {
               onGameCompleted(validationResult);
             }
-            setCurrentWord([]); // clear current word
+            setCurrentWord([]); // Clear current word
           } else {
             // Start the new word with the last letter
             setCurrentWord([{ letter: lastItem.letter, side: lastItem.side }]);
@@ -238,7 +241,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
         setValidationStatus(null);
       }, 2000);
     }
-  };
+  }, [
+    t,
+    isSubmitting, 
+    currentWord, 
+    gameId, 
+    sessionId, 
+    validateWord, 
+    onWordSubmit, 
+    onGameCompleted, 
+    getRandomPhrase
+  ]);
 
   const handleRestart = () => {
     if (onRestartGame) {
