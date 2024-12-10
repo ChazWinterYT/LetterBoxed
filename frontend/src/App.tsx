@@ -227,7 +227,7 @@ const App = () => {
   }, [urlGameId, currentGameId, loadGame, loadTodaysGame]);
 
   // Add words and save the state
-  const addWord = async (word: string) => {
+  const addWord = async (word: string, validationResult: ValidationResult) => {
     console.log("Adding word:", word);
   
     if (!currentGameId || !userSessionId) {
@@ -236,8 +236,6 @@ const App = () => {
     }
   
     try {
-      // Validate the word
-      const validationResult: ValidationResult = await validateWord(word, currentGameId, userSessionId);
       if (validationResult.valid) {
         const { submittedWord, originalWord } = validationResult;
   
@@ -480,8 +478,8 @@ const App = () => {
     setIsModalOpen(true);
   }, [confirmRestartGame, cancelRestartGame, t]);
 
-  const handleWordSubmit = (newWord: string) => {
-    addWord(newWord);
+  const handleWordSubmit = (newWord: string, validationResult: ValidationResult) => {
+    addWord(newWord, validationResult);
   };
 
   const handleRemoveLastWord = (updatedWords: string[]) => {

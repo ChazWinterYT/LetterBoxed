@@ -14,7 +14,7 @@ export interface GameBoardProps {
   originalWordsUsed: string[];
   gameId: string | null;
   sessionId: string | null;
-  onWordSubmit?: (word: string) => void;
+  onWordSubmit?: (word: string, validationResult: ValidationResult) => void;
   onRemoveLastWord?: (updatedWords: string[]) => void;
   onRestartGame?: () => void;
   onGameCompleted?: (validationResult: ValidationResult) => void;
@@ -201,7 +201,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           console.log("Word is valid:", randomValidMessage);
   
           if (onWordSubmit) {
-            onWordSubmit(word);
+            onWordSubmit(word, validationResult);
           }
   
           setValidationMessage(randomValidMessage);
@@ -234,9 +234,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         setValidationMessage(errorMessage);
         setValidationStatus("invalid");
       } finally {
-        setTimeout(() => {
           setIsSubmitting(false);
-        }, 1000)
       }
   
       setTimeout(() => {
