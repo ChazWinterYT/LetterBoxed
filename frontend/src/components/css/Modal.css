@@ -179,6 +179,15 @@
   background-color: #3d8e41;
 }
 
+.game-completed-content .statistics-section {
+  margin: 15px 0;
+}
+
+.game-completed-content .statistics-section p {
+  font-size: 1rem;
+  color: #555;
+}
+
 .game-completed-content .solution-section {
   margin: 15px 0;
 }
