@@ -2,8 +2,7 @@ import json
 from typing import Dict, Any
 
 from lambdas.common.db_utils import add_game_to_db
-from lambdas.common.game_utils import generate_valid_words
-from lambdas.common.game_schema import create_game_schema, validate_board_matches_layout
+from lambdas.common.game_schema import create_game_schema
 from lambdas.common.response_utils import error_response, HEADERS
 
 

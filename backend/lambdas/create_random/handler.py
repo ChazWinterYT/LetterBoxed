@@ -1,8 +1,6 @@
 import json
-from typing import Dict, Any, Optional
-from lambdas.common.db_utils import add_game_to_db, add_game_id_to_random_games_db
-from lambdas.common.dictionary_utils import get_dictionary
-from lambdas.common.game_schema import create_game_schema, validate_board_size, validate_language
+from typing import Dict, Any
+from lambdas.common.validation_utils import validate_board_size, validate_language
 from lambdas.create_random.random_game_service import create_random_game, create_random_small_board_game
 from lambdas.common.response_utils import error_response, HEADERS
 

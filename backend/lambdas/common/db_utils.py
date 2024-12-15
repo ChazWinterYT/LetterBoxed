@@ -335,7 +335,10 @@ def fetch_game_id_from_random_games_db(atomic_number: int, language: str) -> str
     """
     random_games_table = get_random_games_table(language)
     response = random_games_table.get_item(Key={"atomicNumber": atomic_number})
-    return response.get("Item", {}).get("gameId", "")
+    game_id: str = response.get("Item", {}).get("gameId", "")
+    if not game_id:
+        raise ValueError("Atomic number not associated with Game ID.")
+    return game_id
     
 
 def get_random_games_table(language: str = "en") -> Any:

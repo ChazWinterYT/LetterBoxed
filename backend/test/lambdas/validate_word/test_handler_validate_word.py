@@ -21,13 +21,6 @@ def mock_db_utils(mocker):
         "get_user_game_state": get_user_game_state_mock,
         "save_user_session_state": save_user_session_state_mock,
     }
-
-
-@pytest.fixture
-def mock_random_sample():
-    """Mock random.sample to return the first N items for predictable tests."""
-    with patch("random.sample", side_effect=lambda x, n: x[:n]):
-        yield
         
 
 def test_validate_word_success(mock_db_utils, mocker):
@@ -115,8 +108,9 @@ def test_validate_word_db_error(mock_db_utils, mocker):
     assert body["message"] == "An unexpected error occurred: DB Error"
 
 
-def test_game_completion_with_nyt_solution(mock_db_utils, mock_random_sample, mocker):
+def test_game_completion_with_nyt_solution(mock_db_utils, mocker):
     # Arrange
+    random.seed(0)
     mocker.patch(
         "lambdas.validate_word.handler.fetch_valid_words_by_game_id",
         return_value=["APPLE", "ORANGE", "ELEPHANT"]
@@ -133,7 +127,7 @@ def test_game_completion_with_nyt_solution(mock_db_utils, mock_random_sample, mo
         "gameId": "test-game",
         "gameLayout": ["ABC", "DEF", "GHI", "JKL"],
         "nytSolution": ["APPLE", "ORANGE", "ELEPHANT"],
-        "oneWordSolutions": ["GRAPE", "PLUM"],
+        "oneWordSolutions": ["PLUM", "GRAPE"],
         "twoWordSolutions": [("BANANA", "CHERRY"), ("PEACH", "KIWI")],
         "oneWordSolutionCount": 2,
         "twoWordSolutionCount": 2,
@@ -162,8 +156,9 @@ def test_game_completion_with_nyt_solution(mock_db_utils, mock_random_sample, mo
     assert body["someTwoWordSolutions"] == [["BANANA", "CHERRY"], ["PEACH", "KIWI"]]
 
 
-def test_game_completion_with_random_seed_word(mock_db_utils, mock_random_sample, mocker):
+def test_game_completion_with_random_seed_word(mock_db_utils, mocker):
     # Arrange
+    random.seed(0)
     mocker.patch(
         "lambdas.validate_word.handler.fetch_valid_words_by_game_id",
         return_value=["APPLE", "ORANGE", "ELEPHANT"]
@@ -182,7 +177,7 @@ def test_game_completion_with_random_seed_word(mock_db_utils, mock_random_sample
         "randomSeedWord": "ORANGE",
         "oneWordSolutions": ["LIME"],
         "oneWordSolutionCount": 1,
-        "twoWordSolutions": [("BANANA", "CHERRY"), ("PEACH", "KIWI")],
+        "twoWordSolutions": [("PEACH", "KIWI"), ("BANANA", "CHERRY")],
         "twoWordSolutionCount": 2,
         "totalCompletions": 10,
         "totalWordsUsed": 50,
@@ -257,14 +252,3 @@ def test_validate_word_missing_parameters(mock_db_utils, mocker):
     # Assert
     assert response["statusCode"] == 400
     assert body["message"] == "Missing required parameters: gameId, word, or sessionId."
-
-
-def test_random_sample_with_fewer_items(mock_random_sample):
-    # Arrange
-    items = ["ITEM1", "ITEM2"]
-
-    # Act
-    result = random.sample(items, 5)
-
-    # Assert
-    assert result == ["ITEM1", "ITEM2"]

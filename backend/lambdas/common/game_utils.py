@@ -164,7 +164,7 @@ def calculate_two_word_solutions(
     all_letters = set(letter_to_side.keys())
     total_letters = len(all_letters)
 
-    solutions = []
+    solutions: List[Tuple[str, str]] = []
     letter_usage: Counter[str] = Counter()
 
     # Iterate through all valid words

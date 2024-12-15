@@ -2,8 +2,7 @@ from typing import Dict, Any, Optional, List, Tuple
 import time
 import uuid
 import hashlib
-from datetime import datetime, timezone
-from lambdas.common.db_utils import fetch_game_by_id
+from datetime import datetime
 from lambdas.common.game_utils import (
     standardize_board,
     calculate_one_word_solutions,
@@ -184,7 +183,7 @@ def create_game_schema(
     }
 
 
-def update_game_schema(game: Dict[str, Any], updates: dict) -> Dict[str, Any]:
+def update_game_schema(game: Dict[str, Any], updates: Dict[str, Any]) -> Dict[str, Any]:
     """
     Update specific attributes of a game.
 

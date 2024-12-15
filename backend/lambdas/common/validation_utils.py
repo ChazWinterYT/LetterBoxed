@@ -1,8 +1,8 @@
-from typing import List, Dict, Tuple, Optional, Any
+from typing import List, Dict, Any
 import decimal
 
 
-def validate_game_schema(game_item: Dict) -> Dict:
+def validate_game_schema(game_item: Dict[str, Any]) -> Dict[str, Any]:
     """
     Validates a game item and populates missing fields with default values.
     """
@@ -46,7 +46,8 @@ def validate_game_schema(game_item: Dict) -> Dict:
         if field not in game_item or game_item[field] is None:
             game_item[field] = default
     
-    return convert_decimal(game_item)
+    converted_game_item: Dict[str, Any] = convert_decimal(game_item)
+    return converted_game_item
 
 
 def convert_decimal(obj: Any) -> Any:
