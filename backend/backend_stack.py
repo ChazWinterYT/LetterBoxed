@@ -424,6 +424,10 @@ class LetterBoxedStack(Stack):
                 "handler": "lambdas.validate_word.handler.handler",
                 "name": "ValidateWordLambda"
             },
+            "rate_game": {
+                "handler": "lambdas.rate_game.handler.handler",
+                "name": "RateGameLambda"
+            },
             "game_archive": {
                 "handler": "lambdas.game_archive.handler.handler",
                 "name": "GameArchiveLambda"
