@@ -11,5 +11,5 @@ export interface ValidationResult {
     numTwoWordSolutions: number;
     averageWordsUsed: number;
     averageWordLength: number;
-    //averageRating: number;
+    averageRating: number;
   }

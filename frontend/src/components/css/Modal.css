@@ -197,6 +197,28 @@
   color: #555;
 }
 
+.game-completed-content .rating-section p {
+  align-items: center;
+  font-size: 1rem;
+  color: #555;
+}
+
+.game-completed-content .star-rating {
+  display: flex;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.game-completed-content .star {
+  font-size: 30px;
+  color: #ccc; /* Default star color */
+}
+
+.game-completed-content .star:hover,
+.game-completed-content .star.selected {
+  color: #ffc107; /* Highlight color for stars */
+}
+
 .game-completed-content .highlight {
   font-weight: bold;
   color: #4caf50;

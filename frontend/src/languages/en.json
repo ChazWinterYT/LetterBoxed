@@ -62,6 +62,8 @@
             "statisticsTitle": "Here are some statistics on this game (including your performance)",
             "averageWordsUsed": "Average words needed",
             "averageWordLength": "Average word length",
+            "averageRating": "Average Rating",
+            "rateThisGame": "Rate this game",
             "officialSolution": "This puzzle was generated using the word(s)",
             "numberOfOneWordSolutions": "Number of one-word solutions found",
             "numberOfTwoWordSolutions": "Number of two-word solutions found",

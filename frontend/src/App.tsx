@@ -503,7 +503,7 @@ const App = () => {
         numTwoWordSolutions = 0,
         averageWordsUsed = 0,
         averageWordLength = 0,
-        //averageRating = 0.0,
+        averageRating = 0.0,
       } = validationResult;
   
       setModalTitle(t("game.complete.puzzleSolvedTitle"));
@@ -558,6 +558,23 @@ const App = () => {
               </ul>
             </div>
           )}
+
+          {/* Ratings */}
+          <div className="rating-section">
+            <p>
+              <b>{t("game.complete.averageRating")}:</b> {averageRating.toFixed(1)} / 5
+            </p>
+            <div className="rate-this-game">
+              <p>{t("game.complete.rateThisGame")}:</p>
+              <div className="star-rating">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span key={star} className="star">
+                    ★
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
       
           <button
             onClick={() => {
