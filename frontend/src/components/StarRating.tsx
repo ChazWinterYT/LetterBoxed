@@ -17,14 +17,10 @@ const StarRating: React.FC<StarRatingProps> = ({
   onRatingSelect,
 }) => {
   const { t } = useLanguage();
-  // Track which star is currently hovered (for highlighting)
   const [hoveredRating, setHoveredRating] = useState<number>(0);
-
-  // Track which star rating is selected after clicking
   const [selectedRating, setSelectedRating] = useState<number>(0);
-
-  // Update the average rating after a user adds a new rating
   const [localAverage, setLocalAverage] = useState<number>(averageRating);
+  const [newRatingMessage, setNewRatingMessage] = useState<string>("");
 
   const handleClickStar = async (starValue: number) => {
     // Visually lock in the rating
@@ -41,6 +37,7 @@ const StarRating: React.FC<StarRatingProps> = ({
       if (totalStars !== undefined && totalRatings !== undefined && totalRatings > 0) {
         const newAverage = totalStars / totalRatings;
         setLocalAverage(newAverage);
+        setNewRatingMessage(`${t("game.completed.ratingUpdated")} ${newAverage.toFixed(1)} / 5}`)
       }
 
     } catch (error) {
@@ -89,6 +86,12 @@ const StarRating: React.FC<StarRatingProps> = ({
               );
           })}
         </div>
+
+        {newRatingMessage && (
+          <p className="rating-message">
+            {newRatingMessage}
+          </p>
+        )}
       </div>
   );
 };
