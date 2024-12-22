@@ -561,12 +561,14 @@ const App = () => {
           )}
 
           {/* Ratings */}
-          <StarRating 
-            maxStars={5} 
-            averageRating={averageRating}
-            onRatingSelect={undefined} 
-          />
-      
+          {currentGameId && 
+            <StarRating 
+              gameId={currentGameId}
+              maxStars={5} 
+              averageRating={averageRating}
+            />
+          }
+          
           <button
             onClick={() => {
               console.log("Play another game");
@@ -587,7 +589,7 @@ const App = () => {
         setShowConfetti(false);
       }, 10000); // Make confetti disappear
     },
-    [t, openRandomGameModal]
+    [t, openRandomGameModal, currentGameId]
   );
   
 

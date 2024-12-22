@@ -1,14 +1,17 @@
-import React, { useState, FC } from "react";
+import React, { useState } from "react";
 import { useLanguage } from '../context/LanguageContext';
+import { rateGame } from "../services/api";
 import "./css/StarRating.css";
 
 export interface StarRatingProps {
+  gameId: string;
   maxStars?: number;
   averageRating?: number;
   onRatingSelect?: (rating: number) => void;
 }
 
-const StarRating: FC<StarRatingProps> = ({
+const StarRating: React.FC<StarRatingProps> = ({
+  gameId,
   maxStars = 5,
   averageRating = 0.0,
   onRatingSelect,
@@ -20,12 +23,37 @@ const StarRating: FC<StarRatingProps> = ({
   // Track which star rating is selected after clicking
   const [selectedRating, setSelectedRating] = useState<number>(0);
 
+  // Update the average rating after a user adds a new rating
+  const [localAverage, setLocalAverage] = useState<number>(averageRating);
+
+  const handleClickStar = async (starValue: number) => {
+    // Visually lock in the rating
+    setSelectedRating(starValue);
+    onRatingSelect?.(starValue);
+
+    // Make the API call to rate the game
+    try {
+      const { totalStars, totalRatings } = await rateGame({
+        gameId: gameId,
+        stars: starValue,
+      });
+
+      if (totalStars !== undefined && totalRatings !== undefined && totalRatings > 0) {
+        const newAverage = totalStars / totalRatings;
+        setLocalAverage(newAverage);
+      }
+
+    } catch (error) {
+      console.error("Error rating game:", error);
+    }
+  };
+
   return (
       <div className="star-rating-container">
         {/* Display Average Rating text */}
         <p className="average-rating-text">
           <b>{t("game.complete.averageRating")}:</b>{" "}
-          {averageRating.toFixed(1)} / {maxStars}
+          {localAverage.toFixed(1)} / {maxStars}
         </p>
 
         {/* "Rate This Game" text */}
@@ -54,11 +82,7 @@ const StarRating: FC<StarRatingProps> = ({
                   key={starValue}
                   className={starClass}
                   onMouseEnter={() => setHoveredRating(starValue)} // Hover star
-                  onClick={() => {
-                  // Lock in the rating
-                  setSelectedRating(starValue);
-                  onRatingSelect?.(starValue);
-                  }}
+                  onClick={() => handleClickStar(starValue)}
               >
                   ★
               </span>
