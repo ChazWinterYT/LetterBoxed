@@ -95,9 +95,9 @@ const StarRating: React.FC<StarRatingProps> = ({
         </div>
 
         {hasRated && (
-          <p className="rating-message">
-            {newRatingMessage}
-          </p>
+          <div className="rating-message">
+            <p>{newRatingMessage}</p>
+          </div>
         )}
       </div>
   );
