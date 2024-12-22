@@ -585,6 +585,12 @@ class LetterBoxedStack(Stack):
         get_pairs_resource.add_method("POST", get_pairs_integration)
         add_cors(get_pairs_resource)
         
+        # POST /rate-game - Provide a star rating for a game
+        rate_game_integration = apigateway.LambdaIntegration(lambda_references["rate_game"])
+        rate_game_resource = api.root.add_resource("rate-game")
+        rate_game_resource.add_method("POST", rate_game_integration)
+        add_cors(rate_game_resource)
+        
         # Set up sessions resource
         sessions_resource = api.root.add_resource("sessions")
         session_id_resource = sessions_resource.add_resource("{sessionId}")

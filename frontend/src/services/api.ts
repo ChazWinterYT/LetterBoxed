@@ -142,3 +142,16 @@ export const saveSessionState = async (sessionData: any) => {
   )
   return handleErrorOrReturnResponse(response)
 }
+
+// Rate a game
+export const rateGame = async (payload: {
+  gameId: string; 
+  stars: number;
+}) => {
+  const response = await fetch(`${API_URL}/rate-game`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+  });
+  return handleErrorOrReturnResponse(response);
+};
