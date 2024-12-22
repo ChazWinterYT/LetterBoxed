@@ -20,12 +20,15 @@ const StarRating: React.FC<StarRatingProps> = ({
   const [hoveredRating, setHoveredRating] = useState<number>(0);
   const [selectedRating, setSelectedRating] = useState<number>(0);
   const [localAverage, setLocalAverage] = useState<number>(averageRating);
+  const [hasRated, setHasRated] = useState<boolean>(false);
   const [newRatingMessage, setNewRatingMessage] = useState<string>("");
 
   const handleClickStar = async (starValue: number) => {
+    if (hasRated) return; // Prevent user from rating the game twice
     // Visually lock in the rating
     setSelectedRating(starValue);
     onRatingSelect?.(starValue);
+    setHasRated(true);
 
     // Make the API call to rate the game
     try {
@@ -54,9 +57,12 @@ const StarRating: React.FC<StarRatingProps> = ({
         </p>
 
         {/* "Rate This Game" text */}
-        <div className="rate-this-game-label">
-          <p>{t("game.complete.rateThisGame")}:</p>
-        </div>
+        {!hasRated && (
+          <div className="rate-this-game-label">
+            <p>{t("game.complete.rateThisGame")}:</p>
+          </div>
+        )}
+
         
         {/* Stars */}
         <div
@@ -78,8 +84,9 @@ const StarRating: React.FC<StarRatingProps> = ({
               <span
                   key={starValue}
                   className={starClass}
-                  onMouseEnter={() => setHoveredRating(starValue)} // Hover star
+                  onMouseEnter={() => !hasRated && setHoveredRating(starValue)} // Hover star, if not already rated
                   onClick={() => handleClickStar(starValue)}
+                  style={{ cursor: hasRated ? "default" : "pointer" }} // Disable pointer if already rated
               >
                   ★
               </span>
@@ -87,7 +94,7 @@ const StarRating: React.FC<StarRatingProps> = ({
           })}
         </div>
 
-        {newRatingMessage && (
+        {hasRated && (
           <p className="rating-message">
             {newRatingMessage}
           </p>
