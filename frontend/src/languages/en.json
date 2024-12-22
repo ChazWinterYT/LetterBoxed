@@ -64,6 +64,7 @@
             "averageWordLength": "Average word length",
             "averageRating": "Average Rating",
             "rateThisGame": "Rate this game",
+            "ratingUpdated": "Rating updated successfully! The new average is",
             "officialSolution": "This puzzle was generated using the word(s)",
             "numberOfOneWordSolutions": "Number of one-word solutions found",
             "numberOfTwoWordSolutions": "Number of two-word solutions found",
