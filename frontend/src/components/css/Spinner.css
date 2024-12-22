@@ -9,10 +9,10 @@
   background-color: #ffffff; /* White background for spinner */
   border-radius: 10px; /* Optional rounded corners */
   border: 2px solid #000; /* Optional border */
-  width: 300px; /* Match the design */
-  height: 160px; /* Match the design */
+  width: 300px; 
+  height: 160px; 
   text-align: center; /* Center the text */
-  position: relative; /* Allow absolute positioning */
+  position: relative; 
 }
 
 /* Spinner Styling (the circles) */

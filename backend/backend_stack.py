@@ -70,6 +70,20 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.DESTROY  # Test resources should be cleaned up
         )
         test_table_resources.append(self.test_game_table)
+        
+        # Add a GSI for language, sorting by board size and createdAt time
+        self.test_game_table.add_global_secondary_index(
+            index_name="LanguageBoardSizeCreatedAtIndex",
+            partition_key=dynamodb.Attribute(
+                name="language",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="boardSize#createdAt",
+                type=dynamodb.AttributeType.STRING
+            ),
+            projection_type=dynamodb.ProjectionType.ALL
+        )
 
         # Production DynamoDB ValidWords table
         self.prod_valid_words_table = dynamodb.Table.from_table_name(
