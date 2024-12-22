@@ -12,7 +12,8 @@ import { v4 as uuid4 } from "uuid";
 import Header from "./components/Header";
 import ButtonMenu from "./components/ButtonMenu";
 import GameBoard from "./components/GameBoard";
-import ArchiveList from "./components/ArchiveList";
+import GameArchive from "./components/GameArchive/GameArchive";
+import ArchiveList from "./components/GameArchive/ArchiveList";
 import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import CustomGameModal from "./components/CustomGameModal";
@@ -382,15 +383,20 @@ const App = () => {
   }, [t, fetchRandomGameByLanguage, availableLanguages]);
 
   // Open Archive Modal
-  const openArchiveModal = useCallback(
-    async () => {
-      console.log("Opening archive modal.");
-      setModalTitle(t("ui.menu.archive"));
-      setIsModalOpen(true);
-      await loadGameArchive();
-    },
-    [loadGameArchive, t]
-  );
+  const openArchiveModal = useCallback(() => {
+    console.log("Opening archive modal");
+    setModalTitle(t("ui.menu.archive"));
+    setModalContent(
+      <GameArchive 
+        onGameSelect={(gameId) => {
+          console.log("Game selected from archive:", gameId);
+          setIsModalOpen(false);
+          loadGame(gameId, true, true);
+        }}
+      />
+    );
+    setIsModalOpen(true);
+  }, [t, loadGame]);
 
   // Open Custom Game Modal
   const openCustomGameModal = useCallback(() => {

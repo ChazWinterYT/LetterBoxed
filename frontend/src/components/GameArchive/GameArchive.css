@@ -1,0 +1,13 @@
+.game-archive {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .game-archive .spinner {
+    margin-top: 16px;
+    text-align: center;
+  }
+  

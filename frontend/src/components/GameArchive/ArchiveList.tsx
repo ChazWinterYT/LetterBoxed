@@ -1,6 +1,6 @@
 import React from "react";
-import { useLanguage } from "../context/LanguageContext";
-import "./css/ArchiveList.css";
+import { useLanguage } from "../../context/LanguageContext";
+import "./ArchiveList.css";
 
 type ArchiveListProps = {
   games: { gameId: string }[]; // Array of game objects with gameId
