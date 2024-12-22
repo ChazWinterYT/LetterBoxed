@@ -48,6 +48,8 @@ const App = () => {
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [originalWordsUsed, setOriginalWordsUsed] = useState<string[]>([]);
   const [gameCompleted, setGameCompleted] = useState<boolean>(false);
+  //const [selectedRating, setSelectedRating] = useState<number>(0);
+  const [hoveredRating, setHoveredRating] = useState<number>(0);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
@@ -566,13 +568,25 @@ const App = () => {
             </p>
             <div className="rate-this-game">
               <p>{t("game.complete.rateThisGame")}:</p>
-              <div className="star-rating">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="star">
-                    ★
-                  </span>
-                ))}
-              </div>
+            </div>
+            <div 
+              className="star-rating"
+              onMouseLeave={() => setHoveredRating(0)} // Reset hover state when leaving
+            >
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  style={{
+                    color: hoveredRating >= star ? "#ffc107" : "#ccc", // Highlight stars up to hovered
+                    fontSize: "30px", // Ensure consistent font size
+                    cursor: "pointer",
+                    transition: "color 0.2s ease", // Smooth transition for hover effect
+                  }}
+                  onMouseEnter={() => setHoveredRating(star)} // Set hover state on enter
+                >
+                  ★
+                </span>
+              ))}
             </div>
           </div>
       
@@ -596,7 +610,7 @@ const App = () => {
         setShowConfetti(false);
       }, 10000); // Make confetti disappear
     },
-    [t, openRandomGameModal]
+    [t, openRandomGameModal, hoveredRating]
   );
   
 
