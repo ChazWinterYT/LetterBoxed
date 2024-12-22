@@ -20,7 +20,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     try:
         # Parse query parameters
         query_params = event.get("queryStringParameters", {}) or {}
-        limit = int(query_params.get("limit", 12))  # Default to 12 items
+        limit = int(query_params.get("limit", 10))  # Default to 10 items
         last_key = query_params.get("lastKey")  # Last key for pagination
         
         # Decode lastKey if provided

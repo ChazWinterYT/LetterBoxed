@@ -279,7 +279,7 @@ const App = () => {
         }
 
         console.log("Fetching game archive with lastKey:", lastKeyRef.current);
-        const data = await fetchGameArchive(lastKeyRef.current, 12);
+        const data = await fetchGameArchive(lastKeyRef.current, 10);
         console.log("Fetched archive data:", data);
 
         if (data.lastKey) {
