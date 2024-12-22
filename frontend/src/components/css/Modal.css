@@ -104,6 +104,26 @@
   line-height: 1.5;
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: -16px;
+}
+
+.game-archive {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  min-height: 57vh;
+  max-height: 57vh;
+  overflow-y: auto;
+}
+
+.game-archive .spinner {
+  margin-top: 16px;
+  text-align: center;
+}
+
 /* Random game modal styles */
 .random-game-options {
   display: flex;
