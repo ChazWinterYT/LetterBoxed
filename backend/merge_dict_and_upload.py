@@ -134,6 +134,23 @@ def fetch_todays_game() -> Dict[str, Any]:
     return todays_game
 
 
+def prefetch_nyt_game_for_app():
+    """
+    Fetch the NYT game data from the specified API endpoint to use in our app.
+    Returns the JSON response or raises an exception for errors.
+    """
+    url = "https://9q2qk2fao1.execute-api.us-east-1.amazonaws.com/prod/prefetch"
+    print("Adding today's game to app...")
+    try:
+        response = requests.get(url)  # Set timeout to 10 seconds
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        print(response.json())
+        return response.json()  # Parse and return JSON response
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching NYT game: {e}")
+        raise
+
+
 def merge_nyt_dictionary_to_final(nyt_dictionary, temp_dictionary_path, final_dictionary_path):
     """
     Merge the NYT dictionary with the latest dictionary, updating the final dictionary.
@@ -182,6 +199,9 @@ def main():
 
     # Upload all dictionaries to S3
     upload_dictionaries_to_s3()
+
+    # Add the game to our app
+    prefetch_nyt_game_for_app()
 
     print("All tasks completed successfully.")
 

@@ -463,8 +463,8 @@ class LetterBoxedStack(Stack):
                 lambda_layer, 
                 prod_table_resources
             )
-            # Grant each Lambda S3 read access
-            self.prod_bucket.grant_read(prod_lambda)
+            # Grant each Lambda S3 read/write access
+            self.prod_bucket.grant_read_write(prod_lambda)
             # Save Lambda names for routing with API. Needed for prod only.
             lambda_references[lambda_key] = prod_lambda 
 
@@ -477,8 +477,8 @@ class LetterBoxedStack(Stack):
                 lambda_layer, 
                 test_table_resources
             )
-            # Grant each test Lambda S3 read access to the test bucket
-            self.test_bucket.grant_read(test_lambda)
+            # Grant each test Lambda S3 read/write access to the test bucket
+            self.test_bucket.grant_read_write(test_lambda)
 
 
         # ===========================================================================
@@ -584,12 +584,6 @@ class LetterBoxedStack(Stack):
         get_pairs_resource = api.root.add_resource("get-word-pairs")
         get_pairs_resource.add_method("POST", get_pairs_integration)
         add_cors(get_pairs_resource)
-        
-        # POST /rate-game - Provide a star rating for a game
-        rate_game_integration = apigateway.LambdaIntegration(lambda_references["rate_game"])
-        rate_game_resource = api.root.add_resource("rate-game")
-        rate_game_resource.add_method("POST", rate_game_integration)
-        add_cors(rate_game_resource)
         
         # Set up sessions resource
         sessions_resource = api.root.add_resource("sessions")

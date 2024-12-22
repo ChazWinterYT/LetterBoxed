@@ -1,6 +1,8 @@
 import json
 from typing import Dict, Any
-from lambdas.prefetch_todays_game.prefetch_service import fetch_todays_game
+from lambdas.prefetch_todays_game.prefetch_service import (
+    fetch_todays_game,
+)
 from lambdas.common.db_utils import (
     add_game_to_db, 
     fetch_game_by_id, 
@@ -18,6 +20,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         # Fetch today's game
         todays_game = fetch_todays_game()
         game_id = todays_game["gameId"]
+
+        print(f"Today's game fetched from NYT website: {game_id}")
 
         # Check if the game is already in the database
         if fetch_game_by_id(game_id):
