@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import Pagination from "@cloudscape-design/components/pagination";
 import Spinner from "../Spinner";
 import ArchiveList from "./ArchiveList";
 import { fetchGameArchive } from "../../services/api";
@@ -12,9 +13,12 @@ const GameArchive: React.FC<GameArchiveProps> = ({ onGameSelect }) => {
   const { t } = useLanguage();
 
   const [archiveGames, setArchiveGames] = useState<any[]>([]);
-  const [isArchiveLoading, setIsArchiveLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [isArchiveLoading, setIsArchiveLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const lastKeyRef = useRef(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   const loadGameArchive = useCallback(async () => {
     if (isArchiveLoading || !hasMore) {
@@ -48,20 +52,39 @@ const GameArchive: React.FC<GameArchiveProps> = ({ onGameSelect }) => {
     loadGameArchive();
   }, [loadGameArchive]);
 
-  // Show spinner until archiveGames are loaded
-  if (isArchiveLoading && archiveGames.length === 0) {
-    return <Spinner message={t("ui.archive.loadingGames")} />;
-  }
+  // Paginated data based on current page
+  const paginatedGames = archiveGames.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  )
+
+  // Handle page change
+  const handlePageChange = (event: {detail: { currentPageIndex: number }}) => {
+    const newPage = event.detail.currentPageIndex;
+    console.log("Changing to page:", newPage);
+    setCurrentPage(newPage);
+  };
 
   return (
     <div className="game-archive">
-      {archiveGames.length > 0 ? (
-        <ArchiveList
-          games={archiveGames}
-          onGameSelect={onGameSelect}
-          hasMore={hasMore}
-          onLoadMore={loadGameArchive}
-        />
+      {isArchiveLoading && archiveGames.length === 0 ? (
+        <Spinner message={t("ui.archive.loadingGames")} />
+      ) : archiveGames.length > 0 ? (
+        <>
+          <div className="pagination-container">
+            <Pagination
+              currentPageIndex={currentPage}
+              pagesCount={Math.ceil(archiveGames.length / itemsPerPage)}
+              onChange={handlePageChange}
+            />
+          </div>
+          <ArchiveList
+            games={paginatedGames}
+            onGameSelect={onGameSelect}
+            hasMore={hasMore}
+            onLoadMore={loadGameArchive}
+          />
+        </>
       ) : (
         <p>{t("ui.archive.noGames")}</p>
       )}

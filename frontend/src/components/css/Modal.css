@@ -20,6 +20,7 @@
   padding: 20px;
   width: 90%; /* Mobile-friendly width */
   max-width: 400px; /* For larger screens */
+  max-height: 80vh;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   position: relative;

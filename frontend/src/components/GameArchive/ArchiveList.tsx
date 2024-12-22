@@ -35,11 +35,6 @@ const ArchiveList: React.FC<ArchiveListProps> = ({
           </li>
         ))}
       </ul>
-      {hasMore && (
-        <button onClick={onLoadMore} className="load-more-button">
-          {t("ui.archive.loadMore")}
-        </button>
-      )}
     </div>
   );
 };
