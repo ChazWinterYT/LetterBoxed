@@ -601,7 +601,11 @@ class LetterBoxedStack(Stack):
         )
         add_cors(session_id_resource)
 
-        # 
+        # POST /rate-game - Add a rating to the game
+        rate_game_integration = apigateway.LambdaIntegration(lambda_references["rate_game"])
+        rate_game_resource = api.root.add_resource("rate-game")
+        rate_game_resource.add_method("POST", rate_game_integration)
+        add_cors(rate_game_resource)
 
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):
