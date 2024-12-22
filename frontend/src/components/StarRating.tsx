@@ -57,9 +57,13 @@ const StarRating: React.FC<StarRatingProps> = ({
         </p>
 
         {/* "Rate This Game" text */}
-        {!hasRated && (
+        {!hasRated ? (
           <div className="rate-this-game-label">
             <p>{t("game.complete.rateThisGame")}:</p>
+          </div>
+        ) : (
+          <div className="rating-message">
+            <p>{newRatingMessage}</p>
           </div>
         )}
 
@@ -93,12 +97,6 @@ const StarRating: React.FC<StarRatingProps> = ({
               );
           })}
         </div>
-
-        {hasRated && (
-          <div className="rating-message">
-            <p>{newRatingMessage}</p>
-          </div>
-        )}
       </div>
   );
 };
