@@ -1,19 +1,20 @@
-.star-rating-container {
+  .star-rating-container {
     text-align: center;
-    margin-top: 0.5rem;
+    margin-top: 0px;
   }
   
   /* Average rating text */
-  .average-rating-text {
-    margin: 0.5rem 0;
-    font-size: 0.8rem;
+  .star-rating-container .average-rating-text {
+    margin: 0.5rem;
+    font-size: 1rem;
     color: #555;
   }
   
   /* "Rate This Game" label */
-  .rate-this-game-label {
-    margin: 0.25rem 0;
-    font-size: 0.8rem;
+  .star-rating-container .rate-this-game-label {
+    margin: 0.1rem;
+    margin-bottom: 0rem;
+    font-size: 12px;
     font-style: italic;
     color: #555;
   }
@@ -28,7 +29,7 @@
   /* Base star styling */
   .star {
     cursor: pointer;
-    font-size: 30px;
+    font-size: 2.5rem;
     color: #ccc; /* default grey */
     transition: color 0.2s ease;
   }
