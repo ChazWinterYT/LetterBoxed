@@ -32,6 +32,7 @@ import {
 import { ValidationResult } from "./types/validation";
 import "./App.css";
 import { Language } from "./languages/languages";
+import StarRating from "./components/StarRating";
 
 const App = () => {
   const { t, availableLanguages } = useLanguage();
@@ -562,33 +563,7 @@ const App = () => {
           )}
 
           {/* Ratings */}
-          <div className="rating-section">
-            <p>
-              <b>{t("game.complete.averageRating")}:</b> {averageRating.toFixed(1)} / 5
-            </p>
-            <div className="rate-this-game">
-              <p>{t("game.complete.rateThisGame")}:</p>
-            </div>
-            <div 
-              className="star-rating"
-              onMouseLeave={() => setHoveredRating(0)} // Reset hover state when leaving
-            >
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span
-                  key={star}
-                  style={{
-                    color: hoveredRating >= star ? "#ffc107" : "#ccc", // Highlight stars up to hovered
-                    fontSize: "30px", // Ensure consistent font size
-                    cursor: "pointer",
-                    transition: "color 0.2s ease", // Smooth transition for hover effect
-                  }}
-                  onMouseEnter={() => setHoveredRating(star)} // Set hover state on enter
-                >
-                  ★
-                </span>
-              ))}
-            </div>
-          </div>
+          <StarRating maxStars={5} onRatingSelect={undefined} />
       
           <button
             onClick={() => {

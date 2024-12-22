@@ -1,0 +1,45 @@
+.star-rating-container {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  
+  /* Average rating text */
+  .average-rating-text {
+    margin: 0.5rem 0;
+    font-size: 0.8rem;
+    color: #555;
+  }
+  
+  /* "Rate This Game" label */
+  .rate-this-game-label {
+    margin: 0.25rem 0;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #555;
+  }
+  
+  /* Container for the stars */
+  .star-rating {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+  }
+  
+  /* Base star styling */
+  .star {
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc; /* default grey */
+    transition: color 0.2s ease;
+  }
+  
+  /* Hover color */
+  .star.hovered {
+    color: #ff90c2;
+  }
+  
+  /* Selected color */
+  .star.selected {
+    color: #ffc107;
+  }
+  
