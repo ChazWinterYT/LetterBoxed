@@ -49,8 +49,6 @@ const App = () => {
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [originalWordsUsed, setOriginalWordsUsed] = useState<string[]>([]);
   const [gameCompleted, setGameCompleted] = useState<boolean>(false);
-  //const [selectedRating, setSelectedRating] = useState<number>(0);
-  const [hoveredRating, setHoveredRating] = useState<number>(0);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState<string>("");
@@ -563,7 +561,11 @@ const App = () => {
           )}
 
           {/* Ratings */}
-          <StarRating maxStars={5} onRatingSelect={undefined} />
+          <StarRating 
+            maxStars={5} 
+            averageRating={averageRating}
+            onRatingSelect={undefined} 
+          />
       
           <button
             onClick={() => {
@@ -585,7 +587,7 @@ const App = () => {
         setShowConfetti(false);
       }, 10000); // Make confetti disappear
     },
-    [t, openRandomGameModal, hoveredRating]
+    [t, openRandomGameModal]
   );
   
 
