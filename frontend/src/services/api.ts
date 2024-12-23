@@ -29,7 +29,9 @@ export const fetchGameArchive = async (
   params.append("limit", limit.toString());
   if (lastKey) params.append("lastKey", JSON.stringify(lastKey));
 
-  const response = await fetch(`${API_URL}/archive?${params.toString()}`, { headers });
+  const response = await fetch(`${API_URL}/archive?${params.toString()}`, { 
+    headers,
+  });
   return handleErrorOrReturnResponse(response);
 };
 
@@ -37,14 +39,30 @@ export const fetchGameArchive = async (
 export const fetchGameById = async (gameId: string) => {
   const response = await fetch(`${API_URL}/games/${gameId}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
   });
   if (!response.ok) {
     throw new Error(`Error fetching game: ${response.status}`);
   }
   return response.json();
+};
+
+// Fetch games by language with pagination
+export const fetchGamesByLanguage = async (
+  language: string = "en",
+  lastKey: string | null = null,
+  limit: number = 10
+) => {
+  const params = new URLSearchParams();
+  params.append("language", language);
+  params.append("limit", limit.toString());
+  if (lastKey) params.append("lastEvaluatedKey", lastKey);
+
+  const response = await fetch(`${API_URL}/browse-games?${params.toString()}`, {
+    method: "GET",
+    headers,
+  });
+  return handleErrorOrReturnResponse(response);
 };
 
 // Validate word
