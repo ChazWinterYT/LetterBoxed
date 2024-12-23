@@ -114,7 +114,7 @@ def fetch_games_by_language(
     language: str,
     last_key: Optional[Dict[str, Any]] = None,
     limit: int = 10,
-    index_name: str = "LanguageBoardSizeCreatedAtIndex"
+    index_name: str = "LanguageCreatedAtIndex"
 ) -> Dict[str, Any]:
     """
     Queries games by language and optionally filters by board size.
@@ -139,6 +139,7 @@ def fetch_games_by_language(
         }
             
         if last_key:
+            print(f"Parsed lastEvaluatedKey: {last_key}")
             query_kwargs["ExclusiveStartKey"] = last_key
             
         response = table.query(**query_kwargs)
@@ -146,6 +147,10 @@ def fetch_games_by_language(
         games = []
         for raw_item in response.get("Items", []):
             item = validate_game_schema(raw_item)
+            # Don't allow casual games in the browse list
+            if item["gameType"] == "casual":
+                continue
+            
             total_ratings = item.get("totalRatings", 0)
             total_stars = item.get("totalStars", 0)
             total_completions = item.get("totalCompletions", 0)

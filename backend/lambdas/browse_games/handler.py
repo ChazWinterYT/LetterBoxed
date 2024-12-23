@@ -19,6 +19,13 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         query_params = event.get("queryStringParameters", {}) or {}
         language = query_params.get("language", "en")
         last_key = query_params.get("lastEvaluatedKey")
+        if last_key:
+            try:
+                last_key = json.loads(last_key)
+            except json.JSONDecodeError:
+                print(f"Invalid lastEvaluatedKey format: {last_key}")
+                last_key = None
+        
         limit = int(query_params.get("limit", 10)) # Default to 10
         if limit <= 0:
             return error_response("Limit must be a positive integer.", 400)

@@ -3,6 +3,7 @@ from aws_cdk import (
     aws_dynamodb as dynamodb,
     aws_lambda as _lambda,
     aws_apigateway as apigateway,
+    aws_iam as iam,
     aws_s3 as s3,
     CfnOutput,
     RemovalPolicy,
@@ -672,4 +673,14 @@ class LetterBoxedStack(Stack):
         # Grant resources to the Lambda
         for resource in resources:
             resource.grant_read_write_data(lambda_function)
+            
+            # Explicitly grant permissions for GSIs
+            if hasattr(resource, 'table_arn'):
+                lambda_function.add_to_role_policy(
+                    iam.PolicyStatement(
+                        actions=["dynamodb:Query"],
+                        resources=[f"{resource.table_arn}/index/*"]
+                    )
+                )
+            
         return lambda_function
