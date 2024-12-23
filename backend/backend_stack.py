@@ -419,6 +419,10 @@ class LetterBoxedStack(Stack):
                 "handler": "lambdas.create_random.handler.handler",
                 "name": "CreateRandomGameLambda"
             },
+            "browse_games": {
+                "handler": "lambdas.browse_games.handler.handler",
+                "name": "BrowseGamesLambda"
+            },
             "get_pairs": {
                 "handler": "lambdas.get_pairs.handler.handler",
                 "name": "GetWordPairsLambda"
@@ -589,6 +593,12 @@ class LetterBoxedStack(Stack):
             apigateway.LambdaIntegration(lambda_references["create_random"])
         )
         add_cors(random_game_resource)
+        
+        # GET /browse-games?language={language} - Get a list of games
+        browse_games_integration = apigateway.LambdaIntegration(lambda_references["browse_games"])
+        browse_games_resource = api.root.add_resource("browse-games")
+        browse_games_resource.add_method("GET", browse_games_integration)
+        add_cors(browse_games_resource)
         
         # GET /get-word-pairs - Get random word pairs for potential puzzles
         get_pairs_integration = apigateway.LambdaIntegration(lambda_references["get_pairs"])
