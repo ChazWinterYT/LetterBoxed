@@ -37,7 +37,7 @@ def validate_game_schema(game_item: Dict[str, Any]) -> Dict[str, Any]:
         "totalWordsUsed": 0,
         "totalLettersUsed": 0,
         "createdAt": "",
-        "createdBy": "",
+        "createdBy": "Anonymous",
         "clue": "",
     }
     

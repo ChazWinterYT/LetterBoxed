@@ -2,7 +2,6 @@ import os
 from typing import List, Optional, Dict, Any
 import time
 import boto3
-import decimal
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
 from lambdas.common.validation_utils import convert_decimal, validate_game_schema
@@ -109,6 +108,84 @@ def fetch_game_by_id(game_id: str) -> Optional[Dict[str, Any]]:
     except ClientError as e:
         print(f"Error fetching game by gameId: {e}")
         return None
+    
+
+def fetch_games_by_language(
+    language: str,
+    last_key: Optional[Dict[str, Any]] = None,
+    limit: int = 10,
+    index_name: str = "LanguageBoardSizeCreatedAtIndex"
+) -> Dict[str, Any]:
+    """
+    Queries games by language and optionally filters by board size.
+
+    Args:
+        language (str): The language to filter games by.
+        last_key (Optional[dict]): Pagination key for DynamoDB query (optional).
+        limit (int): Number of results to return (default 10).
+        index_name (str): DynamoDB GSI to use for the query (default "LanguageBoardSizeCreatedAtIndex").
+
+    Returns:
+        dict: Dictionary containing "games" (list of games) and "lastEvaluatedKey" for pagination.
+    """
+    try:
+        table = get_games_table()
+        
+        query_kwargs = {
+            "IndexName": index_name,
+            "KeyConditionExpression": Key("language").eq(language),
+            "Limit": limit,
+            "ScanIndexForward": False # Descending order
+        }
+            
+        if last_key:
+            query_kwargs["ExclusiveStartKey"] = last_key
+            
+        response = table.query(**query_kwargs)
+        
+        games = []
+        for raw_item in response.get("Items", []):
+            item = validate_game_schema(raw_item)
+            total_ratings = item.get("totalRatings", 0)
+            total_stars = item.get("totalStars", 0)
+            total_completions = item.get("totalCompletions", 0)
+            total_words_used = item.get("totalWordsUsed", 0)
+            valid_word_count = item.get("validWordCount", 0)
+            two_word_solution_count = item.get("twoWordSolutionCount", 0)
+            one_word_solution_count = item.get("oneWordSolutionCount", 0)
+
+            # Calculate derived values
+            average_rating = total_stars / total_ratings if total_ratings > 0 else 0.0
+            average_words_needed = (
+                total_words_used / total_completions if total_completions > 0 else 0.0
+            )
+            
+            games.append({
+                "gameId": item["gameId"],
+                "gameLayout": item["gameLayout"],
+                "gameType": item["gameType"],
+                "language": item["language"],
+                "boardSize": item["boardSize"],
+                "createdAt": item["createdAt"],
+                "createdBy": item["createdBy"],
+                "clue": item["clue"],
+                "validWordCount": valid_word_count,
+                "oneWordSolutionCount": one_word_solution_count,
+                "twoWordSolutionCount": two_word_solution_count,
+                "totalRatings": total_ratings,
+                "averageRating": average_rating,
+                "totalCompletions": total_completions,
+                "averageWordsNeeded": average_words_needed,
+            }) 
+        
+        return {
+            "games": games,
+            "lastEvaluatedKey": response.get("LastEvaluatedKey")
+        }
+    
+    except Exception as e:
+        print(f"Error fetching games by language: {str(e)}")
+        return {"games": [], "lastEvaluatedKey": None}
 
 
 def fetch_solutions_by_standardized_hash(standardized_hash: str) -> Optional[Dict[str, Any]]:

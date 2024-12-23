@@ -1,6 +1,3 @@
-import os
-import glob
-import boto3
 from aws_cdk import (
     Stack,
     aws_dynamodb as dynamodb,
@@ -73,13 +70,13 @@ class LetterBoxedStack(Stack):
         
         # Add a GSI for language, sorting by board size and createdAt time
         self.test_game_table.add_global_secondary_index(
-            index_name="LanguageBoardSizeCreatedAtIndex",
+            index_name="LanguageCreatedAtIndex",
             partition_key=dynamodb.Attribute(
                 name="language",
                 type=dynamodb.AttributeType.STRING
             ),
             sort_key=dynamodb.Attribute(
-                name="boardSize#createdAt",
+                name="createdAt",
                 type=dynamodb.AttributeType.STRING
             ),
             projection_type=dynamodb.ProjectionType.ALL
