@@ -5,6 +5,7 @@
             "menuTitle": "Main Menu",
             "playToday": "Play Today's NYT Game",
             "archive": "NYT Games Archive",
+            "browseGames": "Browse All Games",
             "customGame": "Create Custom Game",
             "randomGame": "Play Random Game",
             "randomGameGenerator": "Random Game Generator"

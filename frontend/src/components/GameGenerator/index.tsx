@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../Header"; // Adjust path as needed
 import ButtonMenu from "../ButtonMenu"; // Adjust path as needed
 import Footer from "../Footer"; // Adjust path as needed
@@ -18,6 +19,8 @@ const GameGeneratorPage: React.FC<GameGeneratorPageProps> = ({
   onOpenCustomGame,
   onPlayRandomGame,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="game-generator-page">
       <Header />

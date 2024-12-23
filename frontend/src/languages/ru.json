@@ -4,6 +4,7 @@
             "menuTitle": "Главное меню",
             "playToday": "Играть в сегодняшнюю игру NYT",
             "archive": "Архив игр NYT",
+            "browseGames": "Просмотреть все игры",
             "customGame": "Создать пользовательскую игру",
             "randomGame": "Играть в случайную игру",
             "randomGameGenerator": "Генератор Случайных Игр"

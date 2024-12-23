@@ -33,6 +33,12 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
       <button className="menu-button archive" onClick={onOpenArchive}>
         {t("ui.menu.archive")}
       </button>
+      <button
+        className="menu-button browse-games"
+        onClick={() => (window.location.href = "/LetterBoxed/frontend/browse-games")}
+      >
+        {t("ui.menu.browseGames")}
+      </button>
       <button className="menu-button random-game" onClick={onPlayRandomGame}>
         {t("ui.menu.randomGame")}
       </button>

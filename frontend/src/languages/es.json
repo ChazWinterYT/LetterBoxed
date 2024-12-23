@@ -4,6 +4,7 @@
             "menuTitle": "Menú Principal",
             "playToday": "Jugar el juego NYT de hoy",
             "archive": "Archivo de juegos NYT",
+            "browseGames": "Explorar todos los juegos",
             "customGame": "Crear juego personalizado",
             "randomGame": "Jugar juego aleatorio",
             "randomGameGenerator": "Generador de Juegos Aleatorios"

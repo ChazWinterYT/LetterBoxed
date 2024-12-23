@@ -45,6 +45,14 @@
   background-color: #0c65a9;
 }
 
+.button-menu .browse-games {
+  background-color: #1586dd; 
+}
+
+.button-menu .browse-games:hover {
+  background-color: #0c65a9;
+}
+
 .button-menu .random-game {
   background-color: #1586dd; 
 }
