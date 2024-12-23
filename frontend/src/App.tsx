@@ -34,6 +34,7 @@ import { ValidationResult } from "./types/validation";
 import "./App.css";
 import { Language } from "./languages/languages";
 import StarRating from "./components/StarRating";
+import BrowseGames from "./components/BrowseGames/BrowseGames";
 
 const App = () => {
   const { t, availableLanguages } = useLanguage();
@@ -671,6 +672,12 @@ const AppRouter = () => (
         path="/get-word-pairs" 
         element={
           <GameGenerator />} 
+      />
+      {/* Route for the Game Generator */}
+      <Route 
+        path="/browse-games" 
+        element={
+          <BrowseGames />} 
       />
     </Routes>
   </BrowserRouter>
