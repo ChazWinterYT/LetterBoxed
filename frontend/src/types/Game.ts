@@ -1,6 +1,6 @@
 export interface Game {
     gameId: string;
-    gameLayout: string;
+    gameLayout: string[];
     gameType: string;
     language: string;
     boardSize: string;

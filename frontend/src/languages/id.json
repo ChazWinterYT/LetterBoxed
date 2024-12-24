@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "Memuat permainan, harap tunggu...",
         "play": "Mainkan",
         "gameId": "ID Permainan",
         "gameLayout": "Tata Letak Permainan",
@@ -229,7 +230,17 @@
         "totalRatings": "Total Penilaian",
         "averageRating": "Penilaian Rata-rata",
         "totalCompletions": "Total Penyelesaian",
-        "averageWordsNeeded": "Rata-rata Kata Diperlukan"
+        "averageWordsNeeded": "Rata-rata Kata Diperlukan",
+        "group": {
+            "gameIdGroup": "ID Permainan",
+            "gameLayoutGroup": "Tata Letak Permainan",
+            "gameTypeGroup": "Jenis Permainan",
+            "languageGroup": "Bahasa",
+            "boardSizeGroup": "Ukuran Papan",
+            "createdByGroup": "Penulis",
+            "ratingGroup": "Peringkat",
+            "hintGroup": "Petunjuk"
+        }
     },
     "instructions": {
         "howToPlay": "Cara Bermain",

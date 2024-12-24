@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "Cargando juegos, por favor espera...",
         "play": "Jugar",
         "gameId": "ID del Juego",
         "gameLayout": "Diseño del Juego",
@@ -229,7 +230,17 @@
         "totalRatings": "Calificaciones Totales",
         "averageRating": "Calificación Promedio",
         "totalCompletions": "Completados Totales",
-        "averageWordsNeeded": "Promedio de Palabras Necesarias"
+        "averageWordsNeeded": "Promedio de Palabras Necesarias",
+        "group": {
+            "gameIdGroup": "ID de juegos",
+            "gameLayoutGroup": "Diseños de juegos",
+            "gameTypeGroup": "Tipos de juegos",
+            "languageGroup": "Idiomas",
+            "boardSizeGroup": "Tamaños de tablero",
+            "createdByGroup": "Autores",
+            "ratingGroup": "Calificaciones",
+            "hintGroup": "Pistas"
+        }
     },
     "instructions": {
         "howToPlay": "Cómo jugar",

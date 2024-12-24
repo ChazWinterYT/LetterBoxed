@@ -1,16 +1,22 @@
-.browse-games-content {
+  .browse-games-content {
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
   }
-  
+
   .cards-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    flex-direction: column; /* Stack cards vertically */
+    gap: 10px;
+    width: 100%; /* Ensure it takes the full width */
+  }
+
+  .card {
+    width: 100%; /* Ensure each card spans the width of the container */
+    max-width: 400px; /* Optional: Set a maximum width for larger screens */
+    margin: 0 auto; /* Center the card horizontally if max-width is smaller than the screen */
   }
   
   .language-selector {

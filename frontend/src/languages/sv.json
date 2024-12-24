@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "Laddar spel, vänligen vänta...",
         "play": "Spela",
         "gameId": "Spel-ID",
         "gameLayout": "Speluppställning",
@@ -229,7 +230,17 @@
         "totalRatings": "Totala betyg",
         "averageRating": "Genomsnittligt betyg",
         "totalCompletions": "Totalt antal avslut",
-        "averageWordsNeeded": "Genomsnittliga ord som behövs"
+        "averageWordsNeeded": "Genomsnittliga ord som behövs",
+        "group": {
+            "gameIdGroup": "Spel-ID",
+            "gameLayoutGroup": "Spellayouter",
+            "gameTypeGroup": "Speltyper",
+            "languageGroup": "Språk",
+            "boardSizeGroup": "Brädstorlekar",
+            "createdByGroup": "Författare",
+            "ratingGroup": "Betyg",
+            "hintGroup": "Tips"
+        }
     },
     "instructions": {
         "howToPlay": "Hur man spelar",

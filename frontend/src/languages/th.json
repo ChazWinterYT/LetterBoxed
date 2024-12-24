@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "กำลังโหลดเกม โปรดรอ...",
         "play": "เล่น",
         "gameId": "รหัสเกม",
         "gameLayout": "รูปแบบเกม",
@@ -229,7 +230,17 @@
         "totalRatings": "การให้คะแนนทั้งหมด",
         "averageRating": "คะแนนเฉลี่ย",
         "totalCompletions": "จำนวนการเล่นจบทั้งหมด",
-        "averageWordsNeeded": "จำนวนคำเฉลี่ยที่ต้องการ"
+        "averageWordsNeeded": "จำนวนคำเฉลี่ยที่ต้องการ",
+        "group": {
+            "gameIdGroup": "รหัสเกม",
+            "gameLayoutGroup": "เลย์เอาต์เกม",
+            "gameTypeGroup": "ประเภทเกม",
+            "languageGroup": "ภาษา",
+            "boardSizeGroup": "ขนาดบอร์ด",
+            "createdByGroup": "ผู้เขียน",
+            "ratingGroup": "คะแนน",
+            "hintGroup": "คำแนะนำ"
+        }
     },
     "instructions": {
         "howToPlay": "วิธีการเล่น",

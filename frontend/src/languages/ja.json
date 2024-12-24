@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "ゲームを読み込んでいます。お待ちください...",
         "play": "プレイ",
         "gameId": "ゲームID",
         "gameLayout": "ゲームレイアウト",
@@ -229,7 +230,17 @@
         "totalRatings": "総評価数",
         "averageRating": "平均評価",
         "totalCompletions": "総完了数",
-        "averageWordsNeeded": "必要な単語の平均"
+        "averageWordsNeeded": "必要な単語の平均",
+        "group": {
+            "gameIdGroup": "ゲームID",
+            "gameLayoutGroup": "ゲームレイアウト",
+            "gameTypeGroup": "ゲームタイプ",
+            "languageGroup": "言語",
+            "boardSizeGroup": "ボードサイズ",
+            "createdByGroup": "作者",
+            "ratingGroup": "評価",
+            "hintGroup": "ヒント"
+        }
     },
     "instructions": {
         "howToPlay": "遊び方",

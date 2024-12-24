@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "Ładowanie gier, proszę czekać...",
         "play": "Zagraj",
         "gameId": "ID Gry",
         "gameLayout": "Układ Gry",
@@ -229,7 +230,17 @@
         "totalRatings": "Łączna Liczba Ocen",
         "averageRating": "Średnia Ocena",
         "totalCompletions": "Łączna Liczba Ukończeń",
-        "averageWordsNeeded": "Średnia Liczba Słów Potrzebnych"
+        "averageWordsNeeded": "Średnia Liczba Słów Potrzebnych",
+        "group": {
+            "gameIdGroup": "ID Gier",
+            "gameLayoutGroup": "Układy Gier",
+            "gameTypeGroup": "Typy Gier",
+            "languageGroup": "Języki",
+            "boardSizeGroup": "Rozmiary Plansz",
+            "createdByGroup": "Autorzy",
+            "ratingGroup": "Oceny",
+            "hintGroup": "Podpowiedzi"
+        }
     },
     "instructions": {
         "howToPlay": "Jak grać",

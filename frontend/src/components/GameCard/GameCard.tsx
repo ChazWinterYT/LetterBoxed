@@ -1,40 +1,49 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { Game } from "../../types/Game";
-import "./css/GameCard.css"
+import "./GameCard.css";
 
 const GameCard: React.FC<{ game: Game }> = ({ game }) => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   return (
     <div className="card">
-      {/* Image Section */}
-      <img
-        src="https://via.placeholder.com/300x200" /* Plceholder image */
-        alt={`${t("browseGames.gameId")}: ${game.gameId}`}
-      />
-
-      {/* Text Content Section */}
       <div className="card-header">
-        <h2>
-          {t("browseGames.language")}: {game.language} - {t("browseGames.boardSize")}: {game.boardSize}
-        </h2>
+        <h3>{game.gameType || t("browseGames.unknownGameType")}</h3>
+      </div>
+
+      <div className="card-content">
         <p>
-          <b>{t("browseGames.gameType")}:</b> {game.gameType}
+          <b>{t("browseGames.gameLayout")}:</b> {game.gameLayout}
         </p>
         <p>
-          <b>{t("browseGames.createdBy")}:</b> {game.createdBy || t("browseGames.unknownAuthor")}
+          <b>{t("browseGames.boardSize")}:</b> {game.boardSize}
         </p>
         <p>
-          <b>{t("browseGames.averageRating")}:</b> {game.averageRating.toFixed(2)}
+          <b>{t("browseGames.createdBy")}:</b>{" "}
+          {game.createdBy || t("browseGames.unknownAuthor")}
         </p>
         <p>
-          <b>{t("browseGames.totalCompletions")}:</b> {game.totalCompletions}
+          <b>{t("browseGames.averageRating")}:</b>{" "}
+          {game.averageRating.toFixed(1)}
+        </p>
+        <p>
+          <b>{t("browseGames.totalCompletions")}:</b>{" "}
+          {game.totalCompletions}
+        </p>
+        <p>
+          <b>{t("browseGames.averageWordsNeeded")}:</b>{" "}
+          {game.averageWordsNeeded.toFixed(1)}
+        </p>
+        <p>
+          <b>{t("browseGames.hint")}:</b>{" "}
+          {game.hint}
         </p>
       </div>
 
-      {/* Button Section */}
-      <button onClick={() => console.log("Navigate to:", game.gameId)}>
+      <button onClick={() => (window.location.href = `/LetterBoxed/frontend/games/${game.gameId}`)}>
         {t("browseGames.play")}
       </button>
     </div>

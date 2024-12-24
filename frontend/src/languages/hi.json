@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "खेल लोड हो रहे हैं, कृपया प्रतीक्षा करें...",
         "play": "खेलें",
         "gameId": "खेल आईडी",
         "gameLayout": "खेल लेआउट",
@@ -229,7 +230,17 @@
         "totalRatings": "कुल रेटिंग",
         "averageRating": "औसत रेटिंग",
         "totalCompletions": "कुल पूर्णता",
-        "averageWordsNeeded": "औसत आवश्यक शब्द"
+        "averageWordsNeeded": "औसत आवश्यक शब्द",
+        "group": {
+            "gameIdGroup": "खेल आईडी",
+            "gameLayoutGroup": "खेल लेआउट",
+            "gameTypeGroup": "खेल प्रकार",
+            "languageGroup": "भाषाएँ",
+            "boardSizeGroup": "बोर्ड आकार",
+            "createdByGroup": "लेखक",
+            "ratingGroup": "रेटिंग",
+            "hintGroup": "संकेत"
+        }
     },
     "instructions": {
         "howToPlay": "कैसे खेलें",

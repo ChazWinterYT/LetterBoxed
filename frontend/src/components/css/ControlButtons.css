@@ -41,6 +41,7 @@
   font-size: 0.9rem;
   cursor: pointer;
   background-color: #dae4ef; /* Default background color */
+  color:#080808;
   border: 3px solid black;
   border-radius: 1.5rem;
   width: 106px;

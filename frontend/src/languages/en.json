@@ -213,10 +213,16 @@
         }
     },
     "browseGames": {
+        "loading": "Loading games, please wait...",
         "play": "Play",
         "gameId": "Game ID",
         "gameLayout": "Game Layout",
         "gameType": "Game Type",
+        "gameTypes": {
+            "custom": "Custom",
+            "random": "Random",
+            "nyt": "Official NYT"
+        },
         "language": "Language",
         "boardSize": "Board Size",
         "createdAt": "Created At",
@@ -229,7 +235,17 @@
         "totalRatings": "Total Ratings",
         "averageRating": "Average Rating",
         "totalCompletions": "Total Completions",
-        "averageWordsNeeded": "Average Words Needed"
+        "averageWordsNeeded": "Average Words Needed",
+        "group": {
+            "gameIdGroup": "Game IDs",
+            "gameLayoutGroup": "Game Layouts",
+            "gameTypeGroup": "Game Types",
+            "languageGroup": "Languages",
+            "boardSizeGroup": "Board Sizes",
+            "createdByGroup": "Authors",
+            "ratingGroup": "Ratings",
+            "hintGroup": "Hints"
+        }
     },
     "instructions": {
         "howToPlay": "How to Play",

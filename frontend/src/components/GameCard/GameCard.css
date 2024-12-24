@@ -1,42 +1,47 @@
 .card {
-  --shadowColor: 187 60% 40%;
-  display: flex;
-  flex-wrap: wrap;
-  background: hsl(187 70% 85%);
-  max-width: 50rem;
-  width: 100%;
-  box-shadow: 0.65rem 0.65rem 0 hsl(var(--shadowColor) / 1);
-  border-radius: 0.8rem;
-  overflow: hidden;
-  border: 0.5rem solid;
-  margin: 1rem auto; /* Add some spacing between cards */
-}
-
-.card img {
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  flex: 1 1 300px;
-  outline: 0.5rem solid;
+  background: #343a40;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  max-width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  padding: min(2rem, 5vw) min(2rem, 5vw) min(2.5rem, 5vw);
-  flex: 1 0 50%;
+  margin-bottom: 10px; /* Reduce spacing below the header */
 }
 
-.card-header > * + * {
-  margin: min(1.5rem, 2.5vw) 0 0 0;
+.card-header h3 {
+  font-size: 1.3rem;
+  margin: 0; /* Remove extra margin */
+  color: #fcfcfc;
 }
 
-.card button {
-  display: inline-block;
-  color: black;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  background: hsl(187 75% 64%);
-  border-radius: 0.6rem;
-  font-weight: 700;
-  border: 0.35rem solid;
-  margin-top: 1rem;
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Reduce spacing between lines */
+}
+
+.card-content p {
+  margin: 2px 0; /* Reduce top and bottom margins */
+  font-size: 1rem; /* Adjust font size for tighter spacing */
+  line-height: 1.1; /* Set line height to make lines closer */
+  color: #e1e3e6;
+}
+
+button {
+  margin-top: 10px; /* Separate button from content */
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }

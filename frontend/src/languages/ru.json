@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "Загрузка игр, пожалуйста, подождите...",
         "play": "Играть",
         "gameId": "ID игры",
         "gameLayout": "Макет игры",
@@ -229,7 +230,17 @@
         "totalRatings": "Всего оценок",
         "averageRating": "Средний рейтинг",
         "totalCompletions": "Общее количество завершений",
-        "averageWordsNeeded": "Среднее количество слов"
+        "averageWordsNeeded": "Среднее количество слов",
+        "group": {
+            "gameIdGroup": "ID игр",
+            "gameLayoutGroup": "Макеты игр",
+            "gameTypeGroup": "Типы игр",
+            "languageGroup": "Языки",
+            "boardSizeGroup": "Размеры досок",
+            "createdByGroup": "Авторы",
+            "ratingGroup": "Оценки",
+            "hintGroup": "Подсказки"
+        }
     },
     "instructions": {
         "howToPlay": "Как играть",

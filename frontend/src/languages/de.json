@@ -213,6 +213,7 @@
         }
     },
     "browseGames": {
+        "loading": "Spiele werden geladen, bitte warten...",
         "play": "Spielen",
         "gameId": "Spiel-ID",
         "gameLayout": "Spiel-Layout",
@@ -229,7 +230,17 @@
         "totalRatings": "Gesamtbewertungen",
         "averageRating": "Durchschnittsbewertung",
         "totalCompletions": "Gesamtabschlüsse",
-        "averageWordsNeeded": "Durchschnittlich benötigte Wörter"
+        "averageWordsNeeded": "Durchschnittlich benötigte Wörter",
+        "group": {
+            "gameIdGroup": "Spiel-IDs",
+            "gameLayoutGroup": "Spiel-Layouts",
+            "gameTypeGroup": "Spieltypen",
+            "languageGroup": "Sprachen",
+            "boardSizeGroup": "Spielbrettgrößen",
+            "createdByGroup": "Autoren",
+            "ratingGroup": "Bewertungen",
+            "hintGroup": "Hinweise"
+        }
     },
     "instructions": {
         "howToPlay": "Spielanleitung",
