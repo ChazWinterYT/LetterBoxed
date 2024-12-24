@@ -220,6 +220,7 @@
         "boardSize": "Dimensione del Tabellone",
         "createdAt": "Creato il",
         "createdBy": "Creato da",
+        "unknownAuthor": "Anonimo",
         "hint": "Suggerimento",
         "validWordCount": "Parole Valide",
         "oneWordSolutionCount": "Soluzioni a Una Parola",

@@ -221,6 +221,7 @@
         "boardSize": "Board Size",
         "createdAt": "Created At",
         "createdBy": "Author",
+        "unknownAuthor": "Unknown",
         "hint": "Hint",
         "validWordCount": "Valid Words",
         "oneWordSolutionCount": "One-Word Solutions",

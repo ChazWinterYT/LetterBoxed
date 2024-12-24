@@ -220,6 +220,7 @@
         "boardSize": "Brettgröße",
         "createdAt": "Erstellt am",
         "createdBy": "Erstellt von",
+        "unknownAuthor": "Unbekannt",
         "hint": "Hinweis",
         "validWordCount": "Gültige Wörter",
         "oneWordSolutionCount": "Ein-Wort-Lösungen",

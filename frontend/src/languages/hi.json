@@ -220,6 +220,7 @@
         "boardSize": "बोर्ड का आकार",
         "createdAt": "निर्मित तिथि",
         "createdBy": "द्वारा निर्मित",
+        "unknownAuthor": "अज्ञात",
         "hint": "संकेत",
         "validWordCount": "वैध शब्द",
         "oneWordSolutionCount": "एक-शब्द समाधान",

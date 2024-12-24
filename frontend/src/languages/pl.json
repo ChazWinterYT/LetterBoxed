@@ -220,6 +220,7 @@
         "boardSize": "Rozmiar Planszy",
         "createdAt": "Utworzono",
         "createdBy": "Utworzone Przez",
+        "unknownAuthor": "Nieznany",
         "hint": "Wskazówka",
         "validWordCount": "Liczba Prawidłowych Słów",
         "oneWordSolutionCount": "Rozwiązania Jednowyrazowe",

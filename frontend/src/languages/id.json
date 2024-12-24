@@ -220,6 +220,7 @@
         "boardSize": "Ukuran Papan",
         "createdAt": "Dibuat Pada",
         "createdBy": "Dibuat Oleh",
+        "unknownAuthor": "Tidak Diketahui",
         "hint": "Petunjuk",
         "validWordCount": "Kata Valid",
         "oneWordSolutionCount": "Solusi Satu Kata",

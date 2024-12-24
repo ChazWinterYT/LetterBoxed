@@ -220,6 +220,7 @@
         "boardSize": "Tamanho do Tabuleiro",
         "createdAt": "Criado em",
         "createdBy": "Criado por",
+        "unknownAuthor": "Desconhecido",
         "hint": "Dica",
         "validWordCount": "Palavras Válidas",
         "oneWordSolutionCount": "Soluções de Uma Palavra",

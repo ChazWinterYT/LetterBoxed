@@ -220,6 +220,7 @@
         "boardSize": "ขนาดบอร์ด",
         "createdAt": "สร้างเมื่อ",
         "createdBy": "สร้างโดย",
+        "unknownAuthor": "ไม่ทราบชื่อผู้แต่ง",
         "hint": "คำใบ้",
         "validWordCount": "จำนวนคำที่ถูกต้อง",
         "oneWordSolutionCount": "วิธีแก้คำเดียว",

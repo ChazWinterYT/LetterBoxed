@@ -220,6 +220,7 @@
         "boardSize": "Brädstorlek",
         "createdAt": "Skapad den",
         "createdBy": "Skapad av",
+        "unknownAuthor": "Okänd",
         "hint": "Tips",
         "validWordCount": "Giltiga ord",
         "oneWordSolutionCount": "Enords lösningar",

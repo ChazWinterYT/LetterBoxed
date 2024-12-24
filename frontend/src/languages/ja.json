@@ -220,6 +220,7 @@
         "boardSize": "ボードサイズ",
         "createdAt": "作成日",
         "createdBy": "作成者",
+        "unknownAuthor": "不明",
         "hint": "ヒント",
         "validWordCount": "有効な単語数",
         "oneWordSolutionCount": "1語の解決策",

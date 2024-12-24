@@ -220,6 +220,7 @@
         "boardSize": "Taille du Plateau",
         "createdAt": "Créé le",
         "createdBy": "Créé par",
+        "unknownAuthor": "Anonyme",
         "hint": "Indice",
         "validWordCount": "Mots Valides",
         "oneWordSolutionCount": "Solutions d'un Mot",

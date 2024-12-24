@@ -220,6 +220,7 @@
         "boardSize": "Размер доски",
         "createdAt": "Создано",
         "createdBy": "Создано пользователем",
+        "unknownAuthor": "Неизвестный",
         "hint": "Подсказка",
         "validWordCount": "Количество правильных слов",
         "oneWordSolutionCount": "Решения из одного слова",
