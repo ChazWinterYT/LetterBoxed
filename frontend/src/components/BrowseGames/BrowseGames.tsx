@@ -44,21 +44,27 @@ const BrowseGames: React.FC = () => {
   // ================== Data Fetching (Load ALL Games) ==================
   /**
    * Loads *all* games (in repeated calls) before rendering them.
-   * Keeps fetching pages until no lastKey is returned, so the user
+   * Keeps fetching pages until no lastEvaluatedKey is returned, so the user
    * can see the entire dataset for filtering or pagination.
    */
   const loadAllGames = useCallback(async (language: string) => {
     setIsLoading(true);
     let allGames: Game[] = [];
-    let lastEvaluatedKey: Record<string, string> | null = null; // Updated for correct pagination key
+    let lastEvaluatedKey: string | null = null; // Adjusted type to string | null
   
     try {
       do {
-        const response: { games: Game[]; lastEvaluatedKey?: Record<string, string> | null } =
-          await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize); // Pass lastEvaluatedKey
+        const response: { games: Game[]; lastEvaluatedKey?: string | null } =
+          await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize);
+  
+        // Append the fetched games to the existing list
         allGames = [...allGames, ...response.games];
-        lastEvaluatedKey = response.lastEvaluatedKey || null; // Update for next call
+  
+        // Update the pagination key for the next API call
+        lastEvaluatedKey = response.lastEvaluatedKey || null;
       } while (lastEvaluatedKey); // Continue until no more pages
+  
+      // Update state with the fetched games
       setGames(allGames);
       setFilteredGames(allGames); // Initialize filtered games to all loaded games
     } catch (err) {

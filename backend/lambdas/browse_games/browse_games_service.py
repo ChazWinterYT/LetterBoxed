@@ -5,7 +5,7 @@ from lambdas.common.db_utils import fetch_games_by_language
 
 def query_games_by_language(
     language: str,
-    last_key: Optional[str] = None,
+    last_key: Optional[Dict[str, str]] = None,
     limit: int = 10
 ) -> Dict[str, Any]:
     """
@@ -13,7 +13,7 @@ def query_games_by_language(
 
     Args:
         language (str): The language to filter games by.
-        last_key (Optional[str]): Pagination key for DynamoDB query (optional).
+        last_key (Optional[Dict[str, str]]): Pagination key for DynamoDB query (optional).
         limit (int): Number of results to return (default 10).
 
     Returns:
@@ -25,11 +25,16 @@ def query_games_by_language(
     if not isinstance(limit, int) or limit <= 0:
         raise ValueError("Limit must be a positive integer.")
     if last_key:
+        required_keys = ["language", "createdAt", "gameId"]
+        if not all(key in last_key for key in required_keys):
+            raise ValueError(
+                f"last_key must include the following keys: {', '.join(required_keys)}"
+            )
         try:
-            # Validate that last_key is a valid ISO timestamp
-            datetime.fromisoformat(last_key)
+            # Validate ISO 8601 timestamp in createdAt
+            datetime.fromisoformat(last_key["createdAt"])
         except ValueError:
-            raise ValueError("Invalid last_key format. Must be an ISO 8601 timestamp.")
+            raise ValueError("Invalid createdAt in last_key. Must be an ISO 8601 timestamp.")
     
     try:
         # Call the DB Utility function to fetch games

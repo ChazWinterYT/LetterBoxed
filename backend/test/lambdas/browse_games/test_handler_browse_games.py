@@ -3,7 +3,6 @@ import pytest
 from datetime import datetime
 from lambdas.browse_games.handler import handler
 from lambdas.browse_games.browse_games_service import query_games_by_language
-from lambdas.common.response_utils import error_response, HEADERS
 
 
 @pytest.fixture
@@ -13,7 +12,11 @@ def mock_event():
         "queryStringParameters": {
             "language": "en",
             "limit": "10",
-            "lastEvaluatedKey": datetime.now().isoformat()
+            "lastEvaluatedKey": json.dumps({
+                "language": "en",
+                "createdAt": datetime.now().isoformat(),
+                "gameId": "test-game-id"
+            })
         }
     }
 
@@ -22,11 +25,16 @@ def test_handler_valid_request(mocker, mock_event):
     """Test handler with valid input."""
     mock_response = {
         "games": [{"gameId": "1234", "name": "test_game"}],
-        "lastEvaluatedKey": "2024-12-24T15:26:14.634415"
+        "lastEvaluatedKey": {
+            "language": "en",
+            "createdAt": "2024-12-24T15:26:14.634415",
+            "gameId": "1234",
+        }
     }
     mocker.patch("lambdas.browse_games.handler.query_games_by_language", return_value=mock_response)
 
     result = handler(mock_event, None)
+
     assert result["statusCode"] == 200
     assert json.loads(result["body"]) == mock_response
 
@@ -38,24 +46,36 @@ def test_handler_missing_language(mocker, mock_event):
 
     assert result["statusCode"] == 400
     assert json.loads(result["body"])["message"] == "Language is required for browsing games."
-    
-    
+
+
 def test_handler_invalid_language(mocker, mock_event):
-    """Test handler with missing language."""
+    """Test handler with invalid language."""
     mock_event["queryStringParameters"]["language"] = "xx"
     result = handler(mock_event, None)
 
     assert result["statusCode"] == 400
-    assert json.loads(result["body"])["message"] == "Specified langauge is not supported."
+    assert json.loads(result["body"])["message"] == "Specified language is not supported."
 
 
-def test_handler_invalid_last_key(mocker, mock_event):
-    """Test handler with invalid lastEvaluatedKey."""
-    mock_event["queryStringParameters"]["lastEvaluatedKey"] = "invalid-timestamp"
+def test_handler_invalid_last_key_format(mocker, mock_event):
+    """Test handler with invalid lastEvaluatedKey format."""
+    mock_event["queryStringParameters"]["lastEvaluatedKey"] = "invalid-json-string"
     result = handler(mock_event, None)
 
     assert result["statusCode"] == 400
-    assert json.loads(result["body"])["message"] == "Invalid lastEvaluatedKey format. Must be an ISO 8601 timestamp."
+    assert json.loads(result["body"])["message"] == "Invalid lastEvaluatedKey format. Must be a JSON object with 'language', 'createdAt', and 'gameId'."
+
+
+def test_handler_invalid_last_key_missing_keys(mocker, mock_event):
+    """Test handler with missing keys in lastEvaluatedKey."""
+    mock_event["queryStringParameters"]["lastEvaluatedKey"] = json.dumps({
+        "language": "en",
+        "createdAt": "2024-12-24T15:26:14.634415"  # Missing gameId
+    })
+    result = handler(mock_event, None)
+
+    assert result["statusCode"] == 400
+    assert json.loads(result["body"])["message"] == "Invalid lastEvaluatedKey format. Must be a JSON object with 'language', 'createdAt', and 'gameId'."
 
 
 def test_handler_invalid_limit_non_integer(mocker, mock_event):
@@ -64,7 +84,7 @@ def test_handler_invalid_limit_non_integer(mocker, mock_event):
     result = handler(mock_event, None)
 
     assert result["statusCode"] == 400
-    assert json.loads(result["body"])["message"] == "Validation error: invalid literal for int() with base 10: 'abc'"
+    assert json.loads(result["body"])["message"] == "Limit must be a positive integer."
 
 
 def test_handler_invalid_limit_negative(mocker, mock_event):

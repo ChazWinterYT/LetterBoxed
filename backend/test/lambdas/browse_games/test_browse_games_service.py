@@ -8,7 +8,11 @@ def test_query_games_valid_input(mocker):
     """Test query_games_by_language with valid inputs."""
     mock_response = {
         "games": [{"gameId": "1234", "name": "test_game"}],
-        "lastEvaluatedKey": None
+        "lastEvaluatedKey": {
+            "language": "en",
+            "createdAt": "2024-12-24T12:00:00",
+            "gameId": "1234",
+        }
     }
 
     # Mock the fetch_games_by_language function
@@ -18,13 +22,18 @@ def test_query_games_valid_input(mocker):
     )
 
     # Call the function under test
-    result = query_games_by_language(language="en", last_key=None, limit=10)
+    last_key = {
+        "language": "en",
+        "createdAt": "2024-12-23T12:00:00",
+        "gameId": "1233",
+    }
+    result = query_games_by_language(language="en", last_key=last_key, limit=10)
 
     # Assert the result matches the mock response
     assert result == mock_response
 
     # Assert the mock was called with the correct arguments
-    mock_fetch_games.assert_called_once_with(language="en", last_key=None, limit=10)
+    mock_fetch_games.assert_called_once_with(language="en", last_key=last_key, limit=10)
 
 
 def test_query_games_invalid_language_empty():
@@ -51,10 +60,22 @@ def test_query_games_invalid_limit_non_integer():
         query_games_by_language(language="en", last_key=None, limit="ten")
 
 
-def test_query_games_invalid_last_key_format():
-    """Test query_games_by_language with invalid last_key format."""
-    with pytest.raises(ValueError, match="Invalid last_key format. Must be an ISO 8601 timestamp."):
-        query_games_by_language(language="en", last_key="invalid-timestamp", limit=10)
+def test_query_games_invalid_last_key_missing_keys():
+    """Test query_games_by_language with last_key missing required keys."""
+    last_key = {"language": "en", "createdAt": "2024-12-24T12:00:00"}  # Missing 'gameId'
+    with pytest.raises(ValueError, match="last_key must include the following keys: language, createdAt, gameId"):
+        query_games_by_language(language="en", last_key=last_key, limit=10)
+
+
+def test_query_games_invalid_last_key_invalid_createdAt():
+    """Test query_games_by_language with invalid createdAt in last_key."""
+    last_key = {
+        "language": "en",
+        "createdAt": "invalid-timestamp",
+        "gameId": "1234",
+    }
+    with pytest.raises(ValueError, match="Invalid createdAt in last_key. Must be an ISO 8601 timestamp."):
+        query_games_by_language(language="en", last_key=last_key, limit=10)
 
 
 def test_query_games_db_utility_error(mocker):

@@ -241,16 +241,29 @@ def test_fetch_games_success(mock_dynamodb_resource):
                 "createdBy": "test_user",
             }
         ],
-        "LastEvaluatedKey": {"language": "en", "createdAt": "2024-12-24T12:00:00"},
+        "LastEvaluatedKey": {
+            "language": "en",
+            "createdAt": "2024-12-24T12:00:00",
+            "gameId": "1234",
+        },
     }
     mock_table.query.return_value = mock_response
 
     # Act
-    result = db_utils.fetch_games_by_language(language="en", last_key="2024-12-23T12:00:00", limit=10)
+    last_key = {
+        "language": "en",
+        "createdAt": "2024-12-23T12:00:00",
+        "gameId": "1233",
+    }
+    result = db_utils.fetch_games_by_language(language="en", last_key=last_key, limit=10)
 
     # Assert
     assert len(result["games"]) == 1
-    assert result["lastEvaluatedKey"] == "2024-12-24T12:00:00"
+    assert result["lastEvaluatedKey"] == {
+        "language": "en",
+        "createdAt": "2024-12-24T12:00:00",
+        "gameId": "1234",
+    }
     assert result["games"][0]["gameId"] == "1234"
 
     # Verify query parameters
@@ -259,7 +272,11 @@ def test_fetch_games_success(mock_dynamodb_resource):
         KeyConditionExpression=mock.ANY,  # Can't assert Key directly
         Limit=10,
         ScanIndexForward=False,
-        ExclusiveStartKey={"language": "en", "createdAt": "2024-12-23T12:00:00"},
+        ExclusiveStartKey={
+            "language": "en",
+            "createdAt": "2024-12-23T12:00:00",
+            "gameId": "1233",
+        },
     )
 
 
@@ -297,8 +314,12 @@ def test_fetch_games_invalid_last_key(mock_dynamodb_resource):
     mock_table.query.return_value = {"Items": [], "LastEvaluatedKey": None}
 
     # Act
-    result = db_utils.fetch_games_by_language(language="en", last_key="invalid_key", limit=10)
-    print("Result:", result)
+    last_key = {
+        "language": "en",
+        "createdAt": "invalid_key",
+        "gameId": "1234",
+    }
+    result = db_utils.fetch_games_by_language(language="en", last_key=last_key, limit=10)
 
     # Assert
     assert result["games"] == []
@@ -310,7 +331,11 @@ def test_fetch_games_invalid_last_key(mock_dynamodb_resource):
         KeyConditionExpression=mock.ANY,
         Limit=10,
         ScanIndexForward=False,
-        ExclusiveStartKey={"language": "en", "createdAt": "invalid_key"},
+        ExclusiveStartKey={
+            "language": "en",
+            "createdAt": "invalid_key",
+            "gameId": "1234",
+        },
     )
 
 

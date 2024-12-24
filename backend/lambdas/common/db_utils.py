@@ -112,7 +112,7 @@ def fetch_game_by_id(game_id: str) -> Optional[Dict[str, Any]]:
 
 def fetch_games_by_language(
     language: str,
-    last_key: Optional[str] = None,
+    last_key: Optional[Dict[str, str]] = None,
     limit: int = 10,
     index_name: str = "LanguageCreatedAtIndex"
 ) -> Dict[str, Any]:
@@ -121,9 +121,9 @@ def fetch_games_by_language(
 
     Args:
         language (str): The language to filter games by.
-        last_key (Optional[str]): The game timestamp for pagination (optional).
+        last_key (Optional[Dict[str, str]]): Pagination key for DynamoDB query (optional).
         limit (int): Number of results to return (default 10).
-        index_name (str): DynamoDB GSI to use for the query (default "LanguageBoardSizeCreatedAtIndex").
+        index_name (str): DynamoDB GSI to use for the query (default "LanguageCreatedAtIndex").
 
     Returns:
         dict: Dictionary containing "games" (list of games) and "lastEvaluatedKey" for pagination.
@@ -131,29 +131,38 @@ def fetch_games_by_language(
     try:
         table = get_games_table()
         
+        # Build query parameters
         query_kwargs = {
             "IndexName": index_name,
             "KeyConditionExpression": Key("language").eq(language),
             "Limit": limit,
-            "ScanIndexForward": False # Descending order
+            "ScanIndexForward": False  # Descending order
         }
-            
+        
+        # Add pagination key if provided
         if last_key:
             print(f"Parsed lastEvaluatedKey: {last_key}")
-            query_kwargs["ExclusiveStartKey"] = {
-                "language": language,   # Partition key
-                "createdAt": last_key   # Sort key
-            }
-            
+            if not all(key in last_key for key in ["language", "createdAt", "gameId"]):
+                raise ValueError(
+                    "last_key must include 'language', 'createdAt', and 'gameId'."
+                )
+            query_kwargs["ExclusiveStartKey"] = last_key
+        
+        print("query_kwargs:", query_kwargs)
+        
+        # Execute the query
         response = table.query(**query_kwargs)
+        print("DB response LastEvaluatedKey:", response.get("LastEvaluatedKey"))
         
         games = []
         for raw_item in response.get("Items", []):
             item = validate_game_schema(raw_item)
-            # Don't allow casual games in the browse list
+            
+            # Exclude casual games
             if item["gameType"] == "casual":
                 continue
             
+            # Calculate derived values
             total_ratings = item.get("totalRatings", 0)
             total_stars = item.get("totalStars", 0)
             total_completions = item.get("totalCompletions", 0)
@@ -162,12 +171,12 @@ def fetch_games_by_language(
             two_word_solution_count = item.get("twoWordSolutionCount", 0)
             one_word_solution_count = item.get("oneWordSolutionCount", 0)
 
-            # Calculate derived values
             average_rating = total_stars / total_ratings if total_ratings > 0 else 0.0
             average_words_needed = (
                 total_words_used / total_completions if total_completions > 0 else 0.0
             )
             
+            # Append validated game to the results
             games.append({
                 "gameId": item["gameId"],
                 "gameLayout": item["gameLayout"],
@@ -184,14 +193,12 @@ def fetch_games_by_language(
                 "averageRating": average_rating,
                 "totalCompletions": total_completions,
                 "averageWordsNeeded": average_words_needed,
-            }) 
+            })
         
-        # Extract only the createdAt value from lastEvaluatedKey to return to the frontend
-        last_evaluated_key = response.get("LastEvaluatedKey", {}).get("createdAt")
-        
+        # Return results with full lastEvaluatedKey
         return {
             "games": games,
-            "lastEvaluatedKey": last_evaluated_key
+            "lastEvaluatedKey": response.get("LastEvaluatedKey")  # Include the full key for frontend
         }
     
     except Exception as e:
