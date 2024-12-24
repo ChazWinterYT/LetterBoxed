@@ -8,7 +8,6 @@ import Spinner from "../Spinner";
 import { fetchGamesByLanguage } from "../../services/api";
 import { Game } from "../../types/Game";
 import {
-  Box,
   PropertyFilter,
   PropertyFilterProps,
   Pagination,
