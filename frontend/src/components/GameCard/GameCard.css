@@ -1,37 +1,42 @@
-.cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center; /* Center-align cards */
-  }
-  
-  .card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Fixed width for uniformity */
-  }
-  
-  .card p {
-    margin: 0;
-    font-size: 0.9rem;
-  }
-  
-  .card .card-header {
-    font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
-  
-  .card button {
-    margin-top: 10px;
-    background-color: #0073e6;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+.card {
+  --shadowColor: 187 60% 40%;
+  display: flex;
+  flex-wrap: wrap;
+  background: hsl(187 70% 85%);
+  max-width: 50rem;
+  width: 100%;
+  box-shadow: 0.65rem 0.65rem 0 hsl(var(--shadowColor) / 1);
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: 0.5rem solid;
+  margin: 1rem auto; /* Add some spacing between cards */
+}
+
+.card img {
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  flex: 1 1 300px;
+  outline: 0.5rem solid;
+}
+
+.card-header {
+  padding: min(2rem, 5vw) min(2rem, 5vw) min(2.5rem, 5vw);
+  flex: 1 0 50%;
+}
+
+.card-header > * + * {
+  margin: min(1.5rem, 2.5vw) 0 0 0;
+}
+
+.card button {
+  display: inline-block;
+  color: black;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  background: hsl(187 75% 64%);
+  border-radius: 0.6rem;
+  font-weight: 700;
+  border: 0.35rem solid;
+  margin-top: 1rem;
+  cursor: pointer;
+}

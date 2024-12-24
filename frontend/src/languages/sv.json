@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "returnHome": "Återvänd till startsidan",
             "menuTitle": "Huvudmeny",
             "playToday": "Spela dagens NYT-spel",
             "archive": "NYT-spelarkiv",

@@ -1,0 +1,41 @@
+.browse-games-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .language-selector {
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .language-selector select {
+    padding: 5px;
+    font-size: 1rem;
+  }
+  
+  .load-more-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .load-more-button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "returnHome": "Kembali ke Halaman Utama",
             "menuTitle": "Menu Utama",
             "playToday": "Mainkan Game NYT Hari Ini",
             "archive": "Arsip Game NYT",

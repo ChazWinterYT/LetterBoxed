@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "returnHome": "मुख्य पृष्ठ पर लौटें",
             "menuTitle": "मुख्य मेनू",
             "playToday": "आज का NYT गेम खेलें",
             "archive": "NYT गेम्स आर्काइव",

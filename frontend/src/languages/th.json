@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "returnHome": "กลับไปที่หน้าแรก",
             "menuTitle": "เมนูหลัก",
             "playToday": "เล่นเกม NYT วันนี้",
             "archive": "คลังเกม NYT",

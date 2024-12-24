@@ -1,6 +1,7 @@
 {
     "ui": {
         "menu": {
+            "returnHome": "ホームページに戻る",
             "menuTitle": "メインメニュー",
             "playToday": "今日のNYTゲームをプレイ",
             "archive": "NYTゲームアーカイブ",
