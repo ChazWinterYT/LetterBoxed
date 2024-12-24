@@ -234,6 +234,8 @@
         "averageRating": "Note Moyenne",
         "totalCompletions": "Achèvements Totaux",
         "averageWordsNeeded": "Mots Moyens Nécessaires",
+        "result": "Résultat",
+        "results": "Résultats",
         "group": {
             "gameIdGroup": "Identifiants des jeux",
             "gameLayoutGroup": "Dispositions des jeux",

@@ -234,6 +234,8 @@
         "averageRating": "Penilaian Rata-rata",
         "totalCompletions": "Total Penyelesaian",
         "averageWordsNeeded": "Rata-rata Kata Diperlukan",
+        "result": "Hasil",
+        "results": "Hasil",
         "group": {
             "gameIdGroup": "ID Permainan",
             "gameLayoutGroup": "Tata Letak Permainan",

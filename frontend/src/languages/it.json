@@ -234,6 +234,8 @@
         "averageRating": "Valutazione Media",
         "totalCompletions": "Completamenti Totali",
         "averageWordsNeeded": "Media Parole Necessarie",
+        "result": "Risultato",
+        "results": "Risultati",
         "group": {
             "gameIdGroup": "ID Giochi",
             "gameLayoutGroup": "Layout dei giochi",

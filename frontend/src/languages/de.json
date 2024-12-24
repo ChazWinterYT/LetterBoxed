@@ -234,6 +234,8 @@
         "averageRating": "Durchschnittsbewertung",
         "totalCompletions": "Gesamtabschlüsse",
         "averageWordsNeeded": "Durchschnittlich benötigte Wörter",
+        "result": "Ergebnis",
+        "results": "Ergebnisse",
         "group": {
             "gameIdGroup": "Spiel-IDs",
             "gameLayoutGroup": "Spiel-Layouts",

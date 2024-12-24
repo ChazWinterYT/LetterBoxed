@@ -234,6 +234,8 @@
         "averageRating": "Средний рейтинг",
         "totalCompletions": "Общее количество завершений",
         "averageWordsNeeded": "Среднее количество слов",
+        "result": "Результат",
+        "results": "Результаты",
         "group": {
             "gameIdGroup": "ID игр",
             "gameLayoutGroup": "Макеты игр",

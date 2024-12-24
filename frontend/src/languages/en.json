@@ -239,6 +239,8 @@
         "averageRating": "Average Rating",
         "totalCompletions": "Total Completions",
         "averageWordsNeeded": "Average Words Needed",
+        "result": "Result",
+        "results": "Results",
         "group": {
             "gameIdGroup": "Game IDs",
             "gameLayoutGroup": "Game Layouts",

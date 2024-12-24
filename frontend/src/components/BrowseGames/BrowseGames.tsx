@@ -50,11 +50,11 @@ const BrowseGames: React.FC = () => {
   const loadAllGames = useCallback(async (language: string) => {
     setIsLoading(true);
     let allGames: Game[] = [];
-    let lastEvaluatedKey: string | null = null; // Adjusted type to string | null
+    let lastEvaluatedKey: Record<string, string> | null = null; // Updated type to match API
   
     try {
       do {
-        const response: { games: Game[]; lastEvaluatedKey?: string | null } =
+        const response: { games: Game[]; lastEvaluatedKey?: Record<string, string> | null } =
           await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize);
   
         // Append the fetched games to the existing list

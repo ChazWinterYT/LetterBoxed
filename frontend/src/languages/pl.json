@@ -234,6 +234,8 @@
         "averageRating": "Średnia Ocena",
         "totalCompletions": "Łączna Liczba Ukończeń",
         "averageWordsNeeded": "Średnia Liczba Słów Potrzebnych",
+        "result": "Wynik",
+        "results": "Wyniki",
         "group": {
             "gameIdGroup": "ID Gier",
             "gameLayoutGroup": "Układy Gier",

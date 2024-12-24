@@ -234,6 +234,8 @@
         "averageRating": "Genomsnittligt betyg",
         "totalCompletions": "Totalt antal avslut",
         "averageWordsNeeded": "Genomsnittliga ord som behövs",
+        "result": "Resultat",
+        "results": "Resultat",
         "group": {
             "gameIdGroup": "Spel-ID",
             "gameLayoutGroup": "Spellayouter",

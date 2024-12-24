@@ -234,6 +234,8 @@
         "averageRating": "औसत रेटिंग",
         "totalCompletions": "कुल पूर्णता",
         "averageWordsNeeded": "औसत आवश्यक शब्द",
+        "result": "परिणाम",
+        "results": "परिणाम",
         "group": {
             "gameIdGroup": "खेल आईडी",
             "gameLayoutGroup": "खेल लेआउट",

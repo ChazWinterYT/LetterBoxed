@@ -234,6 +234,8 @@
         "averageRating": "Calificación Promedio",
         "totalCompletions": "Completados Totales",
         "averageWordsNeeded": "Promedio de Palabras Necesarias",
+        "result": "Resultado",
+        "results": "Resultados",
         "group": {
             "gameIdGroup": "ID de juegos",
             "gameLayoutGroup": "Diseños de juegos",

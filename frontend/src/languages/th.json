@@ -234,6 +234,8 @@
         "averageRating": "คะแนนเฉลี่ย",
         "totalCompletions": "จำนวนการเล่นจบทั้งหมด",
         "averageWordsNeeded": "จำนวนคำเฉลี่ยที่ต้องการ",
+        "result": "ผลลัพธ์",
+        "results": "ผลลัพธ์",
         "group": {
             "gameIdGroup": "รหัสเกม",
             "gameLayoutGroup": "เลย์เอาต์เกม",
