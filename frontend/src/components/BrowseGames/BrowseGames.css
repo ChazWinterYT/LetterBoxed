@@ -42,14 +42,66 @@
   
   .property-filter-container {
     margin: 20px auto;
+    padding: 6px;
     width: 80%;
     max-width: 400px;
+  }
+
+  /* Center both PropertyFilter and Pagination */
+  .styled-filter,
+  .styled-pagination {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  /* Change the font color */
+  .awsui_root_fvjdu_nfftc_145,
+  .awsui_page-number_fvjdu_nfftc_229,
+  .awsui_arrow_fvjdu_nfftc_219 {
+    color: #d8d9da !important; 
+    font-size: 1.2rem;
+  }
+
+  .awsui_button-current_fvjdu_nfftc_235 {
+    color: rgb(254, 254, 254) !important;
+    background-color: #4a90e2 !important; /* Make the current page stand out */
+    font-size: 1.3rem;
   }
   
   .pagination-container {
     margin: 20px auto;
     width: 80%;
-    max-width: 600px;
+    max-width: 400px;
+  }
+
+  .pagination-container ul {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .pagination-container li {
+    margin: 0 5px;
+  }
+  
+  .pagination-container button {
+    background-color: #f8f9fa;
+    color: #0056b3;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .pagination-container button.current {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+  }
+  
+  .pagination-container button:hover {
+    background-color: #0056b3;
+    color: white;
   }
   
   .browse-games-content {

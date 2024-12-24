@@ -1,3 +1,5 @@
+@import "@cloudscape-design/global-styles/index.css";
+
 /* General styles for app container */
 .app-container {
   display: flex;

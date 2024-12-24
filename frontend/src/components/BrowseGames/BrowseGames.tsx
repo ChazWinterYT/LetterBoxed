@@ -8,11 +8,13 @@ import Spinner from "../Spinner";
 import { fetchGamesByLanguage } from "../../services/api";
 import { Game } from "../../types/Game";
 import {
+  Box,
   PropertyFilter,
   PropertyFilterProps,
   Pagination,
 } from "@cloudscape-design/components";
 import "./BrowseGames.css";
+import "@cloudscape-design/global-styles/index.css";
 
 // We take the "query" type from PropertyFilterProps
 type CloudscapePropertyFilterQuery = NonNullable<PropertyFilterProps["query"]>;
@@ -214,6 +216,14 @@ const BrowseGames: React.FC = () => {
               groupValuesLabel: t("browseGames.group.gameTypeGroup"),
             },
           ]}
+          filteringOptions={[
+            { propertyKey: "boardSize", value: "2x2", label: "2x2 Board" },
+            { propertyKey: "boardSize", value: "3x3", label: "3x3 Board" },
+            { propertyKey: "boardSize", value: "4x4", label: "4x4 Board" },
+            { propertyKey: "gameType", value: "nyt", label: "NYT Official" },
+            { propertyKey: "gameType", value: "custom", label: "Custom Game" },
+            { propertyKey: "gameType", value: "random", label: "Random Game" },
+          ]}
           query={query}
           onChange={({ detail }) => handlePropertyFilterChange(detail)}
           countText={`${filteredGames.length || games.length} ${
@@ -228,6 +238,11 @@ const BrowseGames: React.FC = () => {
           currentPageIndex={currentPageIndex}
           onChange={handlePageChange}
           pagesCount={Math.ceil(filteredGames.length / pageSize)}
+          ariaLabels={{
+            nextPageLabel: "Next page",
+            previousPageLabel: "Previous page",
+            pageLabel: (pageNumber) => `Page ${pageNumber}`,
+          }}
         />
       </div>
   
