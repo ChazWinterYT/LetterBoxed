@@ -217,12 +217,12 @@ const BrowseGames: React.FC = () => {
             },
           ]}
           filteringOptions={[
-            { propertyKey: "boardSize", value: "2x2", label: "2x2 Board" },
-            { propertyKey: "boardSize", value: "3x3", label: "3x3 Board" },
-            { propertyKey: "boardSize", value: "4x4", label: "4x4 Board" },
-            { propertyKey: "gameType", value: "nyt", label: "NYT Official" },
-            { propertyKey: "gameType", value: "custom", label: "Custom Game" },
-            { propertyKey: "gameType", value: "random", label: "Random Game" },
+            { propertyKey: "boardSize", value: "2x2", label: "2x2" },
+            { propertyKey: "boardSize", value: "3x3", label: "3x3" },
+            { propertyKey: "boardSize", value: "4x4", label: "4x4" },
+            { propertyKey: "gameType", value: "nyt", label: t("game.nyt") },
+            { propertyKey: "gameType", value: "custom", label: t("game.custom") },
+            { propertyKey: "gameType", value: "random", label: t("game.random") },
           ]}
           query={query}
           onChange={({ detail }) => handlePropertyFilterChange(detail)}
