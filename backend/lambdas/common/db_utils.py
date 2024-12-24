@@ -173,7 +173,7 @@ def fetch_games_by_language(
                 "boardSize": item["boardSize"],
                 "createdAt": item["createdAt"],
                 "createdBy": item["createdBy"],
-                "clue": item["clue"],
+                "hint": item["clue"],
                 "validWordCount": valid_word_count,
                 "oneWordSolutionCount": one_word_solution_count,
                 "twoWordSolutionCount": two_word_solution_count,

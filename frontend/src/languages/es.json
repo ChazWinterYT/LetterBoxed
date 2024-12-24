@@ -211,6 +211,24 @@
             "maxWordLength4x4": "Los tableros de 4x4 requieren que una palabra tenga al menos 9 letras."
         }
     },
+    "browseGames": {
+        "play": "Jugar",
+        "gameId": "ID del Juego",
+        "gameLayout": "Diseño del Juego",
+        "gameType": "Tipo de Juego",
+        "language": "Idioma",
+        "boardSize": "Tamaño del Tablero",
+        "createdAt": "Creado el",
+        "createdBy": "Creado por",
+        "hint": "Pista",
+        "validWordCount": "Palabras Válidas",
+        "oneWordSolutionCount": "Soluciones de Una Palabra",
+        "twoWordSolutionCount": "Soluciones de Dos Palabras",
+        "totalRatings": "Calificaciones Totales",
+        "averageRating": "Calificación Promedio",
+        "totalCompletions": "Completados Totales",
+        "averageWordsNeeded": "Promedio de Palabras Necesarias"
+    },
     "instructions": {
         "howToPlay": "Cómo jugar",
         "rules": "Reglas",

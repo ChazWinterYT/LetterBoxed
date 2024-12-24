@@ -211,6 +211,24 @@
             "maxWordLength4x4": "กระดาน 4x4 ต้องมีคำที่มีความยาวอย่างน้อย 9 ตัวอักษร"
         }
     },
+    "browseGames": {
+        "play": "เล่น",
+        "gameId": "รหัสเกม",
+        "gameLayout": "รูปแบบเกม",
+        "gameType": "ประเภทเกม",
+        "language": "ภาษา",
+        "boardSize": "ขนาดบอร์ด",
+        "createdAt": "สร้างเมื่อ",
+        "createdBy": "สร้างโดย",
+        "hint": "คำใบ้",
+        "validWordCount": "จำนวนคำที่ถูกต้อง",
+        "oneWordSolutionCount": "วิธีแก้คำเดียว",
+        "twoWordSolutionCount": "วิธีแก้สองคำ",
+        "totalRatings": "การให้คะแนนทั้งหมด",
+        "averageRating": "คะแนนเฉลี่ย",
+        "totalCompletions": "จำนวนการเล่นจบทั้งหมด",
+        "averageWordsNeeded": "จำนวนคำเฉลี่ยที่ต้องการ"
+    },
     "instructions": {
         "howToPlay": "วิธีการเล่น",
         "rules": "กฎ",

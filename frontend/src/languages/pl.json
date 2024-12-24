@@ -211,6 +211,24 @@
             "maxWordLength4x4": "Plansze 4x4 wymagają, aby jedno słowo miało co najmniej 9 liter."
         }
     },
+    "browseGames": {
+        "play": "Zagraj",
+        "gameId": "ID Gry",
+        "gameLayout": "Układ Gry",
+        "gameType": "Typ Gry",
+        "language": "Język",
+        "boardSize": "Rozmiar Planszy",
+        "createdAt": "Utworzono",
+        "createdBy": "Utworzone Przez",
+        "hint": "Wskazówka",
+        "validWordCount": "Liczba Prawidłowych Słów",
+        "oneWordSolutionCount": "Rozwiązania Jednowyrazowe",
+        "twoWordSolutionCount": "Rozwiązania Dwuwyrazowe",
+        "totalRatings": "Łączna Liczba Ocen",
+        "averageRating": "Średnia Ocena",
+        "totalCompletions": "Łączna Liczba Ukończeń",
+        "averageWordsNeeded": "Średnia Liczba Słów Potrzebnych"
+    },
     "instructions": {
         "howToPlay": "Jak grać",
         "rules": "Zasady",

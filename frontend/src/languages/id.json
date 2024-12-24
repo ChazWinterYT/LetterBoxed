@@ -211,6 +211,24 @@
             "maxWordLength4x4": "Papan 4x4 membutuhkan satu kata dengan setidaknya 9 huruf."
         }
     },
+    "browseGames": {
+        "play": "Mainkan",
+        "gameId": "ID Permainan",
+        "gameLayout": "Tata Letak Permainan",
+        "gameType": "Jenis Permainan",
+        "language": "Bahasa",
+        "boardSize": "Ukuran Papan",
+        "createdAt": "Dibuat Pada",
+        "createdBy": "Dibuat Oleh",
+        "hint": "Petunjuk",
+        "validWordCount": "Kata Valid",
+        "oneWordSolutionCount": "Solusi Satu Kata",
+        "twoWordSolutionCount": "Solusi Dua Kata",
+        "totalRatings": "Total Penilaian",
+        "averageRating": "Penilaian Rata-rata",
+        "totalCompletions": "Total Penyelesaian",
+        "averageWordsNeeded": "Rata-rata Kata Diperlukan"
+    },
     "instructions": {
         "howToPlay": "Cara Bermain",
         "rules": "Aturan",

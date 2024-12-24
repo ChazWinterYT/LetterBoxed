@@ -211,6 +211,24 @@
             "maxWordLength4x4": "4x4 बोर्ड में कम से कम 9 अक्षरों वाला एक शब्द होना आवश्यक है।"
         }
     },
+    "browseGames": {
+        "play": "खेलें",
+        "gameId": "खेल आईडी",
+        "gameLayout": "खेल लेआउट",
+        "gameType": "खेल प्रकार",
+        "language": "भाषा",
+        "boardSize": "बोर्ड का आकार",
+        "createdAt": "निर्मित तिथि",
+        "createdBy": "द्वारा निर्मित",
+        "hint": "संकेत",
+        "validWordCount": "वैध शब्द",
+        "oneWordSolutionCount": "एक-शब्द समाधान",
+        "twoWordSolutionCount": "दो-शब्द समाधान",
+        "totalRatings": "कुल रेटिंग",
+        "averageRating": "औसत रेटिंग",
+        "totalCompletions": "कुल पूर्णता",
+        "averageWordsNeeded": "औसत आवश्यक शब्द"
+    },
     "instructions": {
         "howToPlay": "कैसे खेलें",
         "rules": "नियम",

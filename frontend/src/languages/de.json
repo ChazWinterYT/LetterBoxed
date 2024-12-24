@@ -211,6 +211,24 @@
             "maxWordLength4x4": "4x4-Bretter erfordern, dass ein Wort mindestens 9 Buchstaben lang ist."
         }
     },
+    "browseGames": {
+        "play": "Spielen",
+        "gameId": "Spiel-ID",
+        "gameLayout": "Spiel-Layout",
+        "gameType": "Spieltyp",
+        "language": "Sprache",
+        "boardSize": "Brettgröße",
+        "createdAt": "Erstellt am",
+        "createdBy": "Erstellt von",
+        "hint": "Hinweis",
+        "validWordCount": "Gültige Wörter",
+        "oneWordSolutionCount": "Ein-Wort-Lösungen",
+        "twoWordSolutionCount": "Zwei-Wort-Lösungen",
+        "totalRatings": "Gesamtbewertungen",
+        "averageRating": "Durchschnittsbewertung",
+        "totalCompletions": "Gesamtabschlüsse",
+        "averageWordsNeeded": "Durchschnittlich benötigte Wörter"
+    },
     "instructions": {
         "howToPlay": "Spielanleitung",
         "rules": "Regeln",

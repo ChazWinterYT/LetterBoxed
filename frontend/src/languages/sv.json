@@ -211,6 +211,24 @@
             "maxWordLength4x4": "4x4-bräden kräver att ett ord är minst 9 bokstäver långt."
         }
     },
+    "browseGames": {
+        "play": "Spela",
+        "gameId": "Spel-ID",
+        "gameLayout": "Speluppställning",
+        "gameType": "Speltyp",
+        "language": "Språk",
+        "boardSize": "Brädstorlek",
+        "createdAt": "Skapad den",
+        "createdBy": "Skapad av",
+        "hint": "Tips",
+        "validWordCount": "Giltiga ord",
+        "oneWordSolutionCount": "Enords lösningar",
+        "twoWordSolutionCount": "Tvåords lösningar",
+        "totalRatings": "Totala betyg",
+        "averageRating": "Genomsnittligt betyg",
+        "totalCompletions": "Totalt antal avslut",
+        "averageWordsNeeded": "Genomsnittliga ord som behövs"
+    },
     "instructions": {
         "howToPlay": "Hur man spelar",
         "rules": "Regler",

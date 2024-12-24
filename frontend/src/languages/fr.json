@@ -211,6 +211,24 @@
             "maxWordLength4x4": "Les plateaux 4x4 nécessitent qu'un mot ait au moins 9 lettres."
         }
     },
+    "browseGames": {
+        "play": "Jouer",
+        "gameId": "ID du Jeu",
+        "gameLayout": "Disposition du Jeu",
+        "gameType": "Type de Jeu",
+        "language": "Langue",
+        "boardSize": "Taille du Plateau",
+        "createdAt": "Créé le",
+        "createdBy": "Créé par",
+        "hint": "Indice",
+        "validWordCount": "Mots Valides",
+        "oneWordSolutionCount": "Solutions d'un Mot",
+        "twoWordSolutionCount": "Solutions de Deux Mots",
+        "totalRatings": "Évaluations Totales",
+        "averageRating": "Note Moyenne",
+        "totalCompletions": "Achèvements Totaux",
+        "averageWordsNeeded": "Mots Moyens Nécessaires"
+    },
     "instructions": {
         "howToPlay": "Comment jouer",
         "rules": "Règles",

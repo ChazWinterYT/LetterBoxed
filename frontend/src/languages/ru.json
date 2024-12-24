@@ -211,6 +211,24 @@
             "maxWordLength4x4": "На досках 4x4 одно слово должно быть длиной не менее 9 букв."
         }
     },
+    "browseGames": {
+        "play": "Играть",
+        "gameId": "ID игры",
+        "gameLayout": "Макет игры",
+        "gameType": "Тип игры",
+        "language": "Язык",
+        "boardSize": "Размер доски",
+        "createdAt": "Создано",
+        "createdBy": "Создано пользователем",
+        "hint": "Подсказка",
+        "validWordCount": "Количество правильных слов",
+        "oneWordSolutionCount": "Решения из одного слова",
+        "twoWordSolutionCount": "Решения из двух слов",
+        "totalRatings": "Всего оценок",
+        "averageRating": "Средний рейтинг",
+        "totalCompletions": "Общее количество завершений",
+        "averageWordsNeeded": "Среднее количество слов"
+    },
     "instructions": {
         "howToPlay": "Как играть",
         "rules": "Правила",

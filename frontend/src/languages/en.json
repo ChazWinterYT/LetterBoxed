@@ -212,6 +212,24 @@
             "maxWordLength4x4": "4x4 boards require one word to be at least 9 letters long."
         }
     },
+    "browseGames": {
+        "play": "Play",
+        "gameId": "Game ID",
+        "gameLayout": "Game Layout",
+        "gameType": "Game Type",
+        "language": "Language",
+        "boardSize": "Board Size",
+        "createdAt": "Created At",
+        "createdBy": "Author",
+        "hint": "Hint",
+        "validWordCount": "Valid Words",
+        "oneWordSolutionCount": "One-Word Solutions",
+        "twoWordSolutionCount": "Two-Word Solutions",
+        "totalRatings": "Total Ratings",
+        "averageRating": "Average Rating",
+        "totalCompletions": "Total Completions",
+        "averageWordsNeeded": "Average Words Needed"
+    },
     "instructions": {
         "howToPlay": "How to Play",
         "rules": "Rules",

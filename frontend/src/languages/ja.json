@@ -211,6 +211,24 @@
             "maxWordLength4x4": "4x4ボードでは、1つの単語が少なくとも9文字である必要があります。"
         }
     },
+    "browseGames": {
+        "play": "プレイ",
+        "gameId": "ゲームID",
+        "gameLayout": "ゲームレイアウト",
+        "gameType": "ゲームタイプ",
+        "language": "言語",
+        "boardSize": "ボードサイズ",
+        "createdAt": "作成日",
+        "createdBy": "作成者",
+        "hint": "ヒント",
+        "validWordCount": "有効な単語数",
+        "oneWordSolutionCount": "1語の解決策",
+        "twoWordSolutionCount": "2語の解決策",
+        "totalRatings": "総評価数",
+        "averageRating": "平均評価",
+        "totalCompletions": "総完了数",
+        "averageWordsNeeded": "必要な単語の平均"
+    },
     "instructions": {
         "howToPlay": "遊び方",
         "rules": "ルール",
