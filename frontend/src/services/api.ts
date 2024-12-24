@@ -1,3 +1,5 @@
+import { Game } from "../types/Game";
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 // Common headers for requests
@@ -50,13 +52,13 @@ export const fetchGameById = async (gameId: string) => {
 // Fetch games by language with pagination
 export const fetchGamesByLanguage = async (
   language: string = "en",
-  lastKey: string | null = null,
+  lastEvaluatedKey: string | null = null,
   limit: number = 10
-) => {
+): Promise<{ games: Game[]; lastEvaluatedKey?: string | null }> => {
   const params = new URLSearchParams();
   params.append("language", language);
   params.append("limit", limit.toString());
-  if (lastKey) params.append("lastEvaluatedKey", lastKey);
+  if (lastEvaluatedKey) params.append("lastEvaluatedKey", lastEvaluatedKey);
 
   const response = await fetch(`${API_URL}/browse-games?${params.toString()}`, {
     method: "GET",

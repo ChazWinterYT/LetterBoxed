@@ -1,12 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { Game } from "../../types/Game";
 import "./GameCard.css";
 
 const GameCard: React.FC<{ game: Game }> = ({ game }) => {
   const { t } = useLanguage();
-  const navigate = useNavigate();
 
   return (
     <div className="card">

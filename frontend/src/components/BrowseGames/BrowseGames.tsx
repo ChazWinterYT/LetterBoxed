@@ -30,7 +30,6 @@ const BrowseGames: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
-  const [lastEvaluatedKey, setLastEvaluatedKey] = useState<string | null>(null);
 
   // Cloudscape filter query
   const [query, setQuery] = useState<CloudscapePropertyFilterQuery>({
@@ -42,34 +41,37 @@ const BrowseGames: React.FC = () => {
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(1);
   const pageSize = 10;
 
-  // ================== Data Fetching ==================
-  const loadGames = useCallback(
-    async (language: string, lastKey: string | null = null) => {
-      try {
-        setIsLoading(true);
-        const response = await fetchGamesByLanguage(language, lastKey, pageSize);
-        setGames((prev) => [...prev, ...response.games]);
-        setLastEvaluatedKey(response.lastKey || null);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    []
-  );
+  // ================== Data Fetching (Load ALL Games) ==================
+  /**
+   * Loads *all* games (in repeated calls) before rendering them.
+   * Keeps fetching pages until no lastKey is returned, so the user
+   * can see the entire dataset for filtering or pagination.
+   */
+  const loadAllGames = useCallback(async (language: string) => {
+    setIsLoading(true);
+    let allGames: Game[] = [];
+    let nextKey: string | null = null;
 
-  useEffect(() => {
-    // Load English games initially
-    loadGames("en");
-  }, [loadGames]);
-
-  // If backend returns lastEvaluatedKey, keep fetching
-  useEffect(() => {
-    if (lastEvaluatedKey) {
-      loadGames(selectedLanguage, lastEvaluatedKey);
+    try {
+      do {
+        const response: { games: Game[]; lastKey?: string | null } = 
+        await fetchGamesByLanguage(language, nextKey, pageSize);
+        allGames = [...allGames, ...response.games];
+        nextKey = response.lastKey || null;
+      } while (nextKey);
+      setGames(allGames);
+      setFilteredGames(allGames); // Also set initial filtered set
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  }, [lastEvaluatedKey, selectedLanguage, loadGames]);
+  }, [pageSize]);
+
+  // On mount, load all English games
+  useEffect(() => {
+    loadAllGames(selectedLanguage);
+  }, [loadAllGames, selectedLanguage]);
 
   // ================== Filtering Logic ==================
   const handlePropertyFilterChange = (newQuery: CloudscapePropertyFilterQuery) => {
@@ -79,27 +81,29 @@ const BrowseGames: React.FC = () => {
     setCurrentPageIndex(1);
   };
 
-  function filterGames(allGames: Game[], q: CloudscapePropertyFilterQuery) {
-    if (!q.tokens.length) return allGames; // no tokens => show all
+  const filterGames = useCallback(
+    (allGames: Game[], q: CloudscapePropertyFilterQuery) => {
+      if (!q.tokens.length) return allGames;
 
-    return allGames.filter((game) => {
-      if (q.operation === "and") {
-        return q.tokens.every((token) => tokenMatches(token, game));
-      } else {
-        return q.tokens.some((token) => tokenMatches(token, game));
-      }
-    });
-  }
+      return allGames.filter((game) => {
+        if (q.operation === "and") {
+          return q.tokens.every((token) => tokenMatches(token, game));
+        } else {
+          return q.tokens.some((token) => tokenMatches(token, game));
+        }
+      });
+    },
+    []
+  );
 
   function tokenMatches(token: CloudscapePropertyFilterToken, game: Game): boolean {
-    // Make sure operator, propertyKey, value exist
     if (!token.propertyKey || !token.value || !token.operator) {
       return false;
     }
-  
+
     const propertyVal = String(game[token.propertyKey as keyof Game] ?? "").toLowerCase();
     const tokenVal = token.value.toLowerCase();
-  
+
     switch (token.operator) {
       case "=":
         return propertyVal === tokenVal;
@@ -111,19 +115,18 @@ const BrowseGames: React.FC = () => {
     }
   }
 
+  // Re-apply filter whenever `games` or `query` changes
   useEffect(() => {
-    // Re-apply filter if the `games` or `query` changes
     setFilteredGames(filterGames(games, query));
-  }, [games, query]);
+  }, [filterGames, games, query]);
 
   // ================== Language Change ==================
   const handleLanguageChange = async (lang: string) => {
     setSelectedLanguage(lang);
+    // Clear out existing data (so we don't show old results while loading)
     setGames([]);
     setFilteredGames([]);
-    setLastEvaluatedKey(null);
     setCurrentPageIndex(1);
-    await loadGames(lang);
   };
 
   // ================== Pagination for Cards ==================
@@ -140,7 +143,7 @@ const BrowseGames: React.FC = () => {
     <div>
       <Header />
 
-      <button 
+      <button
         className="menu-button"
         onClick={() => (window.location.href = "/LetterBoxed/frontend")}
       >
@@ -221,15 +224,21 @@ const BrowseGames: React.FC = () => {
 
       {/* Display the Cards */}
       <div className="browse-games-content">
-        <div className="cards-container">
-          {paginatedGames.map((game) => (
-            <GameCard key={game.gameId} game={game} />
-          ))}
-        </div>
+        {isLoading ? (
+          <Spinner message={t("browseGames.loading")} />
+        ) : (
+          <div className="cards-container">
+            {paginatedGames.map((game) => (
+              <GameCard key={game.gameId} game={game} />
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Loading Spinner */}
-      {isLoading && <Spinner message={t("browseGames.loading")} />}
+      {/* Fallback if there are no results */}
+      {paginatedGames.length === 0 && !isLoading && (
+        <div>{t("ui.archive.noGames")}</div>
+      )}
 
       <Footer />
     </div>
