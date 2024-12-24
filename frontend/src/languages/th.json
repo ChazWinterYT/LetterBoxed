@@ -76,6 +76,9 @@
         "twoWordSolutions": "คำตอบสองคำ",
         "threeWordSolutions": "คำตอบสามคำ",
         "enterGameLayout": "ป้อนรูปแบบเกม",
+        "custom": "เกมกำหนดเอง",
+        "random": "เกมสุ่ม",
+        "nyt": "เกมทางการ NYT",
         "customGame": {
             "customGameTitle": "สร้างเกมกำหนดเอง",
             "customGameOptions": "ตัวเลือกเกมกำหนดเอง",

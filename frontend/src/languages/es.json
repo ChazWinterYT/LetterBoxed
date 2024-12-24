@@ -76,6 +76,9 @@
         "twoWordSolutions": "Soluciones de dos palabras",
         "threeWordSolutions": "Soluciones de tres palabras",
         "enterGameLayout": "Ingresar diseño del juego",
+        "custom": "Juego Personalizado",
+        "random": "Juego Aleatorio",
+        "nyt": "Juego Oficial NYT",
         "customGame": {
             "customGameTitle": "Crear un juego personalizado",
             "customGameOptions": "Opciones de juego personalizado",

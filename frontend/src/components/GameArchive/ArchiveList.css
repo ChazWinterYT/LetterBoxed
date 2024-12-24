@@ -20,6 +20,7 @@ li {
   align-items: center;
   width: 100%;
   background-color: #f9f9f9;
+  color: #0a2a4c;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -29,7 +30,7 @@ li {
 }
 
 .game-link:hover {
-  background-color: #e6f0ff;
+  background-color: #c6d6ef;
 }
 
 .game-par,

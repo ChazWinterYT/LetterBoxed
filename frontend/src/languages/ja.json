@@ -76,6 +76,9 @@
         "twoWordSolutions": "2語の解答",
         "threeWordSolutions": "3語の解答",
         "enterGameLayout": "ゲームレイアウトを入力",
+        "custom": "カスタムゲーム",
+        "random": "ランダムゲーム",
+        "nyt": "公式NYTゲーム",
         "customGame": {
             "customGameTitle": "カスタムゲームを作成",
             "customGameOptions": "カスタムゲームオプション",

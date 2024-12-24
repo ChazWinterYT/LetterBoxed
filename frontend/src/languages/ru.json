@@ -76,6 +76,9 @@
         "twoWordSolutions": "Решения в два слова",
         "threeWordSolutions": "Решения в три слова",
         "enterGameLayout": "Введите расклад игры",
+        "custom": "Пользовательская Игра",
+        "random": "Случайная Игра",
+        "nyt": "Официальная Игра NYT",
         "customGame": {
             "customGameTitle": "Создать пользовательскую игру",
             "customGameOptions": "Опции пользовательской игры",

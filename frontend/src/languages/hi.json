@@ -76,6 +76,9 @@
         "twoWordSolutions": "दो-शब्द समाधान",
         "threeWordSolutions": "तीन-शब्द समाधान",
         "enterGameLayout": "गेम लेआउट दर्ज करें",
+        "custom": "कस्टम खेल",
+        "random": "रैंडम खेल",
+        "nyt": "आधिकारिक NYT खेल",
         "customGame": {
             "customGameTitle": "एक कस्टम गेम बनाएं",
             "customGameOptions": "कस्टम गेम विकल्प",

@@ -114,8 +114,8 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
-  min-height: 57vh;
-  max-height: 57vh;
+  min-height: 60vh;
+  max-height: 60vh;
   overflow-y: auto;
 }
 

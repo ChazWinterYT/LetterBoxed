@@ -153,8 +153,7 @@ const BrowseGames: React.FC = () => {
       {/* Language Selector */}
       <div className="form-section">
         <label className="form-label">
-          {t("game.randomGame.selectGameLanguage")}:
-          <br />
+          {t("game.randomGame.selectGameLanguage")}: &nbsp;
           <select
             className="form-input"
             value={selectedLanguage}

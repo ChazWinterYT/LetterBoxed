@@ -6,10 +6,16 @@ import "./GameCard.css";
 const GameCard: React.FC<{ game: Game }> = ({ game }) => {
   const { t } = useLanguage();
 
+  const GAME_TYPE_DISPLAY = {
+    "nyt": t("game.nyt"),
+    "custom": t("game.custom"),
+    "random": t("game.random")
+  }
+
   return (
     <div className="card">
       <div className="card-header">
-        <h3>{game.gameType || t("browseGames.unknownGameType")}</h3>
+        <h3>{GAME_TYPE_DISPLAY[game.gameType as keyof typeof GAME_TYPE_DISPLAY] || t("browseGames.unknownGameType")}</h3>
       </div>
 
       <div className="card-content">

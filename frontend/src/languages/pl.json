@@ -76,6 +76,9 @@
         "twoWordSolutions": "Rozwiązania dwu-słowne",
         "threeWordSolutions": "Rozwiązania trzy-słowne",
         "enterGameLayout": "Wprowadź układ gry",
+        "custom": "Gra Niestandardowa",
+        "random": "Gra Losowa",
+        "nyt": "Oficjalna Gra NYT",
         "customGame": {
             "customGameTitle": "Utwórz grę niestandardową",
             "customGameOptions": "Opcje gry niestandardowej",

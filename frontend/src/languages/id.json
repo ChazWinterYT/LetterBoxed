@@ -76,6 +76,9 @@
         "twoWordSolutions": "Solusi Dua Kata",
         "threeWordSolutions": "Solusi Tiga Kata",
         "enterGameLayout": "Masukkan Tata Letak Game",
+        "custom": "Permainan Kustom",
+        "random": "Permainan Acak",
+        "nyt": "Permainan Resmi NYT",
         "customGame": {
             "customGameTitle": "Buat Game Kustom",
             "customGameOptions": "Opsi Game Kustom",

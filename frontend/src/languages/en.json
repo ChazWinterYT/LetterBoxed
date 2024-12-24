@@ -76,6 +76,9 @@
         "twoWordSolutions": "Two-Word Solutions",
         "threeWordSolutions": "Three-Word Solutions",
         "enterGameLayout": "Enter Game Layout",
+        "custom": "Custom Game",
+        "random": "Random Game",
+        "nyt": "Official NYT Game",
         "customGame": {
             "customGameTitle": "Create a Custom Game",
             "customGameOptions": "Custom Game Options",

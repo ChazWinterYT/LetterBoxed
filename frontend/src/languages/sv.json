@@ -76,6 +76,9 @@
         "twoWordSolutions": "Tvåords-lösningar",
         "threeWordSolutions": "Treords-lösningar",
         "enterGameLayout": "Ange spelplanens layout",
+        "custom": "Anpassat Spel",
+        "random": "Slumpmässigt Spel",
+        "nyt": "Officiellt NYT-Spel",
         "customGame": {
             "customGameTitle": "Skapa ett anpassat spel",
             "customGameOptions": "Alternativ för anpassat spel",
