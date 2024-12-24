@@ -20,7 +20,7 @@ const GameCard: React.FC<{ game: Game }> = ({ game }) => {
 
       <div className="card-content">
         <p>
-          <b>{t("browseGames.gameLayout")}:</b> {game.gameLayout}
+          <b>{t("browseGames.gameLayout")}:</b> [{game.gameLayout.join(", ")}]
         </p>
         <p>
           <b>{t("browseGames.boardSize")}:</b> {game.boardSize}
