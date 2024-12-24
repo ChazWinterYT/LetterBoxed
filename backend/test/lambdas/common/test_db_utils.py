@@ -214,6 +214,129 @@ def test_fetch_game_by_id_error(mock_dynamodb_resource):
     # Assert
     assert result is None
     mock_table.get_item.assert_called_once_with(Key={"gameId": "test-game-id"})
+    
+def test_fetch_games_success(mock_dynamodb_resource):
+    """Test fetch_games_by_language with a successful response."""
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    mock_response = {
+        "Items": [
+            {
+                "gameId": "1234",
+                "gameType": "test",
+                "language": "en",
+                "createdAt": "2024-12-24T12:00:00",
+                "validWordCount": 10,
+                "totalRatings": 2,
+                "totalStars": 4,
+                "totalCompletions": 1,
+                "totalWordsUsed": 5,
+                "twoWordSolutionCount": 3,
+                "oneWordSolutionCount": 0,
+                "gameLayout": ["ABC", "DEF", "GHI"],
+                "boardSize": "3x3",
+                "clue": "Hint text",
+                "createdBy": "test_user",
+            }
+        ],
+        "LastEvaluatedKey": {"language": "en", "createdAt": "2024-12-24T12:00:00"},
+    }
+    mock_table.query.return_value = mock_response
+
+    # Act
+    result = db_utils.fetch_games_by_language(language="en", last_key="2024-12-23T12:00:00", limit=10)
+
+    # Assert
+    assert len(result["games"]) == 1
+    assert result["lastEvaluatedKey"] == "2024-12-24T12:00:00"
+    assert result["games"][0]["gameId"] == "1234"
+
+    # Verify query parameters
+    mock_table.query.assert_called_once_with(
+        IndexName="LanguageCreatedAtIndex",
+        KeyConditionExpression=mock.ANY,  # Can't assert Key directly
+        Limit=10,
+        ScanIndexForward=False,
+        ExclusiveStartKey={"language": "en", "createdAt": "2024-12-23T12:00:00"},
+    )
+
+
+def test_fetch_games_no_results(mock_dynamodb_resource):
+    """Test fetch_games_by_language when no results are found."""
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    mock_table.query.return_value = {"Items": []}
+
+    # Act
+    result = db_utils.fetch_games_by_language(language="en", limit=10)
+
+    # Assert
+    assert result["games"] == []
+    assert result["lastEvaluatedKey"] is None
+
+    # Verify query call
+    mock_table.query.assert_called_once_with(
+        IndexName="LanguageCreatedAtIndex",
+        KeyConditionExpression=mock.ANY,
+        Limit=10,
+        ScanIndexForward=False,
+    )
+
+
+def test_fetch_games_invalid_last_key(mock_dynamodb_resource):
+    """Test fetch_games_by_language with an invalid last key."""
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    # Mock the query response to simulate no results due to invalid key
+    mock_table.query.return_value = {"Items": [], "LastEvaluatedKey": None}
+
+    # Act
+    result = db_utils.fetch_games_by_language(language="en", last_key="invalid_key", limit=10)
+    print("Result:", result)
+
+    # Assert
+    assert result["games"] == []
+    assert result["lastEvaluatedKey"] is None
+
+    # Verify that query was called
+    mock_table.query.assert_called_once_with(
+        IndexName="LanguageCreatedAtIndex",
+        KeyConditionExpression=mock.ANY,
+        Limit=10,
+        ScanIndexForward=False,
+        ExclusiveStartKey={"language": "en", "createdAt": "invalid_key"},
+    )
+
+
+def test_fetch_games_query_error(mock_dynamodb_resource):
+    """Test fetch_games_by_language when DynamoDB query raises an error."""
+    # Arrange
+    mock_table = create_mock_table()
+    mock_dynamodb_resource.Table.return_value = mock_table
+
+    mock_table.query.side_effect = Exception("Query error")
+
+    # Act
+    result = db_utils.fetch_games_by_language(language="en", limit=10)
+
+    # Assert
+    assert result["games"] == []
+    assert result["lastEvaluatedKey"] is None
+
+    # Verify query was attempted
+    mock_table.query.assert_called_once_with(
+        IndexName="LanguageCreatedAtIndex",
+        KeyConditionExpression=mock.ANY,
+        Limit=10,
+        ScanIndexForward=False,
+    )
+
 
 def test_fetch_solutions_by_standardized_hash_found(mock_dynamodb_resource):
     # Arrange

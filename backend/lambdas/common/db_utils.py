@@ -112,16 +112,16 @@ def fetch_game_by_id(game_id: str) -> Optional[Dict[str, Any]]:
 
 def fetch_games_by_language(
     language: str,
-    last_key: Optional[Dict[str, Any]] = None,
+    last_key: Optional[str] = None,
     limit: int = 10,
     index_name: str = "LanguageCreatedAtIndex"
 ) -> Dict[str, Any]:
     """
-    Queries games by language and optionally filters by board size.
+    Queries games by language and paginates results.
 
     Args:
         language (str): The language to filter games by.
-        last_key (Optional[dict]): Pagination key for DynamoDB query (optional).
+        last_key (Optional[str]): The game timestamp for pagination (optional).
         limit (int): Number of results to return (default 10).
         index_name (str): DynamoDB GSI to use for the query (default "LanguageBoardSizeCreatedAtIndex").
 
@@ -140,7 +140,10 @@ def fetch_games_by_language(
             
         if last_key:
             print(f"Parsed lastEvaluatedKey: {last_key}")
-            query_kwargs["ExclusiveStartKey"] = last_key
+            query_kwargs["ExclusiveStartKey"] = {
+                "language": language,   # Partition key
+                "createdAt": last_key   # Sort key
+            }
             
         response = table.query(**query_kwargs)
         
@@ -183,9 +186,12 @@ def fetch_games_by_language(
                 "averageWordsNeeded": average_words_needed,
             }) 
         
+        # Extract only the createdAt value from lastEvaluatedKey to return to the frontend
+        last_evaluated_key = response.get("LastEvaluatedKey", {}).get("createdAt")
+        
         return {
             "games": games,
-            "lastEvaluatedKey": response.get("LastEvaluatedKey")
+            "lastEvaluatedKey": last_evaluated_key
         }
     
     except Exception as e:

@@ -50,19 +50,19 @@ const BrowseGames: React.FC = () => {
   const loadAllGames = useCallback(async (language: string) => {
     setIsLoading(true);
     let allGames: Game[] = [];
-    let nextKey: string | null = null;
-
+    let lastEvaluatedKey: Record<string, string> | null = null; // Updated for correct pagination key
+  
     try {
       do {
-        const response: { games: Game[]; lastKey?: string | null } = 
-        await fetchGamesByLanguage(language, nextKey, pageSize);
+        const response: { games: Game[]; lastEvaluatedKey?: Record<string, string> | null } =
+          await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize); // Pass lastEvaluatedKey
         allGames = [...allGames, ...response.games];
-        nextKey = response.lastKey || null;
-      } while (nextKey);
+        lastEvaluatedKey = response.lastEvaluatedKey || null; // Update for next call
+      } while (lastEvaluatedKey); // Continue until no more pages
       setGames(allGames);
-      setFilteredGames(allGames); // Also set initial filtered set
+      setFilteredGames(allGames); // Initialize filtered games to all loaded games
     } catch (err) {
-      console.error(err);
+      console.error("Error loading games:", err);
     } finally {
       setIsLoading(false);
     }

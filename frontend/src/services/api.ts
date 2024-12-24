@@ -51,14 +51,18 @@ export const fetchGameById = async (gameId: string) => {
 
 // Fetch games by language with pagination
 export const fetchGamesByLanguage = async (
-  language: string = "en",
-  lastEvaluatedKey: string | null = null,
-  limit: number = 10
-): Promise<{ games: Game[]; lastEvaluatedKey?: string | null }> => {
+  language: string,
+  lastEvaluatedKey: Record<string, string> | null,
+  limit: number
+): Promise<{ games: Game[]; lastEvaluatedKey?: Record<string, string> | null }> => {
   const params = new URLSearchParams();
   params.append("language", language);
   params.append("limit", limit.toString());
-  if (lastEvaluatedKey) params.append("lastEvaluatedKey", lastEvaluatedKey);
+
+  // Serialize and encode the lastEvaluatedKey if it exists
+  if (lastEvaluatedKey) {
+    params.append("lastEvaluatedKey", encodeURIComponent(JSON.stringify(lastEvaluatedKey)));
+  }
 
   const response = await fetch(`${API_URL}/browse-games?${params.toString()}`, {
     method: "GET",

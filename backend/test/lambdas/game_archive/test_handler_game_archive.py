@@ -29,7 +29,7 @@ def test_handler_no_query_params(mock_fetch_archived_games):
     assert len(body["nytGames"]) == 4  # All items returned
     assert body["lastKey"] is None
     assert body["message"] == "Fetched official NYT games archive successfully."
-    mock_fetch_archived_games.assert_called_once_with(limit=12, last_key=None)
+    mock_fetch_archived_games.assert_called_once_with(limit=10, last_key=None)
 
 
 @patch("lambdas.game_archive.handler.fetch_archived_games")
@@ -81,4 +81,4 @@ def test_handler_error(mock_fetch_archived_games):
     # Assert
     assert response["statusCode"] == 500
     assert body["message"] == "Error fetching New York Times Archive"
-    mock_fetch_archived_games.assert_called_once_with(limit=12, last_key=None)
+    mock_fetch_archived_games.assert_called_once_with(limit=10, last_key=None)
