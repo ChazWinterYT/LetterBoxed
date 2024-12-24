@@ -146,16 +146,16 @@ const BrowseGames: React.FC = () => {
 
   // ================== Render ==================
   return (
-    <div>
+    <div className="browse-games-container">
       <Header />
-
+  
       <button
         className="menu-button"
         onClick={() => (window.location.href = "/LetterBoxed/frontend")}
       >
         {t("ui.menu.returnHome")}
       </button>
-
+  
       {/* Language Selector */}
       <div className="form-section">
         <label className="form-label">
@@ -173,60 +173,64 @@ const BrowseGames: React.FC = () => {
           </select>
         </label>
       </div>
-
+  
       {/* Property Filter for Card Data */}
-      <PropertyFilter
-        filteringProperties={[
-          {
-            key: "language",
-            propertyLabel: t("browseGames.language"),
-            groupValuesLabel: t("browseGames.group.languageGroup"),
-          },
-          {
-            key: "boardSize",
-            propertyLabel: t("browseGames.boardSize"),
-            groupValuesLabel: t("browseGames.group.boardSizeGroup"),
-          },
-          {
-            key: "createdBy",
-            propertyLabel: t("browseGames.createdBy"),
-            groupValuesLabel: t("browseGames.group.createdByGroup"),
-          },
-          {
-            key: "averageRating",
-            propertyLabel: t("browseGames.averageRating"),
-            groupValuesLabel: t("browseGames.group.ratingGroup"),
-          },
-          {
-            key: "averageWordsNeeded",
-            propertyLabel: t("browseGames.averageWordsNeeded"),
-            groupValuesLabel: t("browseGames.averageWordsNeeded"),
-          },
-          {
-            key: "totalCompletions",
-            propertyLabel: t("browseGames.totalCompletions"),
-            groupValuesLabel: t("browseGames.totalCompletions"),
-          },
-          {
-            key: "gameType",
-            propertyLabel: t("browseGames.gameType"),
-            groupValuesLabel: t("browseGames.group.gameTypeGroup"),
-          },
-        ]}
-        query={query}
-        onChange={({ detail }) => handlePropertyFilterChange(detail)}
-        countText={`${filteredGames.length || games.length} ${
-          filteredGames.length === 1 ? t("browseGames.result") : t("browseGames.results")
-        }`}
-      />
-
+      <div className="property-filter-container">
+        <PropertyFilter
+          filteringProperties={[
+            {
+              key: "language",
+              propertyLabel: t("browseGames.language"),
+              groupValuesLabel: t("browseGames.group.languageGroup"),
+            },
+            {
+              key: "boardSize",
+              propertyLabel: t("browseGames.boardSize"),
+              groupValuesLabel: t("browseGames.group.boardSizeGroup"),
+            },
+            {
+              key: "createdBy",
+              propertyLabel: t("browseGames.createdBy"),
+              groupValuesLabel: t("browseGames.group.createdByGroup"),
+            },
+            {
+              key: "averageRating",
+              propertyLabel: t("browseGames.averageRating"),
+              groupValuesLabel: t("browseGames.group.ratingGroup"),
+            },
+            {
+              key: "averageWordsNeeded",
+              propertyLabel: t("browseGames.averageWordsNeeded"),
+              groupValuesLabel: t("browseGames.averageWordsNeeded"),
+            },
+            {
+              key: "totalCompletions",
+              propertyLabel: t("browseGames.totalCompletions"),
+              groupValuesLabel: t("browseGames.totalCompletions"),
+            },
+            {
+              key: "gameType",
+              propertyLabel: t("browseGames.gameType"),
+              groupValuesLabel: t("browseGames.group.gameTypeGroup"),
+            },
+          ]}
+          query={query}
+          onChange={({ detail }) => handlePropertyFilterChange(detail)}
+          countText={`${filteredGames.length || games.length} ${
+            filteredGames.length === 1 ? t("browseGames.result") : t("browseGames.results")
+          }`}
+        />
+      </div>
+  
       {/* Pagination for Cards */}
-      <Pagination
-        currentPageIndex={currentPageIndex}
-        onChange={handlePageChange}
-        pagesCount={Math.ceil(filteredGames.length / pageSize)}
-      />
-
+      <div className="pagination-container">
+        <Pagination
+          currentPageIndex={currentPageIndex}
+          onChange={handlePageChange}
+          pagesCount={Math.ceil(filteredGames.length / pageSize)}
+        />
+      </div>
+  
       {/* Display the Cards */}
       <div className="browse-games-content">
         {isLoading ? (
@@ -239,12 +243,12 @@ const BrowseGames: React.FC = () => {
           </div>
         )}
       </div>
-
+  
       {/* Fallback if there are no results */}
       {paginatedGames.length === 0 && !isLoading && (
         <div>{t("ui.archive.noGames")}</div>
       )}
-
+  
       <Footer />
     </div>
   );

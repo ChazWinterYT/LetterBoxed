@@ -1,4 +1,4 @@
-  .browse-games-content {
+  .browse-games-container .browse-games-content {
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -6,11 +6,13 @@
     gap: 20px;
   }
 
-  .cards-container {
+  .browse-games-container .cards-container {
     display: flex;
-    flex-direction: column; /* Stack cards vertically */
-    gap: 10px;
-    width: 100%; /* Ensure it takes the full width */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
   }
 
   .card {
@@ -19,7 +21,7 @@
     margin: 0 auto; /* Center the card horizontally if max-width is smaller than the screen */
   }
   
-  .language-selector {
+  .browse-games-container .language-selector {
     margin: 20px;
     display: flex;
     align-items: center;
@@ -31,17 +33,44 @@
     font-size: 1rem;
   }
   
-  .load-more-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  .browse-games-container {
+    text-align: center;
+    padding: 0px;
+    color: #333; /* Default text color */
+    font-family: Arial, sans-serif;
   }
   
-  .load-more-button:hover {
-    background-color: #0056b3;
+  .property-filter-container {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 400px;
   }
+  
+  .pagination-container {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .browse-games-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+  }
+  
+  .browse-games-container .form-section {
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  .browse-games-container .form-label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .browse-games-container .form-input {
+    padding: 5px;
+    font-size: 1rem;
+  }  
   
