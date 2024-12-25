@@ -247,6 +247,22 @@
             "hintGroup": "Tips"
         }
     },
+    "propertyFilter": {
+        "4orAbove": "4 eller mer",
+        "3orAbove": "3 eller mer",
+        "2orAbove": "2 eller mer",
+        "1orAbove": "1 eller mer",
+        "2orFewer": "2 eller färre",
+        "3orFewer": "3 eller färre",
+        "4orFewer": "4 eller färre",
+        "moreThan4": "Mer än 4",
+        "lessThan5": "Mindre än 5",
+        "5orMore": "5 eller mer",
+        "10orMore": "10 eller mer",
+        "20orMore": "20 eller mer",
+        "50orMore": "50 eller mer",
+        "100orMore": "100 eller mer"
+    },
     "instructions": {
         "howToPlay": "Hur man spelar",
         "rules": "Regler",

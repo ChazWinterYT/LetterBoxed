@@ -247,6 +247,22 @@
             "hintGroup": "Pistas"
         }
     },
+    "propertyFilter": {
+        "4orAbove": "4 o más",
+        "3orAbove": "3 o más",
+        "2orAbove": "2 o más",
+        "1orAbove": "1 o más",
+        "2orFewer": "2 o menos",
+        "3orFewer": "3 o menos",
+        "4orFewer": "4 o menos",
+        "moreThan4": "Más de 4",
+        "lessThan5": "Menos de 5",
+        "5orMore": "5 o más",
+        "10orMore": "10 o más",
+        "20orMore": "20 o más",
+        "50orMore": "50 o más",
+        "100orMore": "100 o más"
+    },
     "instructions": {
         "howToPlay": "Cómo jugar",
         "rules": "Reglas",

@@ -247,6 +247,22 @@
             "hintGroup": "संकेत"
         }
     },
+    "propertyFilter": {
+        "4orAbove": "4 या अधिक",
+        "3orAbove": "3 या अधिक",
+        "2orAbove": "2 या अधिक",
+        "1orAbove": "1 या अधिक",
+        "2orFewer": "2 या कम",
+        "3orFewer": "3 या कम",
+        "4orFewer": "4 या कम",
+        "moreThan4": "4 से अधिक",
+        "lessThan5": "5 से कम",
+        "5orMore": "5 या अधिक",
+        "10orMore": "10 या अधिक",
+        "20orMore": "20 या अधिक",
+        "50orMore": "50 या अधिक",
+        "100orMore": "100 या अधिक"
+    },
     "instructions": {
         "howToPlay": "कैसे खेलें",
         "rules": "नियम",

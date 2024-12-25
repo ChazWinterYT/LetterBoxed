@@ -247,6 +247,22 @@
             "hintGroup": "Petunjuk"
         }
     },
+    "propertyFilter": {
+        "4orAbove": "4 atau lebih",
+        "3orAbove": "3 atau lebih",
+        "2orAbove": "2 atau lebih",
+        "1orAbove": "1 atau lebih",
+        "2orFewer": "2 atau kurang",
+        "3orFewer": "3 atau kurang",
+        "4orFewer": "4 atau kurang",
+        "moreThan4": "Lebih dari 4",
+        "lessThan5": "Kurang dari 5",
+        "5orMore": "5 atau lebih",
+        "10orMore": "10 atau lebih",
+        "20orMore": "20 atau lebih",
+        "50orMore": "50 atau lebih",
+        "100orMore": "100 atau lebih"
+    },
     "instructions": {
         "howToPlay": "Cara Bermain",
         "rules": "Aturan",

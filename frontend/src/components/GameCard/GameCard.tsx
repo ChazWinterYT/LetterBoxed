@@ -19,6 +19,9 @@ const GameCard: React.FC<{ game: Game }> = ({ game }) => {
       </div>
 
       <div className="card-content">
+        {game.gameType === "nyt" &&
+          <p><b>{game.gameId}</b></p>
+        }
         <p>
           <b>{t("browseGames.gameLayout")}:</b> [{game.gameLayout.join(", ")}]
         </p>
@@ -43,7 +46,7 @@ const GameCard: React.FC<{ game: Game }> = ({ game }) => {
         </p>
         <p>
           <b>{t("browseGames.hint")}:</b>{" "}
-          {game.hint}
+          {game.hint || `(${t("game.noHintAvailable")})`}
         </p>
       </div>
 

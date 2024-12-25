@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { getPlayableLanguages } from "../../languages/languages";
+import { getUniqueValues, generateRangeOptions } from "../../utility/utility";
 import Header from "../Header";
 import Footer from "../Footer";
 import GameCard from "../GameCard/GameCard";
@@ -127,6 +128,66 @@ const BrowseGames: React.FC = () => {
     setFilteredGames(filterGames(games, query));
   }, [filterGames, games, query]);
 
+  // ================== Memoized Filtering Options ==================
+  const filteringOptions = useMemo(() => {
+    // Hard coded board sizes and game types
+    const boardSizes = [
+      { propertyKey: "boardSize", value: "2x2", label: "2x2" },
+      { propertyKey: "boardSize", value: "3x3", label: "3x3" },
+      { propertyKey: "boardSize", value: "4x4", label: "4x4" },
+    ];
+
+    const gameTypes = [
+      { propertyKey: "gameType", value: "custom", label: t("game.custom") },
+      { propertyKey: "gameType", value: "random", label: t("game.random") },
+      { propertyKey: "gameType", value: "nyt", label: t("game.nyt") },
+    ];
+
+    // Dynamically generated authors
+    const authors = getUniqueValues(games, "createdBy").map((value) => ({
+      propertyKey: "createdBy",
+      value,
+      label: value,
+    }));
+
+    // Ranges for average rating
+    const averageRatingRanges = generateRangeOptions("averageRating", [
+      { value: "4+", label: t("propertyFilter.4orAbove") },
+      { value: "3+", label: t("propertyFilter.3orAbove") },
+      { value: "2+", label: t("propertyFilter.2orAbove") },
+      { value: "1+", label: t("propertyFilter.1orAbove") },
+    ]);
+
+    // Ranges for average words needed
+    const averageWordsNeededRanges = generateRangeOptions("averageWordsNeeded", [
+      { value: "1", label: "1" },
+      { value: "2orFewer", label: t("propertyFilter.2orFewer") },
+      { value: "3orFewer", label: t("propertyFilter.3orFewer") },
+      { value: "4orFewer", label: t("propertyFilter.4orFewer") },
+      { value: "moreThan4", label: t("propertyFilter.moreThan4") },
+    ]);
+
+
+    // Ranges for total completions
+    const totalCompletionsRanges = generateRangeOptions("totalCompletions", [
+      { value: "lessThan5", label: t("propertyFilter.lessThan5") },
+      { value: "5orMore", label: t("propertyFilter.5orMore") },
+      { value: "10orMore", label: t("propertyFilter.10orMore") },
+      { value: "20orMore", label: t("propertyFilter.20orMore") },
+      { value: "50orMore", label: t("propertyFilter.50orMore") },
+      { value: "100orMore", label: t("propertyFilter.100orMore") },
+    ]);
+
+    return [
+      ...boardSizes,
+      ...gameTypes,
+      ...authors,
+      ...averageRatingRanges,
+      ...averageWordsNeededRanges,
+      ...totalCompletionsRanges,
+    ];
+  }, [games, t]);
+
   // ================== Language Change ==================
   const handleLanguageChange = async (lang: string) => {
     setSelectedLanguage(lang);
@@ -215,14 +276,7 @@ const BrowseGames: React.FC = () => {
               groupValuesLabel: t("browseGames.group.gameTypeGroup"),
             },
           ]}
-          filteringOptions={[
-            { propertyKey: "boardSize", value: "2x2", label: "2x2" },
-            { propertyKey: "boardSize", value: "3x3", label: "3x3" },
-            { propertyKey: "boardSize", value: "4x4", label: "4x4" },
-            { propertyKey: "gameType", value: "nyt", label: t("game.nyt") },
-            { propertyKey: "gameType", value: "custom", label: t("game.custom") },
-            { propertyKey: "gameType", value: "random", label: t("game.random") },
-          ]}
+          filteringOptions={filteringOptions}
           query={query}
           onChange={({ detail }) => handlePropertyFilterChange(detail)}
           countText={`${filteredGames.length || games.length} ${

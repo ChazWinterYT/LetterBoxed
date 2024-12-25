@@ -247,6 +247,22 @@
             "hintGroup": "Suggerimenti"
         }
     },
+    "propertyFilter": {
+        "4orAbove": "4 o più",
+        "3orAbove": "3 o più",
+        "2orAbove": "2 o più",
+        "1orAbove": "1 o più",
+        "2orFewer": "2 o meno",
+        "3orFewer": "3 o meno",
+        "4orFewer": "4 o meno",
+        "moreThan4": "Più di 4",
+        "lessThan5": "Meno di 5",
+        "5orMore": "5 o più",
+        "10orMore": "10 o più",
+        "20orMore": "20 o più",
+        "50orMore": "50 o più",
+        "100orMore": "100 o più"
+    },
     "instructions": {
         "howToPlay": "Come giocare",
         "rules": "Regole",

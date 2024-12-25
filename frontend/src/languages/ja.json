@@ -247,6 +247,22 @@
             "hintGroup": "ヒント"
         }
     },
+    "propertyFilter": {
+        "4orAbove": "4以上",
+        "3orAbove": "3以上",
+        "2orAbove": "2以上",
+        "1orAbove": "1以上",
+        "2orFewer": "2以下",
+        "3orFewer": "3以下",
+        "4orFewer": "4以下",
+        "moreThan4": "4以上",
+        "lessThan5": "5未満",
+        "5orMore": "5以上",
+        "10orMore": "10以上",
+        "20orMore": "20以上",
+        "50orMore": "50以上",
+        "100orMore": "100以上"
+    },
     "instructions": {
         "howToPlay": "遊び方",
         "rules": "ルール",

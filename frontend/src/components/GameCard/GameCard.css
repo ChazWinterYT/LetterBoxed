@@ -1,6 +1,6 @@
 .card {
-  background: #343a40;
-  border: 1px solid #dee2e6;
+  background: #35312e;
+  border: 2px solid #d32fec;
   border-radius: 8px;
   padding: 15px;
   max-width: 100%;
@@ -20,7 +20,7 @@
 .card-content {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Reduce spacing between lines */
+  gap: 2px; /* Reduce spacing between lines */
 }
 
 .card-content p {
@@ -30,13 +30,13 @@
   color: #e1e3e6;
 }
 
-button {
-  margin-top: 10px; /* Separate button from content */
+.card button {
+  margin-top: 6px; /* Separate button from content */
   padding: 8px 16px;
   font-size: 0.9rem;
   background-color: #007bff;
   color: #fff;
-  border: none;
+  border: 1px solid #010001;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -44,4 +44,5 @@ button {
 
 button:hover {
   background-color: #0056b3;
+  color: #dddada;
 }
