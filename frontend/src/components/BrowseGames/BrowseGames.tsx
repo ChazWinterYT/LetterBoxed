@@ -262,6 +262,20 @@ const BrowseGames: React.FC = () => {
       {paginatedGames.length === 0 && !isLoading && (
         <div>{t("ui.archive.noGames")}</div>
       )}
+
+      {/* Pagination for Cards */}
+      <div className="pagination-container">
+        <Pagination
+          currentPageIndex={currentPageIndex}
+          onChange={handlePageChange}
+          pagesCount={Math.ceil(filteredGames.length / pageSize)}
+          ariaLabels={{
+            nextPageLabel: "Next page",
+            previousPageLabel: "Previous page",
+            pageLabel: (pageNumber) => `Page ${pageNumber}`,
+          }}
+        />
+      </div>
   
       <Footer />
     </div>
