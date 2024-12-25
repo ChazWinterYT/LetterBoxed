@@ -305,7 +305,7 @@
   position: absolute; /* Makes it float over the game board */
   top: 90%; /* Center vertically on the game board */
   left: 50%; /* Center horizontally on the game board */
-  transform: translate(-50%, -50%); /* Adjust for perfect centering */
+  transform: translate(-50%, 100%); /* Adjust for perfect centering */
   z-index: 600; /* Ensures it is above all other elements */
   font-size: 1.2rem;
   font-weight: bold;
