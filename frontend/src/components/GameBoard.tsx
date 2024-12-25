@@ -360,16 +360,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         </div>
       </div>
 
-      {/* Feedback Message */}
-      {validationMessage && (
-        <div
-          className={`feedback-message ${
-            validationStatus === "valid" ? "valid-feedback" : "invalid-feedback"
-          }`}
-        >
-          {validationMessage}
-        </div>
-      )}
+
 
       {/* Played Words Section */}
       <div className="played-words-section">
@@ -385,6 +376,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
       {/* Game Board */}
       <div className="board">
+        {/* Feedback Message */}
+        {validationMessage && (
+          <div
+            className={`feedback-message ${
+              validationStatus === "valid" ? "valid-feedback" : "invalid-feedback"
+            }`}
+          >
+            {validationMessage}
+          </div>
+        )}
+
         {/* Top Side */}
         <div className="top-side">{renderSide(shuffledLayout[0], 'top')}</div>
 

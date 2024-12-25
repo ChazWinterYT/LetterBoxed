@@ -100,6 +100,39 @@
   white-space: nowrap; /* Keep each word with its hyphen together */
 }
 
+/* Feedback Message */
+.feedback-message {
+  position: absolute;
+  bottom: 50%; /* Position just below the board */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 600; /* Ensure it's above other elements */
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fefefe;
+  opacity: 0.9;
+  transition: opacity 0.2s ease-in; /* Smooth fade-in effect */
+  animation: fade-out 3s ease-in-out;
+}
+
+/* Valid Word Feedback */
+.feedback-message.valid-feedback {
+  color: #ffffff;
+  background-color: #28a745; /* Green background for success */
+  border: 4px solid #186027;
+}
+
+/* Invalid Word Feedback */
+.feedback-message.invalid-feedback {
+  color: #ffffff;
+  background-color: #dc3545; /* Red background for failure */
+  border: 4px solid #861924;
+}
+
 /* Board */
 .board {
   position: relative;
@@ -300,37 +333,7 @@
   }
 }
 
-/* Feedback Message */
-.feedback-message {
-  position: absolute; /* Makes it float over the game board */
-  top: 90%; /* Center vertically on the game board */
-  left: 50%; /* Center horizontally on the game board */
-  transform: translate(-50%, 100%); /* Adjust for perfect centering */
-  z-index: 600; /* Ensures it is above all other elements */
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  opacity: 0.9;
-  transition: opacity 0.2s ease-in; /* Fast fade-in */
-  animation: fade-out 3s ease-in-out;
-}
 
-/* Valid Word Feedback */
-.feedback-message.valid-feedback {
-  color: #ffffff;
-  background-color: #28a745; /* Green background for success */
-  border: 4px solid #186027;
-}
-
-/* Invalid Word Feedback */
-.feedback-message.invalid-feedback {
-  color: #ffffff;
-  background-color: #dc3545; /* Red background for failure */
-  border: 4px solid #861924;
-}
 
 /* Fade-out animation */
 @keyframes fade-out {
