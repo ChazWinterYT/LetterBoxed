@@ -236,6 +236,7 @@
         "averageWordsNeeded": "Mots Moyens Nécessaires",
         "result": "Résultat",
         "results": "Résultats",
+        "filterResults": "Filtrer les résultats de recherche",
         "group": {
             "gameIdGroup": "Identifiants des jeux",
             "gameLayoutGroup": "Dispositions des jeux",

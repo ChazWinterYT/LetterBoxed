@@ -21,6 +21,12 @@ const languages: Language[] = [
   { code: "fr", name: "Français", 
     uiAvailable: true, playable: false 
   },
+  { code: "he", name: "עברית", 
+    uiAvailable: true, playable: false 
+  },
+  { code: "hev", name: "עברית (ניקוד)", 
+    uiAvailable: true, playable: false 
+  },
   { code: "hi", name: "हिंदी", 
     uiAvailable: true, playable: false 
   },

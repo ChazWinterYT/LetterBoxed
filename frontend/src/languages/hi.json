@@ -236,6 +236,7 @@
         "averageWordsNeeded": "औसत आवश्यक शब्द",
         "result": "परिणाम",
         "results": "परिणाम",
+        "filterResults": "खोज परिणामों को फ़िल्टर करें",
         "group": {
             "gameIdGroup": "खेल आईडी",
             "gameLayoutGroup": "खेल लेआउट",

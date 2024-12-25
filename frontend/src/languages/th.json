@@ -236,6 +236,7 @@
         "averageWordsNeeded": "จำนวนคำเฉลี่ยที่ต้องการ",
         "result": "ผลลัพธ์",
         "results": "ผลลัพธ์",
+        "filterResults": "กรองผลการค้นหา",
         "group": {
             "gameIdGroup": "รหัสเกม",
             "gameLayoutGroup": "เลย์เอาต์เกม",

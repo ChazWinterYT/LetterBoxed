@@ -241,6 +241,7 @@
         "averageWordsNeeded": "Average Words Needed",
         "result": "Result",
         "results": "Results",
+        "filterResults": "Filter the search results",
         "group": {
             "gameIdGroup": "Game IDs",
             "gameLayoutGroup": "Game Layouts",
@@ -287,6 +288,8 @@
         "de": "German",
         "es": "Spanish",
         "fr": "French",
+        "he": "Hebrew",
+        "hev": "Hebrew (Nikkud)",
         "hi": "Hindi",
         "id": "Indonesian",
         "it": "Italian",

@@ -236,6 +236,7 @@
         "averageWordsNeeded": "Среднее количество слов",
         "result": "Результат",
         "results": "Результаты",
+        "filterResults": "Фильтровать результаты поиска",
         "group": {
             "gameIdGroup": "ID игр",
             "gameLayoutGroup": "Макеты игр",

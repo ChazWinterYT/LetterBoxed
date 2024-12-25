@@ -236,6 +236,7 @@
         "averageWordsNeeded": "必要な単語の平均",
         "result": "結果",
         "results": "結果",
+        "filterResults": "検索結果をフィルターする",
         "group": {
             "gameIdGroup": "ゲームID",
             "gameLayoutGroup": "ゲームレイアウト",

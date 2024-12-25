@@ -236,6 +236,7 @@
         "averageWordsNeeded": "Średnia Liczba Słów Potrzebnych",
         "result": "Wynik",
         "results": "Wyniki",
+        "filterResults": "Filtruj wyniki wyszukiwania",
         "group": {
             "gameIdGroup": "ID Gier",
             "gameLayoutGroup": "Układy Gier",

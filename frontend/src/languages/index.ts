@@ -2,6 +2,8 @@ import en from "./en.json";
 import de from "./de.json";
 import es from "./es.json";
 import fr from "./fr.json";
+import he from "./he.json";
+import hev from "./hev.json";
 import hi from "./hi.json";
 import id from "./id.json";
 import it from "./it.json";
@@ -18,6 +20,8 @@ const translations = {
   de,
   es,
   fr,
+  he,
+  hev,
   hi,
   id,
   it,
@@ -31,7 +35,9 @@ const translations = {
 
 export const gameLanguages = {
   en,
+  de,
   es,
+  it,
   pl,
   ru,
 }

@@ -236,6 +236,7 @@
         "averageWordsNeeded": "Rata-rata Kata Diperlukan",
         "result": "Hasil",
         "results": "Hasil",
+        "filterResults": "Saring hasil pencarian",
         "group": {
             "gameIdGroup": "ID Permainan",
             "gameLayoutGroup": "Tata Letak Permainan",

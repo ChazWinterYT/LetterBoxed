@@ -236,6 +236,7 @@
         "averageWordsNeeded": "Genomsnittliga ord som behövs",
         "result": "Resultat",
         "results": "Resultat",
+        "filterResults": "Filtrera sökresultaten",
         "group": {
             "gameIdGroup": "Spel-ID",
             "gameLayoutGroup": "Spellayouter",

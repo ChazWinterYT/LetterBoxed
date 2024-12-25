@@ -1,0 +1,302 @@
+{
+    "ui": {
+        "menu": {
+            "returnHome": "חזור לדף הבית",
+            "menuTitle": "תפריט ראשי",
+            "playToday": "שחק במשחק הניו יורק טיימס של היום",
+            "archive": "ארכיון משחקי הניו יורק טיימס",
+            "browseGames": "עיין בכל המשחקים",
+            "customGame": "צור משחק מותאם אישית",
+            "randomGame": "שחק במשחק אקראי",
+            "randomGameGenerator": "מחולל משחקים אקראי"
+        },
+        "archive": {
+            "noGames": "אין משחקים זמינים",
+            "loadingGames": "...הארכיון נטען, אנא המתן",
+            "error": "אירעה שגיאה בעת טעינת המשחק",
+            "loadMore": "טען עוד",
+            "previousPage": "הקודם",
+            "nextPage": "הבא",
+            "older": "ישן יותר >>",
+            "newer": "<< חדש יותר",
+            "endOfArchiveMessage": "הגעת לסוף הארכיון"
+        },
+        "customGame": {
+            "random": "משחק אקראי לחלוטין",
+            "seedWords": "משחק שנוצר ממילות בסיס",
+            "fullCustom": "משחק מותאם אישית לחלוטין",
+            "randomDescription": "משחק עם אותיות אקראיות נוצר",
+            "seedWordsDescription": "הזן שתי מילות בסיס כדי ליצור את המשחק שלך",
+            "fullCustomDescription": "צור משחק מותאם אישית על ידי בחירת כל האותיות"
+        },
+        "startGame": "התחל משחק",
+        "submitWord": "שלח מילה",
+        "playAgain": "שחק שוב",
+        "confirm": "אשר",
+        "cancel": "בטל",
+        "chooseLanguage": "בחר שפה",
+        "backToHome": "chazwinter.com-חזור ל",
+        "languageSelector": "שפה"
+    },
+    "messages": {
+        "invalidWord": "מילה לא תקפה",
+        "wordAlreadyUsed": "המילה כבר שומשה",
+        "gameNotFound": "המשחק לא נמצא",
+        "gameCreated": "המשחק נוצר",
+        "gameFetched": "המשחק נטען",
+        "congratulations": "ברכות!",
+        "youWin": "ניצחת!",
+        "tryAgain": "נסה שוב",
+        "loading": "טוען...",
+        "error": "שגיאה",
+        "invalidInput": "קלט לא תקף"
+    },
+    "game": {
+        "loading": "לוח המשחק נטען, אנא המתן...",
+        "playedWords": "מילים ששוחקו:",
+        "boardSize": "גודל הלוח",
+        "gameId": "מזהה המשחק",
+        "tryToSolve": "נסה לפתור ב-{words} מילים",
+        "complete": {
+            "puzzleSolvedTitle": "ניצחת!",
+            "puzzleSolvedMessage": "פתרת את החידה! ברכות!!!",
+            "statisticsTitle": "הנה כמה סטטיסטיקות על המשחק הזה (כולל הביצועים שלך)",
+            "averageWordsUsed": "ממוצע המילים שהשתמשו",
+            "averageWordLength": "אורך מילה ממוצע",
+            "averageRating": "דירוג ממוצע",
+            "rateThisGame": "דרג את המשחק הזה",
+            "ratingUpdated": "הדירוג עודכן בהצלחה! הממוצע החדש הוא",
+            "officialSolution": "החידה נוצרה עם המילה/ות",
+            "numberOfOneWordSolutions": "מספר הפתרונות במילה אחת שנמצאו",
+            "numberOfTwoWordSolutions": "מספר הפתרונות בשתי מילים שנמצאו",
+            "someOneWordSolutions": "כמה פתרונות אפשריים במילה אחת",
+            "someTwoWordSolutions": "כמה פתרונות אפשריים בשתי מילים",
+            "playAnotherButton": "לשחק משחק נוסף?"
+        },
+        "twoWordSolutions": "פתרונות בשתי מילים",
+        "threeWordSolutions": "פתרונות בשלוש מילים",
+        "enterGameLayout": "הזן את פריסת המשחק",
+        "custom": "משחק מותאם אישית",
+        "random": "משחק אקראי",
+        "nyt": "משחק רשמי של הניו יורק טיימס",
+        "customGame": {
+            "customGameTitle": "צור משחק מותאם אישית",
+            "customGameOptions": "אפשרויות למשחק מותאם אישית",
+            "customGameChoice": "איך תרצה ליצור את המשחק שלך?",
+            "enterLetters": "על ידי הזנת אותיות",
+            "enterLettersDesc": "צור משחק מותאם אישית על ידי הזנת אותיות מסביב ללוח המשחק",
+            "chooseWords": "על ידי בחירת מילים",
+            "chooseWordsDesc": "בחר מילה אחת או שתיים, ואני אצור לך לוח משחק!"
+        },
+        "randomGame": {
+            "randomGameTitle": "שחק במשחק אקראי",
+            "randomGameOptions": "אפשרויות למשחק אקראי",
+            "selectGameLanguage": "בחר שפת משחק",
+            "selectGameLanguageDesc": "זה לא משפיע על שפת האתר."
+        },
+        "selectBoardSize": "בחר גודל לוח",
+        "restartGame": "התחל מחדש את המשחק",
+        "deleteLetter": "מחק אות",
+        "removeLastWord": "הסר את המילה האחרונה",
+        "submitWord": "שלח מילה",
+        "shuffle": "ערבב אותיות",
+        "showHint": "הצג רמז",
+        "noHintAvailable": "אין רמז זמין למשחק זה.",
+        "hintError": "אירעה שגיאה בעת טעינת הרמז. אנא נסה שוב מאוחר יותר.",
+        "shareGame": "שתף את המשחק הזה:",
+        "restartConfirmationTitle": "האם אתה בטוח שברצונך להתחיל מחדש את המשחק?",
+        "restartConfirmationMessage": "לחיצה על \"אשר\" תסיר את ההתקדמות שלך ותתחיל את המשחק מחדש.",
+        "validateWord": {
+            "valid": [
+                "עבודה מצוינת!",
+                "כל הכבוד!",
+                "מעולה!",
+                "פגעת בול!",
+                "עבודה יפה!",
+                "מושלם!",
+                "מדהים!",
+                "אתה בכושר שיא!"
+            ],
+            "invalid": [
+                "אופס, זו לא מילה תקפה.",
+                "נסה שוב, המילה הזו לא מתאימה.",
+                "לא בדיוק נכון.",
+                "המילה הזו לא במילון.",
+                "לא, זה לא נחשב.",
+                "קרוב, אבל לא מספיק."
+            ],
+            "error": "אירעה שגיאה בעת בדיקת המילה."
+        }
+    },
+    "customGameForm": {
+        "boardSize": "גודל לוח",
+        "boardSizes": {
+            "2x2": "2x2",
+            "3x3": "3x3",
+            "4x4": "4x4"
+        },
+        "numSeedWords": {
+            "one": "מילה אחת",
+            "two": "שתי מילים"
+        },
+        "seedWords": "מילות בסיס",
+        "clearWord": "נקה מילה",
+        "casualGame": "מצב קליל",
+        "hint": "רמז",
+        "authorName": "שם המחבר",
+        "longTimeWarning": "אזהרה: יצירת משחק עשויה לקחת עד 60 שניות. אנא אל תרענן או תצא מהדף, אחרת לא תקבל את הקישור למשחק שלך.",
+        "generateGame": "צור משחק",
+        "submitting": "נשלח, אנא המתן...",
+        "cancel": "בטל",
+        "instructions": {
+            "authorName": "הזן את שמך!",
+            "enterLetters": "הזן אות בכל רווח סביב לוח המשחק.",
+            "enterSeedWord": "הזן מילת בסיס",
+            "seedWordChoice": "ללוחות משחק קטנים, ניתן להשתמש במילה אחת או שתיים.",
+            "boardSize": "בחר גודל ללוח המשחק",
+            "casualGame": "אם תיבה זו מסומנת, מילות הבסיס לא חייבות להימצא במילון.",
+            "hint": "הזן רמז שיעזור לאחרים לפתור את החידה שלך."
+        },
+        "success": {
+            "gameCreationSuccess": "המשחק נוצר בהצלחה!",
+            "statsTitle": "סטטיסטיקות על המשחק המותאם שלך",
+            "oneWordSolutions": "מספר הפתרונות במילה אחת",
+            "twoWordSolutions": "מספר הפתרונות בשתי מילים",
+            "validWords": "מספר המילים התקפות במשחק שלך",
+            "gameLink": "שתף את המשחק הזה עם חבריך!",
+            "copyLink": "העתק ללוח",
+            "copied": "הועתק!",
+            "goToGame": "שחק במשחק שלך עכשיו!",
+            "createAnotherGame": "ליצור עוד משחק?"
+        },
+        "error": {
+            "spacesOnBoard": "אנא שים אות בכל רווח על הלוח.",
+            "repeatLettersOnBoard": "כל אות בלוח חייבת להיות ייחודית. אין חזרה על אותיות.",
+            "wordsNotConnected": "האות האחרונה של מילה 1 חייבת להיות זהה לאות הראשונה של מילה 2.",
+            "notEnoughLetters": "אין מספיק אותיות ייחודיות לגודל הלוח הזה.",
+            "tooManyLetters": "יש יותר מדי אותיות ייחודיות לגודל הלוח הזה.",
+            "lettersRequired": "נדרשות אותיות",
+            "lettersUsed": "אותיות שנמצאות בשימוש",
+            "_context1": "לדוגמה, 'נדרשות אותיות: 12. אותיות בשימוש: 7.'",
+            "doubleLetters": "אי אפשר שתהיה אותה אות ליד עצמה",
+            "notInDictionary": "אחת (או שתיים) מהמילים שהזנת לא נמצאת במילון.",
+            "genericError": "אירעה שגיאה בעת יצירת המשחק שלך"
+        }
+    },
+    "gameGenerator": {
+        "title": "מחולל משחקים אקראיים",
+        "numTries": "מספר המשחקים ליצירה",
+        "board": {
+            "numWords": "צור חידות ממילים",
+            "singleWord": "מילה אחת",
+            "twoWords": "שתי מילים",
+            "instructions1": "אם תבחר \"4x4\", מומלץ מאוד להפחית את מספר המשחקים ליצירה!",
+            "instructions2": "כדאי גם להגדיל את אורך המילים המרבי."
+        },
+        "dictionary": {
+            "dictionaryType": "סוג המילון",
+            "basic": "בסיסי",
+            "full": "מלא",
+            "instructions1": "בחירת \"מלא\" עשויה ליצור מילות בסיס נדירות וקשות יותר.",
+            "instructions2": "המשחק שנוצר עשוי לכלול פתרונות נוספים מעבר למילות הבסיס."
+        },
+        "wordProperties": {
+            "minWordLength": "אורך המילה המינימלי",
+            "minWordLengthInstructions": "מילות הבסיס לא יהיו קצרות מהערך הזה.",
+            "maxWordLength": "אורך המילה המרבי",
+            "maxWordLengthInstructions": "מילות הבסיס לא יהיו ארוכות מהערך הזה.",
+            "maxSharedLetters": "מספר האותיות המשותפות המרבי",
+            "maxSharedLettersInstructions": "ערכים נמוכים מאפשרים לכל מילת בסיס לתרום במידה שווה לפתרון, מה שמביא למשחק קל יותר."
+        },
+        "generate": "צור משחקים",
+        "error": {
+            "error": "אירעה שגיאה בעת יצירת המשחק",
+            "minGreaterThanMax": "אורך המילה המינימלי לא יכול להיות גדול מאורך המילה המרבי.",
+            "maxWordLength4x4": "לוחות 4x4 דורשים שלפחות מילה אחת תהיה באורך 9 אותיות."
+        }
+    },
+    "browseGames": {
+        "loading": "טוען משחקים, אנא המתן...",
+        "play": "שחק",
+        "gameId": "מזהה משחק",
+        "gameLayout": "פריסת משחק",
+        "gameType": "סוג המשחק",
+        "gameTypes": {
+            "custom": "מותאם אישית",
+            "random": "אקראי",
+            "nyt": "רשמי של ניו יורק טיימס"
+        },
+        "language": "שפה",
+        "boardSize": "גודל לוח",
+        "createdAt": "נוצר בתאריך",
+        "createdBy": "מחבר",
+        "unknownAuthor": "לא ידוע",
+        "hint": "רמז",
+        "validWordCount": "מילים תקפות",
+        "oneWordSolutionCount": "מספר פתרונות במילה אחת",
+        "twoWordSolutionCount": "מספר פתרונות בשתי מילים",
+        "totalRatings": "סה\"כ דירוגים",
+        "averageRating": "דירוג ממוצע",
+        "totalCompletions": "סה\"כ השלמות",
+        "averageWordsNeeded": "ממוצע המילים שנדרשו",
+        "result": "תוצאה",
+        "results": "תוצאות",
+        "filterResults": "סנן את תוצאות החיפוש",
+        "group": {
+            "gameIdGroup": "מזהי משחקים",
+            "gameLayoutGroup": "פריסות משחקים",
+            "gameTypeGroup": "סוגי משחקים",
+            "languageGroup": "שפות",
+            "boardSizeGroup": "גדלי לוחות",
+            "createdByGroup": "מחברים",
+            "ratingGroup": "דירוגים",
+            "hintGroup": "רמזים"
+        }
+    },
+    "propertyFilter": {
+        "4orAbove": "4 ומעלה",
+        "3orAbove": "3 ומעלה",
+        "2orAbove": "2 ומעלה",
+        "1orAbove": "1 ומעלה",
+        "2orFewer": "2 או פחות",
+        "3orFewer": "3 או פחות",
+        "4orFewer": "4 או פחות",
+        "moreThan4": "יותר מ-4",
+        "lessThan5": "פחות מ-5",
+        "5orMore": "5 או יותר",
+        "10orMore": "10 או יותר",
+        "20orMore": "20 או יותר",
+        "50orMore": "50 או יותר",
+        "100orMore": "100 או יותר"
+    },
+    "instructions": {
+        "howToPlay": "איך לשחק",
+        "rules": "כללים",
+        "instructions": "הוראות"
+    },
+    "header": {
+        "title": "מצבי תפרים",
+        "subtitle": "משחק לטרבוקסד"
+    },
+    "footer": {
+        "cookieWarning": "אתר זה משתמש בקובצי עוגיות הכרחיים בלבד לשמירת התקדמות המשחק שלך. לא נשמרת שום מידע אישי. בהמשך השימוש באתר, אתה מסכים לשימוש זה."
+    },
+    "language": {
+        "currentLanguage": "אנגלית",
+        "language": "שפה",
+        "en": "אנגלית",
+        "de": "גרמנית",
+        "es": "ספרדית",
+        "fr": "צרפתית",
+        "he": "עברית",
+        "hev": "עברית (ניקוד)",
+        "hi": "הינדי",
+        "id": "אינדונזית",
+        "it": "איטלקית",
+        "ja": "יפנית",
+        "pl": "פולנית",
+        "pt": "פורטוגזית",
+        "ru": "רוסית",
+        "sv": "שוודית"
+    }
+}

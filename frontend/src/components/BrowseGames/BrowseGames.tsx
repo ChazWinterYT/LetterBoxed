@@ -242,11 +242,6 @@ const BrowseGames: React.FC = () => {
         <PropertyFilter
           filteringProperties={[
             {
-              key: "language",
-              propertyLabel: t("browseGames.language"),
-              groupValuesLabel: t("browseGames.group.languageGroup"),
-            },
-            {
               key: "boardSize",
               propertyLabel: t("browseGames.boardSize"),
               groupValuesLabel: t("browseGames.group.boardSizeGroup"),
@@ -283,6 +278,7 @@ const BrowseGames: React.FC = () => {
           countText={`${filteredGames.length || games.length} ${
             filteredGames.length === 1 ? t("browseGames.result") : t("browseGames.results")
           }`}
+          filteringPlaceholder={t("browseGames.filterResults")}
         />
       </div>
   
