@@ -51,24 +51,25 @@ const BrowseGames: React.FC = () => {
    */
   const loadAllGames = useCallback(async (language: string) => {
     setIsLoading(true);
-    let allGames: Game[] = [];
-    let lastEvaluatedKey: Record<string, string> | null = null; // Updated type to match API
+    let lastEvaluatedKey: Record<string, string> | null = null;
   
     try {
       do {
+        console.log("Fetching games with lastEvaluatedKey:", lastEvaluatedKey);
         const response: { games: Game[]; lastEvaluatedKey?: Record<string, string> | null } =
           await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize);
   
-        // Append the fetched games to the existing list
-        allGames = [...allGames, ...response.games];
+        console.log("Fetched games:", response.games);
+  
+        // Append the new games to the existing list incrementally
+        setGames((prevGames) => [...prevGames, ...response.games]);
+  
+        // Update filteredGames dynamically
+        setFilteredGames((prevFiltered) => [...prevFiltered, ...response.games]);
   
         // Update the pagination key for the next API call
         lastEvaluatedKey = response.lastEvaluatedKey || null;
-      } while (lastEvaluatedKey); // Continue until no more pages
-  
-      // Update state with the fetched games
-      setGames(allGames);
-      setFilteredGames(allGames); // Initialize filtered games to all loaded games
+      } while (lastEvaluatedKey);
     } catch (err) {
       console.error("Error loading games:", err);
     } finally {
@@ -301,7 +302,7 @@ const BrowseGames: React.FC = () => {
   
       {/* Display the Cards */}
       <div className="browse-games-content">
-        {isLoading ? (
+        {filteredGames.length === 0 && isLoading ? (
           <Spinner message={t("browseGames.loading")} />
         ) : (
           <div className="cards-container">
@@ -310,6 +311,7 @@ const BrowseGames: React.FC = () => {
             ))}
           </div>
         )}
+        {isLoading && filteredGames.length > 0 && <Spinner message={t("browseGames.loadingMore")} />}
       </div>
   
       {/* Fallback if there are no results */}
