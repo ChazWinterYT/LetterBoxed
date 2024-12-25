@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "Parolami",
-        "subtitle": "Un gioco LetterBoxed"
+        "subtitle": "Un gioco LetterBoxed",
+        "chooseLanguage": "Scegli la lingua di visualizzazione"
     },
     "footer": {
         "cookieWarning": "Questo sito utilizza cookie strettamente necessari per salvare i tuoi progressi nel gioco. Nessuna informazione personale viene memorizzata. Continuando, accetti questo utilizzo."

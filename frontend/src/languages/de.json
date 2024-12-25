@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "Wortfäden",
-        "subtitle": "Ein LetterBoxed-Spiel"
+        "subtitle": "Ein LetterBoxed-Spiel",
+        "chooseLanguage": "Wählen Sie die Anzeigesprache"
     },
     "footer": {
         "cookieWarning": "Diese Seite verwendet unbedingt notwendige Cookies, um Ihren Spielfortschritt zu speichern. Es werden keine persönlichen Daten gespeichert. Durch die Nutzung dieser Seite stimmen Sie dem zu."

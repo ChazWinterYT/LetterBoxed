@@ -276,7 +276,8 @@
     },
     "header": {
         "title": "Stitch-uations",
-        "subtitle": "A LetterBoxed Game"
+        "subtitle": "A LetterBoxed Game",
+        "chooseLanguage": "Choose Display Language"
     },
     "footer": {
         "cookieWarning": "This site uses strictly-necessary cookies to save your game progress. No personal information is stored. By continuing, you agree to this use."

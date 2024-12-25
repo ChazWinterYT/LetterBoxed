@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "Jalinan Kata",
-        "subtitle": "Permainan LetterBoxed"
+        "subtitle": "Permainan LetterBoxed",
+        "chooseLanguage": "Pilih Bahasa Tampilan"
     },
     "footer": {
         "cookieWarning": "Situs ini menggunakan cookie yang benar-benar diperlukan untuk menyimpan progres game Anda. Tidak ada informasi pribadi yang disimpan. Dengan melanjutkan, Anda menyetujui penggunaan ini."

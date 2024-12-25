@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "TramaPalavras",
-        "subtitle": "Jogo LetterBoxed"
+        "subtitle": "Jogo LetterBoxed",
+        "chooseLanguage": "Escolha o idioma de exibição"
     },
     "footer": {
         "cookieWarning": "Este site utiliza cookies estritamente necessários para salvar seu progresso no jogo. Nenhuma informação pessoal é armazenada. Ao continuar, você concorda com esse uso."

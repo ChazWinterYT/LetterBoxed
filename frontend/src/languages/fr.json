@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "Motissage",
-        "subtitle": "Un jeu LetterBoxed"
+        "subtitle": "Un jeu LetterBoxed",
+        "chooseLanguage": "Choisissez la langue d'affichage"
     },
     "footer": {
         "cookieWarning": "Ce site utilise des cookies strictement nécessaires pour sauvegarder vos progrès dans le jeu. Aucune information personnelle n'est stockée. En continuant, vous acceptez cette utilisation."

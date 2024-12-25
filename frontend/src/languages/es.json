@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "Palabrazos",
-        "subtitle": "Un juego de LetterBoxed"
+        "subtitle": "Un juego de LetterBoxed",
+        "chooseLanguage": "Elige el idioma de visualización"
     },
     "footer": {
         "cookieWarning": "Este sitio utiliza cookies estrictamente necesarias para guardar su progreso en el juego. No se almacenará información personal. Al continuar, acepta este uso."

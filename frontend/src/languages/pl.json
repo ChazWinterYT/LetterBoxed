@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "SłowoSplot",
-        "subtitle": "Gra LetterBoxed"
+        "subtitle": "Gra LetterBoxed",
+        "chooseLanguage": "Wybierz język wyświetlania"
     },
     "footer": {
         "cookieWarning": "Ta strona używa ciasteczek niezbędnych do zapisania twoich postępów w grze. Żadne dane osobowe nie są przechowywane. Kontynuując, akceptujesz to użycie."

@@ -271,7 +271,8 @@
     },
     "header": {
         "title": "Ordsöm",
-        "subtitle": "LetterBoxed-spel"
+        "subtitle": "LetterBoxed-spel",
+        "chooseLanguage": "Välj visningsspråk"
     },
     "footer": {
         "cookieWarning": "Denna webbplats använder strikt nödvändiga cookies för att spara dina framsteg i spelet. Ingen personlig information lagras. Genom att fortsätta accepterar du denna användning."

@@ -10,19 +10,24 @@ const Header = () => {
       <div className="logo">chazwinter.com</div>
       <h2>{t("header.title")}</h2>
       <h3>{t("header.subtitle")}</h3>
-      <select
-        className="language-selector"
-        value={language}
-        onChange={(e) => setLanguage(e.target.value)}
-      >
-        {availableLanguages
-          .filter((lang) => lang.uiAvailable) // Ensure only UI-available languages appear
-          .map((lang) => (
-            <option key={lang.code} value={lang.code}>
-              {lang.name}
-            </option>
-          ))}
-      </select>
+      
+      {/* Language Selector Row */}
+      <div className="language-selector-row">
+        <p className="language-label">{t("header.chooseLanguage")}:</p>
+        <select
+          className="language-selector"
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+        >
+          {availableLanguages
+            .filter((lang) => lang.uiAvailable) // Ensure only UI-available languages appear
+            .map((lang) => (
+              <option key={lang.code} value={lang.code}>
+                {lang.name}
+              </option>
+            ))}
+        </select>
+      </div>
     </header>
   );
 };
