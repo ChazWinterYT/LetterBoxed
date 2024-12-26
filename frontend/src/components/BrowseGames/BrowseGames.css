@@ -39,6 +39,36 @@
     color: #333; /* Default text color */
     font-family: Arial, sans-serif;
   }
+
+  /* Sorting Container */
+  .sorting-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center; /* Center align with the rest of the content */
+  }
+
+  .sorting-container label {
+    font-weight: bold;
+    color: #e7e6e6;
+  }
+
+  .sorting-container select {
+    background-color: #fff;
+    color: #333;
+    border: 2px solid #808080;
+    padding: 0.3rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .sorting-container select:focus {
+    outline: none;
+    border-color: #0073e6; /* Highlighted border for focus */
+    box-shadow: 0 0 5px rgba(0, 115, 230, 0.5); /* Subtle shadow for focus */
+  }
   
   .property-filter-container {
     margin: 20px auto;
@@ -81,7 +111,7 @@
   }
   
   .pagination-container li {
-    margin: 0 5px;
+    margin: 0px;
   }
   
   .pagination-container button {
@@ -125,4 +155,11 @@
     padding: 5px;
     font-size: 1rem;
   }  
-  
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .sorting-container {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
