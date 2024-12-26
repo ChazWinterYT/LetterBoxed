@@ -33,6 +33,15 @@ const BrowseGames: React.FC = () => {
 
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
 
+  const [sortBy, setSortBy] = useState<string>("averageRating");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  const sortOptions = [
+    { key: "averageRating", label: t("browseGames.averageRating") },
+    { key: "totalCompletions", label: t("browseGames.totalCompletions")},
+    { key: "averageWordsNeeded", label: t("browseGames.averageWordsNeeded")},
+  ]
+
   // Cloudscape filter query
   const [query, setQuery] = useState<CloudscapePropertyFilterQuery>({
     tokens: [],
@@ -111,18 +120,70 @@ const BrowseGames: React.FC = () => {
     }
 
     const propertyVal = String(game[token.propertyKey as keyof Game] ?? "").toLowerCase();
+
+    if (typeof propertyVal === "number") {
+      // Handle range-based filtering for numerical values
+      const value = token.value.toLowerCase();
+      switch (token.propertyKey) {
+        case "averageRating":
+          if (value === "4+") return propertyVal >= 4;
+          if (value === "3+") return propertyVal >= 3;
+          if (value === "2+") return propertyVal >= 2;
+          if (value === "1+") return propertyVal >= 1;
+          break;
+        case "averageWordsNeeded":
+          if (value === "1") return propertyVal === 1;
+          if (value === "2orFewer") return propertyVal <= 2;
+          if (value === "3orFewer") return propertyVal <= 3;
+          if (value === "4orFewer") return propertyVal <= 4;
+          if (value === "moreThan4") return propertyVal > 4;
+          break;
+        case "totalCompletions":
+          if (value === "lessThan5") return propertyVal < 5;
+          if (value === "5orMore") return propertyVal >= 5;
+          if (value === "10orMore") return propertyVal >= 10;
+          if (value === "20orMore") return propertyVal >= 20;
+          if (value === "50orMore") return propertyVal >= 50;
+          if (value === "100orMore") return propertyVal >= 100;
+          break;
+        default:
+          return false;
+      }
+    }
+
+    // String matching
+    const propertyStrVal = String(propertyVal ?? "").toLowerCase();
     const tokenVal = token.value.toLowerCase();
 
     switch (token.operator) {
       case "=":
-        return propertyVal === tokenVal;
+        return propertyStrVal === tokenVal;
       case "!=":
-        return propertyVal !== tokenVal;
+        return propertyStrVal !== tokenVal;
       case "contains":
       default:
-        return propertyVal.includes(tokenVal);
+        return propertyStrVal.includes(tokenVal);
     }
   }
+
+  const sortGames = (games: Game[], sortBy: string, sortOrder: "asc" | "desc"): Game[] => {
+    return [...games].sort((a, b) => {
+      const valueA = a[sortBy as keyof Game];
+      const valueB = b[sortBy as keyof Game];
+
+      if (typeof valueA === "number" && typeof valueB === "number") {
+        return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
+      }
+
+      if (typeof valueA === "string" && typeof valueB === "string") {
+        return sortOrder === "asc"
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      }
+
+      return 0;
+    });
+  };
 
   // Re-apply filter whenever `games` or `query` changes
   useEffect(() => {
@@ -205,7 +266,13 @@ const BrowseGames: React.FC = () => {
 
   const startIndex = (currentPageIndex - 1) * pageSize;
   const endIndex = currentPageIndex * pageSize;
-  const paginatedGames = filteredGames.slice(startIndex, endIndex);
+
+  const sortedGames = useMemo(() => sortGames(filteredGames, sortBy, sortOrder), [
+    filteredGames,
+    sortBy,
+    sortOrder,
+  ]);
+  const paginatedGames = sortedGames.slice(startIndex, endIndex);
 
   // ================== Render ==================
   return (
@@ -280,6 +347,28 @@ const BrowseGames: React.FC = () => {
           }`}
           filteringPlaceholder={t("browseGames.filterResults")}
         />
+      </div>
+
+      {/* Sorting */}
+      <div className="sorting-container">
+        <label>{t("propertyFilter.sort.sortBy")}:</label>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          {sortOptions.map((option) => (
+            <option key={option.key} value={option.key}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+        >
+          <option value="asc">{t("propertyFilter.sort.lowToHigh")}</option>
+          <option value="desc">{t("propertyFilter.sort.highToLow")}</option>
+        </select>
       </div>
   
       {/* Pagination for Cards */}

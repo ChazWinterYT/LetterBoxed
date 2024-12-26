@@ -262,7 +262,14 @@
         "10orMore": "10 या अधिक",
         "20orMore": "20 या अधिक",
         "50orMore": "50 या अधिक",
-        "100orMore": "100 या अधिक"
+        "100orMore": "100 या अधिक",
+        "sort": {
+            "sortBy": "इसके अनुसार छाँटें",
+            "ascending": "आरोही",
+            "descending": "अवरोही",
+            "lowToHigh": "निम्न से उच्च",
+            "highToLow": "उच्च से निम्न"
+        }
     },
     "instructions": {
         "howToPlay": "कैसे खेलें",

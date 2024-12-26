@@ -262,7 +262,14 @@
         "10orMore": "10 atau lebih",
         "20orMore": "20 atau lebih",
         "50orMore": "50 atau lebih",
-        "100orMore": "100 atau lebih"
+        "100orMore": "100 atau lebih",
+        "sort": {
+            "sortBy": "Urutkan Berdasarkan",
+            "ascending": "Menaik",
+            "descending": "Menurun",
+            "lowToHigh": "Rendah ke Tinggi",
+            "highToLow": "Tinggi ke Rendah"
+        }
     },
     "instructions": {
         "howToPlay": "Cara Bermain",

@@ -262,7 +262,14 @@
         "10orMore": "10 o más",
         "20orMore": "20 o más",
         "50orMore": "50 o más",
-        "100orMore": "100 o más"
+        "100orMore": "100 o más",
+        "sort": {
+            "sortBy": "Ordenar por",
+            "ascending": "Ascendente",
+            "descending": "Descendente",
+            "lowToHigh": "De menor a mayor",
+            "highToLow": "De mayor a menor"
+        }
     },
     "instructions": {
         "howToPlay": "Cómo jugar",

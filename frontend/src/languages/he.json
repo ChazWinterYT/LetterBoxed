@@ -267,7 +267,14 @@
         "10orMore": "10 או יותר",
         "20orMore": "20 או יותר",
         "50orMore": "50 או יותר",
-        "100orMore": "100 או יותר"
+        "100orMore": "100 או יותר",
+        "sort": {
+            "sortBy": "מיין לפי",
+            "ascending": "עולה",
+            "descending": "יורד",
+            "lowToHigh": "נמוך לגבוה",
+            "highToLow": "גבוה לנמוך"
+        }
     },
     "instructions": {
         "howToPlay": "איך לשחק",

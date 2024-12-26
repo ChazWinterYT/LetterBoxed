@@ -262,7 +262,14 @@
         "10orMore": "10以上",
         "20orMore": "20以上",
         "50orMore": "50以上",
-        "100orMore": "100以上"
+        "100orMore": "100以上",
+        "sort": {
+            "sortBy": "並べ替え",
+            "ascending": "昇順",
+            "descending": "降順",
+            "lowToHigh": "低い順",
+            "highToLow": "高い順"
+        }
     },
     "instructions": {
         "howToPlay": "遊び方",

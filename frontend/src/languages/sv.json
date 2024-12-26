@@ -262,7 +262,14 @@
         "10orMore": "10 eller mer",
         "20orMore": "20 eller mer",
         "50orMore": "50 eller mer",
-        "100orMore": "100 eller mer"
+        "100orMore": "100 eller mer",
+        "sort": {
+            "sortBy": "Sortera efter",
+            "ascending": "Stigande",
+            "descending": "Fallande",
+            "lowToHigh": "Lågt till högt",
+            "highToLow": "Högt till lågt"
+        }
     },
     "instructions": {
         "howToPlay": "Hur man spelar",
