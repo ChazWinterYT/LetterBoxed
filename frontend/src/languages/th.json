@@ -268,7 +268,10 @@
             "ascending": "น้อยไปมาก",
             "descending": "มากไปน้อย",
             "lowToHigh": "จากต่ำไปสูง",
-            "highToLow": "จากสูงไปต่ำ"
+            "highToLow": "จากสูงไปต่ำ",
+            "dateCreated": "วันที่สร้าง",
+            "newestFirst": "ใหม่ที่สุดก่อน",
+            "oldestFirst": "เก่าที่สุดก่อน"
         }
     },
     "instructions": {

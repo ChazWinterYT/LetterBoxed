@@ -268,7 +268,10 @@
             "ascending": "आरोही",
             "descending": "अवरोही",
             "lowToHigh": "निम्न से उच्च",
-            "highToLow": "उच्च से निम्न"
+            "highToLow": "उच्च से निम्न",
+            "dateCreated": "निर्माण तिथि",
+            "newestFirst": "नवीनतम पहले",
+            "oldestFirst": "सबसे पुराना पहले"
         }
     },
     "instructions": {

@@ -33,10 +33,11 @@ const BrowseGames: React.FC = () => {
 
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
 
-  const [sortBy, setSortBy] = useState<string>("averageRating");
+  const [sortBy, setSortBy] = useState<string>("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const sortOptions = [
+    { key: "createdAt", label: t("propertyFilter.sort.dateCreated") },
     { key: "averageRating", label: t("browseGames.averageRating") },
     { key: "totalCompletions", label: t("browseGames.totalCompletions")},
     { key: "averageWordsNeeded", label: t("browseGames.averageWordsNeeded")},
@@ -170,6 +171,12 @@ const BrowseGames: React.FC = () => {
     return [...games].sort((a, b) => {
       const valueA = a[sortBy as keyof Game];
       const valueB = b[sortBy as keyof Game];
+
+      if (sortBy === "createdAt") {
+        const dateA = new Date(valueA as string).getTime();
+        const dateB = new Date(valueB as string).getTime();
+        return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+      }
 
       if (typeof valueA === "number" && typeof valueB === "number") {
         return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
@@ -362,12 +369,22 @@ const BrowseGames: React.FC = () => {
             </option>
           ))}
         </select>
+
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
         >
-          <option value="asc">{t("propertyFilter.sort.lowToHigh")}</option>
-          <option value="desc">{t("propertyFilter.sort.highToLow")}</option>
+          {sortBy === "createdAt" ? (
+            <>
+              <option value="desc">{t("propertyFilter.sort.newestFirst")}</option>
+              <option value="asc">{t("propertyFilter.sort.oldestFirst")}</option>
+            </>
+          ) : (
+            <>
+              <option value="desc">{t("propertyFilter.sort.highToLow")}</option>
+              <option value="asc">{t("propertyFilter.sort.lowToHigh")}</option>
+            </>
+          )}
         </select>
       </div>
   

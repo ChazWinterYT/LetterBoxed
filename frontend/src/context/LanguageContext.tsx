@@ -36,7 +36,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem("language", language);
   }, [language]);
 
-  // Declare availableLanguages here
   const availableLanguages = languages; // Import from languages.ts
 
   const t = (key: string): string => {
@@ -51,7 +50,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     }
 
-    return typeof translation === "string" ? translation : key; // Return the translation if it's a string, otherwise fallback to the key
+    // Return the translation if it's a string, otherwise fallback to the key
+    return typeof translation === "string" ? translation : key; 
   };
 
   const getRandomPhrase = (key: string): string => {

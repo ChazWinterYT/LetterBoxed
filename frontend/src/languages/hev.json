@@ -273,7 +273,10 @@
             "ascending": "עוֹלֶה",
             "descending": "יוֹרֵד",
             "lowToHigh": "נָמוּךְ לְגָבוֹהַּ",
-            "highToLow": "גָּבוֹהַּ לְנָמוּךְ"
+            "highToLow": "גָּבוֹהַּ לְנָמוּךְ",
+            "dateCreated": "תַּאֲרִיךְ יְצִירָה",
+            "newestFirst": "הֶחֳדָשִׁים תְּחִלָּה",
+            "oldestFirst": "הַיְּשָׁנִים תְּחִלָּה"
         }
     },
     "instructions": {

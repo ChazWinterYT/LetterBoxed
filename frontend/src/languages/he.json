@@ -273,7 +273,10 @@
             "ascending": "עולה",
             "descending": "יורד",
             "lowToHigh": "נמוך לגבוה",
-            "highToLow": "גבוה לנמוך"
+            "highToLow": "גבוה לנמוך",
+            "dateCreated": "תאריך יצירה",
+            "newestFirst": "החדשים תחילה",
+            "oldestFirst": "הישנים תחילה"
         }
     },
     "instructions": {

@@ -268,7 +268,10 @@
             "ascending": "Menaik",
             "descending": "Menurun",
             "lowToHigh": "Rendah ke Tinggi",
-            "highToLow": "Tinggi ke Rendah"
+            "highToLow": "Tinggi ke Rendah",
+            "dateCreated": "Tanggal Dibuat",
+            "newestFirst": "Terbaru terlebih dahulu",
+            "oldestFirst": "Terlama terlebih dahulu"
         }
     },
     "instructions": {

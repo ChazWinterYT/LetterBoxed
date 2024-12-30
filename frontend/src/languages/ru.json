@@ -268,7 +268,10 @@
             "ascending": "По возрастанию",
             "descending": "По убыванию",
             "lowToHigh": "От низкого к высокому",
-            "highToLow": "От высокого к низкому"
+            "highToLow": "От высокого к низкому",
+            "dateCreated": "Дата создания",
+            "newestFirst": "Сначала новые",
+            "oldestFirst": "Сначала старые"
         }
     },
     "instructions": {

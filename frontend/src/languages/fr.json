@@ -268,7 +268,10 @@
             "ascending": "Croissant",
             "descending": "Décroissant",
             "lowToHigh": "Du plus bas au plus élevé",
-            "highToLow": "Du plus élevé au plus bas"
+            "highToLow": "Du plus élevé au plus bas",
+            "dateCreated": "Date de création",
+            "newestFirst": "Les plus récents d'abord",
+            "oldestFirst": "Les plus anciens d'abord"
         }
     },
     "instructions": {

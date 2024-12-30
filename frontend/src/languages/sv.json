@@ -268,7 +268,10 @@
             "ascending": "Stigande",
             "descending": "Fallande",
             "lowToHigh": "Lågt till högt",
-            "highToLow": "Högt till lågt"
+            "highToLow": "Högt till lågt",
+            "dateCreated": "Skapelsedatum",
+            "newestFirst": "Nyast först",
+            "oldestFirst": "Äldst först"
         }
     },
     "instructions": {
