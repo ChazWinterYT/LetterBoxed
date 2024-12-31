@@ -29,6 +29,7 @@ class LetterBoxedStack(Stack):
         prod_RANDOM_GAMES_TABLE_NAME_EN = "LetterBoxedRandomGames_en"
         prod_RANDOM_GAMES_TABLE_NAME_DE = "LetterBoxedRandomGames_de"
         prod_RANDOM_GAMES_TABLE_NAME_ES = "LetterBoxedRandomGames_es"
+        prod_RANDOM_GAMES_TABLE_NAME_FR = "LetterBoxedRandomGames_fr"
         prod_RANDOM_GAMES_TABLE_NAME_IT = "LetterBoxedRandomGames_it"
         prod_RANDOM_GAMES_TABLE_NAME_PL = "LetterBoxedRandomGames_pl"
         prod_RANDOM_GAMES_TABLE_NAME_RU = "LetterBoxedRandomGames_ru"
@@ -41,6 +42,7 @@ class LetterBoxedStack(Stack):
         test_RANDOM_GAMES_TABLE_NAME_EN = "LetterBoxedRandomGames_enTest"
         test_RANDOM_GAMES_TABLE_NAME_DE = "LetterBoxedRandomGames_deTest"
         test_RANDOM_GAMES_TABLE_NAME_ES = "LetterBoxedRandomGames_esTest"
+        test_RANDOM_GAMES_TABLE_NAME_FR = "LetterBoxedRandomGames_frTest"
         test_RANDOM_GAMES_TABLE_NAME_IT = "LetterBoxedRandomGames_itTest"
         test_RANDOM_GAMES_TABLE_NAME_PL = "LetterBoxedRandomGames_plTest"
         test_RANDOM_GAMES_TABLE_NAME_RU = "LetterBoxedRandomGames_ruTest"
@@ -221,6 +223,19 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.RETAIN
         )
         prod_table_resources.append(self.prod_random_games_table_es)
+        
+        # French
+        self.prod_random_games_table_fr = dynamodb.Table(
+            self, "LetterBoxedRandomGamesTable_fr",
+            table_name=prod_RANDOM_GAMES_TABLE_NAME_FR,
+            partition_key=dynamodb.Attribute(
+                name="atomicNumber",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.RETAIN
+        )
+        prod_table_resources.append(self.prod_random_games_table_fr)
 
         # Italian
         self.prod_random_games_table_it = dynamodb.Table(
@@ -300,6 +315,19 @@ class LetterBoxedStack(Stack):
             removal_policy=RemovalPolicy.DESTROY
         )
         test_table_resources.append(self.test_random_games_table_es)
+        
+        # French
+        self.test_random_games_table_fr = dynamodb.Table(
+            self, "LetterBoxedRandomGamesTestTable_fr",
+            table_name=test_RANDOM_GAMES_TABLE_NAME_FR,
+            partition_key=dynamodb.Attribute(
+                name="atomicNumber",
+                type=dynamodb.AttributeType.NUMBER
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY
+        )
+        test_table_resources.append(self.test_random_games_table_fr)
 
         # Italian
         self.test_random_games_table_it = dynamodb.Table(
@@ -372,6 +400,7 @@ class LetterBoxedStack(Stack):
             "RANDOM_GAMES_TABLE_EN": prod_RANDOM_GAMES_TABLE_NAME_EN,
             "RANDOM_GAMES_TABLE_DE": prod_RANDOM_GAMES_TABLE_NAME_DE,
             "RANDOM_GAMES_TABLE_ES": prod_RANDOM_GAMES_TABLE_NAME_ES,
+            "RANDOM_GAMES_TABLE_FR": prod_RANDOM_GAMES_TABLE_NAME_FR,
             "RANDOM_GAMES_TABLE_IT": prod_RANDOM_GAMES_TABLE_NAME_IT,
             "RANDOM_GAMES_TABLE_PL": prod_RANDOM_GAMES_TABLE_NAME_PL,
             "RANDOM_GAMES_TABLE_RU": prod_RANDOM_GAMES_TABLE_NAME_RU,
@@ -390,6 +419,7 @@ class LetterBoxedStack(Stack):
             "RANDOM_GAMES_TABLE_EN": test_RANDOM_GAMES_TABLE_NAME_EN,
             "RANDOM_GAMES_TABLE_DE": test_RANDOM_GAMES_TABLE_NAME_DE,
             "RANDOM_GAMES_TABLE_ES": test_RANDOM_GAMES_TABLE_NAME_ES,
+            "RANDOM_GAMES_TABLE_FR": test_RANDOM_GAMES_TABLE_NAME_FR,
             "RANDOM_GAMES_TABLE_IT": test_RANDOM_GAMES_TABLE_NAME_IT,
             "RANDOM_GAMES_TABLE_PL": test_RANDOM_GAMES_TABLE_NAME_PL,
             "RANDOM_GAMES_TABLE_RU": test_RANDOM_GAMES_TABLE_NAME_RU,
