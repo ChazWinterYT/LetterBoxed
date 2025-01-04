@@ -36,7 +36,7 @@ def handle_post_game_logic(game_data: Dict[str, Any], words_used: List[str]) -> 
     Returns:
         Dict[str, Any]: Post-game data including solutions and additional info.
     """
-    NUM_SAMPLE_SOLUTIONS = 5  # Number of solutions to show
+    NUM_SAMPLE_SOLUTIONS = 25  # Number of solutions to show
 
     official_solution = []
     some_one_word_solutions = []
