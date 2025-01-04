@@ -133,7 +133,7 @@
 /* Random game modal styles */
 .random-game-options .button-menu {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ensure two columns */
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); /* Ensure two columns */
   gap: 8px; /* Adjust spacing between buttons */
   justify-items: center; /* Center buttons horizontally */
   align-items: center; /* Center buttons vertically */
@@ -166,8 +166,8 @@
   border-color: #061f32;
   font-size: 1rem;
   cursor: pointer;
-  width: 90%;
-  max-width: 200px;
+  width: 100%;
+  max-width: 120px;
   text-align: center;
 }
 
