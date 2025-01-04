@@ -353,6 +353,20 @@ const App = () => {
     [navigate, loadGameState, t]
   );
 
+  // Disable background scrolling when the modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup when the document unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalOpen]);
+
   // Function to open the random game modal
   const openRandomGameModal = useCallback(() => {
     console.log("Opening random game modal.");
