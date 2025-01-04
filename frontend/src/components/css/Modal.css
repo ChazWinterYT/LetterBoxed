@@ -54,6 +54,12 @@
   text-align: center;
 }
 
+.modal-scrollable-content {
+  max-height: 30vh; /* Adjust based on your modal height */
+  overflow-y: auto;
+  padding-right: 6px; /* Add some space to avoid content hiding behind the scrollbar */
+}
+
 /* Button Group */
 .button-group {
   display: flex;

@@ -525,47 +525,48 @@ const App = () => {
               {t("game.complete.officialSolution")}: <b>{officialSolution.join(", ")}</b>
             </p>
           )}
-      
-          {/* Display Average Words Used and Average Letters Per Word */}
-          <div className="statistics-section">
-            <p>{t("game.complete.statisticsTitle")}:</p>
-            <p>
-              <b>{t("game.complete.averageWordsUsed")}:</b> {averageWordsUsed.toFixed(1)}
-            </p>
-            <p>
-              <b>{t("game.complete.averageWordLength")}:</b> {averageWordLength.toFixed(1)}
-            </p>
+          <div className="modal-scrollable-content">
+            {/* Display Average Words Used and Average Letters Per Word */}
+            <div className="statistics-section">
+              <p>{t("game.complete.statisticsTitle")}:</p>
+              <p>
+                <b>{t("game.complete.averageWordsUsed")}:</b> {averageWordsUsed.toFixed(1)}
+              </p>
+              <p>
+                <b>{t("game.complete.averageWordLength")}:</b> {averageWordLength.toFixed(1)}
+              </p>
+            </div>
+          
+            {someOneWordSolutions.length > 0 && (
+              <div className="solution-section">
+                <p>
+                  <b>{t("game.complete.numberOfOneWordSolutions")}:</b> {numOneWordSolutions}
+                </p>
+                <p>
+                  {t("game.complete.someOneWordSolutions")}:
+                </p>
+                <p>{someOneWordSolutions.join(", ")}</p>
+              </div>
+            )}
+        
+            {someTwoWordSolutions.length > 0 && (
+              <div className="solution-section">
+                <p>
+                  <b>{t("game.complete.numberOfTwoWordSolutions")}:</b> {numTwoWordSolutions}
+                </p>
+                <p>
+                  {t("game.complete.someTwoWordSolutions")}:
+                </p>
+                <ul>
+                  {someTwoWordSolutions.map(([word1, word2], index) => (
+                    <li key={`two-word-${index}`}>
+                      [{word1} - {word2}]
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-
-          {someOneWordSolutions.length > 0 && (
-            <div className="solution-section">
-              <p>
-                <b>{t("game.complete.numberOfOneWordSolutions")}:</b> {numOneWordSolutions}
-              </p>
-              <p>
-                {t("game.complete.someOneWordSolutions")}:
-              </p>
-              <p>{someOneWordSolutions.join(", ")}</p>
-            </div>
-          )}
-      
-          {someTwoWordSolutions.length > 0 && (
-            <div className="solution-section">
-              <p>
-                <b>{t("game.complete.numberOfTwoWordSolutions")}:</b> {numTwoWordSolutions}
-              </p>
-              <p>
-                {t("game.complete.someTwoWordSolutions")}:
-              </p>
-              <ul>
-                {someTwoWordSolutions.map(([word1, word2], index) => (
-                  <li key={`two-word-${index}`}>
-                    [{word1} - {word2}]
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
 
           {/* Ratings */}
           {currentGameId && 
