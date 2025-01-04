@@ -131,12 +131,22 @@
 }
 
 /* Random game modal styles */
+.random-game-options .button-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ensure two columns */
+  gap: 8px; /* Adjust spacing between buttons */
+  justify-items: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  padding: 10px; /* Padding inside the grid */
+  overflow-y: auto; /* Vertical scrolling only */
+  max-height: 80vh; /* Limit modal height */
+  box-sizing: border-box; /* Ensure padding is included in element width */
+}
+
 .random-game-options {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0rem;
-  margin: 1rem 0;
+  overflow-x: hidden; /* Disable horizontal scrolling */
+  padding: 0 10px; /* Add padding to ensure no clipping */
+  width: 100%; /* Ensure full width of modal */
 }
 
 .random-game-options .language-buttons {
@@ -145,6 +155,20 @@
   align-items: center;
   gap: 0.5rem;
   width: 100%;
+}
+
+.random-game-options .random-game-button {
+  background-color: #1586dd;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: solid;
+  border-radius: 40px;
+  border-color: #061f32;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 90%;
+  max-width: 200px;
+  text-align: center;
 }
 
 .language-buttons button {

@@ -383,6 +383,7 @@ const App = () => {
         <div className="button-menu">
           {playableLanguages.map((lang: Language) => (
             <button
+              className="random-game-button"
               key={lang.code}
               onClick={() => {
                 fetchRandomGameByLanguage(lang.code);
