@@ -2,6 +2,16 @@
   text-align: center;
 }
 
+.enter-letters-form .modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  overflow-y: auto; /* Make the modal body itself scrollable if needed */
+  max-height: 60vh; /* Restrict height of the body */
+  width: 100%;
+}
+
 .enter-letters-form h2 {
   margin-bottom: 1rem; /* Reduce spacing below the header */
 }

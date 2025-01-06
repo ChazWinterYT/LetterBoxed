@@ -1,24 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { Language, getPlayableLanguages } from "../languages/languages";
 import { createCustomGame } from "../services/api";
 import "./css/EnterLettersForm.css";
 
-interface EnterLettersFormProps {
-  onGenerate: (data: {
-    gameLayout: string[];
-    createdBy: string;
-    language: string;
-    boardSize: string;
-  }) => void;
-  onCancel: () => void;
-}
 
-const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
-  onGenerate,
-  onCancel,
-}) => {
+const EnterLettersForm: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [boardSize, setBoardSize] = useState<string>("3x3");
   const [gameLayout, setGameLayout] = useState<string[]>(["", "", "", ""]);
   const [createdBy, setCreatedBy] = useState<string>("");
@@ -217,6 +207,10 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
     }
   };
 
+  const handleCancel = () => {
+    navigate("/browse-games");
+  };
+
   const handleCopyToClipboard = () => {
     if (gameId) {
       navigator.clipboard.writeText(`${window.location.origin}/LetterBoxed/frontend/games/${gameId}`);
@@ -396,7 +390,7 @@ const EnterLettersForm: React.FC<EnterLettersFormProps> = ({
         >
           {t('customGameForm.generateGame')}
         </button>
-        <button type="button" className="modal-button" onClick={onCancel}>
+        <button type="button" className="modal-button" onClick={handleCancel}>
           {t('customGameForm.cancel')}
         </button>
       </div>

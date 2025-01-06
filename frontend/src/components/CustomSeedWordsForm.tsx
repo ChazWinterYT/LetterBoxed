@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { Language, getPlayableLanguages } from "../languages/languages";
 import { createRandomGame } from "../services/api";
 import "./css/CustomSeedWordsForm.css";
 
-interface CustomSeedWordsFormProps {
-  onGenerate: (data: {
-    language: string;
-    boardSize: string;
-    seedWords?: [string, string] | [string];
-    hint?: string;
-  }) => void;
-  onCancel: () => void;
-}
 
-const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, onCancel }) => {
+const CustomSeedWordsForm: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [language, setLanguage] = useState("en");
   const [boardSize, setBoardSize] = useState("3x3");
   const [seedWordChoice, setSeedWordChoice] = useState<"one" | "two">("two");
@@ -137,6 +130,10 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCancel = () => {
+    navigate("/browse-games");
   };
 
   const handleCopyToClipboard = () => {
@@ -358,7 +355,7 @@ const CustomSeedWordsForm: React.FC<CustomSeedWordsFormProps> = ({ onGenerate, o
         >
           {isSubmitting ? t("customGameForm.submitting") : t("customGameForm.generateGame")}
         </button>
-          <button className="modal-button" onClick={onCancel}>
+          <button className="modal-button" onClick={handleCancel}>
             {t("customGameForm.cancel")}
           </button>
         </div>

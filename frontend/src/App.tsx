@@ -173,7 +173,7 @@ const App = () => {
         }
       } catch (error) {
         console.error(`Error loading game ${gameId}:`, error);
-        setModalContent(<p>{t("ui.archive.errorLoadingGame")}</p>);
+        setModalContent(<p>{t("ui.archive.error")}</p>);
         setIsModalOpen(true);
       } finally {
         setIsGameLoading(false);
@@ -694,6 +694,18 @@ const AppRouter = () => (
         path="/browse-games" 
         element={
           <BrowseGames />} 
+      />
+      {/* Route for the Seed Words Game Creator */}
+      <Route 
+        path="/create-game-seed-words" 
+        element={
+          <CustomSeedWordsForm />} 
+      />
+      {/* Route for the Custom Letters Game Creator */}
+      <Route 
+        path="/create-game-enter-letters" 
+        element={
+          <EnterLettersForm />} 
       />
     </Routes>
   </BrowserRouter>

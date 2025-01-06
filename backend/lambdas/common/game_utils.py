@@ -130,7 +130,7 @@ def calculate_two_word_solutions(
     valid_words: List[str],
     language: str = "en",
     starting_letter_to_words: Optional[Dict[str, List[str]]] = None,
-    time_limit: Optional[float] = 45.0
+    time_limit: Optional[float] = 25.0
 ) -> List[Tuple[str, str]]:
     """
     Calculate the two-word solutions to the given puzzle input.
@@ -181,7 +181,7 @@ def calculate_two_word_solutions(
 
         for word2 in potential_second_words:
             # Stop the function if the time limit is exceeded
-            if time.time() - tws_start_time > (time_limit or 45.0):
+            if time.time() - tws_start_time > (time_limit or 25.0):
                 print(f"[INFO] Time limit of {time_limit}s exceeded. \
                     Returning {len(solutions)} solutions found so far.")
                 return solutions if solutions else []
