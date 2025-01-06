@@ -14,6 +14,21 @@
     box-sizing: border-box; /* Ensure padding doesn't break width */
   }
 
+  .custom-seed-words-form-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px; /* Space between components */
+    max-width: 360px; /* Limit width of the form */
+    background-color: #c4ddeb;
+    border-radius: 20px;
+    text-align: center;
+    padding: 16px; /* Add padding around the form */
+    margin: 20px auto; /* Center horizontally */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+    box-sizing: border-box; /* Ensure padding doesn't break width */
+  }
+
   /* Ensure the modal-body within the form is also aligned */
   .custom-seed-words-form .modal-body {
     display: flex;

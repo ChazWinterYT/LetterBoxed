@@ -246,63 +246,73 @@ const EnterLettersForm: React.FC = () => {
 
   if (isSuccess) {
     return (
-      <div className="custom-seed-words-form">
-        <h2 className="modal-title">{t("customGameForm.success.gameCreationSuccess")}</h2>
-        <div className="modal-body">
-          <p>{t("customGameForm.success.gameLink")}</p>
-          <div className="game-link">
-            <input
-              type="text"
-              value={`${window.location.origin}/LetterBoxed/frontend/games/${gameId}`}
-              readOnly
-              className="modal-input"
-              onFocus={(e) => e.target.select()}
-            />
-            <button
-              className={`button ${copied ? "copied" : ""}`}
-              onClick={handleCopyToClipboard}
-            >
-              {copied
-                ? t("customGameForm.success.copied")
-                : t("customGameForm.success.copyLink")}
-            </button>
-          </div>
+      <div>
+        <Header />
+        <button 
+          className="menu-button"
+          onClick={() => window.location.href = "/LetterBoxed/frontend"}
+        >
+          {t("ui.menu.returnHome")}
+        </button> 
+        <div className="enter-letters-form-success">
+          <h2 className="modal-title">{t("customGameForm.success.gameCreationSuccess")}</h2>
+          <div className="modal-body">
+            <p>{t("customGameForm.success.gameLink")}</p>
+            <div className="game-link">
+              <input
+                type="text"
+                value={`${window.location.origin}/LetterBoxed/frontend/games/${gameId}`}
+                readOnly
+                className="modal-input"
+                onFocus={(e) => e.target.select()}
+              />
+              <button
+                className={`button ${copied ? "copied" : ""}`}
+                onClick={handleCopyToClipboard}
+              >
+                {copied
+                  ? t("customGameForm.success.copied")
+                  : t("customGameForm.success.copyLink")}
+              </button>
+            </div>
 
-          {/* Display game stats */}
-          <div className="game-stats">
-            <h3>{t("customGameForm.success.statsTitle")}</h3>
-            <ul>
-              {gameStats?.oneWordSolutionCount !== undefined && (
+            {/* Display game stats */}
+            <div className="game-stats">
+              <h3>{t("customGameForm.success.statsTitle")}</h3>
+              <ul>
+                {gameStats?.oneWordSolutionCount !== undefined && (
+                  <li>
+                    {t("customGameForm.success.oneWordSolutions")}:{" "}
+                    {gameStats.oneWordSolutionCount}
+                  </li>
+                )}
                 <li>
-                  {t("customGameForm.success.oneWordSolutions")}:{" "}
-                  {gameStats.oneWordSolutionCount}
+                  {t("customGameForm.success.twoWordSolutions")}:{" "}
+                  {gameStats?.twoWordSolutionCount}
                 </li>
-              )}
-              <li>
-                {t("customGameForm.success.twoWordSolutions")}:{" "}
-                {gameStats?.twoWordSolutionCount}
-              </li>
-              <li>
-                {t("customGameForm.success.validWords")}:{" "}
-                {gameStats?.validWordCount}
-              </li>
-            </ul>
-          </div>
+                <li>
+                  {t("customGameForm.success.validWords")}:{" "}
+                  {gameStats?.validWordCount}
+                </li>
+              </ul>
+            </div>
 
-          <div className="button-group">
-            <button
-              className="modal-button"
-              onClick={() => {
-                window.location.href = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
-              }}
-            >
-              {t("customGameForm.success.goToGame")}
-            </button>
-            <button className="modal-button" onClick={handleCreateAnother}>
-              {t("customGameForm.success.createAnotherGame")}
-            </button>
+            <div className="button-group">
+              <button
+                className="modal-button"
+                onClick={() => {
+                  window.location.href = `${window.location.origin}/LetterBoxed/frontend/games/${gameId}`;
+                }}
+              >
+                {t("customGameForm.success.goToGame")}
+              </button>
+              <button className="modal-button" onClick={handleCreateAnother}>
+                {t("customGameForm.success.createAnotherGame")}
+              </button>
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
