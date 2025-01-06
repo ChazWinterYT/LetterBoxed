@@ -5,6 +5,16 @@
     align-items: center;
     gap: 2px; /* Space between components */
   }
+
+  .custom-seed-words-form .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto; /* Make the modal body itself scrollable if needed */
+    max-height: 65vh; /* Restrict height of the body */
+    width: 100%;
+  }
   
   /* Form Section */
   .custom-seed-words-form .form-section {
