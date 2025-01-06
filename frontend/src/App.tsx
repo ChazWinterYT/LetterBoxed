@@ -420,34 +420,8 @@ const App = () => {
     setModalTitle(t("customGameModal.title"));
     setModalContent(
       <CustomGameModal
-      onClose={() => setIsModalOpen(false)}
-      onOpenSeedWordsForm={() => {
-        setModalTitle(t("game.customGame.customGameTitle"));
-        setModalContent(
-          <CustomSeedWordsForm
-            onGenerate={(data) => {
-              console.log("Generated Custom Game:", data);
-              setIsModalOpen(false); // Close the modal after game generation
-            }}
-            onCancel={() => setIsModalOpen(false)} // Close the modal
-          />
-        );
-        setIsModalOpen(true);
-      }}
-      onOpenEnterLettersForm={() => {
-        setModalTitle(t("game.customGame.customGameTitle"));
-        setModalContent(
-          <EnterLettersForm 
-            onGenerate={(data) => {
-              console.log("Generated Custom Game from Enter Letters:", data);
-              setIsModalOpen(false);
-            }}
-            onCancel={() => setIsModalOpen(false)} // Close the modal
-          />
-        );
-        setIsModalOpen(true);
-      }}
-    />
+        onClose={() => setIsModalOpen(false)}
+      />
     );
     setIsModalOpen(true);
   }, [t]);

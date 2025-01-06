@@ -4,6 +4,8 @@ import { useLanguage } from "../context/LanguageContext";
 import { Language, getPlayableLanguages } from "../languages/languages";
 import { createRandomGame } from "../services/api";
 import "./css/CustomSeedWordsForm.css";
+import Header from "./Header";
+import Footer from "./Footer";
 
 
 const CustomSeedWordsForm: React.FC = () => {
@@ -133,7 +135,7 @@ const CustomSeedWordsForm: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate("/browse-games");
+    navigate("/");
   };
 
   const handleCopyToClipboard = () => {
@@ -193,173 +195,186 @@ const CustomSeedWordsForm: React.FC = () => {
 
 
   return (
-    <div className="custom-seed-words-form">
-      <div className="modal-body">
-        {/* Language Selector */}
-        <div className="form-section">
-          <label className="modal-label">
-            {t("language.language")}
-            <select
-              className="modal-input"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-            >
-              {getPlayableLanguages().map((lang: Language) => (
-                <option key={lang.code} value={lang.code}>
-                  {lang.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-  
-        {/* Board Size */}
-        <div className="form-section">
-          <label className="modal-label">{t("customGameForm.boardSize")}</label>
-          <p className="warning-message">{t("customGameForm.instructions.boardSize")}</p>
-          <div className="toggle-group">
-            {["2x2", "3x3", "4x4"].map((size) => (
-              <button
-                key={size}
-                className={`toggle-button ${boardSize === size ? "active" : ""}`}
-                onClick={() => setBoardSize(size)}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
-        </div>
-  
-        {/* Seed Word Choice */}
-        {boardSize === "2x2" && (
+    <div>
+      <Header />
+      <button 
+        className="menu-button"
+        onClick={() => window.location.href = "/LetterBoxed/frontend"}
+      >
+        {t("ui.menu.returnHome")}
+      </button>
+      <div className="custom-seed-words-form">
+        <div className="modal-body">
+          {/* Language Selector */}
           <div className="form-section">
-            <label className="modal-label">{t("customGameForm.instructions.seedWordChoice")}</label>
-            <div className="toggle-group">
-              <button
-                className={`toggle-button ${seedWordChoice === "one" ? "active" : ""}`}
-                onClick={() => setSeedWordChoice("one")}
+            <label className="modal-label">
+              {t("language.language")}
+              <select
+                className="modal-input"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
               >
-                {t("customGameForm.numSeedWords.one")}
-              </button>
-              <button
-                className={`toggle-button ${seedWordChoice === "two" ? "active" : ""}`}
-                onClick={() => setSeedWordChoice("two")}
-              >
-                {t("customGameForm.numSeedWords.two")}
-              </button>
+                {getPlayableLanguages().map((lang: Language) => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <div className="form-instructions">
+              {t("game.randomGame.selectGameLanguageDesc")}
             </div>
           </div>
-        )}
-  
-        {/* Seed Word Inputs */}
-        <div className="form-section">
-          <label className="modal-label">
-            {t("customGameForm.instructions.enterSeedWord")} (1)
-            <input
-              type="text"
-              value={word1}
-              onChange={(e) => {
-                // Allow only valid letters for compatible languages
-                const filteredValue = e.target.value.replace(/[^a-zA-Z\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}]/gu, "");
-                setWord1(filteredValue.toUpperCase());
-              }}
-              className="modal-input"
-            />
-          </label>
-          {seedWordChoice === "two" && (
+    
+          {/* Board Size */}
+          <div className="form-section">
+            <label className="modal-label">{t("customGameForm.boardSize")}</label>
+            <p className="warning-message">{t("customGameForm.instructions.boardSize")}</p>
+            <div className="toggle-group">
+              {["2x2", "3x3", "4x4"].map((size) => (
+                <button
+                  key={size}
+                  className={`toggle-button ${boardSize === size ? "active" : ""}`}
+                  onClick={() => setBoardSize(size)}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+    
+          {/* Seed Word Choice */}
+          {boardSize === "2x2" && (
+            <div className="form-section">
+              <label className="modal-label">{t("customGameForm.instructions.seedWordChoice")}</label>
+              <div className="toggle-group">
+                <button
+                  className={`toggle-button ${seedWordChoice === "one" ? "active" : ""}`}
+                  onClick={() => setSeedWordChoice("one")}
+                >
+                  {t("customGameForm.numSeedWords.one")}
+                </button>
+                <button
+                  className={`toggle-button ${seedWordChoice === "two" ? "active" : ""}`}
+                  onClick={() => setSeedWordChoice("two")}
+                >
+                  {t("customGameForm.numSeedWords.two")}
+                </button>
+              </div>
+            </div>
+          )}
+    
+          {/* Seed Word Inputs */}
+          <div className="form-section">
             <label className="modal-label">
-              {t("customGameForm.instructions.enterSeedWord")} (2)
+              {t("customGameForm.instructions.enterSeedWord")} (1)
               <input
                 type="text"
-                value={word2}
+                value={word1}
                 onChange={(e) => {
+                  // Allow only valid letters for compatible languages
                   const filteredValue = e.target.value.replace(/[^a-zA-Z\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}]/gu, "");
-                  setWord2(filteredValue.toUpperCase());
+                  setWord1(filteredValue.toUpperCase());
                 }}
                 className="modal-input"
               />
             </label>
-          )}
-        </div>
+            {seedWordChoice === "two" && (
+              <label className="modal-label">
+                {t("customGameForm.instructions.enterSeedWord")} (2)
+                <input
+                  type="text"
+                  value={word2}
+                  onChange={(e) => {
+                    const filteredValue = e.target.value.replace(/[^a-zA-Z\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}]/gu, "");
+                    setWord2(filteredValue.toUpperCase());
+                  }}
+                  className="modal-input"
+                />
+              </label>
+            )}
+          </div>
 
-        {/* Validation Message */}
-        <div className="validation-message-space">
-          {validationError && <span>{validationError}</span>}
-        </div>
+          {/* Validation Message */}
+          <div className="validation-message-space">
+            {validationError && <span>{validationError}</span>}
+          </div>
 
-        {/* Casual flag checkbox */}
-        <div className="form-section">
-          <label className="modal-label">
-            <input
-              type="checkbox"
-              checked={isCasual}
-              onChange={(e) => setIsCasual(e.target.checked)}
-            />
-            {t("customGameForm.casualGame")}
-          </label>
-          <p className="warning-message">{t("customGameForm.instructions.casualGame")}</p>
-        </div>
-  
-        {/* Hint Input */}
-        <div className="hint-input">
-          <label className="modal-label">
-            {t("customGameForm.hint")}
-            <textarea
-              value={hint}
-              onChange={(e) => {
-                // Allow valid letters, numbers, and basic punctuation across scripts
-                const filteredValue = e.target.value.replace(
-                  /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
-                  ""
-                );
-                setHint(filteredValue);
-              }}
-              maxLength={99} // Limit to 70 characters
-              className="hint-textarea"
-              placeholder={t("customGameForm.instructions.hint")}
-            />
-          </label>
-        </div>
+          {/* Casual flag checkbox */}
+          <div className="form-section">
+            <label className="modal-label">
+              <input
+                type="checkbox"
+                checked={isCasual}
+                onChange={(e) => setIsCasual(e.target.checked)}
+              />
+              {t("customGameForm.casualGame")}
+            </label>
+            <p className="warning-message">{t("customGameForm.instructions.casualGame")}</p>
+          </div>
+    
+          {/* Hint Input */}
+          <div className="hint-input">
+            <label className="modal-label">
+              {t("customGameForm.hint")}
+              <textarea
+                value={hint}
+                onChange={(e) => {
+                  // Allow valid letters, numbers, and basic punctuation across scripts
+                  const filteredValue = e.target.value.replace(
+                    /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
+                    ""
+                  );
+                  setHint(filteredValue);
+                }}
+                maxLength={99} // Limit to 70 characters
+                className="hint-textarea"
+                placeholder={t("customGameForm.instructions.hint")}
+              />
+            </label>
+          </div>
 
-        {/* Author Name */}
-        <div className="form-section">
-          <label className="modal-label">
-            {t("customGameForm.authorName")}
-            <input 
-              type="text"
-              value={createdBy}
-              onChange={(e) => {
-                // Allow valid Unicode letters, spaces, and a few special characters for names
-                const filteredValue = e.target.value.replace(
-                  /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
-                  ""
-                );
-                setCreatedBy(filteredValue);
-              }}
-              className="modal-input"
-              placeholder={t("customGameForm.instructions.authorName")}
-              maxLength={30}
-            />
-          </label>
-        </div>
-  
-        {/* Warning Message */}
-        <p className="warning-message">{t("customGameForm.longTimeWarning")}</p>
-  
-        {/* Buttons */}
-        <div className="form-section button-group">
-        <button 
-          className="modal-button" 
-          onClick={handleGenerate}
-          disabled={!!validationError || isSubmitting} // Disable when validating or submitting
-        >
-          {isSubmitting ? t("customGameForm.submitting") : t("customGameForm.generateGame")}
-        </button>
-          <button className="modal-button" onClick={handleCancel}>
-            {t("customGameForm.cancel")}
+          {/* Author Name */}
+          <div className="form-section">
+            <label className="modal-label">
+              {t("customGameForm.authorName")}
+              <input 
+                type="text"
+                value={createdBy}
+                onChange={(e) => {
+                  // Allow valid Unicode letters, spaces, and a few special characters for names
+                  const filteredValue = e.target.value.replace(
+                    /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
+                    ""
+                  );
+                  setCreatedBy(filteredValue);
+                }}
+                className="modal-input"
+                placeholder={t("customGameForm.instructions.authorName")}
+                maxLength={30}
+              />
+            </label>
+          </div>
+    
+          {/* Warning Message */}
+          <p className="warning-message">{t("customGameForm.longTimeWarning")}</p>
+    
+          {/* Buttons */}
+          <div className="form-section button-group">
+          <button 
+            className="modal-button" 
+            onClick={handleGenerate}
+            disabled={!!validationError || isSubmitting} // Disable when validating or submitting
+          >
+            {isSubmitting ? t("customGameForm.submitting") : t("customGameForm.generateGame")}
           </button>
+            <button className="modal-button" onClick={handleCancel}>
+              {t("customGameForm.cancel")}
+            </button>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

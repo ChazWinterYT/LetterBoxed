@@ -4,6 +4,8 @@ import { useLanguage } from "../context/LanguageContext";
 import { Language, getPlayableLanguages } from "../languages/languages";
 import { createCustomGame } from "../services/api";
 import "./css/EnterLettersForm.css";
+import Header from "./Header";
+import Footer from "./Footer";
 
 
 const EnterLettersForm: React.FC = () => {
@@ -208,7 +210,7 @@ const EnterLettersForm: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate("/browse-games");
+    navigate("/");
   };
 
   const handleCopyToClipboard = () => {
@@ -306,95 +308,109 @@ const EnterLettersForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleGenerate} className="enter-letters-form custom-seed-words-form">      
-      <div className="form-section">
-        <label className="modal-label">{t('customGameForm.boardSize')}</label>
-        <div className="toggle-group">
-          {["2x2", "3x3", "4x4"].map((size) => (
-            <button
-              key={size}
-              type="button"
-              className={`toggle-button ${boardSize === size ? "active" : ""}`}
-              onClick={() => {
-                setBoardSize(size);
-                setGameLayout(["", "", "", ""]);
-              }}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Language Selector */}
-      <div className="form-section">
-        <label className="modal-label">
-          {t("language.language")}
-          <select
-            className="modal-input language-selector"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          >
-            {getPlayableLanguages().map((lang: Language) => (
-                <option key={lang.code} value={lang.code}>
-                {lang.name}
-                </option>
+    <div>
+      <Header />
+      <button 
+        className="menu-button"
+        onClick={() => window.location.href = "/LetterBoxed/frontend"}
+      >
+        {t("ui.menu.returnHome")}
+      </button> 
+     <form onSubmit={handleGenerate} className="enter-letters-form custom-seed-words-form">      
+        <div className="form-section">
+          <label className="modal-label">{t('customGameForm.boardSize')}</label>
+          <p className="warning-message">{t("customGameForm.instructions.boardSize")}</p>
+          <div className="toggle-group">
+            {["2x2", "3x3", "4x4"].map((size) => (
+              <button
+                key={size}
+                type="button"
+                className={`toggle-button ${boardSize === size ? "active" : ""}`}
+                onClick={() => {
+                  setBoardSize(size);
+                  setGameLayout(["", "", "", ""]);
+                }}
+              >
+                {size}
+              </button>
             ))}
-          </select>
-        </label>
-      </div>
-
-      <div className="board">
-        <div className="top-side">{renderSideInputs(0)}</div>
-        <div className="left-side">{renderSideInputs(3)}</div>
-        <div className="right-side">{renderSideInputs(1)}</div>
-        <div className="bottom-side">{renderSideInputs(2)}</div>
-      </div>
-
-      {/* Vaidation Warning */}
-      {validationMessage && (
-        <div className="validation-warning">
-          {validationMessage}
+          </div>
         </div>
-      )}
 
-      {/* Author */}
-      <div className="form-section">
-        <label className="modal-label">{t('customGameForm.authorName')}</label>
-        <input
-          type="text"
-          className="modal-input"
-          value={createdBy}
-          onChange={(e) => {
-            // Allow valid Unicode letters, spaces, and a few special characters for names
-            const filteredValue = e.target.value.replace(
-              /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
-              ""
-            );
-            setCreatedBy(filteredValue);
-          }}
-          placeholder={t("customGameForm.instructions.authorName")}
-        />
-      </div>
+        {/* Language Selector */}
+        <div className="form-section">
+          <label className="modal-label">
+            {t("language.language")}
+            <select
+              className="modal-input language-selector"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            >
+              {getPlayableLanguages().map((lang: Language) => (
+                  <option key={lang.code} value={lang.code}>
+                  {lang.name}
+                  </option>
+              ))}
+            </select>
+          </label>
+          <div className="form-instructions">
+            {t("game.randomGame.selectGameLanguageDesc")}
+          </div>
+        </div>
 
-      {/* Validation error */}
-      {validationError && (
-        <p className="validation-warning">{validationError}</p>
-      )}
+        <div className="board">
+          <div className="top-side">{renderSideInputs(0)}</div>
+          <div className="left-side">{renderSideInputs(3)}</div>
+          <div className="right-side">{renderSideInputs(1)}</div>
+          <div className="bottom-side">{renderSideInputs(2)}</div>
+        </div>
 
-      <div className="button-group">
-        <button
-          type="submit"
-          className="modal-button"
-          disabled={!isBoardComplete()}
-        >
-          {t('customGameForm.generateGame')}
-        </button>
-        <button type="button" className="modal-button" onClick={handleCancel}>
-          {t('customGameForm.cancel')}
-        </button>
-      </div>
-    </form>
+        {/* Vaidation Warning */}
+        {validationMessage && (
+          <div className="validation-warning">
+            {validationMessage}
+          </div>
+        )}
+
+        {/* Author */}
+        <div className="form-section">
+          <label className="modal-label">{t('customGameForm.authorName')}</label>
+          <input
+            type="text"
+            className="modal-input"
+            value={createdBy}
+            onChange={(e) => {
+              // Allow valid Unicode letters, spaces, and a few special characters for names
+              const filteredValue = e.target.value.replace(
+                /[^()!?a-zA-Z0-9\p{L}.,’'\-\s]/gu,
+                ""
+              );
+              setCreatedBy(filteredValue);
+            }}
+            placeholder={t("customGameForm.instructions.authorName")}
+          />
+        </div>
+
+        {/* Validation error */}
+        {validationError && (
+          <p className="validation-warning">{validationError}</p>
+        )}
+
+        <div className="button-group">
+          <button
+            type="submit"
+            className="modal-button"
+            disabled={!isBoardComplete()}
+          >
+            {t('customGameForm.generateGame')}
+          </button>
+          <button type="button" className="modal-button" onClick={handleCancel}>
+            {t('customGameForm.cancel')}
+          </button>
+        </div>
+      </form>
+      <Footer />
+    </div>
   );
 };
 
