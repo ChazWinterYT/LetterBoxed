@@ -15,6 +15,7 @@ import {
 } from "@cloudscape-design/components";
 import "./BrowseGames.css";
 import "@cloudscape-design/global-styles/index.css";
+import { useLocation } from "react-router-dom";
 
 // We take the "query" type from PropertyFilterProps
 type CloudscapePropertyFilterQuery = NonNullable<PropertyFilterProps["query"]>;
@@ -26,6 +27,7 @@ type CloudscapePropertyFilterToken = NonNullable<
 
 const BrowseGames: React.FC = () => {
   const { t } = useLanguage();
+  const location = useLocation();
 
   const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
@@ -33,7 +35,7 @@ const BrowseGames: React.FC = () => {
 
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
 
-  const [sortBy, setSortBy] = useState<string>("createdAt");
+  const [sortBy, setSortBy] = useState<string>("dateCreated");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const sortOptions = [
@@ -91,6 +93,24 @@ const BrowseGames: React.FC = () => {
   useEffect(() => {
     loadAllGames(selectedLanguage);
   }, [loadAllGames, selectedLanguage]);
+
+  // ================== Parse filter from URL query parameter ==================
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const gameTypeFilter = params.get("gameType");
+    if (gameTypeFilter === "nyt") {
+      setQuery({
+        tokens: [
+          {
+            propertyKey: "gameType",
+            operator: "=",
+            value: "nyt",
+          },
+        ],
+        operation: "and",
+      });
+    }
+  }, [location.search]);
 
   // ================== Filtering Logic ==================
   const handlePropertyFilterChange = (newQuery: CloudscapePropertyFilterQuery) => {
@@ -171,12 +191,6 @@ const BrowseGames: React.FC = () => {
     return [...games].sort((a, b) => {
       const valueA = a[sortBy as keyof Game];
       const valueB = b[sortBy as keyof Game];
-
-      if (sortBy === "createdAt") {
-        const dateA = new Date(valueA as string).getTime();
-        const dateB = new Date(valueB as string).getTime();
-        return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-      }
 
       if (typeof valueA === "number" && typeof valueB === "number") {
         return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
@@ -355,7 +369,7 @@ const BrowseGames: React.FC = () => {
           filteringPlaceholder={t("browseGames.filterResults")}
         />
       </div>
-
+  
       {/* Sorting */}
       <div className="sorting-container">
         <label>{t("propertyFilter.sort.sortBy")}:</label>
@@ -369,22 +383,12 @@ const BrowseGames: React.FC = () => {
             </option>
           ))}
         </select>
-
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
         >
-          {sortBy === "createdAt" ? (
-            <>
-              <option value="desc">{t("propertyFilter.sort.newestFirst")}</option>
-              <option value="asc">{t("propertyFilter.sort.oldestFirst")}</option>
-            </>
-          ) : (
-            <>
-              <option value="desc">{t("propertyFilter.sort.highToLow")}</option>
-              <option value="asc">{t("propertyFilter.sort.lowToHigh")}</option>
-            </>
-          )}
+          <option value="asc">{t("propertyFilter.sort.lowToHigh")}</option>
+          <option value="desc">{t("propertyFilter.sort.highToLow")}</option>
         </select>
       </div>
   
