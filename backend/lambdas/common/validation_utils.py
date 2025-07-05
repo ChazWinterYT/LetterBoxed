@@ -1,5 +1,14 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import decimal
+
+# Constants for validation
+VALID_GAME_TYPES = ["random", "custom", "nyt", "casual"]
+VALID_BOARD_SIZES = ["2x2", "3x3", "4x4"]
+VALID_LANGUAGES = ["de", "en", "es", "fr", "it", "pl", "ru"]
+
+# Required keys for pagination based on filtering type
+LANGUAGE_PAGINATION_KEYS = ["language", "createdAt", "gameId"]
+GAME_TYPE_PAGINATION_KEYS = ["gameTypeLanguage", "createdAt", "gameId"]
 
 
 def validate_game_schema(game_item: Dict[str, Any]) -> Dict[str, Any]:
@@ -86,8 +95,7 @@ def validate_board_size(board_size: str) -> bool:
     Returns:
         bool: True if the board size is valid, False otherwise.
     """
-    valid_board_sizes = ["2x2", "3x3", "4x4"]
-    return board_size in valid_board_sizes
+    return board_size in VALID_BOARD_SIZES
 
 
 def validate_language(language: str) -> bool:
@@ -100,8 +108,31 @@ def validate_language(language: str) -> bool:
     Returns:
         bool: True if the language is supported, False otherwise.
     """
-    valid_languages = ["de", "en", "es", "fr", "it", "pl", "ru"]
-    return language in valid_languages
+    return language in VALID_LANGUAGES
+
+
+def validate_pagination_key(last_key: Dict[str, str], game_type: Optional[str] = None) -> None:
+    """
+    Validates pagination key based on filtering type.
+    
+    Args:
+        last_key: The pagination key to validate
+        game_type: If provided, validates for gameType filtering, otherwise for language filtering
+        
+    Raises:
+        ValueError: If the pagination key is invalid
+    """
+    if game_type:
+        required_keys = GAME_TYPE_PAGINATION_KEYS
+        context = "gameType filtering"
+    else:
+        required_keys = LANGUAGE_PAGINATION_KEYS
+        context = "language filtering"
+    
+    if not all(key in last_key for key in required_keys):
+        raise ValueError(
+            f"last_key for {context} must include {', '.join(required_keys)}."
+        )
 
 
 def validate_board_matches_layout(game_layout: List[str], board_size: str) -> None:

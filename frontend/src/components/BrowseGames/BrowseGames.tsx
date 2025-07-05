@@ -34,8 +34,9 @@ const BrowseGames: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
+  const [currentGameType, setCurrentGameType] = useState<string | null>(null);
 
-  const [sortBy, setSortBy] = useState<string>("dateCreated");
+  const [sortBy, setSortBy] = useState<string>("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const sortOptions = [
@@ -61,15 +62,15 @@ const BrowseGames: React.FC = () => {
    * Keeps fetching pages until no lastEvaluatedKey is returned, so the user
    * can see the entire dataset for filtering or pagination.
    */
-  const loadAllGames = useCallback(async (language: string) => {
+  const loadAllGames = useCallback(async (language: string, gameType?: string) => {
     setIsLoading(true);
     let lastEvaluatedKey: Record<string, string> | null = null;
   
     try {
       do {
-        console.log("Fetching games with lastEvaluatedKey:", lastEvaluatedKey);
+        console.log("Fetching games with lastEvaluatedKey:", lastEvaluatedKey, "gameType:", gameType);
         const response: { games: Game[]; lastEvaluatedKey?: Record<string, string> | null } =
-          await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize);
+          await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize, gameType);
   
         console.log("Fetched games:", response.games);
   
@@ -114,10 +115,29 @@ const BrowseGames: React.FC = () => {
 
   // ================== Filtering Logic ==================
   const handlePropertyFilterChange = (newQuery: CloudscapePropertyFilterQuery) => {
+    // Check if gameType filter has changed
+    const newGameType = newQuery.tokens.find(token => token.propertyKey === "gameType")?.value || null;
+    const gameTypeChanged = newGameType !== currentGameType;
+    
     setQuery(newQuery);
-    setFilteredGames(filterGames(games, newQuery));
-    // Reset to the first page
-    setCurrentPageIndex(1);
+    
+    if (gameTypeChanged) {
+      // GameType filter changed - restart API calls with backend filtering
+      console.log("GameType filter changed from", currentGameType, "to", newGameType);
+      setCurrentGameType(newGameType);
+      
+      // Clear existing data and restart with new gameType filter
+      setGames([]);
+      setFilteredGames([]);
+      setCurrentPageIndex(1);
+      
+      // Load games with the new gameType filter
+      loadAllGames(selectedLanguage, newGameType || undefined);
+    } else {
+      // Other filters changed - use client-side filtering
+      setFilteredGames(filterGames(games, newQuery));
+      setCurrentPageIndex(1);
+    }
   };
 
   const filterGames = useCallback(
@@ -417,7 +437,7 @@ const BrowseGames: React.FC = () => {
             ))}
           </div>
         )}
-        {isLoading && filteredGames.length > 0 && <Spinner message={t("browseGames.loadingMore")} />}
+        {isLoading && filteredGames.length > 0 && <Spinner message={t("browseGames.loading")} />}
       </div>
   
       {/* Fallback if there are no results */}

@@ -53,11 +53,17 @@ export const fetchGameById = async (gameId: string) => {
 export const fetchGamesByLanguage = async (
   language: string,
   lastEvaluatedKey: Record<string, string> | null,
-  limit: number
+  limit: number,
+  gameType?: string
 ): Promise<{ games: Game[]; lastEvaluatedKey?: Record<string, string> | null }> => {
   const params = new URLSearchParams();
   params.append("language", language);
   params.append("limit", limit.toString());
+
+  // Add gameType if provided
+  if (gameType) {
+    params.append("gameType", gameType);
+  }
 
   // Serialize and append lastEvaluatedKey if it exists
   if (lastEvaluatedKey) {

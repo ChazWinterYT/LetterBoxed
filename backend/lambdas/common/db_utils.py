@@ -4,7 +4,7 @@ import time
 import boto3
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key
-from lambdas.common.validation_utils import convert_decimal, validate_game_schema
+from lambdas.common.validation_utils import convert_decimal, validate_game_schema, validate_pagination_key
 
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource("dynamodb")
@@ -114,16 +114,18 @@ def fetch_games_by_language(
     language: str,
     last_key: Optional[Dict[str, str]] = None,
     limit: int = 10,
-    index_name: str = "LanguageCreatedAtIndex"
+    game_type: Optional[str] = None,
+    index_name: Optional[str] = None
 ) -> Dict[str, Any]:
     """
-    Queries games by language and paginates results.
+    Queries games by language and optionally by game type, and paginates results.
 
     Args:
         language (str): The language to filter games by.
         last_key (Optional[Dict[str, str]]): Pagination key for DynamoDB query (optional).
         limit (int): Number of results to return (default 10).
-        index_name (str): DynamoDB GSI to use for the query (default "LanguageCreatedAtIndex").
+        game_type (Optional[str]): The game type to filter by (optional).
+        index_name (Optional[str]): DynamoDB GSI to use for the query (optional, auto-selected based on game_type).
 
     Returns:
         dict: Dictionary containing "games" (list of games) and "lastEvaluatedKey" for pagination.
@@ -131,22 +133,40 @@ def fetch_games_by_language(
     try:
         table = get_games_table()
         
-        # Build query parameters
-        query_kwargs = {
-            "IndexName": index_name,
-            "KeyConditionExpression": Key("language").eq(language),
-            "Limit": limit,
-            "ScanIndexForward": False  # Descending order
-        }
-        
-        # Add pagination key if provided
-        if last_key:
-            print(f"Parsed lastEvaluatedKey: {last_key}")
-            if not all(key in last_key for key in ["language", "createdAt", "gameId"]):
-                raise ValueError(
-                    "last_key must include 'language', 'createdAt', and 'gameId'."
-                )
-            query_kwargs["ExclusiveStartKey"] = last_key
+        # Determine which GSI to use and build the appropriate query
+        if game_type:
+            # Use GameTypeLanguageCreatedAtIndex for filtered queries
+            actual_index_name = index_name or "GameTypeLanguageCreatedAtIndex"
+            game_type_language = f"{game_type}#{language}"
+            
+            query_kwargs = {
+                "IndexName": actual_index_name,
+                "KeyConditionExpression": Key("gameTypeLanguage").eq(game_type_language),
+                "Limit": limit,
+                "ScanIndexForward": False  # Descending order
+            }
+            
+            # Add pagination key if provided
+            if last_key:
+                print(f"Parsed lastEvaluatedKey for gameType filtering: {last_key}")
+                validate_pagination_key(last_key, game_type)
+                query_kwargs["ExclusiveStartKey"] = last_key
+        else:
+            # Use LanguageCreatedAtIndex for unfiltered queries
+            actual_index_name = index_name or "LanguageCreatedAtIndex"
+            
+            query_kwargs = {
+                "IndexName": actual_index_name,
+                "KeyConditionExpression": Key("language").eq(language),
+                "Limit": limit,
+                "ScanIndexForward": False  # Descending order
+            }
+            
+            # Add pagination key if provided
+            if last_key:
+                print(f"Parsed lastEvaluatedKey for language filtering: {last_key}")
+                validate_pagination_key(last_key, None)  # None means language-only filtering
+                query_kwargs["ExclusiveStartKey"] = last_key
         
         print("query_kwargs:", query_kwargs)
         
