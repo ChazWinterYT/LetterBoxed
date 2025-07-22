@@ -1,12 +1,19 @@
 import os
 import glob
 import shutil
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
 import json
 import requests
 from typing import Any, Dict
 from bs4 import BeautifulSoup
 from datetime import date
 import boto3
+
+# Load environment variables from .env file
+load_dotenv()
 
 # AWS S3 client
 s3 = boto3.client("s3")
@@ -25,6 +32,8 @@ S3_BUCKETS = [
     {"bucket_name": "test-dictionary-bucket", "prefix": "Dictionaries/"}
 ]
 
+# Global variable to hold the response message for notification
+response_message = ""
 
 def clean_word(word):
     """Normalize and clean a word."""
@@ -152,12 +161,15 @@ def prefetch_nyt_game_for_app():
     """
     url = "https://9q2qk2fao1.execute-api.us-east-1.amazonaws.com/prod/prefetch"
     print("Adding today's game to app...")
+    global response_message
     try:
         response = requests.get(url)  # Set timeout to 10 seconds
         response.raise_for_status()  # Raise an exception for HTTP errors
-        print(response.json())
+        response_message = str(response.json())
+        print(f"Response from prefetch API: {response_message}")
         return response.json()  # Parse and return JSON response
     except requests.exceptions.RequestException as e:
+        response_message = f"Error fetching NYT game: {e}"
         print(f"Error fetching NYT game: {e}")
         raise
     
@@ -215,6 +227,34 @@ def merge_nyt_dictionary_to_final(nyt_dictionary, temp_dictionary_path, final_di
     os.remove(merged_temp_path)
     print(f"Cleaned up temporary file: {merged_temp_path}")
 
+def send_completion_notification():
+    """
+    Send a notification that the merge and upload process is complete.
+    """
+    print("Sending completion notification...")
+    sender_email = "chas@hmrmusic.com"
+    receiver_email = "chas@hmrmusic.com"
+    notification_key = os.getenv("NOTIFICATION_KEY")
+    if not notification_key:
+        print("Notification key not found in environment variables.")
+        return
+    global response_message
+
+    message = MIMEMultipart("alternative")
+    message["Subject"] = "NYT Dictionary Merge and Upload Complete"
+    message["From"] = sender_email
+    message["To"] = receiver_email
+    text = response_message
+    part = MIMEText(text, "plain")
+    message.attach(part)
+
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(sender_email, notification_key)
+            server.sendmail(sender_email, receiver_email, message.as_string())
+        print("Notification email sent successfully.")
+    except Exception as e:
+        print(f"Error sending notification email: {e}")
 
 def main():
     """
@@ -233,6 +273,9 @@ def main():
 
     # Add the game to the app
     prefetch_nyt_game_for_app()
+
+    # Notify of completion
+    send_completion_notification()
 
     print("All tasks completed successfully.")
 
