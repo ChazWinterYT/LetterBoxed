@@ -1,0 +1,41 @@
+/* Ad Banner Container */
+.ad-banner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px 0;
+    min-height: 100px;
+    /* Reserve space for ad to prevent layout shift */
+    background-color: transparent;
+}
+
+/* AdSense responsive ad styling */
+.adsbygoogle {
+    display: block;
+    text-align: center;
+    min-height: 100px;
+    max-width: 100%;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 700px) {
+    .ad-banner-container {
+        margin: 5px 0;
+        padding: 5px 0;
+        min-height: 50px;
+        /* Smaller reserve space on mobile */
+    }
+
+    .adsbygoogle {
+        min-height: 50px;
+    }
+}
+
+/* Hide ads on very small screens if needed */
+@media (max-width: 400px) {
+    .ad-banner-container {
+        min-height: 0;
+    }
+}
