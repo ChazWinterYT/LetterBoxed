@@ -13,7 +13,7 @@ from datetime import date
 import boto3
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(override=True)
 
 # AWS S3 client
 s3 = boto3.client("s3")
@@ -250,7 +250,7 @@ def send_completion_notification():
 
     # Fastmail SMTP configuration
     smtp_server = os.getenv("SMTP_SERVER", "smtp.fastmail.com")
-    smtp_port = 465
+    smtp_port = os.getenv("SMTP_PORT", 465)
     
     try:
         with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
@@ -270,10 +270,10 @@ def main():
     nyt_dictionary = todays_game.get("dictionary", [])
 
     # Merge the S3 dictionary and the NYT dictionary
-    merge_s3_and_nyt_dictionaries(nyt_dictionary)
+    #merge_s3_and_nyt_dictionaries(nyt_dictionary)
 
     # Upload the updated dictionaries to all configured S3 buckets
-    upload_dictionaries_to_s3()
+    #upload_dictionaries_to_s3()
 
     # Add the game to the app
     prefetch_nyt_game_for_app()
