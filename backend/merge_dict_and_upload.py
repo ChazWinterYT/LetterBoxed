@@ -248,8 +248,12 @@ def send_completion_notification():
     part = MIMEText(text, "plain")
     message.attach(part)
 
+    # Fastmail SMTP configuration
+    smtp_server = os.getenv("SMTP_SERVER", "smtp.fastmail.com")
+    smtp_port = 465
+    
     try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
             server.login(sender_email, notification_key)
             server.sendmail(sender_email, receiver_email, message.as_string())
         print("Notification email sent successfully.")
