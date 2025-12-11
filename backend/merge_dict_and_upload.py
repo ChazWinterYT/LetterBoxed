@@ -270,10 +270,10 @@ def main():
     nyt_dictionary = todays_game.get("dictionary", [])
 
     # Merge the S3 dictionary and the NYT dictionary
-    #merge_s3_and_nyt_dictionaries(nyt_dictionary)
+    merge_s3_and_nyt_dictionaries(nyt_dictionary)
 
     # Upload the updated dictionaries to all configured S3 buckets
-    #upload_dictionaries_to_s3()
+    upload_dictionaries_to_s3()
 
     # Add the game to the app
     prefetch_nyt_game_for_app()
