@@ -3,6 +3,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
   useNavigate,
   useParams,
 } from "react-router-dom";
@@ -650,6 +651,11 @@ const App = () => {
 const AppRouter = () => (
   <BrowserRouter basename="/LetterBoxed/frontend">
     <Routes>
+      {/* Redirect index.html to root */}
+      <Route
+        path="/index.html"
+        element={<Navigate to="/" replace />}
+      />
       {/* Route for the main app */}
       <Route
         path="/"

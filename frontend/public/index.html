@@ -7,7 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="google-adsense-account" content="ca-pub-9983863437640943">
-  <meta name="description" content="Web site created using create-react-app" />
+  <meta name="description"
+    content="Stitch-uations - A LetterBoxed word puzzle game. Play today's NYT LetterBoxed puzzle, browse the archive, or create your own custom games. Challenge yourself to solve word puzzles by connecting letters around a game board." />
+  <meta name="keywords"
+    content="LetterBoxed, word puzzle, NYT LetterBoxed, word game, puzzle game, crossword alternative, word challenge" />
+  <meta name="author" content="chazwinter.com" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://chazwinter.com/LetterBoxed/frontend/" />
+  <meta property="og:title" content="Stitch-uations - A LetterBoxed Game" />
+  <meta property="og:description"
+    content="Play LetterBoxed word puzzles. Solve today's NYT puzzle, browse the archive, or create custom games." />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://chazwinter.com/LetterBoxed/frontend/" />
+  <meta property="twitter:title" content="Stitch-uations - A LetterBoxed Game" />
+  <meta property="twitter:description"
+    content="Play LetterBoxed word puzzles. Solve today's NYT puzzle, browse the archive, or create custom games." />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -30,6 +48,17 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script>
+    // Redirect /index.html to / if accessed directly
+    if (window.location.pathname.endsWith('/index.html')) {
+      var newPath = window.location.pathname.replace('/index.html', '/');
+      if (newPath === window.location.pathname) {
+        // If replace didn't work, try full redirect
+        newPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/index.html')) + '/';
+      }
+      window.history.replaceState({}, '', newPath + window.location.search + window.location.hash);
+    }
+  </script>
   <div id="root"></div>
   <!--
       This HTML file is a template.
