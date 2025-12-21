@@ -4,10 +4,18 @@ import App from './App';
 import { LanguageProvider } from './context/LanguageContext';
 import './index.css';
 
+console.log('React index.tsx: Starting to mount app');
 const container = document.getElementById('root');
-const root = createRoot(container!); // Use createRoot for React 18+
-root.render(
+if (!container) {
+  console.error('React index.tsx: root container not found!');
+} else {
+  console.log('React index.tsx: root container found, creating root');
+  const root = createRoot(container);
+  console.log('React index.tsx: rendering app');
+  root.render(
     <LanguageProvider>
       <App />
     </LanguageProvider>
-);
+  );
+  console.log('React index.tsx: render called');
+}

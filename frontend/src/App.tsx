@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import Confetti from 'react-confetti'
 import { v4 as uuid4 } from "uuid";
 import Header from "./components/Header";
+//import AdBanner from "./components/AdBanner";
 import ButtonMenu from "./components/ButtonMenu";
 import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/GameArchive/ArchiveList";
@@ -36,6 +37,7 @@ import StarRating from "./components/StarRating";
 import BrowseGames from "./components/BrowseGames/BrowseGames";
 
 const App = () => {
+  console.log('App component: Rendering');
   const { t, availableLanguages } = useLanguage();
   const navigate = useNavigate();
   const { gameId: urlGameId } = useParams<{ gameId: string }>();
@@ -110,12 +112,12 @@ const App = () => {
         console.warn("Cannot save game state: Missing userSessionId or currentGameId.");
         return;
       }
-  
+
       if (!gameLayout || gameLayout.length === 0) {
         console.error("Game layout is not available.");
         return;
       }
-  
+
       const sessionData = {
         sessionId: userSessionId,
         gameId: currentGameId,
@@ -123,7 +125,7 @@ const App = () => {
         wordsUsed: wordsUsed,
         originalWordsUsed: originalWordsUsed, // Include original words
       };
-  
+
       try {
         console.log("Saving game state:", sessionData);
         await saveSessionState(sessionData);
@@ -149,7 +151,7 @@ const App = () => {
       console.log("Loading game by ID:", gameId);
       try {
         setIsGameLoading(true);
-        
+
         // Reset state before loading new game
         setFoundWords([]);
         setOriginalWordsUsed([]);
@@ -214,7 +216,7 @@ const App = () => {
   // Handle shareable URL or default to play-today
   useEffect(() => {
     console.log("Detected URL gameId:", urlGameId);
-  
+
     // If a new gameId is in the URL, load it
     if (urlGameId && urlGameId !== currentGameId) {
       console.log("Loading game from URL:", urlGameId);
@@ -230,27 +232,27 @@ const App = () => {
   // Add words and save the state
   const addWord = async (word: string, validationResult: ValidationResult) => {
     console.log("Adding word:", word);
-  
+
     if (!currentGameId || !userSessionId) {
       console.warn("Cannot validate word: Missing currentGameId or userSessionId.");
       return;
     }
-  
+
     try {
       if (validationResult.valid) {
         const { submittedWord, originalWord } = validationResult;
-  
+
         // Update state
         const updatedFoundWords = [...foundWords, submittedWord];
         const updatedOriginalWords = [...originalWordsUsed, originalWord];
-  
+
         // Save updated state
         setFoundWords(updatedFoundWords);
         setOriginalWordsUsed(updatedOriginalWords);
         saveGameState(updatedFoundWords, updatedOriginalWords);
-  
+
         console.log("Validation Result:", validationResult);
-  
+
         // Check if game is completed
         if (validationResult.gameCompleted) {
           handleGameCompleted(validationResult);
@@ -332,16 +334,16 @@ const App = () => {
       try {
         const randomGame = await fetchRandomGame(language);
         console.log("Fetched random game:", randomGame);
-        
+
         setCurrentGameId(randomGame.gameId);
         setLayout(randomGame.gameLayout || []);
         setGameLayout(randomGame.gameLayout || []);
         setBoardSize(randomGame.boardSize || "3x3");
-        
+
         setIsModalOpen(false); // Close the modal
-        
+
         navigate(`/games/${randomGame.gameId}`, { replace: true });
-        
+
         // Load game state if necessary
         await loadGameState(randomGame.gameId);
       } catch (error) {
@@ -374,7 +376,7 @@ const App = () => {
 
     // Get the list of playable languages
     const playableLanguages = availableLanguages.filter((lang: Language) => lang.playable);
-  
+
     setModalContent(
       <div className="random-game-options">
         <h2>{t("game.randomGame.selectGameLanguage")}</h2>
@@ -469,11 +471,11 @@ const App = () => {
 
   const handleRemoveLastWord = (updatedWords: string[]) => {
     console.log("Removing last word. Updated words:", updatedWords);
-  
+
     // Update the local state
     setFoundWords(updatedWords);
     setOriginalWordsUsed(originalWordsUsed.slice(0, updatedWords.length))
-  
+
     // Save the updated game state
     saveGameState(updatedWords, originalWordsUsed.slice(0, updatedWords.length));
   };
@@ -491,13 +493,13 @@ const App = () => {
         averageWordLength = 0,
         averageRating = 0.0,
       } = validationResult;
-  
+
       setModalTitle(t("game.complete.puzzleSolvedTitle"));
-  
+
       const content = (
         <div className="game-completed-content">
           <p><b>{t("game.complete.puzzleSolvedMessage")}</b></p>
-      
+
           {officialSolution.length > 0 && (
             <p>
               {t("game.complete.officialSolution")}: <b>{officialSolution.join(", ")}</b>
@@ -514,7 +516,7 @@ const App = () => {
                 <b>{t("game.complete.averageWordLength")}:</b> {averageWordLength.toFixed(1)}
               </p>
             </div>
-          
+
             {someOneWordSolutions.length > 0 && (
               <div className="solution-section">
                 <p>
@@ -526,7 +528,7 @@ const App = () => {
                 <p>{someOneWordSolutions.join(", ")}</p>
               </div>
             )}
-        
+
             {someTwoWordSolutions.length > 0 && (
               <div className="solution-section">
                 <p>
@@ -547,14 +549,14 @@ const App = () => {
           </div>
 
           {/* Ratings */}
-          {currentGameId && 
-            <StarRating 
+          {currentGameId &&
+            <StarRating
               gameId={currentGameId}
-              maxStars={5} 
+              maxStars={5}
               averageRating={averageRating}
             />
           }
-          
+
           <button
             onClick={() => {
               console.log("Play another game");
@@ -565,24 +567,30 @@ const App = () => {
           </button>
         </div>
       );
-  
+
       setModalContent(content);
       setIsModalOpen(true);
       setGameCompleted(true);
       setShowConfetti(true);
-  
       setTimeout(() => {
         setShowConfetti(false);
       }, 10000); // Make confetti disappear
     },
     [t, openRandomGameModal, currentGameId]
   );
-  
 
-
+  console.log('App component: About to return JSX, isGameLoading:', isGameLoading, 'currentGameId:', currentGameId);
   return (
     <div className="app-container">
       <Header />
+      {/*
+      <AdBanner
+        adClient={process.env.REACT_APP_ADSENSE_CLIENT_ID}
+        adSlot={process.env.REACT_APP_ADSENSE_SLOT_ID}
+        format="auto"
+        enabled={process.env.REACT_APP_ADS_ENABLED === "true"}
+      />
+      */}
       <ButtonMenu
         onPlayToday={loadTodaysGame}
         onOpenArchive={openArchiveModal}
@@ -643,32 +651,46 @@ const AppRouter = () => (
   <BrowserRouter basename="/LetterBoxed/frontend">
     <Routes>
       {/* Route for the main app */}
-      <Route path="/" element={<App />} />
-      {/* Route for accessing a specific game */}
-      <Route path="/games/:gameId" element={<App />} />
-      {/* Route for the Game Generator */}
-      <Route 
-        path="/get-word-pairs" 
+      <Route
+        path="/"
         element={
-          <GameGenerator />} 
+          <App />
+        }
+      />
+      {/* Route for accessing a specific game */}
+      <Route
+        path="/games/:gameId"
+        element={
+          <App />
+        }
       />
       {/* Route for the Game Generator */}
-      <Route 
-        path="/browse-games" 
+      <Route
+        path="/get-word-pairs"
         element={
-          <BrowseGames />} 
+          <GameGenerator />
+        }
+      />
+      {/* Route for the Game Generator */}
+      <Route
+        path="/browse-games"
+        element={
+          <BrowseGames />
+        }
       />
       {/* Route for the Seed Words Game Creator */}
-      <Route 
-        path="/create-game-seed-words" 
+      <Route
+        path="/create-game-seed-words"
         element={
-          <CustomSeedWordsForm />} 
+          <CustomSeedWordsForm />
+        }
       />
       {/* Route for the Custom Letters Game Creator */}
-      <Route 
-        path="/create-game-enter-letters" 
+      <Route
+        path="/create-game-enter-letters"
         element={
-          <EnterLettersForm />} 
+          <EnterLettersForm />
+        }
       />
     </Routes>
   </BrowserRouter>
