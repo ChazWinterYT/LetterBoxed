@@ -47,7 +47,89 @@
 </head>
 
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!-- Static content for search engine crawlers - visible in HTML source -->
+  <div id="static-content"
+    style="display: block; padding: 20px; font-family: Arial, sans-serif; background-color: #567bad; color: white; min-height: 100vh;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <h1 style="margin: 0 0 10px 0; font-size: 2.5em; text-align: center;">Stitch-uations</h1>
+      <h2 style="margin: 0 0 30px 0; font-weight: normal; font-size: 1.5em; text-align: center;">A LetterBoxed Word
+        Puzzle Game</h2>
+
+      <div style="background-color: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+        <h3 style="margin: 0 0 15px 0;">About the Game</h3>
+        <p style="line-height: 1.8; margin: 0 0 15px 0;">
+          Stitch-uations is a LetterBoxed word puzzle game inspired by The New York Times LetterBoxed puzzle.
+          Challenge yourself to solve word puzzles by connecting letters around a game board to form words.
+        </p>
+        <p style="line-height: 1.8; margin: 0;">
+          Each word must start where the previous word ended. Try to solve the puzzle using as few words as possible!
+        </p>
+      </div>
+
+      <div style="background-color: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+        <h3 style="margin: 0 0 15px 0;">How to Play</h3>
+        <ol style="line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li>You're given letters arranged around a square game board</li>
+          <li>Form words by connecting letters in sequence</li>
+          <li>Each new word must start with the last letter of the previous word</li>
+          <li>Use all letters on the board to complete the puzzle</li>
+          <li>Try to solve using as few words as possible!</li>
+        </ol>
+      </div>
+
+      <div style="background-color: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+        <h3 style="margin: 0 0 15px 0;">Features</h3>
+        <ul style="line-height: 1.8; margin: 0; padding-left: 20px;">
+          <li><strong>Play Today's NYT Puzzle</strong> - Solve the official New York Times LetterBoxed puzzle daily</li>
+          <li><strong>Game Archive</strong> - Access and play any past NYT LetterBoxed puzzle</li>
+          <li><strong>Custom Games</strong> - Create your own LetterBoxed puzzles with custom letters and board sizes
+          </li>
+          <li><strong>Random Games</strong> - Play randomly generated puzzles in multiple languages</li>
+          <li><strong>Multi-language Support</strong> - Play in English, Spanish, French, German, Hebrew, Japanese,
+            Russian, and more</li>
+          <li><strong>Progress Tracking</strong> - Your game progress is automatically saved</li>
+          <li><strong>Solution Statistics</strong> - See how your solution compares to others</li>
+        </ul>
+      </div>
+
+      <div style="background-color: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+        <h3 style="margin: 0 0 15px 0;">Game Types</h3>
+        <p style="line-height: 1.8; margin: 0 0 10px 0;">
+          <strong>Official NYT Games:</strong> Play the daily puzzle from The New York Times LetterBoxed game.
+        </p>
+        <p style="line-height: 1.8; margin: 0 0 10px 0;">
+          <strong>Custom Games:</strong> Create puzzles by entering letters manually or using seed words to generate a
+          board.
+        </p>
+        <p style="line-height: 1.8; margin: 0;">
+          <strong>Random Games:</strong> Generate random puzzles guaranteed to have solutions, available in multiple
+          languages.
+        </p>
+      </div>
+
+      <div style="text-align: center; padding: 20px;">
+        <p style="line-height: 1.8; margin: 0; font-style: italic;">
+          This is an interactive web application. Please enable JavaScript to play the game.
+        </p>
+        <p style="line-height: 1.8; margin: 15px 0 0 0;">
+          <a href="/LetterBoxed/frontend/" style="color: white; text-decoration: underline;">Play Stitch-uations Now</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <div
+      style="padding: 20px; text-align: center; font-family: Arial, sans-serif; background-color: #567bad; color: white; min-height: 100vh;">
+      <h1 style="margin: 0 0 20px 0;">Stitch-uations</h1>
+      <h2 style="margin: 0 0 30px 0; font-weight: normal;">A LetterBoxed Game</h2>
+      <p style="max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        You need to enable JavaScript to run this interactive game. Stitch-uations is a word puzzle game where you solve
+        LetterBoxed puzzles by connecting letters around a game board to form words.
+      </p>
+    </div>
+  </noscript>
+
   <script>
     // Redirect /index.html to / if accessed directly
     if (window.location.pathname.endsWith('/index.html')) {
@@ -58,6 +140,17 @@
       }
       window.history.replaceState({}, '', newPath + window.location.search + window.location.hash);
     }
+
+    // Hide static content when React app loads
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        var staticContent = document.getElementById('static-content');
+        var root = document.getElementById('root');
+        if (staticContent && root && root.children.length > 0) {
+          staticContent.style.display = 'none';
+        }
+      }, 100);
+    });
   </script>
   <div id="root"></div>
   <!--
