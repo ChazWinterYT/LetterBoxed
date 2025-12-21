@@ -698,6 +698,13 @@ const AppRouter = () => (
           <EnterLettersForm />
         }
       />
+      {/* Catch-all route - any unmatched path loads the main game */}
+      <Route
+        path="*"
+        element={
+          <App />
+        }
+      />
     </Routes>
   </BrowserRouter>
 );
