@@ -13,13 +13,13 @@ const Header = () => {
 
       {/* Language Selector Row */}
       <div className="language-selector-row">
+        <p className="language-label">{t("header.chooseLanguage")}:</p>
         <img
           src="/language-icon.png"
           alt=""
           className="language-icon"
           aria-hidden="true"
         />
-        <p className="language-label">{t("header.chooseLanguage")}:</p>
         <select
           className="language-selector"
           value={language}
