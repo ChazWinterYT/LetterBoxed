@@ -684,6 +684,14 @@ const AppRouter = () => (
           <BrowseGames />
         }
       />
+      {/* Route for the NYT Game Archive */}
+      <Route
+        path="/letterboxed-archive"
+        element={
+          <BrowseGames defaultGameType="nyt" />
+        }
+      />
+
       {/* Route for the Seed Words Game Creator */}
       <Route
         path="/create-game-seed-words"
