@@ -10,9 +10,15 @@ const Header = () => {
       <div className="logo">chazwinter.com</div>
       <h2>{t("header.title")}</h2>
       <h3>{t("header.subtitle")}</h3>
-      
+
       {/* Language Selector Row */}
       <div className="language-selector-row">
+        <img
+          src="/language-icon.png"
+          alt=""
+          className="language-icon"
+          aria-hidden="true"
+        />
         <p className="language-label">{t("header.chooseLanguage")}:</p>
         <select
           className="language-selector"
