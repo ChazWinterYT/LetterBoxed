@@ -38,7 +38,9 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
-  const [currentGameType, setCurrentGameType] = useState<string | null>(defaultGameType || null);
+  // Initialize currentGameType to null even if defaultGameType is present, 
+  // to ensure we load ALL games initially and filter client-side.
+  const [currentGameType, setCurrentGameType] = useState<string | null>(null);
 
   const [sortBy, setSortBy] = useState<string>("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -50,7 +52,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
     { key: "averageWordsNeeded", label: t("browseGames.averageWordsNeeded")},
   ]
 
-  // Cloudscape filter query
+  // Cloudscape filter query - Initialize with defaultGameType
   const [query, setQuery] = useState<CloudscapePropertyFilterQuery>({
     tokens: defaultGameType
       ? [
@@ -102,10 +104,10 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
     }
   }, [pageSize]);
 
-  // On mount, load all English games
+  // On mount, load all English games. 
   useEffect(() => {
-    loadAllGames(selectedLanguage, currentGameType || undefined);
-  }, [loadAllGames, selectedLanguage, currentGameType]);
+    loadAllGames(selectedLanguage);
+  }, [loadAllGames, selectedLanguage]);
 
   // ================== Parse filter from URL query parameter ==================
   useEffect(() => {
