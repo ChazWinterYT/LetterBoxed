@@ -403,7 +403,7 @@ const App = () => {
   // Open Archive Modal
   const openArchiveModal = useCallback(() => {
     console.log("Navigating to browse games with NYT filter");
-    navigate("/browse-games?gameType=nyt");
+    navigate("/letterboxed-archive");
   }, [navigate]);
 
   // Open Custom Game Modal
