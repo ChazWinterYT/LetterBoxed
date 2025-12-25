@@ -141,8 +141,8 @@
         },
         "seedWords": "Parole iniziali",
         "clearWord": "Cancella parola",
-        "hint": "Suggerimento",
         "casualGame": "Modalità Casual",
+        "hint": "Suggerimento",
         "authorName": "Nome dell'autore",
         "longTimeWarning": "ATTENZIONE: La generazione di un gioco può richiedere fino a 60 secondi. Non aggiornare o lasciare la pagina, altrimenti non riceverai il link del tuo gioco.",
         "generateGame": "Genera gioco",
@@ -154,8 +154,8 @@
             "enterSeedWord": "Inserisci una parola iniziale",
             "seedWordChoice": "Per tabelloni piccoli, puoi usare una o due parole iniziali.",
             "boardSize": "Seleziona una dimensione per il tabellone",
-            "hint": "Inserisci un suggerimento per aiutare gli altri a risolvere il tuo enigma.",
-            "casualGame": "Se questa casella è selezionata, le parole iniziali non devono essere nel dizionario."
+            "casualGame": "Se questa casella è selezionata, le parole iniziali non devono essere nel dizionario.",
+            "hint": "Inserisci un suggerimento per aiutare gli altri a risolvere il tuo enigma."
         },
         "success": {
             "gameCreationSuccess": "Gioco generato con successo!",
@@ -192,7 +192,7 @@
             "twoWords": "Due Parole",
             "instructions1": "\"Singola Parola\" genererà una griglia 2x2.",
             "instructions2": "\"Due Parole\" genererà una griglia 3x3."
-        },      
+        },
         "dictionary": {
             "dictionaryType": "Tipo di Dizionario",
             "basic": "Base",
@@ -221,9 +221,15 @@
         "gameId": "ID del Gioco",
         "gameLayout": "Disposizione del Gioco",
         "gameType": "Tipo di Gioco",
+        "gameTypes": {
+            "custom": "Personalizzato",
+            "random": "Casuale",
+            "nyt": "Ufficiale NYT"
+        },
         "language": "Lingua",
         "boardSize": "Dimensione del Tabellone",
         "createdAt": "Creato il",
+        "date": "Data",
         "createdBy": "Creato da",
         "unknownAuthor": "Anonimo",
         "hint": "Suggerimento",
@@ -249,6 +255,25 @@
         }
     },
     "propertyFilter": {
+        "operators": {
+            "olderThan": "Più vecchio di (<=)",
+            "newerThan": "Più recente di (>=)",
+            "between": "Tra",
+            "and": "e",
+            "dismiss": "Ignora",
+            "operators": "Operatori",
+            "or": "o",
+            "lessThan": "Meno di",
+            "greaterThan": "Più di"
+        },
+        "actions": {
+            "clear": "Cancella filtri",
+            "apply": "Applica",
+            "cancel": "Annulla",
+            "allProperties": "Tutte le proprietà",
+            "groupValues": "Valori",
+            "empty": "Nessuna corrispondenza trovata"
+        },
         "4orAbove": "4 o più",
         "3orAbove": "3 o più",
         "2orAbove": "2 o più",
@@ -274,6 +299,11 @@
             "oldestFirst": "Più vecchi per primi"
         }
     },
+    "pagination": {
+        "nextPage": "Pagina successiva",
+        "previousPage": "Pagina precedente",
+        "page": "Pagina"
+    },
     "instructions": {
         "howToPlay": "Come giocare",
         "rules": "Regole",
@@ -294,6 +324,8 @@
         "de": "Tedesco",
         "es": "Spagnolo",
         "fr": "Francese",
+        "he": "Ebraico",
+        "hev": "Ebraico (Nikkud)",
         "hi": "Hindi",
         "id": "Indonesiano",
         "it": "Italiano",
@@ -301,6 +333,7 @@
         "pl": "Polacco",
         "pt": "Portoghese",
         "ru": "Russo",
-        "sv": "Svedese"
+        "sv": "Svedese",
+        "th": "Tailandese"
     }
 }

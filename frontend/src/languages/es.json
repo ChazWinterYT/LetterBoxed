@@ -141,8 +141,8 @@
         },
         "seedWords": "Palabras semilla",
         "clearWord": "Borrar palabra",
-        "hint": "Pista",
         "casualGame": "Modo Casual",
+        "hint": "Pista",
         "authorName": "Nombre del autor",
         "longTimeWarning": "ADVERTENCIA: Generar un juego puede tardar hasta 60 segundos. Por favor, no actualice ni salga de la página, o no recibirá el enlace de su juego.",
         "generateGame": "Generar juego",
@@ -154,8 +154,8 @@
             "enterSeedWord": "Ingrese una palabra semilla",
             "seedWordChoice": "Para tableros pequeños, puede usar una o dos palabras semilla.",
             "boardSize": "Seleccione un tamaño para el tablero",
-            "hint": "Ingrese una pista para ayudar a otros a resolver su rompecabezas.",
-            "casualGame": "Si esta casilla está marcada, las palabras iniciales no tienen que estar en el diccionario."
+            "casualGame": "Si esta casilla está marcada, las palabras iniciales no tienen que estar en el diccionario.",
+            "hint": "Ingrese una pista para ayudar a otros a resolver su rompecabezas."
         },
         "success": {
             "gameCreationSuccess": "¡Juego generado con éxito!",
@@ -192,7 +192,7 @@
             "twoWords": "Dos Palabras",
             "instructions1": "\"Palabra Única\" generará un tablero de juego de 2x2.",
             "instructions2": "\"Dos Palabras\" generará un tablero de juego de 3x3."
-        },      
+        },
         "dictionary": {
             "dictionaryType": "Tipo de Diccionario",
             "basic": "Básico",
@@ -221,9 +221,15 @@
         "gameId": "ID del Juego",
         "gameLayout": "Diseño del Juego",
         "gameType": "Tipo de Juego",
+        "gameTypes": {
+            "custom": "Personalizado",
+            "random": "Aleatorio",
+            "nyt": "Oficial NYT"
+        },
         "language": "Idioma",
         "boardSize": "Tamaño del Tablero",
         "createdAt": "Creado el",
+        "date": "Fecha",
         "createdBy": "Creado por",
         "unknownAuthor": "Anónimo",
         "hint": "Pista",
@@ -249,6 +255,25 @@
         }
     },
     "propertyFilter": {
+        "operators": {
+            "olderThan": "Más antiguo que (<=)",
+            "newerThan": "Más reciente que (>=)",
+            "between": "Entre",
+            "and": "y",
+            "dismiss": "Descartar",
+            "operators": "Operadores",
+            "or": "o",
+            "lessThan": "Menos de",
+            "greaterThan": "Más de"
+        },
+        "actions": {
+            "clear": "Borrar filtros",
+            "apply": "Aplicar",
+            "cancel": "Cancelar",
+            "allProperties": "Todas las propiedades",
+            "groupValues": "Valores",
+            "empty": "No se encontraron coincidencias"
+        },
         "4orAbove": "4 o más",
         "3orAbove": "3 o más",
         "2orAbove": "2 o más",
@@ -274,6 +299,11 @@
             "oldestFirst": "Más antiguos primero"
         }
     },
+    "pagination": {
+        "nextPage": "Siguiente página",
+        "previousPage": "Página anterior",
+        "page": "Página"
+    },
     "instructions": {
         "howToPlay": "Cómo jugar",
         "rules": "Reglas",
@@ -294,6 +324,8 @@
         "de": "Alemán",
         "es": "Español",
         "fr": "Francés",
+        "he": "Hebreo",
+        "hev": "Hebreo (Nikkud)",
         "hi": "Hindi",
         "id": "Indonesio",
         "it": "Italiano",
@@ -301,6 +333,7 @@
         "pl": "Polaco",
         "pt": "Portugués",
         "ru": "Ruso",
-        "sv": "Sueco"
+        "sv": "Sueco",
+        "th": "Tailandés"
     }
 }

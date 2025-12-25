@@ -224,11 +224,12 @@
         "gameTypes": {
             "custom": "מותאם אישית",
             "random": "אקראי",
-            "nyt": "רשמי של ניו יורק טיימס"
+            "nyt": "הרשמי של NYT"
         },
         "language": "שפה",
         "boardSize": "גודל לוח",
         "createdAt": "נוצר בתאריך",
+        "date": "תאריך",
         "createdBy": "מחבר",
         "unknownAuthor": "לא ידוע",
         "hint": "רמז",
@@ -254,6 +255,25 @@
         }
     },
     "propertyFilter": {
+        "operators": {
+            "olderThan": "ישן מ (<=)",
+            "newerThan": "חדש מ (>=)",
+            "between": "בין",
+            "and": "וגם",
+            "dismiss": "סגור",
+            "operators": "אופרטורים",
+            "or": "או",
+            "lessThan": "פחות מ",
+            "greaterThan": "יותר מ"
+        },
+        "actions": {
+            "clear": "נקה מסננים",
+            "apply": "החל",
+            "cancel": "ביטול",
+            "allProperties": "כל המאפיינים",
+            "groupValues": "ערכים",
+            "empty": "לא נמצאו התאמות"
+        },
         "4orAbove": "4 ומעלה",
         "3orAbove": "3 ומעלה",
         "2orAbove": "2 ומעלה",
@@ -278,6 +298,11 @@
             "newestFirst": "החדשים תחילה",
             "oldestFirst": "הישנים תחילה"
         }
+    },
+    "pagination": {
+        "nextPage": "העמוד הבא",
+        "previousPage": "העמוד הקודם",
+        "page": "עמוד"
     },
     "instructions": {
         "howToPlay": "איך לשחק",
@@ -308,6 +333,7 @@
         "pl": "פולנית",
         "pt": "פורטוגזית",
         "ru": "רוסית",
-        "sv": "שוודית"
+        "sv": "שוודית",
+        "th": "תאילנדית"
     }
 }

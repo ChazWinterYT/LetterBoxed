@@ -141,8 +141,8 @@
         },
         "seedWords": "Kata Awal",
         "clearWord": "Hapus Kata",
-        "hint": "Petunjuk",
         "casualGame": "Mode Santai",
+        "hint": "Petunjuk",
         "authorName": "Nama Penulis",
         "longTimeWarning": "PERINGATAN: Membuat game dapat memakan waktu hingga 60 detik. Jangan menyegarkan atau meninggalkan halaman, atau Anda tidak akan menerima tautan game Anda.",
         "generateGame": "Buat Game",
@@ -154,8 +154,8 @@
             "enterSeedWord": "Masukkan kata awal",
             "seedWordChoice": "Untuk papan game kecil, Anda dapat menggunakan satu atau dua kata awal.",
             "boardSize": "Pilih ukuran papan game",
-            "hint": "Masukkan petunjuk untuk membantu orang lain menyelesaikan teka-teki Anda.",
-            "casualGame": "Jika kotak ini dicentang, kata awal tidak harus ada di kamus."
+            "casualGame": "Jika kotak ini dicentang, kata awal tidak harus ada di kamus.",
+            "hint": "Masukkan petunjuk untuk membantu orang lain menyelesaikan teka-teki Anda."
         },
         "success": {
             "gameCreationSuccess": "Game berhasil dibuat!",
@@ -192,7 +192,7 @@
             "twoWords": "Dua Kata",
             "instructions1": "\"Satu Kata\" akan menghasilkan papan permainan 2x2.",
             "instructions2": "\"Dua Kata\" akan menghasilkan papan permainan 3x3."
-        },      
+        },
         "dictionary": {
             "dictionaryType": "Jenis Kamus",
             "basic": "Dasar",
@@ -221,9 +221,15 @@
         "gameId": "ID Permainan",
         "gameLayout": "Tata Letak Permainan",
         "gameType": "Jenis Permainan",
+        "gameTypes": {
+            "custom": "Kustom",
+            "random": "Acak",
+            "nyt": "Resmi NYT"
+        },
         "language": "Bahasa",
         "boardSize": "Ukuran Papan",
         "createdAt": "Dibuat Pada",
+        "date": "Tanggal",
         "createdBy": "Dibuat Oleh",
         "unknownAuthor": "Tidak Diketahui",
         "hint": "Petunjuk",
@@ -249,6 +255,25 @@
         }
     },
     "propertyFilter": {
+        "operators": {
+            "olderThan": "Lebih lama dari (<=)",
+            "newerThan": "Lebih baru dari (>=)",
+            "between": "Antara",
+            "and": "dan",
+            "dismiss": "Tutup",
+            "operators": "Operator",
+            "or": "atau",
+            "lessThan": "Kurang dari",
+            "greaterThan": "Lebih dari"
+        },
+        "actions": {
+            "clear": "Hapus filter",
+            "apply": "Terapkan",
+            "cancel": "Batal",
+            "allProperties": "Semua properti",
+            "groupValues": "Nilai",
+            "empty": "Tidak ada kecocokan"
+        },
         "4orAbove": "4 atau lebih",
         "3orAbove": "3 atau lebih",
         "2orAbove": "2 atau lebih",
@@ -274,6 +299,11 @@
             "oldestFirst": "Terlama terlebih dahulu"
         }
     },
+    "pagination": {
+        "nextPage": "Halaman berikutnya",
+        "previousPage": "Halaman sebelumnya",
+        "page": "Halaman"
+    },
     "instructions": {
         "howToPlay": "Cara Bermain",
         "rules": "Aturan",
@@ -294,6 +324,8 @@
         "de": "Jerman",
         "es": "Spanyol",
         "fr": "Prancis",
+        "he": "Ibrani",
+        "hev": "Ibrani (Nikkud)",
         "hi": "Hindi",
         "id": "Indonesia",
         "it": "Italia",
@@ -301,6 +333,7 @@
         "pl": "Polandia",
         "pt": "Portugis",
         "ru": "Rusia",
-        "sv": "Swedia"
+        "sv": "Swedia",
+        "th": "Thailand"
     }
 }

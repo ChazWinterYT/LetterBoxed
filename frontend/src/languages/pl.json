@@ -141,8 +141,8 @@
         },
         "seedWords": "Słowa początkowe",
         "clearWord": "Wyczyść słowo",
-        "hint": "Wskazówka",
         "casualGame": "Tryb Swobodny",
+        "hint": "Wskazówka",
         "authorName": "Nazwa autora",
         "longTimeWarning": "OSTRZEŻENIE: Generowanie gry może potrwać do 60 sekund. Nie odświeżaj ani nie opuszczaj strony, aby otrzymać link do swojej gry.",
         "generateGame": "Wygeneruj grę",
@@ -154,8 +154,8 @@
             "enterSeedWord": "Wpisz słowo początkowe",
             "seedWordChoice": "Dla małych plansz możesz użyć jednego lub dwóch słów początkowych.",
             "boardSize": "Wybierz rozmiar planszy do gry",
-            "hint": "Wpisz wskazówkę, aby pomóc innym rozwiązać twoją zagadkę.",
-            "casualGame": "Jeśli to pole jest zaznaczone, słowa startowe nie muszą być w słowniku."
+            "casualGame": "Jeśli to pole jest zaznaczone, słowa startowe nie muszą być w słowniku.",
+            "hint": "Wpisz wskazówkę, aby pomóc innym rozwiązać twoją zagadkę."
         },
         "success": {
             "gameCreationSuccess": "Gra została pomyślnie wygenerowana!",
@@ -192,7 +192,7 @@
             "twoWords": "Dwóch Słów",
             "instructions1": "\"Jedno Słowo\" wygeneruje planszę 2x2.",
             "instructions2": "\"Dwa Słowa\" wygenerują planszę 3x3."
-        },      
+        },
         "dictionary": {
             "dictionaryType": "Typ Słownika",
             "basic": "Podstawowy",
@@ -221,9 +221,15 @@
         "gameId": "ID Gry",
         "gameLayout": "Układ Gry",
         "gameType": "Typ Gry",
+        "gameTypes": {
+            "custom": "Niestandardowy",
+            "random": "Losowy",
+            "nyt": "Oficjalny NYT"
+        },
         "language": "Język",
         "boardSize": "Rozmiar Planszy",
         "createdAt": "Utworzono",
+        "date": "Data",
         "createdBy": "Utworzone Przez",
         "unknownAuthor": "Nieznany",
         "hint": "Wskazówka",
@@ -249,6 +255,25 @@
         }
     },
     "propertyFilter": {
+        "operators": {
+            "olderThan": "Starsze niż (<=)",
+            "newerThan": "Nowsze niż (>=)",
+            "between": "Pomiędzy",
+            "and": "i",
+            "dismiss": "Odrzuć",
+            "operators": "Operatory",
+            "or": "lub",
+            "lessThan": "Mniej niż",
+            "greaterThan": "Więcej niż"
+        },
+        "actions": {
+            "clear": "Wyczyść filtry",
+            "apply": "Zastosuj",
+            "cancel": "Anuluj",
+            "allProperties": "Wszystkie właściwości",
+            "groupValues": "Wartości",
+            "empty": "Brak wyników"
+        },
         "4orAbove": "4 lub więcej",
         "3orAbove": "3 lub więcej",
         "2orAbove": "2 lub więcej",
@@ -274,6 +299,11 @@
             "oldestFirst": "Najstarsze pierwsze"
         }
     },
+    "pagination": {
+        "nextPage": "Następna strona",
+        "previousPage": "Poprzednia strona",
+        "page": "Strona"
+    },
     "instructions": {
         "howToPlay": "Jak grać",
         "rules": "Zasady",
@@ -294,6 +324,8 @@
         "de": "Niemiecki",
         "es": "Hiszpański",
         "fr": "Francuski",
+        "he": "Hebrajski",
+        "hev": "Hebrajski (Nikkud)",
         "hi": "Hinduski",
         "id": "Indonezyjski",
         "it": "Włoski",
@@ -301,6 +333,7 @@
         "pl": "Polski",
         "pt": "Portugalski",
         "ru": "Rosyjski",
-        "sv": "Szwedzki"
+        "sv": "Szwedzki",
+        "th": "Tajski"
     }
 }

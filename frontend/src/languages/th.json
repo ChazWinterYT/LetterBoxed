@@ -37,7 +37,7 @@
         "chooseLanguage": "เลือกภาษา",
         "backToHome": "กลับไปที่ chazwinter.com",
         "languageSelector": "ภาษา"
-        },
+    },
     "messages": {
         "invalidWord": "คำไม่ถูกต้อง",
         "wordAlreadyUsed": "คำนี้ถูกใช้แล้ว",
@@ -192,7 +192,7 @@
             "twoWords": "สองคำ",
             "instructions1": "\"คำเดียว\" จะสร้างกระดานเกมขนาด 2x2",
             "instructions2": "\"สองคำ\" จะสร้างกระดานเกมขนาด 3x3"
-        },      
+        },
         "dictionary": {
             "dictionaryType": "ประเภทพจนานุกรม",
             "basic": "พื้นฐาน",
@@ -221,9 +221,15 @@
         "gameId": "รหัสเกม",
         "gameLayout": "รูปแบบเกม",
         "gameType": "ประเภทเกม",
+        "gameTypes": {
+            "custom": "กำหนดเอง",
+            "random": "สุ่ม",
+            "nyt": "อย่างเป็นทางการ NYT"
+        },
         "language": "ภาษา",
         "boardSize": "ขนาดบอร์ด",
         "createdAt": "สร้างเมื่อ",
+        "date": "วันที่",
         "createdBy": "สร้างโดย",
         "unknownAuthor": "ไม่ทราบชื่อผู้แต่ง",
         "hint": "คำใบ้",
@@ -249,6 +255,25 @@
         }
     },
     "propertyFilter": {
+        "operators": {
+            "olderThan": "เก่ากว่า (<=)",
+            "newerThan": "ใหม่กว่า (>=)",
+            "between": "ระหว่าง",
+            "and": "และ",
+            "dismiss": "ยกเลิก",
+            "operators": "ตัวดำเนินการ",
+            "or": "หรือ",
+            "lessThan": "น้อยกว่า",
+            "greaterThan": "มากกว่า"
+        },
+        "actions": {
+            "clear": "ล้างตัวกรอง",
+            "apply": "นำไปใช้",
+            "cancel": "ยกเลิก",
+            "allProperties": "คุณสมบัติทั้งหมด",
+            "groupValues": "ค่า",
+            "empty": "ไม่พบรายการที่ตรงกัน"
+        },
         "4orAbove": "4 หรือมากกว่า",
         "3orAbove": "3 หรือมากกว่า",
         "2orAbove": "2 หรือมากกว่า",
@@ -274,6 +299,11 @@
             "oldestFirst": "เก่าที่สุดก่อน"
         }
     },
+    "pagination": {
+        "nextPage": "หน้าถัดไป",
+        "previousPage": "หน้าก่อนหน้า",
+        "page": "หน้า"
+    },
     "instructions": {
         "howToPlay": "วิธีการเล่น",
         "rules": "กฎ",
@@ -294,6 +324,8 @@
         "de": "เยอรมัน",
         "es": "สเปน",
         "fr": "ฝรั่งเศส",
+        "he": "ฮิบรู",
+        "hev": "ฮิบรู (นิคคุค)",
         "hi": "ฮินดี",
         "id": "อินโดนีเซีย",
         "it": "อิตาลี",
@@ -301,6 +333,7 @@
         "pl": "โปแลนด์",
         "pt": "โปรตุเกส",
         "ru": "รัสเซีย",
-        "sv": "สวีเดน"
+        "sv": "สวีเดน",
+        "th": "ไทย"
     }
 }
