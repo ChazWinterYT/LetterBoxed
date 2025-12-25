@@ -12,6 +12,9 @@ const languages: Language[] = [
   { code: "en", name: "English", 
     uiAvailable: true, playable: true   // Games are supported
   },
+  { code: "th", name: "ภาษาไทย", 
+    uiAvailable: true, playable: false 
+  },
   { code: "de", name: "Deutsch", 
     uiAvailable: true, playable: true  // Games are supported
   },
@@ -49,9 +52,6 @@ const languages: Language[] = [
     uiAvailable: true, playable: true   // Games are supported
   },
   { code: "sv", name: "Svenska", 
-    uiAvailable: true, playable: false 
-  },
-  { code: "th", name: "ภาษาไทย", 
     uiAvailable: true, playable: false 
   },
 ];
