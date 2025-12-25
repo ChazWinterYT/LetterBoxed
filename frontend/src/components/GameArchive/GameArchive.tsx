@@ -29,7 +29,7 @@ const GameArchive: React.FC<GameArchiveProps> = ({ onGameSelect }) => {
     setIsArchiveLoading(true);
     try {
       console.log("Fetching game archive with lastKey:", lastKeyRef.current);
-      const data = await fetchGameArchive(lastKeyRef.current, 10);
+      const data = await fetchGameArchive(lastKeyRef.current, 100);
       console.log("Fetched archive data:", data);
 
       if (data.lastKey) {

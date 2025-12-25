@@ -69,10 +69,11 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
   // Pagination
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(1);
   const pageSize = 10;
+  const FETCH_BATCH_SIZE = 100;
 
   // ================== Data Fetching (Load ALL Games) ==================
   /**
-   * Loads *all* games (in repeated calls) before rendering them.
+   * Loads *all* games (in repeated calls), rendering on the fly.
    * Keeps fetching pages until no lastEvaluatedKey is returned, so the user
    * can see the entire dataset for filtering or pagination.
    */
@@ -84,7 +85,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       do {
         console.log("Fetching games with lastEvaluatedKey:", lastEvaluatedKey, "gameType:", gameType);
         const response: { games: Game[]; lastEvaluatedKey?: Record<string, string> | null } =
-          await fetchGamesByLanguage(language, lastEvaluatedKey, pageSize, gameType);
+          await fetchGamesByLanguage(language, lastEvaluatedKey, FETCH_BATCH_SIZE, gameType);
   
         console.log("Fetched games:", response.games);
   
