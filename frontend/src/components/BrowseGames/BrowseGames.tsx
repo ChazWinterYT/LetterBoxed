@@ -146,7 +146,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
 
     if (typeof rawVal === "number") {
       // Handle range-based filtering for numerical values
-      const value = token.value.toLowerCase();
+      const value = token.value;
       switch (token.propertyKey) {
         case "averageRating":
           if (value === "4+") return rawVal >= 4;
