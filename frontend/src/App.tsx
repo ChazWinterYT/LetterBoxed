@@ -401,7 +401,7 @@ const App = () => {
   }, [t, fetchRandomGameByLanguage, availableLanguages]);
 
   // Open Archive Modal
-  const openArchiveModal = useCallback(() => {
+  const openNYTArchive = useCallback(() => {
     console.log("Navigating to browse games with NYT filter");
     navigate("/letterboxed-archive");
   }, [navigate]);
@@ -594,7 +594,7 @@ const App = () => {
       */}
       <ButtonMenu
         onPlayToday={loadTodaysGame}
-        onOpenArchive={openArchiveModal}
+        onOpenArchive={openNYTArchive}
         onOpenCustomGame={openCustomGameModal}
         onPlayRandomGame={openRandomGameModal}
       />

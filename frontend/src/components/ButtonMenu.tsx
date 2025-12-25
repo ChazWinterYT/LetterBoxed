@@ -35,7 +35,7 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
       </button>
       <button
         className="menu-button browse-games"
-        onClick={() => (window.location.href = "/LetterBoxed/frontend/browse-games")}
+        onClick={() => navigate("/browse-games")}
       >
         {t("ui.menu.browseGames")}
       </button>
@@ -47,7 +47,7 @@ const ButtonMenu: React.FC<ButtonMenuProps> = ({
       </button>
       <button
         className="menu-button random-game-generator"
-        onClick={() => (window.location.href = "/LetterBoxed/frontend/get-word-pairs")}
+        onClick={() => navigate("/get-word-pairs")}
       >
         {t("ui.menu.randomGameGenerator")}
       </button>
