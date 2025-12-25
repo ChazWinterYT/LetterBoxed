@@ -230,10 +230,6 @@
         "boardSize": "Board Size",
         "createdAt": "Created At",
         "date": "Date",
-        "olderThan": "Older than (<=)",
-        "newerThan": "Newer than (>=)",
-        "between": "Between",
-        "and": "and",
         "createdBy": "Author",
         "unknownAuthor": "Unknown",
         "hint": "Hint",
@@ -259,6 +255,25 @@
         }
     },
     "propertyFilter": {
+        "operators": {
+            "olderThan": "Older than (<=)",
+            "newerThan": "Newer than (>=)",
+            "between": "Between",
+            "and": "and",
+            "dismiss": "Dismiss",
+            "operators": "Operators",
+            "or": "or",
+            "lessThan": "Less than",
+            "greaterThan": "Greater than"
+        },
+        "actions": {
+            "clear": "Clear filters",
+            "apply": "Apply",
+            "cancel": "Cancel",
+            "allProperties": "All properties",
+            "groupValues": "Values",
+            "empty": "No matches found"
+        },
         "4orAbove": "4 or Above",
         "3orAbove": "3 or Above",
         "2orAbove": "2 or Above",
@@ -283,6 +298,11 @@
             "newestFirst": "Newest First",
             "oldestFirst": "Oldest First"
         }
+    },
+    "pagination": {
+        "nextPage": "Next page",
+        "previousPage": "Previous page",
+        "page": "Page"
     },
     "instructions": {
         "howToPlay": "How to Play",

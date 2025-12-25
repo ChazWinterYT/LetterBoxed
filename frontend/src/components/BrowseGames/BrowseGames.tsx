@@ -292,14 +292,26 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
 
   const i18nStrings = useMemo(() => ({
     filteringAriaLabel: t("browseGames.filterResults"),
-    dismissAriaLabel: "Dismiss",
-    operatorsText: "Operators",
-    operationAndText: t("browseGames.and"),
-    operationOrText: "or",
-    operatorLessText: "Less than",
-    operatorLessOrEqualText: t("browseGames.olderThan"),
-    operatorGreaterText: "Greater than",
-    operatorGreaterOrEqualText: t("browseGames.newerThan"),
+    dismissAriaLabel: t("propertyFilter.operators.dismiss"),
+    operatorsText: t("propertyFilter.operators.operators"),
+    operationAndText: t("propertyFilter.operators.and"),
+    operationOrText: t("propertyFilter.operators.or"),
+    operatorLessText: t("propertyFilter.operators.lessThan"),
+    operatorLessOrEqualText: t("propertyFilter.operators.olderThan"),
+    operatorGreaterText: t("propertyFilter.operators.greaterThan"),
+    operatorGreaterOrEqualText: t("propertyFilter.operators.newerThan"),
+    clearFiltersText: t("propertyFilter.actions.clear"),
+    applyActionText: t("propertyFilter.actions.apply"),
+    cancelActionText: t("propertyFilter.actions.cancel"),
+    allPropertiesLabel: t("propertyFilter.actions.allProperties"),
+    groupValuesText: t("propertyFilter.actions.groupValues"),
+    empty: t("propertyFilter.actions.empty"),
+  }), [t]);
+
+  const paginationAriaLabels = useMemo(() => ({
+    nextPageLabel: t("pagination.nextPage"),
+    previousPageLabel: t("pagination.previousPage"),
+    pageLabel: (pageNumber: number) => `${t("pagination.page")} ${pageNumber}`,
   }), [t]);
 
   // ================== Language Change ==================
@@ -435,11 +447,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
           currentPageIndex={currentPageIndex}
           onChange={handlePageChange}
           pagesCount={Math.ceil(filteredGames.length / pageSize)}
-          ariaLabels={{
-            nextPageLabel: "Next page",
-            previousPageLabel: "Previous page",
-            pageLabel: (pageNumber) => `Page ${pageNumber}`,
-          }}
+          ariaLabels={paginationAriaLabels}
         />
       </div>
   
@@ -468,11 +476,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
           currentPageIndex={currentPageIndex}
           onChange={handlePageChange}
           pagesCount={Math.ceil(filteredGames.length / pageSize)}
-          ariaLabels={{
-            nextPageLabel: "Next page",
-            previousPageLabel: "Previous page",
-            pageLabel: (pageNumber) => `Page ${pageNumber}`,
-          }}
+          ariaLabels={paginationAriaLabels}
         />
       </div>
   
