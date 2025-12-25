@@ -142,6 +142,24 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       return false;
     }
 
+    if (token.propertyKey === "date") {
+      const createdAt = game.createdAt;
+      if (!createdAt) return false;
+      const gameDateStr = createdAt.substring(0, 10);
+      const tokenDateStr = token.value;
+
+      if (token.operator === ">=") {
+        return gameDateStr >= tokenDateStr;
+      }
+      if (token.operator === "<=") {
+        return gameDateStr <= tokenDateStr;
+      }
+      if (token.operator === "=") {
+        return gameDateStr === tokenDateStr;
+      }
+      return false;
+    }
+
     const rawVal = game[token.propertyKey as keyof Game];
 
     if (typeof rawVal === "number") {
@@ -252,7 +270,6 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       { value: "moreThan4", label: t("propertyFilter.moreThan4") },
     ]);
 
-
     // Ranges for total completions
     const totalCompletionsRanges = generateRangeOptions("totalCompletions", [
       { value: "lessThan5", label: t("propertyFilter.lessThan5") },
@@ -272,6 +289,18 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       ...totalCompletionsRanges,
     ];
   }, [games, t]);
+
+  const i18nStrings = useMemo(() => ({
+    filteringAriaLabel: t("browseGames.filterResults"),
+    dismissAriaLabel: "Dismiss",
+    operatorsText: "Operators",
+    operationAndText: t("browseGames.and"),
+    operationOrText: "or",
+    operatorLessText: "Less than",
+    operatorLessOrEqualText: t("browseGames.olderThan"),
+    operatorGreaterText: "Greater than",
+    operatorGreaterOrEqualText: t("browseGames.newerThan"),
+  }), [t]);
 
   // ================== Language Change ==================
   const handleLanguageChange = async (lang: string) => {
@@ -360,6 +389,12 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
               propertyLabel: t("browseGames.gameType"),
               groupValuesLabel: t("browseGames.group.gameTypeGroup"),
             },
+            {
+              key: "date",
+              propertyLabel: t("browseGames.date"),
+              groupValuesLabel: t("browseGames.date"),
+              operators: [">=", "<=", "="],
+            },
           ]}
           filteringOptions={filteringOptions}
           query={query}
@@ -368,6 +403,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
             filteredGames.length === 1 ? t("browseGames.result") : t("browseGames.results")
           }`}
           filteringPlaceholder={t("browseGames.filterResults")}
+          i18nStrings={i18nStrings}
         />
       </div>
   
