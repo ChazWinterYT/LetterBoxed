@@ -4,6 +4,7 @@ import Spinner from "../Spinner";
 import ArchiveList from "./ArchiveList";
 import { fetchGameArchive } from "../../services/api";
 import { useLanguage } from "../../context/LanguageContext";
+import { FETCH_BATCH_SIZE } from "../../utility/utility";
 
 interface GameArchiveProps {
   onGameSelect: (gameId: string) => void;
@@ -29,7 +30,10 @@ const GameArchive: React.FC<GameArchiveProps> = ({ onGameSelect }) => {
     setIsArchiveLoading(true);
     try {
       console.log("Fetching game archive with lastKey:", lastKeyRef.current);
-      const data = await fetchGameArchive(lastKeyRef.current, 100);
+      const data = await fetchGameArchive(
+        lastKeyRef.current,
+        FETCH_BATCH_SIZE
+      );
       console.log("Fetched archive data:", data);
 
       if (data.lastKey) {

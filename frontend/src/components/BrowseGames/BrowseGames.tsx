@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { getPlayableLanguages } from "../../languages/languages";
-import { getUniqueValues, generateRangeOptions } from "../../utility/utility";
+import {
+  getUniqueValues,
+  generateRangeOptions,
+  FETCH_BATCH_SIZE,
+} from "../../utility/utility";
 import Header from "../Header";
 import Footer from "../Footer";
 import GameCard from "../GameCard/GameCard";
@@ -69,7 +73,6 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
   // Pagination
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(1);
   const pageSize = 10;
-  const FETCH_BATCH_SIZE = 100;
 
   // ================== Data Fetching (Load ALL Games) ==================
   /**
@@ -103,7 +106,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [pageSize]);
+  }, []);
 
   // On mount, load all English games. 
   useEffect(() => {

@@ -18,3 +18,7 @@ export const generateRangeOptions = (key: string, ranges: RangeOption[]): {
     label: range.label,
   }));
 };
+
+// Constants
+// Batch size for fetching a list of games from the DB
+export const FETCH_BATCH_SIZE = 80;
