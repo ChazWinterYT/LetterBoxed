@@ -13,6 +13,15 @@ header {
   justify-content: center;
 }
 
+header a {
+  color: #fff;
+  text-decoration: none;
+}
+
+header a:hover {
+  text-decoration: underline;
+}
+
 .logo {
   font-size: 1.5rem;
   font-weight: bold;

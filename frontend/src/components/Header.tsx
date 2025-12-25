@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="logo">chazwinter.com</div>
+      <div className="logo"><a href="https://chazwinter.com/">chazwinter.com</a></div>
       <h2>{t("header.title")}</h2>
       <h3>{t("header.subtitle")}</h3>
 
