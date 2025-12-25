@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import Pagination from "@cloudscape-design/components/pagination";
 import Spinner from "../Spinner";
 import ArchiveList from "./ArchiveList";
 import { fetchGameArchive } from "../../services/api";
 import { useLanguage } from "../../context/LanguageContext";
 import { FETCH_BATCH_SIZE } from "../../utility/utility";
+import { useGameArchive } from "../hooks/useGameArchive";
 
 interface GameArchiveProps {
   onGameSelect: (gameId: string) => void;
@@ -13,48 +14,18 @@ interface GameArchiveProps {
 const GameArchive: React.FC<GameArchiveProps> = ({ onGameSelect }) => {
   const { t } = useLanguage();
 
-  const [archiveGames, setArchiveGames] = useState<any[]>([]);
-  const [isArchiveLoading, setIsArchiveLoading] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const lastKeyRef = useRef(null);
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  const loadGameArchive = useCallback(async () => {
-    if (isArchiveLoading || !hasMore) {
-      console.log("Archive is already loading or no more games to load.");
-      return;
-    }
+  const fetcher = useCallback(async (lastKey: any) => {
+    const data = await fetchGameArchive(lastKey, FETCH_BATCH_SIZE);
+    return {
+        items: data.nytGames || [],
+        lastKey: data.lastKey ? JSON.parse(data.lastKey) : undefined 
+    };
+  }, []);
 
-    setIsArchiveLoading(true);
-    try {
-      console.log("Fetching game archive with lastKey:", lastKeyRef.current);
-      const data = await fetchGameArchive(
-        lastKeyRef.current,
-        FETCH_BATCH_SIZE
-      );
-      console.log("Fetched archive data:", data);
-
-      if (data.lastKey) {
-        lastKeyRef.current = JSON.parse(data.lastKey);
-        console.log("Last Key updated to", lastKeyRef.current);
-      } else {
-        setHasMore(false); // No more items to fetch
-      }
-
-      setArchiveGames((prevGames) => [...prevGames, ...(data.nytGames || [])]);
-    } catch (error) {
-      console.error("Error fetching game archive:", error);
-    } finally {
-      setIsArchiveLoading(false);
-    }
-  }, [isArchiveLoading, hasMore]);
-
-  // Trigger loadGameArchive when component mounts
-  useEffect(() => {
-    loadGameArchive();
-  }, [loadGameArchive]);
+  const { games: archiveGames, isLoading: isArchiveLoading } = useGameArchive("nyt_archive", fetcher);
 
   // Paginated data based on current page
   const paginatedGames = archiveGames.slice(
@@ -65,7 +36,6 @@ const GameArchive: React.FC<GameArchiveProps> = ({ onGameSelect }) => {
   // Handle page change
   const handlePageChange = (event: {detail: { currentPageIndex: number }}) => {
     const newPage = event.detail.currentPageIndex;
-    console.log("Changing to page:", newPage);
     setCurrentPage(newPage);
   };
 
@@ -85,8 +55,8 @@ const GameArchive: React.FC<GameArchiveProps> = ({ onGameSelect }) => {
           <ArchiveList
             games={paginatedGames}
             onGameSelect={onGameSelect}
-            hasMore={hasMore}
-            onLoadMore={loadGameArchive}
+            hasMore={false}
+            onLoadMore={() => {}} // No-op
           />
         </>
       ) : (

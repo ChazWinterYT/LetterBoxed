@@ -20,6 +20,7 @@ import {
 import "./BrowseGames.css";
 import "@cloudscape-design/global-styles/index.css";
 import { useLocation } from "react-router-dom";
+import { useGameArchive } from "../hooks/useGameArchive";
 
 // We take the "query" type from PropertyFilterProps
 type CloudscapePropertyFilterQuery = NonNullable<PropertyFilterProps["query"]>;
@@ -37,13 +38,9 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
   const { t } = useLanguage();
   const location = useLocation();
 
-  const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
+  
   const [selectedLanguage, setSelectedLanguage] = useState<string>("en");
-  // Initialize currentGameType to null even if defaultGameType is present, 
-  // to ensure we load ALL games initially and filter client-side.
   const [currentGameType, setCurrentGameType] = useState<string | null>(null);
 
   const [sortBy, setSortBy] = useState<string>("createdAt");
@@ -74,44 +71,24 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
   const [currentPageIndex, setCurrentPageIndex] = useState<number>(1);
   const pageSize = 10;
 
-  // ================== Data Fetching (Load ALL Games) ==================
-  /**
-   * Loads *all* games (in repeated calls), rendering on the fly.
-   * Keeps fetching pages until no lastEvaluatedKey is returned, so the user
-   * can see the entire dataset for filtering or pagination.
-   */
-  const loadAllGames = useCallback(async (language: string, gameType?: string) => {
-    setIsLoading(true);
-    let lastEvaluatedKey: Record<string, string> | null = null;
+  // ================== Data Fetching with Cache ==================
   
-    try {
-      do {
-        console.log("Fetching games with lastEvaluatedKey:", lastEvaluatedKey, "gameType:", gameType);
-        const response: { games: Game[]; lastEvaluatedKey?: Record<string, string> | null } =
-          await fetchGamesByLanguage(language, lastEvaluatedKey, FETCH_BATCH_SIZE, gameType);
-  
-        console.log("Fetched games:", response.games);
-  
-        // Append the new games to the existing list incrementally
-        setGames((prevGames) => [...prevGames, ...response.games]);
-  
-        // Update filteredGames dynamically
-        setFilteredGames((prevFiltered) => [...prevFiltered, ...response.games]);
-  
-        // Update the pagination key for the next API call
-        lastEvaluatedKey = response.lastEvaluatedKey || null;
-      } while (lastEvaluatedKey);
-    } catch (err) {
-      console.error("Error loading games:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const fetcher = useCallback(async (lastKey: any) => {
+    const response = await fetchGamesByLanguage(
+        selectedLanguage, 
+        lastKey, 
+        FETCH_BATCH_SIZE, 
+        undefined // Always fetch ALL games for the language
+    );
+    return {
+        items: response.games,
+        lastKey: response.lastEvaluatedKey
+    };
+  }, [selectedLanguage]);
 
-  // On mount, load all English games. 
-  useEffect(() => {
-    loadAllGames(selectedLanguage);
-  }, [loadAllGames, selectedLanguage]);
+  const cacheKey = `browse_${selectedLanguage}`;
+  
+  const { games, isLoading } = useGameArchive(cacheKey, fetcher);
 
   // ================== Parse filter from URL query parameter ==================
   useEffect(() => {
@@ -133,29 +110,16 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
 
   // ================== Filtering Logic ==================
   const handlePropertyFilterChange = (newQuery: CloudscapePropertyFilterQuery) => {
-    // Check if gameType filter has changed
-    const newGameType = newQuery.tokens.find(token => token.propertyKey === "gameType")?.value || null;
-    const gameTypeChanged = newGameType !== currentGameType;
-    
     setQuery(newQuery);
-    
-    if (gameTypeChanged) {
-      // GameType filter changed - restart API calls with backend filtering
-      console.log("GameType filter changed from", currentGameType, "to", newGameType);
-      setCurrentGameType(newGameType);
-      
-      // Clear existing data and restart with new gameType filter
-      setGames([]);
-      setFilteredGames([]);
-      setCurrentPageIndex(1);
-      
-      // Load games with the new gameType filter
-      loadAllGames(selectedLanguage, newGameType || undefined);
-    } else {
-      // Other filters changed - use client-side filtering
-      setFilteredGames(filterGames(games, newQuery));
-      setCurrentPageIndex(1);
+    // Update local state for tracking (optional)
+    const newGameType = newQuery.tokens.find(token => token.propertyKey === "gameType")?.value || null;
+    if (newGameType !== currentGameType) {
+        setCurrentGameType(newGameType);
     }
+    
+    // Always use client-side filtering
+    setFilteredGames(filterGames(games, newQuery));
+    setCurrentPageIndex(1);
   };
 
   const filterGames = useCallback(
@@ -178,32 +142,32 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       return false;
     }
 
-    const propertyVal = String(game[token.propertyKey as keyof Game] ?? "").toLowerCase();
+    const rawVal = game[token.propertyKey as keyof Game];
 
-    if (typeof propertyVal === "number") {
+    if (typeof rawVal === "number") {
       // Handle range-based filtering for numerical values
       const value = token.value.toLowerCase();
       switch (token.propertyKey) {
         case "averageRating":
-          if (value === "4+") return propertyVal >= 4;
-          if (value === "3+") return propertyVal >= 3;
-          if (value === "2+") return propertyVal >= 2;
-          if (value === "1+") return propertyVal >= 1;
+          if (value === "4+") return rawVal >= 4;
+          if (value === "3+") return rawVal >= 3;
+          if (value === "2+") return rawVal >= 2;
+          if (value === "1+") return rawVal >= 1;
           break;
         case "averageWordsNeeded":
-          if (value === "1") return propertyVal === 1;
-          if (value === "2orFewer") return propertyVal <= 2;
-          if (value === "3orFewer") return propertyVal <= 3;
-          if (value === "4orFewer") return propertyVal <= 4;
-          if (value === "moreThan4") return propertyVal > 4;
+          if (value === "1") return rawVal === 1;
+          if (value === "2orFewer") return rawVal <= 2;
+          if (value === "3orFewer") return rawVal <= 3;
+          if (value === "4orFewer") return rawVal <= 4;
+          if (value === "moreThan4") return rawVal > 4;
           break;
         case "totalCompletions":
-          if (value === "lessThan5") return propertyVal < 5;
-          if (value === "5orMore") return propertyVal >= 5;
-          if (value === "10orMore") return propertyVal >= 10;
-          if (value === "20orMore") return propertyVal >= 20;
-          if (value === "50orMore") return propertyVal >= 50;
-          if (value === "100orMore") return propertyVal >= 100;
+          if (value === "lessThan5") return rawVal < 5;
+          if (value === "5orMore") return rawVal >= 5;
+          if (value === "10orMore") return rawVal >= 10;
+          if (value === "20orMore") return rawVal >= 20;
+          if (value === "50orMore") return rawVal >= 50;
+          if (value === "100orMore") return rawVal >= 100;
           break;
         default:
           return false;
@@ -211,7 +175,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
     }
 
     // String matching
-    const propertyStrVal = String(propertyVal ?? "").toLowerCase();
+    const propertyStrVal = String(rawVal ?? "").toLowerCase();
     const tokenVal = token.value.toLowerCase();
 
     switch (token.operator) {
@@ -313,7 +277,6 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
   const handleLanguageChange = async (lang: string) => {
     setSelectedLanguage(lang);
     // Clear out existing data (so we don't show old results while loading)
-    setGames([]);
     setFilteredGames([]);
     setCurrentPageIndex(1);
   };
