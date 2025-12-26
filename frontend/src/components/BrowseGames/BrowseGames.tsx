@@ -16,6 +16,8 @@ import {
   PropertyFilter,
   PropertyFilterProps,
   Pagination,
+  DatePicker,
+  DateRangePicker,
 } from "@cloudscape-design/components";
 import "./BrowseGames.css";
 import "@cloudscape-design/global-styles/index.css";
@@ -156,6 +158,11 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       }
       if (token.operator === "=") {
         return gameDateStr === tokenDateStr;
+      }
+      if (token.operator === ":") {
+        const [start, end] = tokenDateStr.split("..");
+        if (!start || !end) return false;
+        return gameDateStr >= start && gameDateStr <= end;
       }
       return false;
     }
@@ -300,6 +307,9 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
     operatorLessOrEqualText: t("propertyFilter.operators.olderThan"),
     operatorGreaterText: t("propertyFilter.operators.greaterThan"),
     operatorGreaterOrEqualText: t("propertyFilter.operators.newerThan"),
+    operatorEqualsText: t("propertyFilter.operators.equals"),
+    operatorContainsText: t("propertyFilter.operators.between"),
+    enteredTextLabel: (text: string) => `${text}`,
     clearFiltersText: t("propertyFilter.actions.clear"),
     applyActionText: t("propertyFilter.actions.apply"),
     cancelActionText: t("propertyFilter.actions.cancel"),
@@ -405,7 +415,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
               key: "date",
               propertyLabel: t("browseGames.date"),
               groupValuesLabel: t("browseGames.date"),
-              operators: [">=", "<=", "="],
+              operators: [">=", "<=", "=", ":"],
             },
           ]}
           filteringOptions={filteringOptions}
