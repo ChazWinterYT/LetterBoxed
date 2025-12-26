@@ -242,6 +242,7 @@
         "averageWordsNeeded": "Średnia Liczba Słów Potrzebnych",
         "result": "Wynik",
         "results": "Wyniki",
+        "dateRangePlaceholder": "Wybierz zakres dat",
         "filterResults": "Filtruj wyniki wyszukiwania",
         "group": {
             "gameIdGroup": "ID Gier",
@@ -264,7 +265,8 @@
             "operators": "Operatory",
             "or": "lub",
             "lessThan": "Mniej niż",
-            "greaterThan": "Więcej niż"
+            "greaterThan": "Więcej niż",
+            "equals": "Równa się"
         },
         "actions": {
             "clear": "Wyczyść filtry",
@@ -303,6 +305,30 @@
         "nextPage": "Następna strona",
         "previousPage": "Poprzednia strona",
         "page": "Strona"
+    },
+    "datePicker": {
+        "today": "Dzisiaj",
+        "nextMonth": "Następny miesiąc",
+        "previousMonth": "Poprzedni miesiąc",
+        "previousYear": "Poprzedni rok",
+        "nextYear": "Następny rok",
+        "currentMonth": "Bieżący miesiąc",
+        "currentYear": "Bieżący rok",
+        "selectDate": "Wybierz datę",
+        "selectRange": "Wybierz zakres",
+        "startDate": "Data początkowa",
+        "endDate": "Data końcowa",
+        "startTime": "Czas rozpoczęcia",
+        "endTime": "Czas zakończenia",
+        "customRange": "Zakres niestandardowy",
+        "duration": "Czas trwania",
+        "enterDuration": "Wprowadź czas trwania",
+        "unit": "Jednostka",
+        "relativeRange": "Zakres względny",
+        "customRangeDescription": "Wybierz zakres niestandardowy",
+        "format": "RRRR/MM/DD",
+        "error": "Błąd",
+        "dateTimeConstraint": "Data musi być w formacie RRRR/MM/DD"
     },
     "instructions": {
         "howToPlay": "Jak grać",

@@ -242,6 +242,7 @@
         "averageWordsNeeded": "Среднее количество слов",
         "result": "Результат",
         "results": "Результаты",
+        "dateRangePlaceholder": "Выберите диапазон дат",
         "filterResults": "Фильтровать результаты поиска",
         "group": {
             "gameIdGroup": "ID игр",
@@ -264,7 +265,8 @@
             "operators": "Операторы",
             "or": "или",
             "lessThan": "Меньше, чем",
-            "greaterThan": "Больше, чем"
+            "greaterThan": "Больше, чем",
+            "equals": "Равно"
         },
         "actions": {
             "clear": "Очистить фильтры",
@@ -303,6 +305,30 @@
         "nextPage": "Следующая страница",
         "previousPage": "Предыдущая страница",
         "page": "Страница"
+    },
+    "datePicker": {
+        "today": "Сегодня",
+        "nextMonth": "Следующий месяц",
+        "previousMonth": "Предыдущий месяц",
+        "previousYear": "Предыдущий год",
+        "nextYear": "Следующий год",
+        "currentMonth": "Текущий месяц",
+        "currentYear": "Текущий год",
+        "selectDate": "Выберите дату",
+        "selectRange": "Выберите диапазон",
+        "startDate": "Дата начала",
+        "endDate": "Дата окончания",
+        "startTime": "Время начала",
+        "endTime": "Время окончания",
+        "customRange": "Пользовательский диапазон",
+        "duration": "Длительность",
+        "enterDuration": "Введите длительность",
+        "unit": "Единица",
+        "relativeRange": "Относительный диапазон",
+        "customRangeDescription": "Выберите пользовательский диапазон",
+        "format": "ГГГГ/ММ/ДД",
+        "error": "Ошибка",
+        "dateTimeConstraint": "Дата должна быть в формате ГГГГ/ММ/ДД"
     },
     "instructions": {
         "howToPlay": "Как играть",

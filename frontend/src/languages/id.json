@@ -242,6 +242,7 @@
         "averageWordsNeeded": "Rata-rata Kata Diperlukan",
         "result": "Hasil",
         "results": "Hasil",
+        "dateRangePlaceholder": "Pilih rentang tanggal",
         "filterResults": "Saring hasil pencarian",
         "group": {
             "gameIdGroup": "ID Permainan",
@@ -264,7 +265,8 @@
             "operators": "Operator",
             "or": "atau",
             "lessThan": "Kurang dari",
-            "greaterThan": "Lebih dari"
+            "greaterThan": "Lebih dari",
+            "equals": "Sama dengan"
         },
         "actions": {
             "clear": "Hapus filter",
@@ -303,6 +305,30 @@
         "nextPage": "Halaman berikutnya",
         "previousPage": "Halaman sebelumnya",
         "page": "Halaman"
+    },
+    "datePicker": {
+        "today": "Hari ini",
+        "nextMonth": "Bulan depan",
+        "previousMonth": "Bulan lalu",
+        "previousYear": "Tahun lalu",
+        "nextYear": "Tahun depan",
+        "currentMonth": "Bulan ini",
+        "currentYear": "Tahun ini",
+        "selectDate": "Pilih tanggal",
+        "selectRange": "Pilih rentang",
+        "startDate": "Tanggal mulai",
+        "endDate": "Tanggal akhir",
+        "startTime": "Waktu mulai",
+        "endTime": "Waktu akhir",
+        "customRange": "Rentang kustom",
+        "duration": "Durasi",
+        "enterDuration": "Masukkan durasi",
+        "unit": "Unit",
+        "relativeRange": "Rentang relatif",
+        "customRangeDescription": "Pilih rentang kustom",
+        "format": "TTTT/BB/HH",
+        "error": "Kesalahan",
+        "dateTimeConstraint": "Tanggal harus TTTT/BB/HH"
     },
     "instructions": {
         "howToPlay": "Cara Bermain",

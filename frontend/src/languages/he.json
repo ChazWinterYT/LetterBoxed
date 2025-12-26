@@ -242,6 +242,7 @@
         "averageWordsNeeded": "ממוצע המילים שנדרשו",
         "result": "תוצאה",
         "results": "תוצאות",
+        "dateRangePlaceholder": "בחר טווח תאריכים",
         "filterResults": "סנן את תוצאות החיפוש",
         "group": {
             "gameIdGroup": "מזהי משחקים",
@@ -264,7 +265,8 @@
             "operators": "אופרטורים",
             "or": "או",
             "lessThan": "פחות מ",
-            "greaterThan": "יותר מ"
+            "greaterThan": "יותר מ",
+            "equals": "שווה ל"
         },
         "actions": {
             "clear": "נקה מסננים",
@@ -303,6 +305,30 @@
         "nextPage": "העמוד הבא",
         "previousPage": "העמוד הקודם",
         "page": "עמוד"
+    },
+    "datePicker": {
+        "today": "היום",
+        "nextMonth": "חודש הבא",
+        "previousMonth": "חודש שעבר",
+        "previousYear": "שנה שעברה",
+        "nextYear": "שנה הבאה",
+        "currentMonth": "חודש נוכחי",
+        "currentYear": "שנה נוכחית",
+        "selectDate": "בחר תאריך",
+        "selectRange": "בחר טווח",
+        "startDate": "תאריך התחלה",
+        "endDate": "תאריך סיום",
+        "startTime": "שעת התחלה",
+        "endTime": "שעת סיום",
+        "customRange": "טווח מותאם אישית",
+        "duration": "משך",
+        "enterDuration": "הזן משך",
+        "unit": "יחידה",
+        "relativeRange": "טווח יחסי",
+        "customRangeDescription": "בחר טווח מותאם אישית",
+        "format": "YYYY/MM/DD",
+        "error": "שגיאה",
+        "dateTimeConstraint": "התאריך חייב להיות YYYY/MM/DD"
     },
     "instructions": {
         "howToPlay": "איך לשחק",

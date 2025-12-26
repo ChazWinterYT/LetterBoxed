@@ -242,6 +242,7 @@
         "averageWordsNeeded": "Genomsnittliga ord som behövs",
         "result": "Resultat",
         "results": "Resultat",
+        "dateRangePlaceholder": "Välj datumintervall",
         "filterResults": "Filtrera sökresultaten",
         "group": {
             "gameIdGroup": "Spel-ID",
@@ -264,7 +265,8 @@
             "operators": "Operatorer",
             "or": "eller",
             "lessThan": "Mindre än",
-            "greaterThan": "Mer än"
+            "greaterThan": "Mer än",
+            "equals": "Lika med"
         },
         "actions": {
             "clear": "Rensa filter",
@@ -303,6 +305,30 @@
         "nextPage": "Nästa sida",
         "previousPage": "Föregående sida",
         "page": "Sida"
+    },
+    "datePicker": {
+        "today": "Idag",
+        "nextMonth": "Nästa månad",
+        "previousMonth": "Föregående månad",
+        "previousYear": "Föregående år",
+        "nextYear": "Nästa år",
+        "currentMonth": "Innevarande månad",
+        "currentYear": "Innevarande år",
+        "selectDate": "Välj datum",
+        "selectRange": "Välj intervall",
+        "startDate": "Startdatum",
+        "endDate": "Slutdatum",
+        "startTime": "Starttid",
+        "endTime": "Sluttid",
+        "customRange": "Anpassat intervall",
+        "duration": "Varaktighet",
+        "enterDuration": "Ange varaktighet",
+        "unit": "Enhet",
+        "relativeRange": "Relativt intervall",
+        "customRangeDescription": "Välj ett anpassat intervall",
+        "format": "ÅÅÅÅ/MM/DD",
+        "error": "Fel",
+        "dateTimeConstraint": "Datumet måste vara ÅÅÅÅ/MM/DD"
     },
     "instructions": {
         "howToPlay": "Hur man spelar",

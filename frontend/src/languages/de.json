@@ -242,6 +242,7 @@
         "averageWordsNeeded": "Durchschnittlich benötigte Wörter",
         "result": "Ergebnis",
         "results": "Ergebnisse",
+        "dateRangePlaceholder": "Datumsbereich auswählen",
         "filterResults": "Suchergebnisse filtern",
         "group": {
             "gameIdGroup": "Spiel-IDs",
@@ -264,7 +265,8 @@
             "operators": "Operatoren",
             "or": "oder",
             "lessThan": "Weniger als",
-            "greaterThan": "Mehr als"
+            "greaterThan": "Mehr als",
+            "equals": "Gleicht"
         },
         "actions": {
             "clear": "Filter löschen",
@@ -303,6 +305,30 @@
         "nextPage": "Nächste Seite",
         "previousPage": "Vorherige Seite",
         "page": "Seite"
+    },
+    "datePicker": {
+        "today": "Heute",
+        "nextMonth": "Nächster Monat",
+        "previousMonth": "Vorheriger Monat",
+        "previousYear": "Vorheriges Jahr",
+        "nextYear": "Nächstes Jahr",
+        "currentMonth": "Aktueller Monat",
+        "currentYear": "Aktuelles Jahr",
+        "selectDate": "Datum auswählen",
+        "selectRange": "Bereich auswählen",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "startTime": "Startzeit",
+        "endTime": "Endzeit",
+        "customRange": "Benutzerdefiniert",
+        "duration": "Dauer",
+        "enterDuration": "Dauer eingeben",
+        "unit": "Einheit",
+        "relativeRange": "Relativer Bereich",
+        "customRangeDescription": "Benutzerdefinierten Bereich auswählen",
+        "format": "JJJJ/MM/TT",
+        "error": "Fehler",
+        "dateTimeConstraint": "Datum muss im Format JJJJ/MM/TT sein"
     },
     "instructions": {
         "howToPlay": "Spielanleitung",

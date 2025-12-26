@@ -242,6 +242,7 @@
         "averageWordsNeeded": "必要な単語の平均",
         "result": "結果",
         "results": "結果",
+        "dateRangePlaceholder": "日付範囲を選択",
         "filterResults": "検索結果をフィルターする",
         "group": {
             "gameIdGroup": "ゲームID",
@@ -264,7 +265,8 @@
             "operators": "演算子",
             "or": "または",
             "lessThan": "〜未満",
-            "greaterThan": "〜より大きい"
+            "greaterThan": "〜より大きい",
+            "equals": "等しい"
         },
         "actions": {
             "clear": "フィルターをクリア",
@@ -303,6 +305,30 @@
         "nextPage": "次のページ",
         "previousPage": "前のページ",
         "page": "ページ"
+    },
+    "datePicker": {
+        "today": "今日",
+        "nextMonth": "来月",
+        "previousMonth": "先月",
+        "previousYear": "昨年",
+        "nextYear": "来年",
+        "currentMonth": "今月",
+        "currentYear": "今年",
+        "selectDate": "日付を選択",
+        "selectRange": "範囲を選択",
+        "startDate": "開始日",
+        "endDate": "終了日",
+        "startTime": "開始時間",
+        "endTime": "終了時間",
+        "customRange": "カスタム範囲",
+        "duration": "期間",
+        "enterDuration": "期間を入力",
+        "unit": "単位",
+        "relativeRange": "相対範囲",
+        "customRangeDescription": "カスタム範囲を選択",
+        "format": "YYYY/MM/DD",
+        "error": "エラー",
+        "dateTimeConstraint": "日付はYYYY/MM/DD形式である必要があります"
     },
     "instructions": {
         "howToPlay": "遊び方",

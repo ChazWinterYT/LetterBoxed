@@ -242,6 +242,7 @@
         "averageWordsNeeded": "מְמֻצַּע הַמִּלִּים הַנִּדְרָשׁוֹת",
         "result": "תּוֹצָאָה",
         "results": "תּוֹצָאוֹת",
+        "dateRangePlaceholder": "בְּחַר טְוָוח תַּאֲרִיכִים",
         "filterResults": "סַנֵּן אֶת תּוֹצְאוֹת הַחִיפּוּשׁ",
         "group": {
             "gameIdGroup": "מַזְּהֵה מִשְׂחָקִים",
@@ -264,7 +265,8 @@
             "operators": "אוֹפֵּרָטוֹרִים",
             "or": "אוֹ",
             "lessThan": "פָּחוֹת מִ",
-            "greaterThan": "יוֹתֵר מִ"
+            "greaterThan": "יוֹתֵר מִ",
+            "equals": "שָׁוֶוה לְ"
         },
         "actions": {
             "clear": "נַקֵּה מְסַנְּנִים",
@@ -303,6 +305,30 @@
         "nextPage": "הֶעָמוּד הַבָּא",
         "previousPage": "הֶעָמוּד הַקּוֹדֵם",
         "page": "עָמוּד"
+    },
+    "datePicker": {
+        "today": "הַיּוֹם",
+        "nextMonth": "חוֹדֶשׁ הַבָּא",
+        "previousMonth": "חוֹדֶשׁ שֶׁעָבַר",
+        "previousYear": "שָׁנָה שֶׁעָבְרָה",
+        "nextYear": "שָׁנָה הַבָּה",
+        "currentMonth": "חוֹדֶשׁ נוֹכְחִי",
+        "currentYear": "שָׁנָה נוֹכְחִית",
+        "selectDate": "בְּחַר תַּאֲרִיךְ",
+        "selectRange": "בְּחַר טְוָוח",
+        "startDate": "תַּאֲרִיךְ הַתְחָלָה",
+        "endDate": "תַּאֲרִיךְ סִיּוּם",
+        "startTime": "שְׁעַת הַתְחָלָה",
+        "endTime": "שְׁעַת סִיּוּם",
+        "customRange": "טְוָוח מוּתְאָם אִישִׁית",
+        "duration": "מֶשֶׁךְ",
+        "enterDuration": "הָזֵן מֶשֶׁךְ",
+        "unit": "יְחִידָה",
+        "relativeRange": "טְוָוח יַחֲסִי",
+        "customRangeDescription": "בְּחַר טְוָוח מוּתְאָם אִישִׁית",
+        "format": "YYYY/MM/DD",
+        "error": "שְׁגִיאָה",
+        "dateTimeConstraint": "הַתַּאֲרִיךְ חַיָּיב לִהְיוֹת YYYY/MM/DD"
     },
     "instructions": {
         "howToPlay": "אֵיךְ לְשַׂחֵק",

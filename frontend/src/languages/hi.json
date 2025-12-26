@@ -242,6 +242,7 @@
         "averageWordsNeeded": "औसत आवश्यक शब्द",
         "result": "परिणाम",
         "results": "परिणाम",
+        "dateRangePlaceholder": "तिथि सीमा चुनें",
         "filterResults": "खोज परिणामों को फ़िल्टर करें",
         "group": {
             "gameIdGroup": "खेल आईडी",
@@ -264,7 +265,8 @@
             "operators": "ऑपरेटर्स",
             "or": "या",
             "lessThan": "से कम",
-            "greaterThan": "से अधिक"
+            "greaterThan": "से अधिक",
+            "equals": "बराबर"
         },
         "actions": {
             "clear": "फ़िल्टर साफ़ करें",
@@ -303,6 +305,30 @@
         "nextPage": "अगला पेज",
         "previousPage": "पिछला पेज",
         "page": "पेज"
+    },
+    "datePicker": {
+        "today": "आज",
+        "nextMonth": "अगला महीना",
+        "previousMonth": "पिछला महीना",
+        "previousYear": "पिछला साल",
+        "nextYear": "अगला साल",
+        "currentMonth": "वर्तमान महीना",
+        "currentYear": "वर्तमान साल",
+        "selectDate": "तिथि चुनें",
+        "selectRange": "सीमा चुनें",
+        "startDate": "आरंभिक तिथि",
+        "endDate": "अंतिम तिथि",
+        "startTime": "आरंभिक समय",
+        "endTime": "अंतिम समय",
+        "customRange": "कस्टम सीमा",
+        "duration": "अवधि",
+        "enterDuration": "अवधि दर्ज करें",
+        "unit": "इकाई",
+        "relativeRange": "सापेक्ष सीमा",
+        "customRangeDescription": "एक कस्टम सीमा चुनें",
+        "format": "YYYY/MM/DD",
+        "error": "त्रुटि",
+        "dateTimeConstraint": "तिथि YYYY/MM/DD होनी चाहिए"
     },
     "instructions": {
         "howToPlay": "कैसे खेलें",

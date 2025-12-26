@@ -242,6 +242,7 @@
         "averageWordsNeeded": "Media Parole Necessarie",
         "result": "Risultato",
         "results": "Risultati",
+        "dateRangePlaceholder": "Seleziona intervallo date",
         "filterResults": "Filtra i risultati di ricerca",
         "group": {
             "gameIdGroup": "ID Giochi",
@@ -264,7 +265,8 @@
             "operators": "Operatori",
             "or": "o",
             "lessThan": "Meno di",
-            "greaterThan": "Più di"
+            "greaterThan": "Più di",
+            "equals": "Uguale a"
         },
         "actions": {
             "clear": "Cancella filtri",
@@ -303,6 +305,30 @@
         "nextPage": "Pagina successiva",
         "previousPage": "Pagina precedente",
         "page": "Pagina"
+    },
+    "datePicker": {
+        "today": "Oggi",
+        "nextMonth": "Mese prossimo",
+        "previousMonth": "Mese scorso",
+        "previousYear": "Anno scorso",
+        "nextYear": "Anno prossimo",
+        "currentMonth": "Mese corrente",
+        "currentYear": "Anno corrente",
+        "selectDate": "Seleziona data",
+        "selectRange": "Seleziona intervallo",
+        "startDate": "Data inizio",
+        "endDate": "Data fine",
+        "startTime": "Ora inizio",
+        "endTime": "Ora fine",
+        "customRange": "Intervallo personalizzato",
+        "duration": "Durata",
+        "enterDuration": "Inserisci durata",
+        "unit": "Unità",
+        "relativeRange": "Intervallo relativo",
+        "customRangeDescription": "Seleziona un intervallo personalizzato",
+        "format": "AAAA/MM/GG",
+        "error": "Errore",
+        "dateTimeConstraint": "La data deve essere AAAA/MM/GG"
     },
     "instructions": {
         "howToPlay": "Come giocare",

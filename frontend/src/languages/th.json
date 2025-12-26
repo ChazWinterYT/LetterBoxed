@@ -242,6 +242,7 @@
         "averageWordsNeeded": "จำนวนคำเฉลี่ยที่ต้องการ",
         "result": "ผลลัพธ์",
         "results": "ผลลัพธ์",
+        "dateRangePlaceholder": "เลือกช่วงวันที่",
         "filterResults": "กรองผลการค้นหา",
         "group": {
             "gameIdGroup": "รหัสเกม",
@@ -264,7 +265,8 @@
             "operators": "ตัวดำเนินการ",
             "or": "หรือ",
             "lessThan": "น้อยกว่า",
-            "greaterThan": "มากกว่า"
+            "greaterThan": "มากกว่า",
+            "equals": "เท่ากับ"
         },
         "actions": {
             "clear": "ล้างตัวกรอง",
@@ -303,6 +305,30 @@
         "nextPage": "หน้าถัดไป",
         "previousPage": "หน้าก่อนหน้า",
         "page": "หน้า"
+    },
+    "datePicker": {
+        "today": "วันนี้",
+        "nextMonth": "เดือนถัดไป",
+        "previousMonth": "เดือนก่อนหน้า",
+        "previousYear": "ปีก่อนหน้า",
+        "nextYear": "ปีถัดไป",
+        "currentMonth": "เดือนปัจจุบัน",
+        "currentYear": "ปีปัจจุบัน",
+        "selectDate": "เลือกวันที่",
+        "selectRange": "เลือกช่วง",
+        "startDate": "วันที่เริ่มต้น",
+        "endDate": "วันที่สิ้นสุด",
+        "startTime": "เวลาเริ่มต้น",
+        "endTime": "เวลาสิ้นสุด",
+        "customRange": "ช่วงที่กำหนดเอง",
+        "duration": "ระยะเวลา",
+        "enterDuration": "ป้อนระยะเวลา",
+        "unit": "หน่วย",
+        "relativeRange": "ช่วงสัมพัทธ์",
+        "customRangeDescription": "เลือกช่วงที่กำหนดเอง",
+        "format": "ปปปป/ดด/วว",
+        "error": "ข้อผิดพลาด",
+        "dateTimeConstraint": "วันที่ต้องเป็น ปปปป/ดด/วว"
     },
     "instructions": {
         "howToPlay": "วิธีการเล่น",
