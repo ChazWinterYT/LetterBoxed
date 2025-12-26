@@ -16,6 +16,7 @@ import {
   PropertyFilter,
   PropertyFilterProps,
   Pagination,
+  DatePicker,
 } from "@cloudscape-design/components";
 import "./BrowseGames.css";
 import "@cloudscape-design/global-styles/index.css";
@@ -29,6 +30,102 @@ type CloudscapePropertyFilterQuery = NonNullable<PropertyFilterProps["query"]>;
 type CloudscapePropertyFilterToken = NonNullable<
   CloudscapePropertyFilterQuery["tokens"]
 >[number];
+
+const ISO_DATE_PLACEHOLDER = "YYYY-MM-DD";
+
+const parseRangeValue = (rangeValue?: string | null) => {
+  if (!rangeValue) {
+    return { start: "", end: "" };
+  }
+  const [start = "", end = ""] = rangeValue.split("..");
+  return { start, end };
+};
+
+const formatRangeLabel = (rangeValue: string) => {
+  const { start, end } = parseRangeValue(rangeValue);
+  if (start && end) {
+    return `${start} – ${end}`;
+  }
+  return rangeValue;
+};
+
+const DateValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
+  value,
+  onChange,
+  operator,
+}) => {
+  const normalizedValue = typeof value === "string" ? value : "";
+
+  return (
+    <div className="date-filter-form date-filter-form__single">
+      <DatePicker
+        value={normalizedValue}
+        onChange={({ detail }) => onChange(detail.value)}
+        placeholder={ISO_DATE_PLACEHOLDER}
+        ariaLabel={operator ? `${operator} date` : "Select date"}
+        expandToViewport
+      />
+    </div>
+  );
+};
+
+const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
+  value,
+  onChange,
+}) => {
+  const parsedRange = useMemo(
+    () => parseRangeValue(typeof value === "string" ? value : ""),
+    [value]
+  );
+  const [startDate, setStartDate] = useState(parsedRange.start);
+  const [endDate, setEndDate] = useState(parsedRange.end);
+
+  useEffect(() => {
+    setStartDate(parsedRange.start);
+    setEndDate(parsedRange.end);
+  }, [parsedRange.start, parsedRange.end]);
+
+  const emitRange = useCallback(
+    (nextStart: string, nextEnd: string) => {
+      if (!nextStart && !nextEnd) {
+        onChange("");
+      } else {
+        onChange(`${nextStart ?? ""}..${nextEnd ?? ""}`);
+      }
+    },
+    [onChange]
+  );
+
+  const handleStartChange = ({ detail }: { detail: { value: string } }) => {
+    setStartDate(detail.value);
+    emitRange(detail.value, endDate);
+  };
+
+  const handleEndChange = ({ detail }: { detail: { value: string } }) => {
+    setEndDate(detail.value);
+    emitRange(startDate, detail.value);
+  };
+
+  return (
+    <div className="date-filter-form date-filter-form__range">
+      <DatePicker
+        value={startDate}
+        onChange={handleStartChange}
+        placeholder={ISO_DATE_PLACEHOLDER}
+        ariaLabel="Start date"
+        expandToViewport
+      />
+      <span className="date-filter-form__separator">–</span>
+      <DatePicker
+        value={endDate}
+        onChange={handleEndChange}
+        placeholder={ISO_DATE_PLACEHOLDER}
+        ariaLabel="End date"
+        expandToViewport
+      />
+    </div>
+  );
+};
 
 interface BrowseGamesProps {
   defaultGameType?: string;
@@ -285,6 +382,14 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       { value: "100orMore", label: t("propertyFilter.100orMore") },
     ]);
 
+    const dateOptions: PropertyFilterProps.FilteringOption[] = [
+      {
+        propertyKey: "date",
+        value: "today",
+        label: t("browseGames.dateToday"),
+      },
+    ];
+
     return [
       ...boardSizes,
       ...gameTypes,
@@ -292,6 +397,7 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
       ...averageRatingRanges,
       ...averageWordsNeededRanges,
       ...totalCompletionsRanges,
+      ...dateOptions,
     ];
   }, [games, t]);
 
@@ -413,7 +519,13 @@ const BrowseGames: React.FC<BrowseGamesProps> = ({ defaultGameType }) => {
               key: "date",
               propertyLabel: t("browseGames.date"),
               groupValuesLabel: t("browseGames.date"),
-              operators: [">=", "<=", "=", ":"],
+              defaultOperator: "=",
+              operators: [
+                { operator: "=", form: DateValueForm },
+                { operator: ">=", form: DateValueForm },
+                { operator: "<=", form: DateValueForm },
+                { operator: ":", form: DateRangeValueForm, format: formatRangeLabel },
+              ],
             },
           ]}
           filteringOptions={filteringOptions}
