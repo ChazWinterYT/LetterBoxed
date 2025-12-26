@@ -16,8 +16,6 @@ import {
   PropertyFilter,
   PropertyFilterProps,
   Pagination,
-  DatePicker,
-  DateRangePicker,
 } from "@cloudscape-design/components";
 import "./BrowseGames.css";
 import "@cloudscape-design/global-styles/index.css";
