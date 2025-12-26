@@ -31,8 +31,6 @@ type CloudscapePropertyFilterToken = NonNullable<
   CloudscapePropertyFilterQuery["tokens"]
 >[number];
 
-const ISO_DATE_PLACEHOLDER = "YYYY-MM-DD";
-
 const parseRangeValue = (rangeValue?: string | null) => {
   if (!rangeValue) {
     return { start: "", end: "" };
@@ -55,13 +53,22 @@ const DateValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
   operator,
 }) => {
   const normalizedValue = typeof value === "string" ? value : "";
+  const { t, language } = useLanguage();
 
   return (
     <div className="date-filter-form date-filter-form__single">
       <DatePicker
         value={normalizedValue}
         onChange={({ detail }) => onChange(detail.value)}
-        placeholder={ISO_DATE_PLACEHOLDER}
+        locale={language}
+        placeholder={t("datePicker.format")}
+        i18nStrings={{
+          todayAriaLabel: t("datePicker.today"),
+          nextMonthAriaLabel: t("datePicker.nextMonth"),
+          previousMonthAriaLabel: t("datePicker.previousMonth"),
+          nextYearAriaLabel: t("datePicker.nextYear"),
+          previousYearAriaLabel: t("datePicker.previousYear"),
+        }}
         ariaLabel={operator ? `${operator} date` : "Select date"}
         expandToViewport
       />
@@ -79,6 +86,7 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
   );
   const [startDate, setStartDate] = useState(parsedRange.start);
   const [endDate, setEndDate] = useState(parsedRange.end);
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     setStartDate(parsedRange.start);
@@ -106,12 +114,22 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
     emitRange(startDate, detail.value);
   };
 
+  const datePickerI18n = {
+    todayAriaLabel: t("datePicker.today"),
+    nextMonthAriaLabel: t("datePicker.nextMonth"),
+    previousMonthAriaLabel: t("datePicker.previousMonth"),
+    nextYearAriaLabel: t("datePicker.nextYear"),
+    previousYearAriaLabel: t("datePicker.previousYear"),
+  };
+
   return (
     <div className="date-filter-form date-filter-form__range">
       <DatePicker
         value={startDate}
         onChange={handleStartChange}
-        placeholder={ISO_DATE_PLACEHOLDER}
+        locale={language}
+        placeholder={t("datePicker.format")}
+        i18nStrings={datePickerI18n}
         ariaLabel="Start date"
         expandToViewport
       />
@@ -119,7 +137,9 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
       <DatePicker
         value={endDate}
         onChange={handleEndChange}
-        placeholder={ISO_DATE_PLACEHOLDER}
+        locale={language}
+        placeholder={t("datePicker.format")}
+        i18nStrings={datePickerI18n}
         ariaLabel="End date"
         expandToViewport
       />
