@@ -242,6 +242,7 @@
         "averageWordsNeeded": "Average Words Needed",
         "result": "Result",
         "results": "Results",
+        "dateRangePlaceholder": "Select date range",
         "filterResults": "Filter the search results",
         "group": {
             "gameIdGroup": "Game IDs",
@@ -264,7 +265,8 @@
             "operators": "Operators",
             "or": "or",
             "lessThan": "Less than",
-            "greaterThan": "Greater than"
+            "greaterThan": "Greater than",
+            "equals": "Equals"
         },
         "actions": {
             "clear": "Clear filters",
@@ -303,6 +305,30 @@
         "nextPage": "Next page",
         "previousPage": "Previous page",
         "page": "Page"
+    },
+    "datePicker": {
+        "today": "Today",
+        "nextMonth": "Next month",
+        "previousMonth": "Previous month",
+        "previousYear": "Previous year",
+        "nextYear": "Next year",
+        "currentMonth": "Current month",
+        "currentYear": "Current year",
+        "selectDate": "Select date",
+        "selectRange": "Select range",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "startTime": "Start time",
+        "endTime": "End time",
+        "customRange": "Custom range",
+        "duration": "Duration",
+        "enterDuration": "Enter duration",
+        "unit": "Unit",
+        "relativeRange": "Relative range",
+        "customRangeDescription": "Select a custom range",
+        "format": "YYYY/MM/DD",
+        "error": "Error",
+        "dateTimeConstraint": "Date must be YYYY/MM/DD"
     },
     "instructions": {
         "howToPlay": "How to Play",
