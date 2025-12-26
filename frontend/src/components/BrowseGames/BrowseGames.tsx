@@ -47,6 +47,56 @@ const formatRangeLabel = (rangeValue: string) => {
   return rangeValue;
 };
 
+const DATE_VALUE_REGEX = /^(\d{4})-(\d{2})-(\d{2})$/;
+const YEAR_RANGE_START = 2024;
+const YEAR_RANGE_FUTURE = 1;
+
+const parseDateParts = (value: string) => {
+  const match = DATE_VALUE_REGEX.exec(value);
+  if (!match) {
+    return null;
+  }
+  const [, year, month, day] = match;
+  return {
+    year: Number(year),
+    month: Number(month),
+    day: Number(day),
+  };
+};
+
+const pad2 = (value: number) => value.toString().padStart(2, "0");
+
+const formatDateValue = (year: number, month: number, day: number) =>
+  `${year}-${pad2(month)}-${pad2(day)}`;
+
+const clampDayInMonth = (year: number, month: number, day: number) => {
+  const daysInMonth = new Date(year, month, 0).getDate();
+  return Math.min(day, daysInMonth);
+};
+
+const getYearFromDateValue = (value: string) => parseDateParts(value)?.year;
+
+const setYearOnDateValue = (value: string, year: number) => {
+  const parts = parseDateParts(value);
+  const month = parts?.month ?? 1;
+  const day = parts?.day ?? 1;
+  const clampedDay = clampDayInMonth(year, month, day);
+  return formatDateValue(year, month, clampedDay);
+};
+
+const buildYearOptions = (selectedYear?: number) => {
+  const currentYear = new Date().getFullYear();
+  const startYear = YEAR_RANGE_START;
+  const endYear = currentYear + YEAR_RANGE_FUTURE;
+  const minYear = selectedYear ? Math.min(startYear, selectedYear) : startYear;
+  const maxYear = selectedYear ? Math.max(endYear, selectedYear) : endYear;
+  const years: number[] = [];
+  for (let year = maxYear; year >= minYear; year -= 1) {
+    years.push(year);
+  }
+  return years;
+};
+
 const DateValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
   value,
   onChange,
@@ -54,9 +104,46 @@ const DateValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
 }) => {
   const normalizedValue = typeof value === "string" ? value : "";
   const { t, language } = useLanguage();
+  const selectedYear = useMemo(
+    () => getYearFromDateValue(normalizedValue),
+    [normalizedValue]
+  );
+  const yearOptions = useMemo(
+    () => buildYearOptions(selectedYear),
+    [selectedYear]
+  );
+
+  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const nextValue = event.target.value;
+    if (nextValue === "") {
+      onChange("");
+      return;
+    }
+    const nextYear = Number(nextValue);
+    if (Number.isNaN(nextYear)) {
+      return;
+    }
+    onChange(setYearOnDateValue(normalizedValue, nextYear));
+  };
 
   return (
     <div className="date-filter-form date-filter-form__single">
+      <div className="date-filter-form__year">
+        <span className="date-filter-form__year-label">{t("datePicker.year")}</span>
+        <select
+          className="date-filter-form__year-select"
+          value={selectedYear ? String(selectedYear) : ""}
+          onChange={handleYearChange}
+          aria-label={t("datePicker.year")}
+        >
+          <option value="">{t("datePicker.year")}</option>
+          {yearOptions.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
       <DatePicker
         value={normalizedValue}
         onChange={({ detail }) => onChange(detail.value)}
@@ -87,6 +174,13 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
   const [startDate, setStartDate] = useState(parsedRange.start);
   const [endDate, setEndDate] = useState(parsedRange.end);
   const { t, language } = useLanguage();
+  const startYear = useMemo(() => getYearFromDateValue(startDate), [startDate]);
+  const endYear = useMemo(() => getYearFromDateValue(endDate), [endDate]);
+  const startYearOptions = useMemo(
+    () => buildYearOptions(startYear),
+    [startYear]
+  );
+  const endYearOptions = useMemo(() => buildYearOptions(endYear), [endYear]);
 
   useEffect(() => {
     setStartDate(parsedRange.start);
@@ -114,6 +208,40 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
     emitRange(startDate, detail.value);
   };
 
+  const handleStartYearChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const nextValue = event.target.value;
+    if (nextValue === "") {
+      setStartDate("");
+      emitRange("", endDate);
+      return;
+    }
+    const nextYear = Number(nextValue);
+    if (Number.isNaN(nextYear)) {
+      return;
+    }
+    const nextStart = setYearOnDateValue(startDate, nextYear);
+    setStartDate(nextStart);
+    emitRange(nextStart, endDate);
+  };
+
+  const handleEndYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const nextValue = event.target.value;
+    if (nextValue === "") {
+      setEndDate("");
+      emitRange(startDate, "");
+      return;
+    }
+    const nextYear = Number(nextValue);
+    if (Number.isNaN(nextYear)) {
+      return;
+    }
+    const nextEnd = setYearOnDateValue(endDate, nextYear);
+    setEndDate(nextEnd);
+    emitRange(startDate, nextEnd);
+  };
+
   const datePickerI18n = {
     todayAriaLabel: t("datePicker.today"),
     nextMonthAriaLabel: t("datePicker.nextMonth"),
@@ -124,25 +252,65 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
 
   return (
     <div className="date-filter-form date-filter-form__range">
-      <DatePicker
-        value={startDate}
-        onChange={handleStartChange}
-        locale={language}
-        placeholder={t("datePicker.format")}
-        i18nStrings={datePickerI18n}
-        ariaLabel="Start date"
-        expandToViewport
-      />
+      <div className="date-filter-form__control">
+        <div className="date-filter-form__year">
+          <span className="date-filter-form__year-label">
+            {t("datePicker.year")}
+          </span>
+          <select
+            className="date-filter-form__year-select"
+            value={startYear ? String(startYear) : ""}
+            onChange={handleStartYearChange}
+            aria-label={t("datePicker.year")}
+          >
+            <option value="">{t("datePicker.year")}</option>
+            {startYearOptions.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+        <DatePicker
+          value={startDate}
+          onChange={handleStartChange}
+          locale={language}
+          placeholder={t("datePicker.format")}
+          i18nStrings={datePickerI18n}
+          ariaLabel="Start date"
+          expandToViewport
+        />
+      </div>
       <span className="date-filter-form__separator">–</span>
-      <DatePicker
-        value={endDate}
-        onChange={handleEndChange}
-        locale={language}
-        placeholder={t("datePicker.format")}
-        i18nStrings={datePickerI18n}
-        ariaLabel="End date"
-        expandToViewport
-      />
+      <div className="date-filter-form__control">
+        <div className="date-filter-form__year">
+          <span className="date-filter-form__year-label">
+            {t("datePicker.year")}
+          </span>
+          <select
+            className="date-filter-form__year-select"
+            value={endYear ? String(endYear) : ""}
+            onChange={handleEndYearChange}
+            aria-label={t("datePicker.year")}
+          >
+            <option value="">{t("datePicker.year")}</option>
+            {endYearOptions.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+        <DatePicker
+          value={endDate}
+          onChange={handleEndChange}
+          locale={language}
+          placeholder={t("datePicker.format")}
+          i18nStrings={datePickerI18n}
+          ariaLabel="End date"
+          expandToViewport
+        />
+      </div>
     </div>
   );
 };

@@ -157,6 +157,39 @@
     font-size: 1rem;
   }  
 
+  .date-filter-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .date-filter-form__control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .date-filter-form__year {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .date-filter-form__year-label {
+    font-weight: 600;
+  }
+
+  .date-filter-form__year-select {
+    padding: 4px 6px;
+    font-size: 0.9rem;
+  }
+
+  .date-filter-form__separator {
+    font-weight: 600;
+  }
+
   /* Responsive Adjustments */
   @media (max-width: 768px) {
     .sorting-container {
