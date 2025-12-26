@@ -314,6 +314,7 @@
         "nextYear": "שנה הבאה",
         "currentMonth": "חודש נוכחי",
         "currentYear": "שנה נוכחית",
+        "year": "שנה",
         "selectDate": "בחר תאריך",
         "selectRange": "בחר טווח",
         "startDate": "תאריך התחלה",
@@ -326,9 +327,9 @@
         "unit": "יחידה",
         "relativeRange": "טווח יחסי",
         "customRangeDescription": "בחר טווח מותאם אישית",
-        "format": "שששש/חח/יי",
+        "format": "יי/חח/שששש",
         "error": "שגיאה",
-        "dateTimeConstraint": "התאריך חייב להיות שששש/חח/יי"
+        "dateTimeConstraint": "התאריך חייב להיות יי/חח/שששש"
     },
     "instructions": {
         "howToPlay": "איך לשחק",
