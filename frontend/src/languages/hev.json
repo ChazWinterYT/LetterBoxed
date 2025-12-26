@@ -326,9 +326,9 @@
         "unit": "יְחִידָה",
         "relativeRange": "טְוָוח יַחֲסִי",
         "customRangeDescription": "בְּחַר טְוָוח מוּתְאָם אִישִׁית",
-        "format": "YYYY/MM/DD",
+        "format": "שששש/חח/יי",
         "error": "שְׁגִיאָה",
-        "dateTimeConstraint": "הַתַּאֲרִיךְ חַיָּיב לִהְיוֹת YYYY/MM/DD"
+        "dateTimeConstraint": "הַתַּאֲרִיךְ חַיָּיב לִהְיוֹת שששש/חח/יי"
     },
     "instructions": {
         "howToPlay": "אֵיךְ לְשַׂחֵק",

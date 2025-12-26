@@ -326,9 +326,9 @@
         "unit": "יחידה",
         "relativeRange": "טווח יחסי",
         "customRangeDescription": "בחר טווח מותאם אישית",
-        "format": "YYYY/MM/DD",
+        "format": "שששש/חח/יי",
         "error": "שגיאה",
-        "dateTimeConstraint": "התאריך חייב להיות YYYY/MM/DD"
+        "dateTimeConstraint": "התאריך חייב להיות שששש/חח/יי"
     },
     "instructions": {
         "howToPlay": "איך לשחק",
