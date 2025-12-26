@@ -116,7 +116,6 @@ const DateValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
   const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const nextValue = event.target.value;
     if (nextValue === "") {
-      onChange("");
       return;
     }
     const nextYear = Number(nextValue);
@@ -213,8 +212,6 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
   ) => {
     const nextValue = event.target.value;
     if (nextValue === "") {
-      setStartDate("");
-      emitRange("", endDate);
       return;
     }
     const nextYear = Number(nextValue);
@@ -229,8 +226,6 @@ const DateRangeValueForm: PropertyFilterProps.ExtendedOperatorForm<string> = ({
   const handleEndYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const nextValue = event.target.value;
     if (nextValue === "") {
-      setEndDate("");
-      emitRange(startDate, "");
       return;
     }
     const nextYear = Number(nextValue);
