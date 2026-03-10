@@ -5,6 +5,9 @@ from aws_cdk import (
     aws_apigateway as apigateway,
     aws_iam as iam,
     aws_s3 as s3,
+    aws_events as events,
+    aws_events_targets as targets,
+    aws_sns as sns,
     CfnOutput,
     RemovalPolicy,
     Duration,
@@ -658,6 +661,61 @@ class LetterBoxedStack(Stack):
         rate_game_resource = api.root.add_resource("rate-game")
         rate_game_resource.add_method("POST", rate_game_integration)
         add_cors(rate_game_resource)
+
+
+        # ===========================================================================
+        # Daily Update Lambda + EventBridge Schedule
+        # Replaces the local nightly cron job that runs merge_dict_and_upload.py
+        # ===========================================================================
+
+        # SNS topic for completion/failure notifications.
+        # After deploying, subscribe your email via the AWS Console or CLI:
+        #   aws sns subscribe --topic-arn <TopicArn> --protocol email --notification-endpoint you@example.com
+        daily_update_topic = sns.Topic(
+            self, "DailyUpdateTopic",
+            display_name="LetterBoxed Daily Update Notifications"
+        )
+        CfnOutput(self, "DailyUpdateTopicArn", value=daily_update_topic.topic_arn)
+
+        daily_update_lambda = _lambda.Function(
+            self, "DailyDictionaryUpdateLambda",
+            function_name="DailyDictionaryUpdateLambda",
+            runtime=_lambda.Runtime.PYTHON_3_10,
+            handler="lambdas.daily_update.handler.handler",
+            code=_lambda.Code.from_asset(
+                path=".",
+                exclude=[
+                    "**/node_modules", "**/__pycache__", ".pytest_cache",
+                    "**/.git", "**/.idea", "**/.vscode", "**/*.pyc",
+                    "cdk.out", "dictionaries", "venv", "lambda_layer",
+                    "*.iml", "*.log", "*.tmp", "*.zip", "*.tar.gz",
+                    ".env", ".gitignore", "utility", "test",
+                    "cdk.json", "*.bat", "*.md"
+                ],
+            ),
+            timeout=Duration.seconds(300),
+            memory_size=512,
+            layers=[lambda_layer],
+            environment={
+                "SNS_TOPIC_ARN": daily_update_topic.topic_arn,
+            },
+        )
+
+        # Grant S3 read/write on both buckets
+        self.prod_bucket.grant_read_write(daily_update_lambda)
+        self.test_bucket.grant_read_write(daily_update_lambda)
+
+        # Grant SNS publish permission
+        daily_update_topic.grant_publish(daily_update_lambda)
+
+        # Schedule: 8:15 AM UTC daily = 12:15 AM Pacific Standard Time
+        # (runs at 1:15 AM Pacific during Daylight Saving — still well after midnight)
+        daily_rule = events.Rule(
+            self, "DailyUpdateSchedule",
+            schedule=events.Schedule.cron(minute="15", hour="8"),
+            description="Triggers the daily LetterBoxed dictionary merge and game prefetch"
+        )
+        daily_rule.add_target(targets.LambdaFunction(daily_update_lambda))
 
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):
