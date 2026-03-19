@@ -5,8 +5,7 @@ from aws_cdk import (
     aws_apigateway as apigateway,
     aws_iam as iam,
     aws_s3 as s3,
-    aws_events as events,
-    aws_events_targets as targets,
+    aws_scheduler as scheduler,
     aws_sns as sns,
     CfnOutput,
     RemovalPolicy,
@@ -708,14 +707,33 @@ class LetterBoxedStack(Stack):
         # Grant SNS publish permission
         daily_update_topic.grant_publish(daily_update_lambda)
 
-        # Schedule: 8:15 AM UTC daily = 12:15 AM Pacific Standard Time
-        # (runs at 1:15 AM Pacific during Daylight Saving — still well after midnight)
-        daily_rule = events.Rule(
-            self, "DailyUpdateSchedule",
-            schedule=events.Schedule.cron(minute="15", hour="8"),
-            description="Triggers the daily LetterBoxed dictionary merge and game prefetch"
+        # IAM role allowing EventBridge Scheduler to invoke the Lambda
+        scheduler_role = iam.Role(
+            self, "DailyUpdateSchedulerRole",
+            assumed_by=iam.ServicePrincipal("scheduler.amazonaws.com"),
         )
-        daily_rule.add_target(targets.LambdaFunction(daily_update_lambda))
+        scheduler_role.add_to_policy(
+            iam.PolicyStatement(
+                actions=["lambda:InvokeFunction"],
+                resources=[daily_update_lambda.function_arn],
+            )
+        )
+
+        # Timezone-aware schedule: 12:15 AM America/Los_Angeles every day.
+        # EventBridge Scheduler handles DST automatically — no UTC offset math needed.
+        scheduler.CfnSchedule(
+            self, "DailyUpdateSchedule",
+            schedule_expression="cron(15 0 * * ? *)",
+            schedule_expression_timezone="America/Los_Angeles",
+            flexible_time_window=scheduler.CfnSchedule.FlexibleTimeWindowProperty(
+                mode="OFF"
+            ),
+            target=scheduler.CfnSchedule.TargetProperty(
+                arn=daily_update_lambda.function_arn,
+                role_arn=scheduler_role.role_arn,
+            ),
+            description="Triggers the daily LetterBoxed dictionary merge and game prefetch at 12:15 AM Pacific"
+        )
 
 
     def create_lambda(self, lambda_key, lambda_config, environment, function_suffix, layer, resources):
