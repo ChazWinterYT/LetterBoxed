@@ -13,13 +13,13 @@ const promoVideos: PromoVideo[] = [
   {
     title: "AIs Play Poker, Episode 4",
     description: "Watch 9 real LLMs compete in a full poker tournament, complete with trash talk.",
-    url: "https://www.youtube.com/@ChazWinter",
+    url: "https://www.youtube.com/watch?v=zV9aZK0_UOs",
     thumbnailUrl: `${process.env.PUBLIC_URL}/Ep4Part1thumb-Eng.jpg`,
   },
   {
     title: "AIs Play Pokemon, Episode 2",
     description: "Watch 8 real LLMs choose Pokemon and battle tournament-style.",
-    url: "https://www.youtube.com/@ChazWinter",
+    url: "https://www.youtube.com/watch?v=7IpwFULKnJs",
     thumbnailUrl: `${process.env.PUBLIC_URL}/Ep2Part1-thumbnail-Eng.jpg`,
   },
 ];
