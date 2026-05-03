@@ -10,6 +10,10 @@
             "randomGame": "ランダムゲームをプレイ",
             "randomGameGenerator": "ランダムゲームジェネレーター"
         },
+        "youtubePromo": {
+            "heading": "私の最新のYouTube動画もぜひご覧ください:",
+            "watchOnYouTube": "YouTubeで見る"
+        },
         "archive": {
             "noGames": "利用可能なゲームはありません",
             "loadingGames": "アーカイブを読み込んでいます、お待ちください...",

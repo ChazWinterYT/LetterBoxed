@@ -10,6 +10,10 @@
             "randomGame": "Zufälliges Spiel spielen",
             "randomGameGenerator": "Zufälliger Spielgenerator"
         },
+        "youtubePromo": {
+            "heading": "Bitte schauen Sie sich meine neuesten YouTube-Videos an:",
+            "watchOnYouTube": "Auf YouTube ansehen"
+        },
         "archive": {
             "noGames": "Keine Spiele verfügbar",
             "loadingGames": "Archiv wird geladen, bitte warten...",

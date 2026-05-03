@@ -10,6 +10,10 @@
             "randomGame": "Mainkan Game Acak",
             "randomGameGenerator": "Penghasil Game Acak"
         },
+        "youtubePromo": {
+            "heading": "Silakan pertimbangkan untuk menonton video YouTube terbaru saya:",
+            "watchOnYouTube": "Tonton di YouTube"
+        },
         "archive": {
             "noGames": "Tidak ada game tersedia",
             "loadingGames": "Arsip sedang dimuat, harap tunggu...",

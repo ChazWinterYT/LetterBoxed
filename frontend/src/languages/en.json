@@ -10,6 +10,10 @@
             "randomGame": "Play Random Game",
             "randomGameGenerator": "Random Game Generator"
         },
+        "youtubePromo": {
+            "heading": "Please consider watching my latest YouTube videos:",
+            "watchOnYouTube": "Watch on YouTube"
+        },
         "archive": {
             "noGames": "No games available",
             "loadingGames": "Archive is loading, please wait...",

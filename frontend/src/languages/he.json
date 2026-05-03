@@ -10,6 +10,10 @@
             "randomGame": "שחק במשחק אקראי",
             "randomGameGenerator": "מחולל משחקים אקראי"
         },
+        "youtubePromo": {
+            "heading": "אנא שקול לצפות בסרטוני YouTube האחרונים שלי:",
+            "watchOnYouTube": "צפה ב-YouTube"
+        },
         "archive": {
             "noGames": "אין משחקים זמינים",
             "loadingGames": "...הארכיון נטען, אנא המתן",

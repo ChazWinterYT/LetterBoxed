@@ -10,6 +10,10 @@
             "randomGame": "เล่นเกมแบบสุ่ม",
             "randomGameGenerator": "ตัวสร้างเกมแบบสุ่ม"
         },
+        "youtubePromo": {
+            "heading": "โปรดลองรับชมวิดีโอ YouTube ล่าสุดของฉัน:",
+            "watchOnYouTube": "ดูบน YouTube"
+        },
         "archive": {
             "noGames": "ไม่มีเกมที่พร้อมใช้งาน",
             "loadingGames": "กำลังโหลดคลังเกม โปรดรอ...",

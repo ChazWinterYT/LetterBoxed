@@ -10,6 +10,10 @@
             "randomGame": "रैंडम गेम खेलें",
             "randomGameGenerator": "रैंडम गेम जनरेटर"
         },
+        "youtubePromo": {
+            "heading": "कृपया मेरे नवीनतम YouTube वीडियो देखने पर विचार करें:",
+            "watchOnYouTube": "YouTube पर देखें"
+        },
         "archive": {
             "noGames": "कोई खेल उपलब्ध नहीं है",
             "loadingGames": "आर्काइव लोड हो रहा है, कृपया प्रतीक्षा करें...",

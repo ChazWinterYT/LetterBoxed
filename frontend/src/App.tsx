@@ -13,6 +13,7 @@ import { v4 as uuid4 } from "uuid";
 import Header from "./components/Header";
 //import AdBanner from "./components/AdBanner";
 import ButtonMenu from "./components/ButtonMenu";
+import YouTubePromo from "./components/YouTubePromo";
 import GameBoard from "./components/GameBoard";
 import ArchiveList from "./components/GameArchive/ArchiveList";
 import Footer from "./components/Footer";
@@ -592,6 +593,7 @@ const App = () => {
         enabled={process.env.REACT_APP_ADS_ENABLED === "true"}
       />
       */}
+      <YouTubePromo />
       <ButtonMenu
         onPlayToday={loadTodaysGame}
         onOpenArchive={openNYTArchive}

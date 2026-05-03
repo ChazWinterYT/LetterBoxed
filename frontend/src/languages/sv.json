@@ -10,6 +10,10 @@
             "randomGame": "Spela slumpmässigt spel",
             "randomGameGenerator": "Slumpmässig Spelgenerator"
         },
+        "youtubePromo": {
+            "heading": "Titta gärna på mina senaste YouTube-videor:",
+            "watchOnYouTube": "Titta på YouTube"
+        },
         "archive": {
             "noGames": "Inga spel tillgängliga",
             "loadingGames": "Arkivet laddas, vänligen vänta...",
