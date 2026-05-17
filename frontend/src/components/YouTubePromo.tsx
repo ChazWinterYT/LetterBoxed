@@ -20,7 +20,7 @@ const promoVideos: PromoVideo[] = [
     title: "AIs Play Pokemon, Episode 3 (Little Cup)",
     description: "Watch 8 real LLMs choose Pokemon and battle tournament-style.",
     url: "https://www.youtube.com/watch?v=E29ael2HlfU",
-    thumbnailUrl: `${process.env.PUBLIC_URL}/Ep2Part1-thumbnail-Eng.jpg`,
+    thumbnailUrl: `${process.env.PUBLIC_URL}/Ep3Part1-Poke.jpg`,
   },
 ];
 
