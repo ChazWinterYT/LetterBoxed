@@ -11,16 +11,16 @@ type PromoVideo = {
 
 const promoVideos: PromoVideo[] = [
   {
-    title: "AIs Play Poker, Episode 4",
+    title: "AIs Play Poker, Episode 5",
     description: "Watch 9 real LLMs compete in a full poker tournament, complete with trash talk.",
-    url: "https://www.youtube.com/watch?v=zV9aZK0_UOs",
-    thumbnailUrl: `${process.env.PUBLIC_URL}/Ep4Part1thumb-Eng.jpg`,
+    url: "https://www.youtube.com/watch?v=bhVu3bbPmEw",
+    thumbnailUrl: `${process.env.PUBLIC_URL}/ep5part1-poker`,
   },
   {
-    title: "AIs Play Pokemon, Episode 3 (Little Cup)",
+    title: "AIs Play Pokemon, Episode 4 (Random Draft)",
     description: "Watch 8 real LLMs choose Pokemon and battle tournament-style.",
-    url: "https://www.youtube.com/watch?v=E29ael2HlfU",
-    thumbnailUrl: `${process.env.PUBLIC_URL}/Ep3Part1-Poke.jpg`,
+    url: "https://www.youtube.com/watch?v=vXpMuqSVIcM",
+    thumbnailUrl: `${process.env.PUBLIC_URL}/Ep4Part1-poke.jpg`,
   },
 ];
 
