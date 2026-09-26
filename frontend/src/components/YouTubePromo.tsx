@@ -14,7 +14,7 @@ const promoVideos: PromoVideo[] = [
     title: "AIs Play Poker, Episode 5",
     description: "Watch 9 real LLMs compete in a full poker tournament, complete with trash talk.",
     url: "https://www.youtube.com/watch?v=bhVu3bbPmEw",
-    thumbnailUrl: `${process.env.PUBLIC_URL}/ep5part1-poker`,
+    thumbnailUrl: `${process.env.PUBLIC_URL}/ep5part1-poker.jpg`,
   },
   {
     title: "AIs Play Pokemon, Episode 4 (Random Draft)",
