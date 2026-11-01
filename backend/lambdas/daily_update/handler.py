@@ -1,7 +1,11 @@
 import json
 import os
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
 import boto3
 import requests
+from lambdas.common.db_utils import fetch_game_by_id
 from lambdas.prefetch_todays_game.prefetch_service import fetch_todays_game
 
 s3 = boto3.client("s3")
@@ -61,6 +65,16 @@ def handler(event, context):
     messages = []
 
     try:
+        if (event or {}).get("mode") == "fallback":
+            game_id = datetime.now(ZoneInfo("America/Los_Angeles")).date().isoformat()
+            if fetch_game_by_id(game_id):
+                message = f"Fallback skipped: {game_id} is already cached."
+                print(message)
+                return {
+                    "statusCode": 200,
+                    "body": json.dumps({"message": message, "gameId": game_id}),
+                }
+
         # Step 1: Fetch today's NYT game
         todays_game = fetch_todays_game()
         nyt_dictionary = todays_game.get("dictionary", [])

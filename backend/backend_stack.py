@@ -697,12 +697,14 @@ class LetterBoxedStack(Stack):
             layers=[lambda_layer],
             environment={
                 "SNS_TOPIC_ARN": daily_update_topic.topic_arn,
+                "GAMES_TABLE": prod_GAMES_TABLE_NAME,
             },
         )
 
         # Grant S3 read/write on both buckets
         self.prod_bucket.grant_read_write(daily_update_lambda)
         self.test_bucket.grant_read_write(daily_update_lambda)
+        self.prod_game_table.grant_read_data(daily_update_lambda)
 
         # Grant SNS publish permission
         daily_update_topic.grant_publish(daily_update_lambda)
@@ -719,8 +721,12 @@ class LetterBoxedStack(Stack):
             )
         )
 
-        # Timezone-aware schedule: 12:15 AM America/Los_Angeles every day.
-        # EventBridge Scheduler handles DST automatically — no UTC offset math needed.
+        daily_update_target = scheduler.CfnSchedule.TargetProperty(
+            arn=daily_update_lambda.function_arn,
+            role_arn=scheduler_role.role_arn,
+        )
+
+        # Normally 12:15 AM Pacific is 3:15 AM Eastern, just after NYT updates.
         scheduler.CfnSchedule(
             self, "DailyUpdateSchedule",
             schedule_expression="cron(15 0 * * ? *)",
@@ -728,11 +734,25 @@ class LetterBoxedStack(Stack):
             flexible_time_window=scheduler.CfnSchedule.FlexibleTimeWindowProperty(
                 mode="OFF"
             ),
+            target=daily_update_target,
+            description="Triggers the daily LetterBoxed dictionary merge and game prefetch at 12:15 AM Pacific"
+        )
+
+        # Retry an hour later if today's game is still missing. This covers the
+        # fall DST mismatch without hard-coding today's US transition rules.
+        scheduler.CfnSchedule(
+            self, "DailyUpdateDstFallbackSchedule",
+            schedule_expression="cron(15 1 * * ? *)",
+            schedule_expression_timezone="America/Los_Angeles",
+            flexible_time_window=scheduler.CfnSchedule.FlexibleTimeWindowProperty(
+                mode="OFF"
+            ),
             target=scheduler.CfnSchedule.TargetProperty(
                 arn=daily_update_lambda.function_arn,
                 role_arn=scheduler_role.role_arn,
+                input='{"mode":"fallback"}',
             ),
-            description="Triggers the daily LetterBoxed dictionary merge and game prefetch at 12:15 AM Pacific"
+            description="Retries at 1:15 AM Pacific only when today's game is still missing"
         )
 
 
